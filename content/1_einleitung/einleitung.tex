@@ -13,12 +13,19 @@
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Einleitung}\label{ch:einleitung}
-	Mit der Einführung beginnt die arabische Seitennummerierung. Eine gute Einleitung sollte folgende Punkte erörtern:
-	\begin{itemize}
-		\item Einführung in das Problemfeld\\
-		-> Bewegungensanalysen sind oft nur mit teuren optischen Verfahren in speziellen Einrichtungen möglich. Somit sind Untersuchungen und Messugen von Bewegungsabläufen nur in speziell dafür ausgelegten Laboren erfolgt. Mit der zunehmenden Miniaturisierung der Bewegunssensoren wird die Realisierung von kompakten und für den Träger komfortablen Geräten erreicht. \\
-		-> Sensorgenauigkeit ist Problem		
-		\item Zweck, Ziel, Intension und Notwendigkeit der Untersuchung
-		\item Stand der Wissenschaft
-		\item Ablauf und Gliederung des Projekts
-	\end{itemize}
+Bewegungensanalysen waren früher nur mit optischen Verfahren in speziellen Einrichtungen möglich. EIne Methode ist, dass ein opisches tracken von Markern. Die Marker sind dabei auf dem Testobjekt angebracht. Die Marker sind an für die Rekonstruktion des Bewegungsablaufes relevanten Stellen angebracht. Beispielsweise zum simplen Tracken eines Läufers (Beine) an Hüfte, Knie und Knöchel. Die Marker sind somit an den beweglichen Gelenken angebracht. Der Bewegungsablauf wird von mehreren Kameras aus verschiedenen Perspektiven gefilmt. Mit Bildverarbeitung und Triangulation kann anschliessend auf die Position des Markers im Raum geschlossen werden. Untersuchungen und Messugen von Bewegungsabläufen auf diese Art sind nur in speziell dafür ausgelegten Laboren durchfürbar. Durch diese Labore sind die Messungen zum einen ortgebunden und zum andern durch die aufwändigen und teuren Kamerasystemen kostspielig. Eine Lösung mit günstigen und komfortablen Analysegeräten ist gefragt womit auch Messungen im täglichen Umfeld durführbar sind.
+
+Dank der MEMS-Technologie \cite{g:MEMS} ist in den letzten Jahren eine zunehmenden Miniaturisierung von Bewegunssensoren wie Beschleunigunssenoren oder Gyroscopen erfolgt. Eine Bewegung kann somit auch mithilfe eines Beschleunigungssensor gemessen werden. Dieser misst jedoch nicht direkt die Position wie in den beschriebenen Kamera-Systemen, sondern die Beschleunigung. Um die Bewegung im Raum zu messen benötigt man die Startposition und Orientierung des Sensors sowie die Beschleunigung und Richtung der Bewegung von diesem Punkt aus. Mit anschliessender doppelter Integration der Beschleunigung kann die neue Position berechnet werden. Somit ist die Realisierung von kompakten und für den Träger komfortablen Geräten möglich.
+
+Ein Problem bei diesem Verfahren mit den Beschleunigungssensoren, ist die Genuaigkeit der Messung. Bereits ein kleiner Fehler in der Messung der Beschleunigung resultiert zu einem grossen Fehler in der Endposition. Hinzu kommt, dass der Sensor einen Drift aufweist. Somit sind nur Messungen mit anschliessender Berechnung der Position von kurzer Dauer (enigen Sekunden) zu realisieren. 		
+
+\section{Zweck, Ziel, Intension und Notwendigkeit der Untersuchung}
+Der Widereinstieg in das Training für einen Sportler mit Kreuzbandriss ist schwer zu bestimmen. Zum einen will der Sportler schnellstmöglich mit dem Training weiterfahren um den Trainingsrückstand aufzuholen und den getätigen Aufbau nicht weiter zu verlieren. Zum andern sollte aber die Verletzung bestmöglich geheilt sein um Folgeschäden und weitere Trainingsrückschläge zu vermeiden. 
+
+An der Eidgenössische Hochschule für Sport in Magglingen wird dazu ein Test geleitet durch einen Physiotherapeuten am verletzen Sportler durchgeführt. Der Test dienen zum Ermitteln des Genesungszustandes des Sportlers. Bei diesem Test werden an der EHSM mehreren Übungen mit unterschiedlichen Belastungen des Knies durchgeführt. Ine Kamera filmt den Sportler zusätzlich während den Übungen. Die Auslenkung des Knies in der Frontalebene des Körpers lässt auf den Genesungszustand nach einem Kreuzbandriss schliessen. Auch ist ersichlich ob der Sportler eine Schonhaltung einnimmt. Mithilfe der Aufnahme wertet der Therapeut diese Auslenkung aus und bestimmt die weiteren Trainingsmöglichkeiten.
+
+Diser Test mit anschliessender Auswertung der Kameraaufnahmen ist durch seine Subjektivität nicht die bestmögliche Lösung. Die Auslenkung des Knies ist schwer zu bestimmen und kann nur geschätz werden. Eine falsche Auswertung hat bei zu frühem Trainingseinstieg folgen auf die Gesundheit des Athleten, bei zu spätem Wiedereinstieg geht dem Sportler wichtige Zeit verloren. Den Therapeuten würde eine zusätzliche Angabe der absolute Auslenkung helfen, um eine bessere Entscheidung treffen zu können. Diese Auslenkung kann beispielsweise mit einem Beschleunigungssensor gemessen werden.
+
+\section{Stand der Wissenschaft}
+
+\section{Ablauf und Gliederung des Projekts}
