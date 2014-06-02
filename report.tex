@@ -270,8 +270,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand*{\glossaryname}{Glossar}
 \glossarystyle{listgroup}
-\printglossary
+\printglossary[type=main]
 \addcontentsline{toc}{chapter}{Glossar}
+\deftranslation[to=German]{Acronyms}{Abkürzungsverzeichnis} 
+\printglossary[type=\acronymtype]
+\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+
 %
 %
 %
