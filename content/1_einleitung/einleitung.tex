@@ -13,23 +13,20 @@
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Einleitung}\label{ch:einleitung}
-Für die Öffentlichkeit wurde das Motion-Tracking-Verfahren vor allem durch die Filmindustrie bekannt. Grosse Erfolge erreichte der Film Avatar - Aufbruch nach Pandora. In diesem Film wird mit einem optischen Motion-Tracking-Verfahren den Figuren Leben eingehaucht. Diese Bewegen sich im Vergleich zu früheren Animationen sehr authentisch. Speziell ist, dass durch das zusätzliche Tracken des Gesichts auch Emotionen der Schauspieler auf die Figuren übertragen werden und somit nicht nur die Bewegungen der Schauspieler. Der Film gilt zurzeit als einer der erfolgreichsten Filme. Durch die aufwändige Technik, welche teilweise speziell für Avatar entwickelt wurde entstanden jedoch auch sehr hohe Produktionskosten.\par
+Für die Öffentlichkeit wurde das Motion-Tracking-Verfahren vor allem durch die Filmindustrie bekannt. Grosse Erfolge erreichte der Film Avatar - Aufbruch nach Pandora. In diesem Film wird mit einem optischen Motion-Tracking-Verfahren den Figuren Leben eingehaucht. Diese Bewegen sich im Vergleich zu früheren Animationen sehr authentisch. Speziell ist, dass durch das zusätzliche Tracken des Gesichts auch Emotionen der Schauspieler auf die Figuren übertragen werden und somit nicht nur die Bewegungen der Schauspieler. Der Film gilt zurzeit als einer der erfolgreichsten Filme. Durch die aufwändige Technik, welche teilweise speziell für Avatar entwickelt wurde, entstanden jedoch auch sehr hohe Produktionskosten.\par
 %
-Bewegungensanalysen waren früher nur mit optischen Verfahren in speziellen Einrichtungen möglich. Eine Methode ist ein optisches Tracken von Markern. Die Marker sind dabei auf dem Testobjekt an für die Rekonstruktion des Bewegungsablaufes relevanten Stellen angebracht. Beispielsweise zum Tracken der Beine eines Läufers an Hüfte, Knie und Knöchel. Die Marker sind somit an den beweglichen Gelenken angebracht. Der Bewegungsablauf wird von mehreren Kameras aus verschiedenen Perspektiven gefilmt. Mit Bildverarbeitung und \gls{g:triangulation} kann anschliessend auf die Position des Markers im Raum geschlossen werden, wobei aus den Markern ein entsprechendes Modell des Beines erstellt werden kann. Untersuchungen und Messungen von Bewegungsabläufen auf diese Art sind nur in speziell dafür ausgelegten Laboren durchführbar. Durch diese Labore sind die Messungen zum einen ortsgebunden und zum andern durch die aufwändigen und teuren Kamerasystemen kostspielig. Eine Lösung mit günstigen und komfortablen Analysegeräten ist gefragt womit auch Messungen im täglichen Umfeld durchführbar sind.\par
+Bewegungensanalysen waren früher nur mit optischen Verfahren in speziellen Einrichtungen möglich. Eine Methode ist ein optisches Tracken von Markern. Die Marker sind dabei auf dem Testobjekt an für die Rekonstruktion des Bewegungsablaufes relevanten Stellen angebracht. Beispielsweise zum Tracken der Beine eines Läufers an Hüfte, Knie und Knöchel. Die Marker sind somit an den beweglichen Gelenken befestigt. Der Bewegungsablauf wird von mehreren Kameras aus verschiedenen Perspektiven gefilmt. Mit Bildverarbeitung und \gls{g:triangulation} kann anschliessend auf die Position des Markers im Raum geschlossen werden, wobei aus den Markern ein entsprechendes Modell des Beines erstellt werden kann. Untersuchungen und Messungen von Bewegungsabläufen auf diese Art sind nur in speziell dafür ausgelegten Laboren durchführbar. Durch diese Labore sind die Messungen zum einen ortsgebunden und zum andern durch die aufwändigen und teuren Kamerasystemen kostspielig. Eine Lösung mit günstigen und komfortablen Analysegeräten ist gefragt womit auch Messungen im täglichen Umfeld durchführbar sind.\par
 %
-Dank der \acrshort{ac:MEMS}-Technologie ist in den letzten Jahren eine zunehmenden Miniaturisierung von Bewegungssensoren wie Beschleunigungssensoren oder Gyroskopen erfolgt. Eine Bewegung kann somit auch mithilfe eines Beschleunigungssensor gemessen werden. Dieser misst jedoch nicht direkt die Position wie in den beschriebenen Kamera-Systemen, sondern die Beschleunigung. Um die Bewegung im Raum zu messen benötigt man die Startposition und Orientierung des Sensors sowie die Beschleunigung und Richtung der Bewegung von diesem Punkt aus. Mit anschliessender doppelter Integration der Beschleunigung kann die neue Position berechnet werden. Somit ist die Realisierung von kompakten und für den Träger komfortablen Geräten möglich.\par
+Dank der \acrshort{ac:MEMS}-Technologie ist in den letzten Jahren eine zunehmenden Miniaturisierung von Bewegungssensoren wie Beschleunigungssensoren oder Gyroskopen erfolgt. Eine Bewegung kann somit auch mithilfe eines Beschleunigungssensor gemessen werden. Dieser misst jedoch nicht die absolute Position wie in den beschriebenen Kamera-Systemen, sondern die Beschleunigung. Um die Bewegung im Raum zu ermitteln benötigt man die Startposition und Orientierung des Sensors sowie die Beschleunigung und Richtung der Bewegung von diesem Punkt aus. Mit anschliessender doppelter Integration der Beschleunigung kann die neue Position berechnet werden. Somit ist die Realisierung von kompakten und für den Träger komfortablen Geräten möglich.\par
 %
-Ein Problem bei diesem Verfahren mit den Beschleunigungssensoren, ist die Genauigkeit der Messung. Bereits ein kleiner Fehler in der Messung der Beschleunigung resultiert zu einem grossen Fehler in der Endposition. Hinzu kommt, dass der Sensor einen Drift sowie Offset aufweist. Somit sind nur Messungen mit anschliessender Berechnung der Position von kurzer Dauer (einigen Sekunden) zu realisieren. \par		
+Ein Problem bei diesem Verfahren mit den Beschleunigungssensoren ist die Genauigkeit der Messung. Bereits ein kleiner Fehler in der Messung der Beschleunigung resultiert in einem grossen Fehler in der Endposition. Hinzu kommt, dass der Sensor einen Drift sowie Offset aufweist. Somit sind nur Messungen mit anschliessender Berechnung der Position von kurzer Dauer (einigen Sekunden) zu realisieren. \par		
 %
 \section{Zweck, Ziel, Intention und Notwendigkeit der Untersuchung}
-Der Wiedereinstieg in das Training für einen Sportler mit Kreuzbandriss ist schwer zu bestimmen. Zum einen will der Sportler schnellstmöglich mit dem Training weiterfahren um den Trainingsrückstand aufzuholen und den getätigten Aufbau nicht weiter zu verlieren. Zum andern sollte aber die Verletzung bestmöglich geheilt sein um Folgeschäden und weitere Trainingsrückschläge zu vermeiden.\par 
+Der Wiedereinstieg in das Training für einen Sportler mit Kreuzbandriss ist schwer zu bestimmen. Zum einen will der Sportler schnellstmöglich mit dem Training weiterfahren um den Trainingsrückstand aufzuholen und den getätigten Aufbau nicht weiter zu verlieren. Zum andern sollte jedoch die Verletzung bestmöglich geheilt sein um Folgeschäden und weitere Trainingsrückschläge zu vermeiden.\par 
 %
-An der \gls{ac:EHSM} wird dazu ein Test geleitet durch einen Physiotherapeuten am verletzen Sportler durchgeführt. Der Test dienen zum Ermitteln des Genesungszustandes des Sportlers. Bei diesem Test werden an der \gls{ac:EHSM} mehreren Übungen mit unterschiedlichen Belastungen des Knies durchgeführt. Eine Kamera filmt den Sportler zusätzlich während den Übungen. Die Auslenkung des Knies in der \gls{g:transversalebene} des Körpers lässt auf den Genesungszustand nach einem Kreuzbandriss schliessen. Auch ist erschlich ob der Sportler eine Schonhaltung einnimmt. Mithilfe der Aufnahme wertet der Therapeut diese Auslenkung aus und bestimmt die weiteren Trainingsmöglichkeiten.\par
+An der \gls{ac:EHSM} wird dazu ein Test geleitet durch einen Physiotherapeuten am verletzen Sportler durchgeführt. Der Test dienen zum Ermitteln des Genesungszustandes des Sportlers. Bei diesem Test werden an der \gls{ac:EHSM} mehreren Übungen mit unterschiedlichen Belastungen des Knies durchgeführt. Eine Kamera filmt den Sportler zusätzlich während den Übungen. Die Auslenkung des Knies in der \gls{g:transversalebene} des Körpers lässt auf den Genesungszustand nach einem Kreuzbandriss schliessen. Auch ist ersichtlich ob der Sportler eine Schonhaltung einnimmt. Mithilfe der Aufnahme wertet der Therapeut diese Auslenkung aus und bestimmt die weiteren Trainingsmöglichkeiten.\par
 %
 Dieser Test mit anschliessender Auswertung der Kameraaufnahmen ist durch seine Subjektivität nicht die bestmögliche Lösung. Die Auslenkung des Knies ist schwer zu bestimmen und kann nur geschätzt werden. Eine falsche Auswertung hat bei zu frühem Trainingseinstieg folgen auf die Gesundheit des Athleten, bei zu spätem Wiedereinstieg geht dem Sportler wichtige Zeit verloren. Den Therapeuten würde eine zusätzliche Angabe der absolute Auslenkung helfen, um eine bessere Entscheidung treffen zu können. Diese Auslenkung könnte beispielsweise mit einem Beschleunigungssensor gemessen werden.
-%
-\section{Aufgabenstellung}
-blabla\par
 %
 \section{Stand der Wissenschaft}
 Auf dem Gebiet der Biomechanik werden viele Forschungen zur Untersuchung eine Bewegungsablaufes mit Beschleunigungssensoren getätigt. Die Motivation ist in den meisten Arbeiten dieselbe. Das Messen von Bewegungsabläufen wurde bisher mit Kameras in speziell dafür vorgesehenen Laboren vorgenommen. Bewegungsabläufe in einem anderen Umfeld sind mit dieser Methode nicht möglich zu bestimmen. Viele Forschungen wollen aus diesem Grund kompakte Geräte mit einer günstigeren und komfortableren Lösung entwickeln.\par
@@ -42,4 +39,53 @@ In einer Arbeit verfasst von der Technischen Universität in Schweden resultiert 
 %
 In der letzten betrachteten Arbeit der Universität Coimbra in Portugal, wurde das Tracken eines Bewegungsablauf mittels Beschleunigungssensor, Gyroskop und \gls{g:magnetometer} realisiert. Dabei wird zuerst die Ausrichtung des Sensors zum Bezugssystem bestimmt und mittels Rotationsmatrix in das gewünschte Bezugssystem transformiert. Dann wird die gemessenen Beschleunigungen von der Beschleunigung des Erdfeldes separiert und anschliessend durch doppelte Integration auf den zurückgelegten Weg geschlossen. Da durch den Drift-Fehler des Gyroskopes die Messung nach wenigen Sekunden schon stark verfälscht ist, wurde eine zusätzliche Bewegungsdetektion vorgenommen. Die Integration erfolgt somit  nur, wenn sich das Testobjekt bewegt. Eine Bewegung wird mittels einem Threshold aus der berechneten Varianz des Beschleunigungssensors (abzüglich der Erdbeschleunigung) detektiert. Zusätzlich wird dem Drift des Gyroskopes mit einer Kompensation entgegengewirkt. Mit dieser Methode erreichten sie eine Genauigkeit von 2 cm auf eine Distanz von 50 cm \cite{lit:doubleint}.
 %
-\section{Ablauf und Gliederung des Projekts}
+\section{Aufgabenstellung}\label{s:aufgabenstellung}
+blabla\par
+%
+\subsection{Ablauf und Gliederung des Projekts}
+	Das Projekt wird in insgesamt vier Phasen gegliedert. Jede Phase beinhaltet dabei mehrere \gls{ac:ap}, die durch die beiden Autoren abgearbeitet werden. Dabei werden Arbeiten gemeinsam und getrennt durchgeführt. Dieses Vorgehen steigert die Effizienz und garantiert gleichzeitig eine gewisse Redundanz im Arbeitsprozess. Der detaillierte Ablauf ist der Abbildung \vref{img:projekablauf} zu entnehmen.
+	\image{content/1_einleitung/image/ablauf}{scale=1}{htbp}[Projekablauf][img:projekablauf]
+\subsubsection{Arbeitsphasen}\label{sss:arbeitsphasen}
+	Die bereits erwähnten Phasen umfassen die Punkte Literaturstudie, Konzept, Implementierung und Validierung
+	%
+	\paragraph*{Literaturstudie}
+		Die erste Phase umfasst das Einarbeiten in die Thematik. Dafür dienen spezifische Papers als Grundlage, auf der anschliessend aufgebaut werden kann. Ein Hauptaugenmerk wird auf das Bedienen der Toolchains gelegt (referenziert durch die \gls{ac:ap} \textsf{Einarbeitung LabView} und \textsf{Einarbeitung DAQ in MATLAB}). Durch dies werden vorhandenen Problemen früh erkannt und beeinflussen die späteren Phasen nicht negativ.
+	%
+	\paragraph*{Konzept}
+		Ein grosser Teil des Projekts beansprucht die Konzept-Phase für sich. Sie hat zum Ziel einen entsprechenden Algorithmus zu entwickeln und anschliessen zu Validieren (\gls{ac:ap} \textsf{Algorithmus-Entwicklung} und \textsf{Validierung Konzept}). Parallel dazu wird ein Experimental-Protokoll ausgearbeitet und ein LabView-Basis-Projekt aufgesetzt (\gls{ac:ap} \textsf{Experimental-Protokoll ausarbeiten} und \textsf{Basis-Projekt LabView ergänzen}).
+	%
+	\paragraph*{Implementierung} 
+		In der zweiten Hauptphase wird im \gls{ac:ap} \textsf{Portierung MATLAB nach LabView} der erstellte MATLAB Algorithmus nach LabView portiert. Dabei ist das Ziel die gleiche Funktionalität wie das Konzept zu erreichen. Anschliessend erfolgt eine Kreuzvalidierung mit dem Konzept (\gls{ac:ap} \textsf{Kreuzvalidierung Implementation}). Parallel dazu wird das bestehende LabView-Projekt zu einem Demodulator für die Präsentation erweitert (\gls{ac:ap} \textsf{Demodulator}).   
+	%
+	\paragraph*{Validierung}
+		Abschliessend wird in der letzten Phase das Projektergebnis mit der Aufgabenstellung verglichen und ein Soll/Ist-Vergleich durchgeführt (\gls{ac:ap} \textsf{Soll/Ist Vergleich}).
+%
+%
+\subsubsection{Zeitplan}
+	Aus den definierten \gls{ac:ap} wird ein entsprechender Zeitplan erstellt. Dabei wird der chronologische Ablauf des Ablaufplans eingehalten. Wie der Abbildung \vref{img:zeitplan} zu entnehmen ist, werden keine Bufferzeiten eingeplant. Dies weil die Projektdauer bezogen auf die Aufgabenstellung schon knapp ausfällt und daher jede Verzögerung den Erfolg des Projekts gefährden würde.
+	%
+	\image{content/1_einleitung/image/Zeitplan}{scale=1}{htbp}[Zeitplan][img:zeitplan]
+%
+%
+\subsubsection{Meilensteine}\todo{noch Beschreiben und anpassen}
+	Jede Phase\footnote{siehe Abschnitt \vref{sss:arbeitsphasen}} wird durch einen Meilenstein abgeschlossen. Die Erfüllung einen Meilensteins ist Voraussetzung für das Voranschreiten in die nächste Projektphase.
+	\begin{description}
+		\item[wichtigste Methode evaluiert]
+		\item[Machbarkeit gewährleistet]
+		\item[Abschluss Implementation]
+		\item[Zusammenfassung]
+		\item[Abgabe Thesis]
+	\end{description}
+%
+%
+\subsection{Verwendete Software}
+	Während der Umsetzung des Projekts kommen folgende Software-Komponente eingesetzt:
+	%
+	\begin{itemize}
+		\item MATLAB 2012b
+		\item LabView 2013
+		\item NI-DAQ mx 9.5.5 
+	\end{itemize}
+	%
+	Weiter wurde diverse Werkzeuge zur Erzeugung der Dokumentation eingesetzt, die jedoch keinen wesentlichen Einfluss auf das Projekt haben.
+
