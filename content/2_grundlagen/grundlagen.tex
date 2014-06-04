@@ -13,12 +13,62 @@
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Grundlagen}\label{ch:grundlagen}
+%
+%
+%Anatomie des Knies
 \section{Anatomie des Knies}
+%
+%
+%LabVIEW auf NI myRIO
 \section{LabVIEW auf NI myRIO}
-	\todo{Basisprojekt erklären: gross10}
+	In der Konzept- und Implementationsphase\footnote{für detaillierte Erläuterungen zu den Projektphasen sei auf den Abschnitt \vref{ss:ablauf_gliederung_projekt} verwiesen} wird das Werkzeug \gls{g:labview} der Firma \gls{ac:ni} verwendet. \gls{g:labview} ist die Abkürzung für \textsf{Laboratory Virtual Instrument Engineering Workbench} und stellt eine Entwicklungsumgebung und eine grafische Programmiersprache dar. Es wurde in den 70er Jahren von den Mitgründer von \gls{ac:ni}, Jim Truchard und Jeff Kodosky entworfen und wird stetig weiter entwickelt. Im Gegensatz zu den gängigen Hochsprachen wie C/C++ sind in \gls{g:labview} der Datenfluss im Zentrum und nicht Kontrollstrukturen, soll heissen das Datenflussprinzip wird verfolgt \cite[19-22]{lit:labview}.
+	%
+	\subsection{Aufbau und Struktur}
+		Ein \gls{g:labview}-Projekt besteht aus mindestens einem \gls{ac:vi}, indem sich Funktionsblöcke oder weitere \gls{ac:vi}s befinden können. Eine \gls{ac:vi} stellt sich zusammen aus einem Frontpanel und einem Blockdiagramm zusammen. Das Frontpanel stellt dabei die Benutzeroberfläche dar, dagegen das Blockdiagramm die eigentliche Funktionalität beinhaltet.\par
+		%
+		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem Host und dem Target. Der Host bezeichnet dabei der Computer mit installiertem \gls{g:labview} und das Target ein zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten die auf dem Target erfasst werden, befinden sich trotz bestehender Kommunikation zum Host nicht automatisch auf demselben. Sie werden stattdessen auf dem internen Speicher des Targets gespeichert und müssen anschliessen aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}}. Ebenso wird zwischen \gls{ac:vi}s auf dem Host und Target unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
+		%
+		\image{content/2_grundlagen/image/labview_gliederung}{scale=0.7}{htbp}[\gls{g:labview}-Gliederung][img:labview_gliederung]
+	%
+	\subsection{Hardware}\label{ss:myRIO_hw}
+		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{nähere Angaben sind im Datenblatt im Anhang \vref{ch:datasheet_myrio} zu finden}:
+		\begin{itemize}
+			\item Prozessor/FPGA Xilinx Z-7010 (Cortex A9), 2 Kerne à \unit[667]{MHz}
+			\item \unit[256]{MB} Flash, \unit[512]{MB} RAM
+			\item USB 2.0 Hi-Speed
+			\item Accelerometer, 3 Achsen, $\pm$\unit[8]{g}, \unit[12]{bit} Auflösung
+		\end{itemize}
+		%
+		Die gesamte Hardware, inklusive Beschleunigungssensor ist in einem kompakten Gehäuse verbaut, wie die Abbildung \vref{img:myrio} zeigt. Die Befestigung kann auf einfache weise mit Hilfe von drei Schrauben erfolgen.
+		%
+		\image{content/2_grundlagen/image/myrio}{scale=0.2}{htbp}[\gls{g:myrio} \cite{img:myrio}][\gls{g:myrio}][img:myrio]
+		%
+		\subsubsection*{Bedienung}
+			Das \gls{g:myrio} benutzt als Betriebssystem ein Real Time Linux von \gls{ac:ni}. Dies bietet dem Nutzer eine Vielzahl von Möglichkeiten das \gls{g:myrio} zu bedienen \cite{lit:rt_linux}.
+			%
+			\begin{description}
+				\item[\gls{g:labview}] Normalerweise erfolgt die Bedienung via \gls{g:labview}. Dabei werden \gls{ac:vi}s erstellt und auf das \gls{g:myrio} geladen. Zusätzlich besteht die Möglichkeit mit Hilfe vorgefertigter \gls{ac:vi}s direkt auf Real Time Linux zuzugreifen.
+				%
+				\item[NI MAX]
+				%
+				\item[Weboberfläche]
+				%
+				\item[Terminal]
+			\end{description}
+		%
+		\paragraph*{Daten extrahieren}
+	%
+	\subsection{Unterscheidung Host und Target}
+%
+%
+%DAQ in MATLAB
 \section{\acrshort{ac:daq} in MATLAB}
-MATLAB bietet zum direkten Auslesen von Daten eine Data Acquisition Toolbox an. In dieser können angeschlossene \acrshort{ac:daq}-Karten in einer sogenannten Session direkt in MATLAB Beispielsweise mittels USB ausgelesen werden. Auch können Daten/Signale, welche in MATLAB generiert wurden über Ausgänge der Karte ausgegeben werden.
-Zum Auslesen eines Beschleunigungssensors wurde ein kurzes MATLAB-Skript geschrieben (ersichtlich in \vref{ch:daqauslesen}). Dieses Skript sollte auch zukünftigen Arbeiten eine schnelle und einfache Verwendung der Beschleunigungssensoren ermöglichen.
+	MATLAB bietet zum direkten Auslesen von Daten eine Data Acquisition Toolbox an. In dieser können angeschlossene \acrshort{ac:daq}-Karten in einer sogenannten Session direkt in MATLAB Beispielsweise mittels USB ausgelesen werden. Auch können Daten/Signale, welche in MATLAB generiert wurden über Ausgänge der Karte ausgegeben werden.\par 
+	%
+	Zum Auslesen eines Beschleunigungssensors wurde ein kurzes MATLAB-Skript geschrieben (ersichtlich in \vref{ch:daqauslesen}). Dieses Skript sollte auch zukünftigen Arbeiten eine schnelle und einfache Verwendung der Beschleunigungssensoren ermöglichen.
+%
+%
+%Rotationsmatrix
 \section{Rotationsmatrix}
 In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra mit Herrn Jenni im zweiten Semseter behandelt \cite{lit:linalg2}.\par
 Die Gerade g hat die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$. Der Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ soll um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ gedreht werden. Der Berechnungsschritt lässt sich somit wie in \vref{eq:rot} zusammenfassen:
