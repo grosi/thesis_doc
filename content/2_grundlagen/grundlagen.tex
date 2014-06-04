@@ -20,7 +20,19 @@
 MATLAB bietet zum direkten Auslesen von Daten eine Data Acquisition Toolbox an. In dieser können angeschlossene \acrshort{ac:daq}-Karten in einer sogenannten Session direkt in MATLAB Beispielsweise mittels USB ausgelesen werden. Auch können Daten/Signale, welche in MATLAB generiert wurden über Ausgänge der Karte ausgegeben werden.
 Zum Auslesen eines Beschleunigungssensors wurde ein kurzes MATLAB-Skript geschrieben (ersichtlich in \vref{ch:daqauslesen}). Dieses Skript sollte auch zukünftigen Arbeiten eine schnelle und einfache Verwendung der Beschleunigungssensoren ermöglichen.
 \section{Rotationsmatrix}
-In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade g im Raum nötig. Die Gerade hat die Richtung $\overrightarrow{n}=$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$  \cite{lit:linalg2}
+In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra mit Herrn Jenni im zweiten Semseter behandelt \cite{lit:linalg2}.\par
+Die Gerade g hat die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$. Der Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ soll um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ gedreht werden. Der Berechnungsschritt lässt sich somit wie in \vref{eq:rot} zusammenfassen:
+\formula{
+            \left(\begin{array}{c}x'\\ y'\\z'\end{array}\right)=R_{g;O;\overrightarrow{n};\phi}*\left(\begin{array}{c}x\\ y\\z\end{array}\right)
+        }{
+            R_{g;O;\overrightarrow{n};\phi} & Rotationsmatrix um Winkel $\phi$ um die Gerade g}[eq:rot]
+            
+Die Rotationsmatrix wird dabei wie in \vref{eq:rotmax} aufgestellt.
+\formula{
+            R_{g;O;\overrightarrow{n};\phi} = \cos(\phi)*\begin{bmatrix}1 & 0 & 0 \\0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}+\frac{(1-\cos(\phi))}{a^{2}+b^{2}+c^{2}}*\begin{bmatrix}a^{2} & ab & ac \\ ab & b^{2} & bc \\ ac & bc & c^{2} \end{bmatrix}\\+\frac{\sin(\phi)}{\sqrt{a^{2}+b^{2}+c^{2}}}*\begin{bmatrix}0 & -c & b \\ c & 0 & -a \\ -b & a & 0 \end{bmatrix}
+        }{ 
+           }[eq:rotmax]
+          
 \section{nummerische Integration}
 \subsection{Trapezmethode}
 \subsection{Filter}
