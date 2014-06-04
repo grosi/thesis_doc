@@ -13,6 +13,8 @@
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konzept}\label{ch:konzept}
+\section{Datenaufnahme mit \gls{ac:icp}-Beschleunigungssensoren}
+Um bei der Konzeptentwicklung Daten zum Überprüfen des Algorithmus zu haben, haben wir von Rolf Vetter \gls{ac:icp}-Beschleunigungssensoren von IMI Sensors erhalten. Mit einer \gls{ac:daq}-Karte von \gls{ac:ni}, der \gls{ac:ni} USB-4431, wurden die Beschleunigungssensoren direkt mittels MATLAB ausgelesen. Somit sind die Daten direkt in MATLAB zur Weiterverarbeitung abgelegt. Es hat sich jedoch schnell herausgestellt, dass die Sensoren für unsere Anwendung nicht geeignet sind. Der Frequenzbereich des Sensors ist im Datenblatt in \vref{ch:indusriesensor} ersichtlich. Dort zu sehen, dass der Sensor einen Frequenzbereich von 0.5 Hz bis 10 kHz hat. Somit wird die für uns notwendige Gravitationsbeschleunigung, die einem DC-Anteil im Signal entspricht, nicht aufgenommen. Diese Sensoren können somit nur für dynamische Anwendungen verwendet werden.
 \section{Algorithmus}
 \subsection{Übersicht}
 \subsection{Filterung}
