@@ -62,27 +62,37 @@
 %
 %
 %DAQ in MATLAB
-\section{\acrshort{ac:daq} in MATLAB}
-	MATLAB bietet zum direkten Auslesen von Daten eine Data Acquisition Toolbox an. In dieser können angeschlossene \acrshort{ac:daq}-Karten in einer sogenannten Session direkt in MATLAB Beispielsweise mittels USB ausgelesen werden. Auch können Daten/Signale, welche in MATLAB generiert wurden über Ausgänge der Karte ausgegeben werden.\par 
+\section{\acrshort{ac:daq} in \gls{g:matlab}}
+	\gls{g:matlab} bietet zum direkten Auslesen von Daten eine Data Acquisition Toolbox an. In dieser können angeschlossene \acrshort{ac:daq}-Karten in einer sogenannten Session direkt in \gls{g:matlab} Beispielsweise mittels USB ausgelesen werden. Auch können Daten/Signale, welche in \gls{g:matlab} generiert wurden über Ausgänge der Karte ausgegeben werden.\par 
 	%
-	Zum Auslesen eines Beschleunigungssensors wurde ein kurzes MATLAB-Skript geschrieben (ersichtlich in \vref{ch:daqauslesen}). Dieses Skript sollte auch zukünftigen Arbeiten eine schnelle und einfache Verwendung der Beschleunigungssensoren ermöglichen.
+	Zum Auslesen eines Beschleunigungssensors wurde ein kurzes \gls{g:matlab}-Skript geschrieben (ersichtlich in \vref{ch:daqauslesen}). Dieses Skript sollte auch zukünftigen Arbeiten eine schnelle und einfache Verwendung der Beschleunigungssensoren ermöglichen.
 %
 %
 %Rotationsmatrix
 \section{Rotationsmatrix}
-In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra mit Herrn Jenni im zweiten Semseter behandelt \cite{lit:linalg2}.\par
-Die Gerade g hat die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$. Der Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ soll um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ gedreht werden. Der Berechnungsschritt lässt sich somit wie in \vref{eq:rot} zusammenfassen:
+In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
+%
+Wir möchten den Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ drehen. Die Gerade g hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
+%
+\image{content/2_grundlagen/image/rotmat}{scale=0.6}{htbp}[Drehung des Punktes P in P' \cite{lit:linalg2}][Drehung des Punktes P in P'][img:rotmat]
+%           
+Die Rotationsmatrix ist wie schon erwähnt definiert durch den Drehwinkel $\phi$ und der Geraden g. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt S der Geraden g mit der Ebene E in welcher die Punkte P und P' liegen und welche Senkrecht auf die Gerade g steht berechnet. Anschliessend ist aus dem Schnittpunkt S und dem Ausgangspunkt P die Berechnung des gedrehten Punktes P' möglich. Die Berechnung des gedrehten Punktes P' mit der Rotationsmatrix lässt sich somit zusammenfassen in Gleichung \vref{eq:rot}:\par
+%
+%Berechnung des gedrehten Punkt P'
 \formula{
             \left(\begin{array}{c}x'\\ y'\\z'\end{array}\right)=R_{g;O;\overrightarrow{n};\phi}*\left(\begin{array}{c}x\\ y\\z\end{array}\right)
         }{
-            R_{g;O;\overrightarrow{n};\phi} & Rotationsmatrix um Winkel $\phi$ um die Gerade g}[eq:rot]
-            
-Die Rotationsmatrix wird dabei wie in \vref{eq:rotmax} aufgestellt.
+            R_{g;O;\overrightarrow{n};\phi} & Rotationsmatrix mit Winkel $\phi$ um die Gerade g}[eq:rot]\par
+%
+Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden. Sie beinhaltet die oben genannten Rechnungsschritte. Zur Anwendung genügt der Aufbau der Matrix zu kennen, welcher in Gleichung \vref{eq:rotmax} ersichtlich ist:\par  
+%
+% Aufbau der Rotationsmatrix
 \formula{
             R_{g;O;\overrightarrow{n};\phi} &= \cos(\phi)*\begin{bmatrix}1 & 0 & 0 \\0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}+\frac{(1-\cos(\phi))}{a^{2}+b^{2}+c^{2}}*\begin{bmatrix}a^{2} & ab & ac \\ ab & b^{2} & bc \\ ac & bc & c^{2} \end{bmatrix}\\&+\frac{\sin(\phi)}{\sqrt{a^{2}+b^{2}+c^{2}}}*\begin{bmatrix}0 & -c & b \\ c & 0 & -a \\ -b & a & 0 \end{bmatrix}
         }{ 
            }[eq:rotmax]
-          
+%
+% nummerische Integration          
 \section{nummerische Integration}
 \subsection{Trapezmethode}
 \subsection{Filter}
