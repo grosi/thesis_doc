@@ -23,7 +23,7 @@
 \section{LabVIEW auf NI myRIO}
 	In der Konzept- und Implementationsphase\footnote{für detaillierte Erläuterungen zu den Projektphasen sei auf den Abschnitt \vref{ss:ablauf_gliederung_projekt} verwiesen} wird das Werkzeug \gls{g:labview} der Firma \gls{ac:ni} verwendet. \gls{g:labview} ist die Abkürzung für \textsf{Laboratory Virtual Instrument Engineering Workbench} und stellt eine Entwicklungsumgebung und eine grafische Programmiersprache dar. Es wurde in den 70er Jahren von den Mitgründer von \gls{ac:ni}, Jim Truchard und Jeff Kodosky entworfen und wird stetig weiter entwickelt. Im Gegensatz zu den gängigen Hochsprachen wie C/C++ sind in \gls{g:labview} der Datenfluss im Zentrum und nicht Kontrollstrukturen, soll heissen das Datenflussprinzip wird verfolgt \cite[19-22]{lit:labview}.
 	%
-	\subsection{Aufbau und Struktur}
+	\subsection{Aufbau und Struktur}\label{ss:aufbau_struktur}
 		Ein \gls{g:labview}-Projekt besteht aus mindestens einem \gls{ac:vi}, indem sich Funktionsblöcke oder weitere \gls{ac:vi}s befinden können. Eine \gls{ac:vi} stellt sich zusammen aus einem Frontpanel und einem Blockdiagramm zusammen. Das Frontpanel stellt dabei die Benutzeroberfläche dar, dagegen das Blockdiagramm die eigentliche Funktionalität beinhaltet.\par
 		%
 		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem Host und dem Target. Der Host bezeichnet dabei der Computer mit installiertem \gls{g:labview} und das Target ein zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten die auf dem Target erfasst werden, befinden sich trotz bestehender Kommunikation zum Host nicht automatisch auf demselben. Sie werden stattdessen auf dem internen Speicher des Targets gespeichert und müssen anschliessen aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}}. Ebenso wird zwischen \gls{ac:vi}s auf dem Host und Target unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
@@ -47,22 +47,43 @@
 			Das \gls{g:myrio} benutzt als Betriebssystem ein Real Time Linux von \gls{ac:ni}. Dies bietet dem Nutzer eine Vielzahl von Möglichkeiten das \gls{g:myrio} zu bedienen \cite{lit:rt_linux}.
 			%
 			\begin{description}
-				\item[\gls{g:labview}] Normalerweise erfolgt die Bedienung via \gls{g:labview}. Dabei werden \gls{ac:vi}s erstellt und auf das \gls{g:myrio} geladen. Zusätzlich besteht die Möglichkeit mit Hilfe vorgefertigter \gls{ac:vi}s direkt auf Real Time Linux zuzugreifen.
+				\item[\gls{g:labview}] Normalerweise erfolgt die Bedienung via \gls{g:labview}. Dabei werden \gls{ac:vi}s erstellt und auf das \gls{g:myrio} geladen. Zusätzlich besteht die Möglichkeit mit Hilfe vorgefertigter \gls{ac:vi}s direkt auf das Real Time Linux zuzugreifen (siehe \vref{img:myrio_cmd}).
+				\image{content/2_grundlagen/image/labview_myrio_cmd}{scale=0.9}{htbp}[System-\gls{ac:vi}s auf \gls{g:myrio} \cite{img:myrio_labview}][System-\gls{ac:vi}s auf \gls{g:myrio}][img:myrio_cmd]
 				%
-				\item[NI MAX]
+				\item[NI MAX] MAX steht für Measurement \& Automation Explorer und ist ein Werkzeug für die Verbindungsaufnahme und Konfiguration von \gls{ac:ni} Hardware wie das \gls{g:myrio}. Ausserdem stehen abhängig von der Hardware unterschiedliche Diagnose-Werkzeuge zur Verfügung. Die Installation von NI MAX erfolgt zeitgleich mit \gls{g:labview} \cite{lit:ni_max}. 
 				%
-				\item[Weboberfläche]
+				\item[Weboberfläche] Das \gls{g:myrio} stellt eine Weboberfläche für die Konfiguration bereit. Damit können im gleichen Umfang wie in der Software NI MAX Einstellungen vorgenommen werden. Ergänzend besteht die Möglichkeit auf das interne Dateisystem via HTTP zu zugreifen.  
 				%
-				\item[Terminal]
+				\item[Terminal] Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nenn sich die Option \textsf{Enable Secure Shell Server (sshd)}} aktiviert werden (via NI MAX oder Weboberfläche). Für ein Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
+				\begin{itemize}
+					\item IP-Adresse: 172.22.11.2
+					\item Benutzername: admin
+					\item Passwort: \textit{leer}
+				\end{itemize}
+				Konnte eine Kommunikation hergestellt werden, so erscheint eine normale Terminal-Prompt, wie in der Abbildung \vref{img:myrio_ssh} ersichtlich.
+				\image{content/2_grundlagen/image/putty_myrio}{scale=0.7}{htbp}[Bedienung via \gls{g:ssh}][img:myrio_ssh]
 			\end{description}
 		%
-		\paragraph*{Daten extrahieren}
-	%
-	\subsection{Unterscheidung Host und Target}
+		\subsubsection*{Daten extrahieren}
+			Wie in Abschnitt \vref{ss:aufbau_struktur} bereits erläutert, werden in \gls{g:labview} erstellte Dateien auf dem internen Speicher der \gls{g:myrio} abgelegt. Der Datentransfer zum Host kann über drei Arten erfolgen:
+			\begin{description}
+				\item[HTTP/\gls{g:webdav}] Die einfachste Möglichkeit ist die Daten via eines Webbrowsers direkt vom \gls{g:myrio} herunterzuladen. Dies wird ermöglicht durch \gls{g:webdav}, einem offenem Standard für Datenkommunikation im Internet. Für den Zugriff muss zum einem der Richtige Pfad und zum anderen die korrekten Benutzerdaten angegeben werden:
+				\begin{itemize}
+					\item Pfad: \texttt{http://172.22.11.2/files/}
+					\item Benutzername: admin
+					\item Passwort: \textit{leer}
+				\end{itemize}
+				Daufhin präsentiert sich ein einfacher Dateiexplorer, wie Abbildung \vref{img:myrio_webdav} zeigt.
+				\image{content/2_grundlagen/image/webdav_myrio}{scale=0.5}{htbp}[Dateiexplorer][img:myrio_webdav]
+				%
+				\item[\gls{g:labview}]\todo{data-stream erklären}
+				%
+				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \textsf{SFTP} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter \textsf{\gls{g:ssh}} erwähnten Bedingungen erfüllt sein.
+			\end{description}
 %
 %
 %DAQ in MATLAB
-\section{\acrshort{ac:daq} in \gls{g:matlab}}
+\section{DAQ in MATLAB}
 	\gls{g:matlab} bietet zum direkten Auslesen von Daten eine Data Acquisition Toolbox an. In dieser können angeschlossene \acrshort{ac:daq}-Karten in einer sogenannten Session direkt in \gls{g:matlab} Beispielsweise mittels USB ausgelesen werden. Auch können Daten/Signale, welche in \gls{g:matlab} generiert wurden über Ausgänge der Karte ausgegeben werden.\par 
 	%
 	Zum Auslesen eines Beschleunigungssensors wurde ein kurzes \gls{g:matlab}-Skript geschrieben (ersichtlich in \vref{ch:daqauslesen}). Dieses Skript sollte auch zukünftigen Arbeiten eine schnelle und einfache Verwendung der Beschleunigungssensoren ermöglichen.
@@ -74,7 +95,7 @@ In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt
 %
 Wir möchten den Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ drehen. Die Gerade g hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
 %
-\image{content/2_grundlagen/image/rotmat}{scale=0.6}{htbp}[Drehung des Punktes P in P' \cite{lit:linalg2}][Drehung des Punktes P in P'][img:rotmat]
+\image{content/2_grundlagen/image/rotmat}{scale=0.6}{htbp}[Drehung des Punktes P in P' \cite{img:linalg2}][Drehung des Punktes P in P'][img:rotmat]
 %           
 Die Rotationsmatrix ist wie schon erwähnt definiert durch den Drehwinkel $\phi$ und der Geraden g. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt S der Geraden g mit der Ebene E in welcher die Punkte P und P' liegen und welche Senkrecht auf die Gerade g steht berechnet. Anschliessend ist aus dem Schnittpunkt S und dem Ausgangspunkt P die Berechnung des gedrehten Punktes P' möglich. Die Berechnung des gedrehten Punktes P' mit der Rotationsmatrix lässt sich somit zusammenfassen in Gleichung \vref{eq:rot}:\par
 %
@@ -92,7 +113,11 @@ Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden
         }{ 
            }[eq:rotmax]
 %
+%
+%Winkel- und Rotationsachsenschätzung
+\section{Winkel- und Rotationsachsenschätzung}          
+%
 % nummerische Integration          
-\section{nummerische Integration}
-\subsection{Trapezmethode}
-\subsection{Filter}
+\section{Nummerische Integration}
+	\subsection{Trapezmethode}
+	\subsection{Filter}
