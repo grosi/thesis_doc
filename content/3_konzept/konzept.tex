@@ -34,25 +34,165 @@
 %Software
 \section{Software}\label{s:konzept:sw}
 	%
-	\subsection{Rohdaten aufzeichnen}
+	\subsection{Rohdaten aufzeichnen}\label{ss:rohdaten_aufzeichnen}
 	%
 	\subsection{myRIO Posture Estimation}
 %
 %
-%Experimental-Protokoll
-\section{Experimental-Protokoll}\label{s:experimental_protokoll}
+%Verifikation Translation
+\section{Verifikation Translation}\label{s:verifikation_translation}
+	%
+	%
+	\subsection{Grund/Zweck der Messung}
+		Die Verifikation der Translation stellt das erste von drei Experimental-Protokollen\footnote{die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_rotation} und \vref{s:verifikation_transaltion_rotation} zu finden} dar, die folgend für die Validierung des Konzepts als Ausgangslagen dienen sollen.  Ziel der Messung ist es den Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Bei auftretenden Diskrepanzen muss das Konzept überarbeitet und dieses Protokoll wiederholt werden. Das Erfüllen	
+	%
+	%
+	\subsection{Material/Testumgebung}
+		\input{content/3_konzept/table/messmittel}	
+		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
+		\input{content/3_konzept/table/messaufbau}
+	%
+	%
+	\subsection{Methoden}
+		%
+		\subsubsection*{Messgruppen}\todo{unabhängige Variabel}
+			Es werden zwei Messgruppen definiert. Die eine dient als Testgruppe und die andere als Kontrollgruppe. 
+			%
+			\begin{itemize}
+				%
+				\item \textbf{Testgruppe} Die Testgruppe repräsentiert das \gls{g:myrio}, das zur Aufzeichnung der Beschleunigungsdaten benötigt wird. Dabei werden die Daten nur gespeichert und nicht verarbeitet\footnote{Für detailliertere Informationen zur Aufzeichnung sei auf den Abschnitt \vref{ss:rohdaten_aufzeichnen} verwiesen}. Die Signalverarbeitung erfolgt zu einem späteren Zeitpunkt auf einem Computer mit Hilfe von \gls{g:matlab}.
+				%
+				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit Massstab dar. Sie ist gleichzeitig die Kontrollgruppe, die schlussendlich bei der Interpretation als Ausgangslage gilt.
+			\end{itemize}
+			%
+			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
+		%
+		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
+		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
+		\formula{
+			r &= \sqrt{x^2+y^2}\\
+			&=\sqrt{47^2+515^2}=\underline{517.14}
+		}
+		{
+			r & Radius in mm\\
+			x & vertikaler Abstand in mm\\
+			y & horizontaler Abstand in mm\\
+		}[eq:radius]
+		%
+		\formula{
+			\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
+			&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
+			b&=r\cdot\alpha '\\
+			&=517.14\cdot 0.366=\underline{189.54}
+		}
+		{
+			r & Radius in mm\\
+			\alpha & Winkel in Grad\\
+			\alpha ' & Winkel in Rad\\
+			b & Teilumfang in mm\\
+		}[eq:kreissegement]
+	%
+	%
+	\subsection{Kontrollgruppe}
+	%
+	%
+	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
+%
+%
+%Verifikation Rotation
+\section{Verifikation Rotation}\label{s:verifikation_rotation}
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
 	%
 	%
 	\subsection{Material/Testumgebung}
+		Zur Aufzeichnung eines Bewegungsablaufes des Knies wurde eine Mechanik zur Simulation erstellt. Sie basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Die Simulation ermöglicht es einen statischen Bewegungsablauf nachzubilden. Dabei wird aktuell nur die seitliche Auslenkung des Knies berücksichtigt. Die ebenfalls vorhandene Rotation wird in diesem Projekt nicht
+		\input{content/3_konzept/table/messmittel}	
+		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
+		\input{content/3_konzept/table/messaufbau}
 	%
 	%
 	\subsection{Methoden}
+		%
 		\subsubsection*{Messgruppen}\todo{unabhängige Variabel}
+			
+		%
 		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
 		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
+		\formula{
+			r &= \sqrt{x^2+y^2}\\
+			&=\sqrt{47^2+515^2}=\underline{517.14}
+		}
+		{
+			r & Radius in mm\\
+			x & vertikaler Abstand in mm\\
+			y & horizontaler Abstand in mm\\
+		}[eq:radius]
+		%
+		\formula{
+			\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
+			&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
+			b&=r\cdot\alpha '\\
+			&=517.14\cdot 0.366=\underline{189.54}
+		}
+		{
+			r & Radius in mm\\
+			\alpha & Winkel in Grad\\
+			\alpha ' & Winkel in Rad\\
+			b & Teilumfang in mm\\
+		}[eq:kreissegement]
+	%
+	%
+	\subsection{Kontrollgruppe}
+	%
+	%
+	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
+%
+%
+%Verifikation Translation mit anschliessender Rotation
+\section{Verifikation Translation mit anschliessender Rotation}\label{s:verifikation_transaltion_rotation}
+	%
+	%
+	\subsection{Grund/Zweck der Messung}
+	%
+	%
+	\subsection{Material/Testumgebung}
+		Zur Aufzeichnung eines Bewegungsablaufes des Knies wurde eine Mechanik zur Simulation erstellt. Sie basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Die Simulation ermöglicht es einen statischen Bewegungsablauf nachzubilden. Dabei wird aktuell nur die seitliche Auslenkung des Knies berücksichtigt. Die ebenfalls vorhandene Rotation wird in diesem Projekt nicht
+		\input{content/3_konzept/table/messmittel}	
+		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
+		\input{content/3_konzept/table/messaufbau}
+	%
+	%
+	\subsection{Methoden}
+		%
+		\subsubsection*{Messgruppen}\todo{unabhängige Variabel}
+			
+		%
+		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
+		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
+		\formula{
+			r &= \sqrt{x^2+y^2}\\
+			&=\sqrt{47^2+515^2}=\underline{517.14}
+		}
+		{
+			r & Radius in mm\\
+			x & vertikaler Abstand in mm\\
+			y & horizontaler Abstand in mm\\
+		}[eq:radius]
+		%
+		\formula{
+			\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
+			&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
+			b&=r\cdot\alpha '\\
+			&=517.14\cdot 0.366=\underline{189.54}
+		}
+		{
+			r & Radius in mm\\
+			\alpha & Winkel in Grad\\
+			\alpha ' & Winkel in Rad\\
+			b & Teilumfang in mm\\
+		}[eq:kreissegement]
 	%
 	%
 	\subsection{Kontrollgruppe}
