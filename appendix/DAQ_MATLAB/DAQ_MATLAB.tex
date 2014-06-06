@@ -12,8 +12,9 @@
 %
 % 0.0.01      Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\chapter{Auslesen \gls{ac:daq}-Karte mit MATLAB}\label{ch:daqauslesen}
-MATLAB-Skript zum Auslesen eines Beschleunigungssensors mit einer \gls{ac:daq}-Karte von \gls{ac:ni}.
+\chapter{Auslesen DAQ-Karte mit MATLAB}\label{ch:daqauslesen}
+\gls{g:matlab} bietet zum direkten Auslesen von Daten eine Data Acquisition Toolbox an. In dieser können angeschlossene \acrshort{ac:daq}-Karten in einer sogenannten Session direkt in \gls{g:matlab} beispielsweise mittels USB ausgelesen werden. Auch können Daten/Signale, welche in \gls{g:matlab} generiert wurden über Ausgänge der Karte ausgegeben werden.\par 
+Zum Auslesen eines Beschleunigungssensors wurde ein kurzes \gls{g:matlab}-Skript geschrieben. Dieses Skript sollte auch zukünftigen Arbeiten eine schnelle und einfache Verwendung der Beschleunigungssensoren ermöglichen.\par
 \begin{lstlisting}[style=Matlab,caption={DAQ\_Auslesen.m},label={list:daqauslesen}]
 %**************************************************************************
 %   Smart Rehabilitation Thesis 2014 
@@ -61,3 +62,8 @@ plot(time,data)
 xlabel('Time [s]')
 ylabel('Acceleration [g]')
 \end{lstlisting}
+%
+%Datenaufnahme mit ICP-Beschleunigungssensoren
+\section*{Datenaufnahme mit ICP-Beschleunigungssensoren}
+Um bei der Konzeptentwicklung Daten zum Überprüfen des Algorithmus zu haben, erhielten wir von Rolf Vetter \gls{ac:icp}-Beschleunigungssensoren von IMI Sensors. Mit einer \gls{ac:daq}-Karte von \gls{ac:ni}, der \gls{ac:ni} USB-4431, wurden die Beschleunigungssensoren direkt mittels MATLAB ausgelesen. Somit sind die Daten direkt in MATLAB zur Weiterverarbeitung abgelegt. Es hat sich jedoch schnell herausgestellt, dass die Sensoren für unsere Anwendung nicht geeignet sind. Der Frequenzbereich des Sensors ist im Datenblatt in \vref{ch:indusriesensor} ersichtlich. Dort zu sehen ist, dass der Sensor einen Frequenzbereich von \unit[0.5]{Hz} bis \unit[10]{kHz} hat. Somit wird die für uns notwendige Gravitationsbeschleunigung, die einem DC-Anteil im Signal entspricht, nicht aufgenommen. Diese Sensoren können nur für dynamische Anwendungen verwendet werden wie Beispielsweise einer Erschütterungsmessung.
+
