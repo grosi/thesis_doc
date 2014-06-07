@@ -13,22 +13,71 @@
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konzept}\label{ch:konzept}
+
 %
 % Blockdiagramm
 \section{Blockdiagramm}
+Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurde wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Durch die geringe Einarbeitungszeit konnten wir dort einige Ideen kopieren. Wir haben uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
-%Algorithmus
-\section{Algorithmus}\label{s:konzept_algo}
-	%
-	\subsection{Übersicht}
-	%
-	\subsection{Filterung}
-	%
-	\subsection{Winkeldetektion}
-	%
-	\subsection{Rotation}
-	%
-	\subsection{Integration}
+Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit müssen wir zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung trennen. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten haben wir nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
+%
+% Blockdiagramm
+\image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=0.6}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
+%
+% Filterung
+\subsection{Tiefpass-Filterung}
+Als erste Aufgabe müssen wir die Beschleunigungsdaten auftrennen in die Erdbeschleunigung und die Beschleunigung der Bewegung. Beide Komponenten können wir weiterverwenden. Die Erdbeschleunigung ermöglicht uns das Schätzen der Orientierung (Abschnitt \vref{subsec:orientierungsschätzung}), die Beschleunigung der Bewegung wird zum Schätzen der Position mittels doppelter Integration verwendet.\par
+%
+Die Erdbeschnleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund können wir diese Beschleunigung wie eine DC-Komponente betrachten. Mit einer Tiefpass-Filterung können wir somit die Erdbeschleunigung von der Beschleunigung der Bewegung trennen. Als Tiefpassfilter wurde ein \todo{Überprüfen ob Filterwahl gut} \gls{ac:fir}-Filter gewählt. 
+%
+% Filterentwurf
+\subsubsection*{Filterentwurf}
+Das verwendete \gls{ac:fir}-Filter hat, wie der Name schon aussagt eine endliche Impulsantwort und ist somit gezwungen stabil. Der Phasengang dieser Filter ist linear. Die Gruppenlaufzeit entspricht der Zeit, durch die das Eingangssignal eines \gls{ac:lti}-Systems verzögert wird. Diese ist durch die lineare Phase bei einem \gls{ac:fir}-Filter konstant. Das Eingangssignal ist also am Ausgang nur verzögert und nicht verzerrt.\cite{lit:vongruenigen}\par
+%
+Zum Entwurf des Filters müssen zuerst einige Spezifikationen des Filters festgelegt werden. Diese sind in der Abbildung \vref{img:spezfilter} ersichtlich und sind:
+%
+\begin{itemize}
+\item f\low{pass}: Durchlassfrequenz
+\item f\low{stop}: Sperrfrequenz
+\item A\low{pass}: Rippel im Durchlassbereich
+\item A\low{stop}: Dämpfung im Sperrbereich 
+\end{itemize}
+%
+% Filterentwurf
+\image{content/3_konzept/image/filterentwurf}{scale=0.6}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
+%
+\subsubsection*{Fenstermethode}
+Zum Entwurf des Filters wurde die einfachste sogenannte Fenstermethode gewählt. Bei dieser Methode geht man vom idealen Frequenzgang des Filters aus. Dieser Frequenzgang hat im Falle eines \gls{ac:tp}-Filters bis zur Durchlassfrequenz f\low{pass} den Wert 1, bei grösseren Frequenzen den Wert 0. Aus dem Frequenzgang H\low{ideal}($e^{j\Omega}$) können wir mit der inversen Fourier-Analyse auf die Impulsantwort h\low{ideal}(n) des Filters schliessen wie gemäss Gleichung \vref{eq:invfourier} in \cite{lit:vongruenigen} beschrieben.
+%
+\formula{
+h_{ideal}(n) = \frac{1}{2\pi}\int_{-\pi}^{\pi} H_{ideal}(e^{j\Omega})*e^{j\Omega n}d\Omega\\
+\Omega = k\frac{2\pi}{N}
+}{
+h_{ideal} & ideale Impulsantwort\\
+H_{ideal} & idealer Frequenzgang\\
+N & Anzahl Samples 
+}[eq:invfourier] \todo{N richtig benamsen/überprüfen}
+%
+Diese ideale Impulsantwort ist durch den Sprung an der Durchlassfrequenz unendlich lang und somit nicht realisierbar. Eine einfache Lösung ist, die Impulsantwort mit einem Fenster zu begrenzen. Somit erhält man die Impulsantwort des \gls{ac:fir}-Filters wie in Gleichung \vref{eq:impfir} durch die Multiplikation des Fensters mit der idealer Impulsantwort des Filters.
+%
+\formula{
+h[n]=h_{ideal}[n]w[n]
+}{
+h & approximierte Impulsantwort\\
+h_{ideal} & ideale Impulsantwort\\
+w & Fensterfunktion
+}[eq:impfir]
+%
+% Schätzung der Orientierung
+\subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
+Um die Bewegung des Sensors im Bezugssystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem verwenden wir die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor a\low{g} und der gemessenen Erdbeschleunigung des Sensors können wir mit einfachen grundlegenden Vektoroperationen auf den Zwischenwinkel sowie auf die Richtung der Rotationsachse zwischen den beiden Betrachtungssystemen schliessen. Der Zwischenwinkel zweier Vektoren können wir über das Skalarprodukt berechnen. Nach Papula \cite{lit:papula} \todo{Seite anpassen bei Papula}
+%
+	
+\subsection{Verzögerung, Berechnung der Bewegungsbeschleunigung}
+%
+\subsection{Rotation}
+%
+\subsection{Integration}
 %
 %
 %Software
