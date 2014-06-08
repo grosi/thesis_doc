@@ -17,14 +17,16 @@
 %
 % Blockdiagramm
 \section{Blockdiagramm}
-Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurde wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Durch die geringe Einarbeitungszeit konnten wir dort einige Ideen kopieren. Wir haben uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
+Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurde wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Durch die geringe Einarbeitungszeit konnten wir einige Ideen übernehmen. Wir haben uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
 Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit müssen wir zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung trennen. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten haben wir nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
 % Blockdiagramm
-\image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=0.6}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
+\image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=1}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
+\todo{Bildposition, Grösse besser}
 %
 % Filterung
+\newpage
 \subsection{Tiefpass-Filterung}
 Als erste Aufgabe müssen wir die Beschleunigungsdaten auftrennen in die Erdbeschleunigung und die Beschleunigung der Bewegung. Beide Komponenten können wir weiterverwenden. Die Erdbeschleunigung ermöglicht uns das Schätzen der Orientierung (Abschnitt \vref{subsec:orientierungsschätzung}), die Beschleunigung der Bewegung wird zum Schätzen der Position mittels doppelter Integration verwendet.\par
 %
@@ -70,15 +72,58 @@ w & Fensterfunktion
 %
 % Schätzung der Orientierung
 \subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
-Um die Bewegung des Sensors im Bezugssystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem verwenden wir die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor a\low{g} und der gemessenen Erdbeschleunigung des Sensors können wir mit einfachen grundlegenden Vektoroperationen auf den Zwischenwinkel sowie auf die Richtung der Rotationsachse zwischen den beiden Betrachtungssystemen schliessen. Der Zwischenwinkel zweier Vektoren können wir über das Skalarprodukt berechnen. Nach Papula \cite{lit:papula} \todo{Seite anpassen bei Papula}
+Um die Bewegung des Sensors im Bezugssystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem verwenden wir die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor a\low{g} und der gemessenen Erdbeschleunigung des Sensors können wir mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel sowie auf die Richtung der Rotationsachse zwischen den beiden Betrachtungssystemen schliessen.
 %
-	
+\subsubsection*{Drehwinkel}
+Der Drehwinkel entspricht gerade dem Zwischenwinkel der Beiden Vektoren a\low{g} sowie den Beschleunigungsdaten a\low{sens}. Der Zwischenwinkel zweier Vektoren können wir über das Skalarprodukt berechnen. Nach Papula \cite{lit:papula} ist dieses wie in Gleichung \vref{eq:dotp} möglich.
+%
+\formula{
+\overrightarrow{a\low{g}}*\overrightarrow{a\low{sens}} = \mid \overrightarrow{a\low{g}}\mid *\mid \overrightarrow{a\low{sens}}\mid *\cos(\phi)\\
+\\
+\phi=\arccos\left(\frac{\overrightarrow{a\low{g}}*\overrightarrow{a\low{sens}}}{ \mid \overrightarrow{a\low{g}}\mid *\mid \overrightarrow{a\low{sens}}\mid}\right)
+}{
+\phi & Zwischenwinkel der beiden Vektoren\\
+\overrightarrow{a\low{g}} & Gravitätsvektor\\
+\overrightarrow{a\low{sens}} & gemessene Erdbeschleunigung
+}[eq:dotp]
+%
+\subsubsection*{Rotationsachse}
+Die Rotationsachse benötigen wir, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor a\low{g} und dem vom Beschleunigungssensor aufgenommenem Vektor, stehen. Dazu verwenden wir das Vektorprodukt, auch Kreuzprodukt genannt. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge dieses Vektors (die Norm oder der Betrag) entspricht der von den beiden Vektoren aufgespannten Fläche. Wir normieren den erhaltenen Vektor zusätzlich, damit dieser stets Länge Eins hat. Die Rotationsachse $\overrightarrow{n}$	wird somit wie in Gleichung \vref{eq:cross} berechnet.
+%
+\formula{
+\overrightarrow{n} = \frac{\overrightarrow{a\low{g}} \times\overrightarrow{a\low{sens}}}{ \mid \overrightarrow{a\low{g}} \times \overrightarrow{a\low{sens}}\mid}
+}{
+\overrightarrow{n} & Richtung der Rotationsachse\\
+\overrightarrow{a\low{g}} & Gravitätsvektor\\
+\overrightarrow{a\low{sens}} & gemessene Erdbeschleunigung
+}[eq:cross]
+%
+% Verzögerung
 \subsection{Verzögerung, Berechnung der Bewegungsbeschleunigung}
+Um die Beschleunigung der Bewegung zu erhalten, möchten wir die berechnete Erdbeschleunigung am Sensor von der gemessenen Beschleunigung am Sensor subtrahieren. Die gemessene Beschleunigung am Sensor beinhaltet bekanntlich die Erdbeschleunigung sowie die gefragte Beschleunigung der Bewegung.\par
+%
+Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung ist, nach Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter verhält sich wie in Gleichung \vref{eq:delay} aufgezeigt.
+%
+\formula{
+n_{d} = \frac{n_{b}}{2}
+}{
+n_{d} & Verzögerung in Samples\\
+n_{b} & Anzahl Filterkoeffizienten
+}[eq:delay]
+%
+Die durch die Filterung berechnete Erdbeschleunigung können wir nicht direkt von der gemessenen Beschleunigung am Sensor abziehen. Die gemessene Beschleunigung am Sensor müssen wir zuerst verzögern. Dies erreichen wir mit einem einfachen Verzögerungselement. Die Funktion eines solchen Elementes ist in Abbildung \vref{img:delay} dargestellt.
+%
+% Verzögerungselement
+\image{content/3_konzept/image/Verzoegerungselement}{scale=1}{htbp}[Verzögerungselement][img:delay]
 %
 \subsection{Rotation}
+Die Rotation benötigen wir, um das Koordinatensystem des Sensors in das Koordinatensystem des Betrachters zu transformieren. Dabei benötigen wir die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche wir das System drehen wollen sowie den Drehwinkel $\phi$ zwischen den beiden Vektoren. Die Rotationsmatrix können wir mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellen.\par
+% 
+Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation ins Koordinatensystem des Betrachters mit einer einfachen Multiplikation erreicht werden. Der Output ist dabei die Beschleunigung der Bewegung im definierten Betrachtungssystem. Die beliebige Orientierung des Beschleunigungssensors am Knie ist somit kompensiert.
 %
+% Integration
 \subsection{Integration}
-%
+\todo{Integration erklären}
 %
 %Software
 \section{Software}\label{s:konzept:sw}
