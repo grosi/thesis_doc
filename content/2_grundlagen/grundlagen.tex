@@ -84,7 +84,7 @@
 %
 %Rotationsmatrix
 \section{Rotationsmatrix}\label{sub:rot}
-In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
+In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
 %
 Wir möchten den Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ drehen. Die Gerade g hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
 %
@@ -107,6 +107,38 @@ Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden
            }[eq:rotmax]        
 %
 % nummerische Integration          
-\section{Nummerische Integration}
-	\subsection{Trapezmethode}
-	\subsection{Filter}
+\section{Nummerische Integration}\label{sec:numint}
+Da wir nicht alle Integrale analytisch unter der Verwendung von elementaren Funktionen berechnen können, sind wir auf nummerische Verfahren angewiesen. Mittels diesen nummerischen Verfahren wird das Integral mit in unserem Falle durch die Abtastfrequenz bestimmter Genauigkeit approximiert. In der Vorlesung Analysis 2 (BZG1102 ANALY2) im zweiten Semester bei Herrn Bäni haben wir dazu drei verschiedene Verfahren kennengelernt. Diese sind die linke und rechte Rechtecknäherung sowie die Trapeznäherung. Die hier genannten Angaben wurden mithilfe der Quelle \cite{lit:baeni} erarbeitet.
+%
+\subsubsection*{Rechtecknäherung}
+Bei der Rechtecknäherung wird zwischen der linken und rechten Näherung unterschieden. Bei der linken Rechtecknäherung wird der linke Funktionswert wie in Abbildung \vref{img:rechteck} dargestellt als Höhe der zur berechnenden Fläche unter der Kurve verwendet. Bei der rechten Näherung dementsprechend der rechte Funktionswert. \par
+%
+% Rechtecknäherung
+\image{content/2_grundlagen/image/rechtecknaeherung_bearb}{scale=0.6}{htbp}[Rechtecknäherung \cite{img:baeni}][Rechtecknäherung][img:rechteck]	
+%
+Das Integral setzt sich anschliessend als Summe aller dieser berechneten Flächen zusammen und kann somit rekursiv, wie in Gleichung \vref{eq:rechteck} für die rechte Rechtecknäherung aufgezeigt, berechnet werden.
+%
+\formula{
+y(n) = y(n-1) + T_a * x(n)            
+}{ 
+y(n) & Integral von Beginn bis zur Stelle n\\
+T_a & Abtastrate\\
+x(n) & Abgetasteter Wert an Stelle n 
+           }[eq:rechteck]
+%
+% Trapeszmethode
+\subsubsection*{Trapezmethode}
+Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreichen wir mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung als wir mit einer der beiden Rechtecknäherungen erreichen können. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
+%
+% Trapeszmethode
+\image{content/2_grundlagen/image/trapeznaeherung_bearb}{scale=0.6}{htbp}[Trapeznäherung \cite{img:baeni}][Trapeznäherung][img:trapez]
+%
+Auch in diesem Fall kann das Integral auf relativ einfache Weise rekursiv berechnet werden wie dies in der Gleichung \vref{eq:trapez} zu sehen ist.
+%
+\formula{
+y(n) = y(n-1) + \frac{T_a}{2}  (x(n)+x(n-1))            
+}{ 
+y(n) & Integral von Beginn bis zur Stelle n\\
+T_a & Abtastrate\\
+x(n) & Abgetasteter Wert an Stelle n 
+           }[eq:trapez]

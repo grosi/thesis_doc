@@ -22,7 +22,7 @@ Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Refere
 Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit müssen wir zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung trennen. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten haben wir nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
 % Blockdiagramm
-\image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=1}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
+\image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=0.9,angle=90}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
 \todo{Bildposition, Grösse besser}
 %
 % Filterung
@@ -123,7 +123,26 @@ Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die
 %
 % Integration
 \subsection{Integration}
-\todo{Integration erklären}
+Um von der Beschleunigung auf die Position zu schliessen, können wir die Beschleunigung bekannterweise  zweimal nach der Zeit integrieren. Integrieren wir die Beschleunigung einmal, so erhalten wir die Geschwindigkeit.
+%
+\formula{
+v(t) = \int a(t)dt + v_0 
+}{
+v & Geschwindigkeit [$m/s$]\\
+v_{0} & Anfangsgeschwindigkeit [$m/s$]\\
+a & Beschleunigung [$m/s^2$]
+}[eq:geschw]
+%
+Integrieren wir diese Geschwindigkeit erneut, so erhalten wir den zurückgelegten Weg über die betrachtete Zeitdauer.
+\formula{
+s(t) = \int v(t)dt + s_0 
+}{
+s & zurückgelegter Weg [m]\\
+s_{0} & Anfangsposition [m]\\
+v & Geschwindigkeit [$m/s$]
+}[eq:weg]
+% 
+Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben nummerisch mittels der Trapezmethode.
 %
 %Software
 \section{Software}\label{s:konzept:sw}
