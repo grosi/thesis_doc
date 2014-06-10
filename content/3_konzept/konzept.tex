@@ -111,11 +111,14 @@ n_{d} & Verzögerung in Samples\\
 n_{b} & Anzahl Filterkoeffizienten
 }[eq:delay]
 %
-Die durch die Filterung berechnete Erdbeschleunigung können wir nicht direkt von der gemessenen Beschleunigung am Sensor abziehen. Die gemessene Beschleunigung am Sensor müssen wir zuerst verzögern. Dies erreichen wir mit einem einfachen Verzögerungselement. Die Funktion eines solchen Elementes ist in Abbildung \vref{img:delay} dargestellt.
+Die durch die Filterung berechnete Erdbeschleunigung können wir nicht direkt von der gemessenen Beschleunigung am Sensor abziehen. Die gemessene Beschleunigung am Sensor müssen wir zuerst verzögern. Dies erreichen wir mit einem einfachen Verzögerungselement. Die Funktion eines solchen Elementes ist in Abbildung \vref{img:delay} dargestellt.\par
 %
 % Verzögerungselement
 \image{content/3_konzept/image/Verzoegerungselement}{scale=1}{htbp}[Verzögerungselement][img:delay]
 %
+Nachdem das gemessene Signal zusätzlich verzögert wurde, kann das gefilterte Signal nun vom verzögerten Signal abgezogen werden um die Komponente der Erdbeschleunigung abzuziehen.
+%
+% Rotation
 \subsection{Rotation}
 Die Rotation benötigen wir, um das Koordinatensystem des Sensors in das Koordinatensystem des Betrachters zu transformieren. Dabei benötigen wir die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche wir das System drehen wollen sowie den Drehwinkel $\phi$ zwischen den beiden Vektoren. Die Rotationsmatrix können wir mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellen.\par
 % 
