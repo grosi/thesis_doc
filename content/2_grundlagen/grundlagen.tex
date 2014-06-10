@@ -54,7 +54,7 @@
 				%
 				\item[Weboberfläche] Das \gls{g:myrio} stellt eine Weboberfläche für die Konfiguration bereit. Damit können im gleichen Umfang wie in der Software NI MAX Einstellungen vorgenommen werden. Ergänzend besteht die Möglichkeit auf das interne Dateisystem via HTTP zu zugreifen.  
 				%
-				\item[Terminal] Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nenn sich die Option \textsf{Enable Secure Shell Server (sshd)}} aktiviert werden (via NI MAX oder Weboberfläche). Für ein Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
+				\item[Terminal] \label{i:terminal}Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}. Als Alternative kann auch Cygwin mit den richtigen Paketen dienen: \url{http://cygwin.com/index.html}}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nenn sich die Option \textsf{Enable Secure Shell Server (sshd)}} aktiviert werden (via NI MAX oder Weboberfläche). Für ein Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
 				\begin{itemize}
 					\item IP-Adresse: 172.22.11.2
 					\item Benutzername: admin
@@ -78,7 +78,12 @@
 				%
 				\item[\gls{g:labview}]\todo{data-stream erklären}
 				%
-				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \textsf{SFTP} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter \textsf{\gls{g:ssh}} erwähnten Bedingungen erfüllt sein.
+				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \textsf{SFTP} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter Terminal \vpageref{i:terminal} erwähnten Bedingungen erfüllt sein. Für den Dateitransfer dient das Kommando \texttt{scp}, das wie in Listing \vref{list:sftp} gezeigt angewendet wird.
+				%
+				\begin{lstlisting}[style=bash,caption={SFTP angewendet},label={list:sftp}]
+scp admin@172.22.11.2:/Pfad/zur/Datei /Pfad/zur/Zieldatei
+				\end{lstlisting}  
+				%
 			\end{description}
 %
 %

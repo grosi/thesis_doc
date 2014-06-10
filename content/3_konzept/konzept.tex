@@ -160,53 +160,75 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
-		Die Verifikation der Translation stellt das erste von drei Experimental-Protokollen\footnote{die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_rotation} und \vref{s:verifikation_transaltion_rotation} zu finden} dar, die folgend für die Validierung des Konzepts als Ausgangslagen dienen sollen.  Ziel der Messung ist es den Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Bei auftretenden Diskrepanzen muss das Konzept überarbeitet und dieses Protokoll wiederholt werden. Das Erfüllen	
+		Die Verifikation der Translation stellt das erste von drei Experimental-Protokollen\footnote{die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_rotation} und \vref{s:verifikation_transaltion_rotation} zu finden} dar, die folgend für die Validierung des Konzepts als Ausgangslagen dienen sollen.  Ziel der Messung ist es den Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Bei auftretenden Diskrepanzen muss das Konzept überarbeitet und dieses Protokoll wiederholt werden.
 	%
 	%
-	\subsection{Material/Testumgebung}
-		\input{content/3_konzept/table/messmittel}	
-		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
-		\input{content/3_konzept/table/messaufbau}
+	\subsection{Material/Testumgebung}\label{ss:material_translation}
+		Die Messung muss reproduzierbar sein. Deshalb muss eine Testumgebung gewährleistet sein, die für eine Simulation einer geradlinigen Translation geeignet ist. Diese Voraussetzung erfüllt ein Kreuztisch einer Standbohr- / Fräsmaschine. Damit können vorgegebene Pfade präzise in der X/Y-Ebene gefahren werden.\par 
+		%
+		Für die Messung wird der Kreuztische der XXX aus der mechanischen Abteilung verwendet. Weiter kommt als zentrale Komponente das \gls{g:myrio} zum Einsatz. Ein vollständige Auflistung aller verwendeten Mittel ist der Tabelle \vref{tab:messmittel_translation} zu entnehmen. Der reale Aufbau der Umgebung entspricht der Abbildung XXX.
+		%
+		\input{content/3_konzept/table/messmittel}
+		%
+		\subsubsection*{Translationsrichtung}
+			Durch die Tatsache das der Kreuztisch M\low{1} über keine \acrshort{ac:cnc}-Steuerung verfügt können keine konstante statischen Bewegungen in der X/Y-Ebene gefahren werden. Es wird deshalb auf ein Freiheitsgrad verzichtet und nur eine Translation in X-Richtung vorgesehen. 
+		%
+		\subsubsection*{Translationsgeschwindigkeit}
+			Die Translationsgeschwindigkeit ist abhängig vom Bediener des Kreuztisches. Es kann deshalb keine abschliessende Aussage über die Geschwindigkeit gemacht werden. Die subjektiv wahrgenommene Bewegung wird lediglich in die drei Stufen langsam, mittel und schnell eingestuft.
 	%
 	%
 	\subsection{Methoden}
 		%
-		\subsubsection*{Messgruppen}\todo{unabhängige Variabel}
+		\subsubsection*{Messgruppen}
 			Es werden zwei Messgruppen definiert. Die eine dient als Testgruppe und die andere als Kontrollgruppe. 
 			%
 			\begin{itemize}
 				%
 				\item \textbf{Testgruppe} Die Testgruppe repräsentiert das \gls{g:myrio}, das zur Aufzeichnung der Beschleunigungsdaten benötigt wird. Dabei werden die Daten nur gespeichert und nicht verarbeitet\footnote{Für detailliertere Informationen zur Aufzeichnung sei auf den Abschnitt \vref{ss:rohdaten_aufzeichnen} verwiesen}. Die Signalverarbeitung erfolgt zu einem späteren Zeitpunkt auf einem Computer mit Hilfe von \gls{g:matlab}.
 				%
-				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit Massstab dar. Sie ist gleichzeitig die Kontrollgruppe, die schlussendlich bei der Interpretation als Ausgangslage gilt.
+				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit der Kreuztischskala dar. Sie ist gleichzeitig die Kontrollgruppe, die schlussendlich bei der Interpretation als Ausgangslage gilt.
 			\end{itemize}
 			%
 			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
 		%
-		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
-		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
-		\formula{
-			r &= \sqrt{x^2+y^2}\\
-			&=\sqrt{47^2+515^2}=\underline{517.14}
-		}
-		{
-			r & Radius in mm\\
-			x & vertikaler Abstand in mm\\
-			y & horizontaler Abstand in mm\\
-		}[eq:radius]
+		\subsubsection*{Testbeschreibungen}
+			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} unterschiedlich positioniert. Um die Anzahl Messungen in eine überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
+			%
+			\begin{itemize}
+				\item \textbf{X-Achse Position} Das \gls{g:myrio} wird flach auf dem Kreuztisch angebracht. Dabei zeigt die X-Achse des Beschleunigungssensors nach unten, sprich gleichgerichtet wie der Gravitationsvektor. Relative Beschleunigungen erfolgen in der X/Y-Ebene in X-Richtung des Kreuztisches. Eine schematische Darstellung der Befestigung kann der Abbildung \vref{img:x_achse} entnommen werden.
+				\image{content/3_konzept/image/testaufbau_translation_position_x}{scale=0.8}{htbp}[X-Achsen Position][img:x_achse]
+				%
+				\item \textbf{Y-Achse Position} Bei der zweiten Position wird das \gls{g:myrio} so angebracht, das die Y-Achse des Beschleunigungssensors parallel zum Gravitationsvektor steht. Gemessene Beschleunigungen wirken sich somit nur auf die X- und Z-Achse aus. Die Abbildung \vref{img:y_achse} verdeutlicht diesen Aufbau.
+				\image{content/3_konzept/image/testaufbau_translation_position_y}{scale=0.8}{htbp}[Y-Achsen Position][img:y_achse]
+				%
+				\item \textbf{Z-Achse Position} Abschliessend erfolgt noch eine Positionierung mit der Z-Achse des Beschleunigungssensors in Richtung des Gravitationsvektors (gleichgerichtet). Aus dieser Konstellation ergeben sich nur Beschleunigungen auf die X- und Y-Achsen des Sensors. Die Befestigungsrichtung des \gls{g:myrio}s ist in der Abbildung \vref{img:z_achse} zu sehen.
+				\image{content/3_konzept/image/testaufbau_translation_position_z}{scale=0.8}{htbp}[Z-Achsen Position][img:z_achse]
+			\end{itemize}\par 
+			%
+			Wie im vorherigen Abschnitt \vref{ss:material_translation} erörtert, kann die Translationgeschwindigkeit nicht messtechnisch bestimmt oder gemessen werden. Daher werden lediglich drei Bereiche definiert:
+			\begin{itemize}
+				\item \textbf{langsam} Die Translation ist nicht schneller als XXX\todo{Wert eintragen} in der Minute. Diese Vorgabe wird nur rudimentär mit einer Zeitmessung verifiziert.  
+				\item \textbf{mittel} Der Kreuztisch wird schneller als die Stufe langsam bewegt, jedoch langsamer als die folgende Stufe schnell.
+				\item \textbf{schnell} Maximale Geschwindigkeit, die mit dem Kreuztisch gefahren werden kann. Auf eine Kontrolle dieser Aussage wird verzichtet, da dies sehr bedienerabhänging ist.
+			\end{itemize}\par
+			%
+			Insgesamt ergeben sich durch die verschiedenen Positionierungen und Geschwindigkeiten 9 verschiedene Messungen.\par 
+			%
+%			Für die Aufnahme der Messwerte kommen abhängig von der Messgruppe unterschiedliche Messmethodiken zum Einsatz:
+%			\begin{itemize}
+%				\item \textbf{Testgruppe}
+%				\item \textbf{Kontrollgruppe}
+%			\end{itemize}
+			Bei der Durchführungen müssen folgende Vorgaben eingehalten werden:
+			%
+			\begin{itemize}
+				\item Jede Messung ist 10 mal zu wiederholen (ergibt insgesamt 90 Messungen für dieses Protokoll)
+				\item Die Bedienung des Kreuztisches muss durch unterschiedliche Personen erfolgen
+				\item Die Raumtemperatur darf sollte \unit[25]{°C} betragen
+			\end{itemize}
 		%
-		\formula{
-			\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
-			&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
-			b&=r\cdot\alpha '\\
-			&=517.14\cdot 0.366=\underline{189.54}
-		}
-		{
-			r & Radius in mm\\
-			\alpha & Winkel in Grad\\
-			\alpha ' & Winkel in Rad\\
-			b & Teilumfang in mm\\
-		}[eq:kreissegement]
+		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
+	
 	%
 	%
 	\subsection{Kontrollgruppe}
@@ -224,9 +246,9 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	%
 	\subsection{Material/Testumgebung}
 		Zur Aufzeichnung eines Bewegungsablaufes des Knies wurde eine Mechanik zur Simulation erstellt. Sie basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Die Simulation ermöglicht es einen statischen Bewegungsablauf nachzubilden. Dabei wird aktuell nur die seitliche Auslenkung des Knies berücksichtigt. Die ebenfalls vorhandene Rotation wird in diesem Projekt nicht
-		\input{content/3_konzept/table/messmittel}	
-		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
-		\input{content/3_konzept/table/messaufbau}
+%		\input{content/3_konzept/table/messmittel}	
+%		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
+%		\input{content/3_konzept/table/messaufbau}
 	%
 	%
 	\subsection{Methoden}
@@ -275,9 +297,9 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	%
 	\subsection{Material/Testumgebung}
 		Zur Aufzeichnung eines Bewegungsablaufes des Knies wurde eine Mechanik zur Simulation erstellt. Sie basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Die Simulation ermöglicht es einen statischen Bewegungsablauf nachzubilden. Dabei wird aktuell nur die seitliche Auslenkung des Knies berücksichtigt. Die ebenfalls vorhandene Rotation wird in diesem Projekt nicht
-		\input{content/3_konzept/table/messmittel}	
-		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
-		\input{content/3_konzept/table/messaufbau}
+%		\input{content/3_konzept/table/messmittel}	
+%		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
+%		\input{content/3_konzept/table/messaufbau}
 	%
 	%
 	\subsection{Methoden}
