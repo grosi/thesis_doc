@@ -151,6 +151,103 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 \section{Software}\label{s:konzept:sw}
 	%
 	\subsection{Rohdaten aufzeichnen}\label{ss:rohdaten_aufzeichnen}
+		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann.\par 
+		%
+		Als Basis für die \acrshort{ac:vi} dient das Standardprojekt \textsf{myRIO Project}\footnote{Das Projekt kann im Startdialog von \gls{g:labview} 2013 angewählt werden} von \gls{g:labview}, das folgende Möglichkeiten mitbringt:
+		%
+		\begin{itemize}
+			\item Anbindung, inkl. Initialisierung den \gls{g:myrio}s
+			\item Darstellung von aktuellen Beschleunigungsdaten in Diagramm
+			\item Start und Stopp der Messung
+		\end{itemize}
+		%
+		Damit die dargestellten Daten aufgezeichnet werden können, muss das bestehende Projekt mit den Komponenten Datei anlegen, Daten buffern und Daten speichern ergänzt werden. Für diesen Zweck werden die drei Zustände der bestehenden Sequenz angepasst.
+		%
+		\subsubsection*{Initialisierungs-Zustand}
+			In der Initialisierung muss eine Datei für das spätere Speichern der Rohdaten erstellt werden. Dazu wird der in Abbildung \vref{img:init_file} ersichtliche Ablauf verwendet. Der Dateiname kann mit Hilfe eines Eingabefeldes (siehe Abbildung \vref{img:init_file_indicator}) individuell angepasst werden, muss aber die Endung \texttt{*.xlsx} aufweisen. Der Pfad der angelegten Datei bezieht sich auf das Home-Directory des \texttt{lvuser}, einem lokalen Benutzer des \gls{ac:ni} Real Time Linux. Der endgültige Speicherpfad wird anschliessend im letzten Zustand (Schliessen-Zustand) ausgegeben.
+			%
+			\begin{figure}[htbp] %htbp
+				\centering
+				\begin{subfigure}[b]{0.49\textwidth}
+					\centering
+					\includegraphics[scale=1]{content/3_konzept/image/init_file}  
+					\caption{Blockdiagramm}
+					\label{img:init_file}          
+				\end{subfigure}
+				\begin{subfigure}[b]{0.49\textwidth}
+					\centering
+					\includegraphics[scale=1]{content/3_konzept/image/init_file_indicator}  
+					\caption{Frontpanel} 
+					\label{img:init_file_indicator}         
+				\end{subfigure}
+				\caption{Datei erstellen}
+				\label{img:datei_erstellen}
+	    	\end{figure}\par
+	    	%
+	    	Für das einfachere Einstellen der Sampling-Rate wird die Initialisierung noch durch eine solche Möglichkeit ergänzt. Für eine einfachere Interpretation wird zudem noch eine Umrechnung in Herz vorgenommen und angezeigt. Der Ablauf und das UI ist in der Abbildung \vref{img:periode} ersichtlich.
+	    	%
+			\begin{figure}[htbp] %htbp
+				\centering
+				\begin{subfigure}[b]{0.49\textwidth}
+					\centering
+					\includegraphics[scale=1]{content/3_konzept/image/init_periode}  
+					\caption{Blockdiagramm}
+					\label{img:init_periode}          
+				\end{subfigure}
+				\begin{subfigure}[b]{0.49\textwidth}
+					\centering
+					\includegraphics[scale=1]{content/3_konzept/image/init_periode_indicator}  
+					\caption{Frontpanel} 
+					\label{img:init_periode_indicator}         
+				\end{subfigure}
+				\caption{Sampling-Rate einstellen}
+				\label{img:periode}
+	    	\end{figure}
+	    	%	
+		%
+		\subsubsection*{Datenaufzeichnen und Verarbeiten-Zustand}
+			Der Hauptzustand dieses \gls{ac:vi}s besteht aus zwei Teilen. Der erste Teil beinhaltet einen Endlosschlaufe\footnote{genauer ein Time Loop, der eine genaue zyklische Ausführung gewährleistet}, die zyklisch Beschleunigungsdaten und Timestamps einliest und buffert. Zusätzlich werden die aktuellen Daten in Diagramm auf dem Frontpanel ausgegeben. Wird die Endlosschleife durch eine Fehler oder durch Betätigung der Stopp-Schaltfläche beendet, so werden im zweiten Teil die gebufferten Daten mit Labels versehen, zu einer N x 4 Matrix zusammen gefasst und in eine Excel-Tabelle geschrieben. Dargestellt ist dieser Ablauf in der Abbildung \vref{img:process}. Die für die Bedienung erforderliche Komponenten können der Abbildung \vref{img:process_indicator} entnommen werden.
+			%
+			\begin{figure}[htbp] %htbp
+				\centering
+				\begin{subfigure}[b]{\textwidth}
+					\centering
+					\includegraphics[scale=0.4]{content/3_konzept/image/process}  
+					\caption{Blockdiagramm}
+					\label{img:process}          
+				\end{subfigure}
+				\begin{subfigure}[b]{\textwidth}
+					\centering
+					\includegraphics[scale=0.7]{content/3_konzept/image/process_indicator}  
+					\caption{Frontpanel} 
+					\label{img:process_indicator}         
+				\end{subfigure}
+				\caption{Daten einlesen und speichern}
+				\label{img:daten_einlesen}
+	    	\end{figure}
+	    	%	
+		%
+		\subsubsection*{Schliessen-Zustand}
+			Abgeschlossen wird das \gls{ac:vi} durch den Schliessen-Zustand. Dabei wird das \gls{g:myrio} auf den Ursprung zurückgesetzt und der Speicherpfad der Daten ausgeben. Für diesen Zweck wird eine vorgefertigte \gls{ac:vi} von \gls{ac:ni} verwendet, die das Reseten des \gls{g:myrio}s durchführt. Die Ausgabe des Pfades erfolgt bereits im vorderen Zustand, wird jedoch erst hier visualisiert. Für das Blockdiagramm und das UI sei auf die Abbildung \vref{img:speicherpfad} verwiesen.
+			%
+			\begin{figure}[htbp] %htbp
+				\centering
+				\begin{subfigure}[b]{0.49\textwidth}
+					\centering
+					\includegraphics[scale=1]{content/3_konzept/image/close}  
+					\caption{Blockdiagramm}
+					\label{img:process}          
+				\end{subfigure}
+				\begin{subfigure}[b]{0.49\textwidth}
+					\centering
+					\includegraphics[scale=1]{content/3_konzept/image/close_indicator}  
+					\caption{Frontpanel} 
+					\label{img:close_indicator}         
+				\end{subfigure}
+				\caption{Speicherpfad angeben und \gls{g:myrio} reseten}
+				\label{img:speicherpfad}
+	    	\end{figure}\par
+	    	%	
 	%
 	\subsection{myRIO Posture Estimation}
 %
