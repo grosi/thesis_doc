@@ -321,14 +321,15 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 			\begin{itemize}
 				\item Jede Messung ist 10 mal zu wiederholen (ergibt insgesamt 90 Messungen für dieses Protokoll)
 				\item Die Bedienung des Kreuztisches muss durch unterschiedliche Personen erfolgen
-				\item Die Raumtemperatur darf sollte \unit[25]{°C} betragen
+				\item Die Translation beträgt immer \unit[200]{mm}
+				\item Die Raumtemperatur sollte \unit[25]{°C} betragen
 			\end{itemize}
 		%
+		\subsubsection*{Kontrollgruppe Messmethodik}
+			Die Aufnahme der Pfadlänge erfolgt direkt mit der Messskala am Kreuztisch. Die Skala hat eine Auflösung von XXX\todo{ergäntzen}, was eine sehr präzises Messer ermöglicht. Die Abbildung XXX zeigt die verwendet Messskala des Tisches.
+			\todo{Das Ablesen von der Skala -> Foto/Grafik}
+		%
 		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
-	
-	%
-	%
-	\subsection{Kontrollgruppe}
 	%
 	%
 	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
@@ -339,10 +340,11 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
+		Das Auslenken des Knies beinhaltet neben einer Translation auch eine Rotation. Daher muss der Algorithmus auch in dieser Hinsicht verifiziert werden. Das Ziel dieser Messung ist es wiederum die Genauigkeit und Dynamik des Konzept zu überprüfen und mit den Anforderungen zu vergleichen. 
 	%
 	%
 	\subsection{Material/Testumgebung}
-		Zur Aufzeichnung eines Bewegungsablaufes des Knies wurde eine Mechanik zur Simulation erstellt. Sie basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Die Simulation ermöglicht es einen statischen Bewegungsablauf nachzubilden. Dabei wird aktuell nur die seitliche Auslenkung des Knies berücksichtigt. Die ebenfalls vorhandene Rotation wird in diesem Projekt nicht
+		
 %		\input{content/3_konzept/table/messmittel}	
 %		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
 %		\input{content/3_konzept/table/messaufbau}
@@ -350,33 +352,45 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	%
 	\subsection{Methoden}
 		%
-		\subsubsection*{Messgruppen}\todo{unabhängige Variabel}
-			
+		\subsubsection*{Messgruppen}
+			Für die Messung werden zwei Messgruppen festgelegt. Wiederum wird die eine als Testgruppe fungieren, wogegen die andere der Kontrolle dient.
+			%
+			\begin{itemize}
+				%
+				\item \textbf{Testgruppe} In der Testgruppe werden Beschleunigungsdaten durch das \gls{g:myrio} aufgezeichnet\footnote{siehe Abschnitt \vref{ss:rohdaten_aufzeichnen}} und gespeichert. Im Anschluss zur Messung werden die Daten in \gls{g:matlab} eingelesen und verarbeitet.
+				%
+				\item \textbf{Kontrollgruppe} Die zweite Gruppe repräsentiert die direkte Messung auf dem Rotationstisch. Sie dient gleichzeitig der Kontrolle für die folgende Interpretation.
+			\end{itemize}
+			%
+			Die unabhängige Variabel dieser Gruppen stellt die Messmethodik dar. 
 		%
 		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
-		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
-		\formula{
-			r &= \sqrt{x^2+y^2}\\
-			&=\sqrt{47^2+515^2}=\underline{517.14}
-		}
-		{
-			r & Radius in mm\\
-			x & vertikaler Abstand in mm\\
-			y & horizontaler Abstand in mm\\
-		}[eq:radius]
 		%
-		\formula{
-			\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
-			&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
-			b&=r\cdot\alpha '\\
-			&=517.14\cdot 0.366=\underline{189.54}
-		}
-		{
-			r & Radius in mm\\
-			\alpha & Winkel in Grad\\
-			\alpha ' & Winkel in Rad\\
-			b & Teilumfang in mm\\
-		}[eq:kreissegement]
+		\subsubsection*{Kontrollgruppe Messmethodik}
+		%
+		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
+%			\formula{
+%				r &= \sqrt{x^2+y^2}\\
+%				&=\sqrt{47^2+515^2}=\underline{517.14}
+%			}
+%			{
+%				r & Radius in mm\\
+%				x & vertikaler Abstand in mm\\
+%				y & horizontaler Abstand in mm\\
+%			}[eq:radius]
+%			%
+%			\formula{
+%				\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
+%				&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
+%				b&=r\cdot\alpha '\\
+%				&=517.14\cdot 0.366=\underline{189.54}
+%			}
+%			{
+%				r & Radius in mm\\
+%				\alpha & Winkel in Grad\\
+%				\alpha ' & Winkel in Rad\\
+%				b & Teilumfang in mm\\
+%			}[eq:kreissegement]
 	%
 	%
 	\subsection{Kontrollgruppe}
@@ -385,52 +399,95 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
 %
 %
-%Verifikation Translation mit anschliessender Rotation
-\section{Verifikation Translation mit anschliessender Rotation}\label{s:verifikation_transaltion_rotation}
+%Verifikation Translation und Rotation überlagert
+\section{Verifikation Translation und Rotation überlagert}\label{s:verifikation_transaltion_rotation}
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
+		Der Bewegungsablauf eines Knies umfasst eine Translation, die mit einer Rotation überlagert ist. Für eine abschliessende Überprüfung des Algorithmus sollen nun diese beiden Komponenten zeitgleich überprüft werden. Im Falle eines positiven Messergebnisse kann das Konzept, respektive der Algorithmus als geeignet betrachtet und implementiert werden.
 	%
 	%
 	\subsection{Material/Testumgebung}
-		Zur Aufzeichnung eines Bewegungsablaufes des Knies wurde eine Mechanik zur Simulation erstellt. Sie basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Die Simulation ermöglicht es einen statischen Bewegungsablauf nachzubilden. Dabei wird aktuell nur die seitliche Auslenkung des Knies berücksichtigt. Die ebenfalls vorhandene Rotation wird in diesem Projekt nicht
-%		\input{content/3_konzept/table/messmittel}	
-%		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
-%		\input{content/3_konzept/table/messaufbau}
+		Für eine aussagekräftige Messung muss eine Kniebewegung möglichst exakt nachgebildet werden können. Weiter sollten die Messungen reproduzierbar sein. Für diesen Zweck wurde eigens eine Mechanik konstruiert und aufgebaut.\par 
+		%
+		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Der Aufbau erlaubt es einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontal Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht. Für das errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät angebracht, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung XXX ersichtlich, wohingegen die Tabelle \vref{tab:messmittel_tran_rot} alle verwendeten Messinstrumente enthält.
+		%
+		\input{content/3_konzept/table/messmittel_tran_rot}	
 	%
 	%
 	\subsection{Methoden}
 		%
-		\subsubsection*{Messgruppen}\todo{unabhängige Variabel}
-			
+		\subsubsection*{Messgruppen}\label{sss:messgruppe_tran_rot}
+			Die Messung wird mit zwei Messgruppen durchgeführt, wobei die eine als Testgruppe und die andere als Kontrollgruppe dient.	
+			%
+			\begin{itemize}
+				%
+				\item \textbf{Testgruppe} Die Testgruppe beinhaltet das \gls{g:myrio} mit integriertem Beschleunigungssensor. Die Daten werden während des Tests aufgezeichnet und später auf dem Computer mit \gls{g:matlab} verarbeitet. 
+				%
+				\item \textbf{Kontrollgruppe} Die Kontrollgruppe dient als Basis für die spätere Auswertung. Die Aufnahme der Daten erfolgt zume einen Messtechnisch (Radius und Winkel) und zum anderen mathematisch (Berechnung der Pfadlänge).
+			\end{itemize}
+			%
+			Das unterschiedliche Messverfahren stellt die unabhängige Variabel in diesem Protokoll dar.
 		%
 		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
-		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
-		\formula{
-			r &= \sqrt{x^2+y^2}\\
-			&=\sqrt{47^2+515^2}=\underline{517.14}
-		}
-		{
-			r & Radius in mm\\
-			x & vertikaler Abstand in mm\\
-			y & horizontaler Abstand in mm\\
-		}[eq:radius]
+			Es werden Messungen bei unterschiedlichen Ausgangslagen durchgeführt. Sie unterscheiden sich in den Punkten Geschwindigkeit und Auslenkung. Dabei werden die Messungen auf insgesamt drei Auslenkungen und drei Geschwindigkeiten beschränkt.\par
+			%
+			Die Auslenkung $\alpha$ kann durch das Verstellen der Querstrebe (siehe Abbildung XXX) eingestellt werden. Die Position des \gls{g:myrio} wird dabei nicht verändert.
+			%
+			\begin{itemize}
+				\item \textbf{Auslenkung 1} Die erste Auslenkung beträgt \unit[6]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_1}{scale=0.8}{htbp}[Querstreben-Position 1][img:messaufbau_pos1]
+				%
+				\item \textbf{Auslenkung 2} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[95]{mm} befestigt. Damit ist ein Winkelbereich von \unit[30]{°} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_2}{scale=0.8}{htbp}[Querstreben-Position 2][img:messaufbau_pos2]
+				%
+				\item \textbf{Auslenkung 3} Die maximale Auslenkung von \unit[75]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[190]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_3}{scale=0.8}{htbp}[Querstreben-Position 3][img:messaufbau_pos3]
+			\end{itemize}
+			%
+			Die Geschwindigkeit wird nur indirekt durch die Betriebsspannung des DC-Motors eingestellt. Dessen Spannungsbereich liegt zwischen \unit[8]{V} und \unit[12]{V}\footnote{Nach Aussage von Herr XXX}. Für die drei Geschwindigkeiten werden die Spannungen \unit[8]{V} für langsam, \unit[10]{V} für mittel und \unit[12]{V} für schnell festgelegt.
+			%
+			Durch die verschiedenen Auslenkungen und Geschwindigkeiten ergeben sich insgesamt 9 verschieden Messungen.\par 
+			%
+			Während den Messungen müssen zudem die folgenden Punkte eingehalten werden:
+			%
+			\begin{itemize}
+				\item Jede Messung wird 10 mal wiederholt, was insgesamt 90 Messungen ergibt
+				\item Die Messungen für die Kontrollgruppe muss durch unterschiedliche Personen ausgeführt werden
+				\item Jede Messung enthält 5 Umdrehungen der Messeinrichtung (entspricht 5 Auslenkungen jeweils von rechts nach links \todo{kontrollieren})
+				\item Die Raumtemperatur sollte \unit[25]{°C} betragen
+			\end{itemize}
 		%
-		\formula{
-			\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
-			&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
-			b&=r\cdot\alpha '\\
-			&=517.14\cdot 0.366=\underline{189.54}
-		}
-		{
-			r & Radius in mm\\
-			\alpha & Winkel in Grad\\
-			\alpha ' & Winkel in Rad\\
-			b & Teilumfang in mm\\
-		}[eq:kreissegement]
-	%
-	%
-	\subsection{Kontrollgruppe}
+		\subsubsection*{Kontrollgruppe Messmethodik}
+			Die Datenaufnahme der Kontrollgruppe erfolgt, wie bereits \vpageref{sss:messgruppe_tran_rot} erläutert, mit Hilfe von Massstab M\low{4} und Winkelmesser M\low{1} mit anschliessender Berechnung der Pfadlänge. Dabei dient die Abbildung \vref{img:messaufbau_dimensionen} als Ausgangslage für die Aufnahme der skalaren Messgrössen. 
+			\image{content/3_konzept/image/messaufbau}{scale=0.5}{htbp}[Messaufbau - Messmethodik][img:messaufbau_dimensionen]
+			%
+			Die benötigten Grössen sind zum einen der Radius $r$ (gemessen vom Drehpunkt bis Position Beschleunigungssensor) und davon abhängig die Bogenlänge $b$ (Entspricht der Pfadlänge des Bewegungsablaufs). Der Radius wird dem Satz des Pythagoras bestimmt, wie die Gleichung \vref{eq:radius} zeigt. 
+			\formula{
+				r &= \sqrt{x^2+y^2}\\
+				&=\sqrt{47^2+515^2}=\underline{517.14}
+			}
+			{
+				r & Radius in mm\\
+				x & vertikaler Abstand in mm\\
+				y & horizontaler Abstand in mm\\
+			}[eq:radius]
+			%
+			Die Bogenlänge kann anschliessend mit der Gleichung \vref{eq:kreissegement} unter Berücksichtigung des Winkels $\alpha$ bestimmt werden.
+			\formula{
+					\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
+					&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
+					b&=r\cdot\alpha '\\
+					&=517.14\cdot 0.366=\underline{189.54}
+				}
+				{
+					r & Radius in mm\\
+					\alpha & Winkel in Grad\\
+					\alpha ' & Winkel in Rad\\
+					b & Teilumfang in mm\\
+				}[eq:kreissegement]
+		%
+		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
 	%
 	%
 	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
