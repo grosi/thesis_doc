@@ -95,13 +95,13 @@ scp admin@172.22.11.2:/Pfad/zur/Datei /Pfad/zur/Zieldatei
 %
 %Rotationsmatrix
 \section{Rotationsmatrix}\label{sub:rot}
-In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. In unserem Fall ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
+In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. Im vorliegenden Falle ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
 %
-Wir möchten den Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ drehen. Die Gerade g hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
+Ziel ist, den Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ zu drehen. Die Gerade g hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
 %
 \image{content/2_grundlagen/image/rotmat}{scale=0.6}{htbp}[Drehung des Punktes P in P' \cite{img:linalg2}][Drehung des Punktes P in P'][img:rotmat]
 %           
-Die Rotationsmatrix ist wie schon erwähnt definiert durch den Drehwinkel $\phi$ und der Geraden g. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt S der Geraden g mit der Ebene E in welcher die Punkte P und P' liegen und welche Senkrecht auf die Gerade g steht berechnet. Anschliessend ist aus dem Schnittpunkt S und dem Ausgangspunkt P die Berechnung des gedrehten Punktes P' möglich. Die Berechnung des gedrehten Punktes P' mit der Rotationsmatrix lässt sich somit zusammenfassen in Gleichung \vref{eq:rot}:\par
+Die Rotationsmatrix ist wie schon erwähnt definiert durch den Drehwinkel $\phi$ und der Geraden/Rotationsachse g. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt S der Geraden g mit der Ebene E in welcher die Punkte P und P' liegen und welche Senkrecht auf die Gerade g steht berechnet. Anschliessend ist aus dem Schnittpunkt S und dem Ausgangspunkt P die Berechnung des gedrehten Punktes P' möglich. Die Berechnung des gedrehten Punktes P' mit der Rotationsmatrix lässt sich somit zusammenfassen in Gleichung \vref{eq:rot}:\par
 %
 %Berechnung des gedrehten Punkt P'
 \formula{
@@ -119,7 +119,7 @@ Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden
 %
 % nummerische Integration          
 \section{Nummerische Integration}\label{sec:numint}
-Da wir nicht alle Integrale analytisch unter der Verwendung von elementaren Funktionen berechnen können, sind wir auf nummerische Verfahren angewiesen. Mittels diesen nummerischen Verfahren wird das Integral mit in unserem Falle durch die Abtastfrequenz bestimmter Genauigkeit approximiert. In der Vorlesung Analysis 2 (BZG1102 ANALY2) im zweiten Semester bei Herrn Bäni haben wir dazu drei verschiedene Verfahren kennengelernt. Diese sind die linke und rechte Rechtecknäherung sowie die Trapeznäherung. Die hier genannten Angaben wurden mithilfe der Quelle \cite{lit:baeni} erarbeitet.
+Da nicht alle Integrale analytisch unter der Verwendung von elementaren Funktionen berechnet werden können, ist man auf nummerische Verfahren angewiesen. Mittels diesen nummerischen Verfahren wird das Integral mit in unserem Fall durch die Abtastfrequenz bestimmter Genauigkeit approximiert. In der Vorlesung Analysis 2 (BZG1102 ANALY2) im zweiten Semester bei Herrn Bäni wurden dazu drei verschiedene Verfahren präsentiert. Diese sind die linke und rechte Rechtecknäherung sowie die Trapeznäherung. Die hier genannten Angaben wurden mithilfe der Quelle \cite{lit:baeni} erarbeitet.
 %
 \subsubsection*{Rechtecknäherung}
 Bei der Rechtecknäherung wird zwischen der linken und rechten Näherung unterschieden. Bei der linken Rechtecknäherung wird der linke Funktionswert wie in Abbildung \vref{img:rechteck} dargestellt als Höhe der zur berechnenden Fläche unter der Kurve verwendet. Bei der rechten Näherung dementsprechend der rechte Funktionswert. \par
@@ -139,7 +139,7 @@ x(n) & Abgetasteter Wert an Stelle n
 %
 % Trapeszmethode
 \subsubsection*{Trapezmethode}
-Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreichen wir mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung als wir mit einer der beiden Rechtecknäherungen erreichen können. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
+Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreichen man mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung als das diese mit einer der beiden Rechtecknäherungen erreichen werden könnte. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
 %
 % Trapeszmethode
 \image{content/2_grundlagen/image/trapeznaeherung_bearb}{scale=0.6}{htbp}[Trapeznäherung \cite{img:baeni}][Trapeznäherung][img:trapez]
@@ -155,8 +155,8 @@ x(n) & Abgetasteter Wert an Stelle n
            }[eq:trapez]
 %
 % Adaptives Filter
-\section{adaptives Filter}
-Ein adaptives Filter ist eine besondere Art von digitalem Filter. Dieses Filter hat die Möglichkeit seine Filterkoeffizienten und somit seine Filtereigenschaften während dem Betrieb anzupassen. Die neuen Filterkoeffizienten werden dabei aus den alten Filterkoeffizienten und der ermittelten Aktualisierung berechnet (z. Bsp. anhand der Differenz-Fehler zwischen $y(n)$ und $\hat{y}(n)$). Diese Berechnung erfolgt mit jedem neuen Sample. Das Prinzip ist in Abbildung \vref{img:adaptives_Filter} ersichtlich.\par
+\section{Adaptives Filter}
+Ein adaptives Filter ist eine besondere Art von digitalem Filter. Dieses Filter hat die Möglichkeit seine Filterkoeffizienten und somit seine Filtereigenschaften während dem Betrieb anzupassen. Die neuen Filterkoeffizienten werden dabei aus den alten Filterkoeffizienten und der ermittelten Aktualisierung berechnet (z. Bsp. anhand der Differenz/Fehler zwischen $y(n)$ und $\hat{y}(n)$). Diese Berechnung erfolgt mit jedem neuen Sample. Das Prinzip ist in Abbildung \vref{img:adaptives_Filter} ersichtlich.\par
 % 
 % Prinzip adaptives Filter
 \image{content/2_grundlagen/image/adaptives_Filter}{scale=0.6}{htbp}[Prinzip eines adaptiven Filters][Prinzip eines adaptiven Filters][img:adaptives_Filter]
@@ -191,3 +191,23 @@ x(n) & Eingangssignal
 }[eq:filtkoeff]
 % 
 Der Vorfaktor $\mu$ hat Einfluss auf die Geschwindigkeit und Stabilität des Filters. Wird dieser grösser gewählt, so konvergiert das Filter zwar schneller läuft jedoch Gefahr instabil zu werden \cite{lit:adaptFiltVetter}.
+%
+% Gleitender Mittelwert
+\section{Gleitender Mittelwert}
+Beim arithmetischen Mittelwert werden bekanntlich alle Daten aufsummiert und anschliessend durch die Anzahl Messpunkte dividiert. Ein Nachteil dabei ist, dass neue Messpunkte nicht eingebunden werden respektive der gesamte Mittelwert (Aufsummierung und Division) neu berechnet werden muss falls ein neuer Messwert aufgenommen wird. Dabei bietet der gleitende Mittelwert eine elegantere Lösung. Der gleitende Mittelwert ist eine Methode zur Schätzung des Mittelwertes. Bei dieser Methode wird ein sogenanntes rekursives Verfahren angewendet, wobei bei jedem neuen Datenwert die gesuchte Schätzung aus der alten Schätzung und dem erhobenen Datenwert neu berechnet wird. Die Schätzung wird dadurch mit jedem zusätzlichen Messpunkt \glqq genauer\grqq\ und konvergiert gegen den \glqq wahren\grqq\ Wert. Die rekursive Mittelung ist nach \cite{lit:mittelung_eth} in Gleichung \vref{eq:mittelung_eth} definiert.
+% 
+\formula{
+\mu _x(n) = \mu _x(n-1) + \frac{1}{n} *(x(n) - \mu _x(n-1))
+}{ 
+
+}[eq:mittelung_eth]
+%
+Ersetzt man $\frac{1}{k}$ mit $\alpha$ so erhält man nach Umstellen die aus den Vorlesungen bei Herrn Vetter bekannte Gleichung zur rekursiven Mittelwertbildung.
+%
+\formula{
+\hat{\mu} _x(n) = \alpha * x(n) + (1-\alpha) * \hat{\mu _x}(n-1)
+}{ 
+
+}[eq:mittelung_unterricht]
+%
+Da es sich um eine Schätzung handelt, wird in Gleichung \vref{eq:mittelung_unterricht} die Schreibweise $\hat{\mu _x}$ verwendet. Der Faktor $\alpha$ wird auch als Vergessensfaktor bezeichnet. Der Vergessensfaktor $\alpha$ ist $0 < \alpha < 1$ und hat Einfluss auf die Gewichtung der früheren Schätzung ($\mu _x(k-1)$). Wird der Wert nahe 0 gewählt, so werden nach Gleichung \vref{eq:mittelung_unterricht} alte Schätzungen sehr stark beachtet und die neuen Messwerte nahezu nicht gewichtet. Die Schätzung ist dadurch eher statisch. Wird $\alpha$ nahe 1 gewählt, so werden die neu aufgenommenen Werte im Gegensatz zur alten Schätzung sehr stark gewichtet und haben einen grossen Einfluss auf die Mittelwertbildung. Die Schätzung ist eher flüchtig.

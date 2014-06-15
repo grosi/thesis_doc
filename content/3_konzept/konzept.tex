@@ -17,9 +17,9 @@
 %
 % Blockdiagramm
 \section{Blockdiagramm}
-Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurde wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Durch die geringe Einarbeitungszeit konnten wir einige Ideen übernehmen. Wir haben uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
+Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurden wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie haben wir uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
-Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit müssen wir zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung trennen. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten haben wir nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
+Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit muss zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten sind nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
 % Blockdiagramm
 \image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=0.9,angle=90}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
@@ -28,9 +28,9 @@ Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achs
 % Filterung
 \newpage
 \subsection{Tiefpass-Filterung}
-Als erste Aufgabe müssen wir die Beschleunigungsdaten auftrennen in die Erdbeschleunigung und die Beschleunigung der Bewegung. Beide Komponenten können wir weiterverwenden. Die Erdbeschleunigung ermöglicht uns das Schätzen der Orientierung (Abschnitt \vref{subsec:orientierungsschätzung}), die Beschleunigung der Bewegung wird zum Schätzen der Position mittels doppelter Integration verwendet.\par
+Als erste Aufgabe werden die Beschleunigungsdaten aufgetrennt in die Erdbeschleunigung und die Beschleunigung der Bewegung. Beide Komponenten können wir weiterverwenden. Die Erdbeschleunigung ermöglicht das Schätzen der Orientierung (Abschnitt \vref{subsec:orientierungsschätzung}), die Beschleunigung der Bewegung wird zum Schätzen der Position mittels doppelter Integration verwendet.\par
 %
-Die Erdbeschnleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund können wir diese Beschleunigung wie eine DC-Komponente betrachten. Mit einer Tiefpass-Filterung können wir somit die Erdbeschleunigung von der Beschleunigung der Bewegung trennen. Als Tiefpassfilter wurde ein \todo{Überprüfen ob Filterwahl gut} \gls{ac:fir}-Filter gewählt. 
+Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine DC-Komponente betrachtet werden. Mit einer Tiefpass-Filterung wird somit einfach die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt. Als Tiefpassfilter wurde ein \todo{Überprüfen ob Filterwahl gut} \gls{ac:fir}-Filter gewählt. 
 %
 % Filterentwurf
 \subsubsection*{Filterentwurf}
@@ -49,7 +49,7 @@ Zum Entwurf des Filters müssen zuerst einige Spezifikationen des Filters festgel
 \image{content/3_konzept/image/filterentwurf}{scale=0.6}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
 %
 \subsubsection*{Fenstermethode}
-Zum Entwurf des Filters wurde die einfachste sogenannte Fenstermethode gewählt. Bei dieser Methode geht man vom idealen Frequenzgang des Filters aus. Dieser Frequenzgang hat im Falle eines \gls{ac:tp}-Filters bis zur Durchlassfrequenz f\low{pass} den Wert 1, bei grösseren Frequenzen den Wert 0. Aus dem Frequenzgang H\low{ideal}($e^{j\Omega}$) können wir mit der inversen Fourier-Analyse auf die Impulsantwort h\low{ideal}(n) des Filters schliessen wie gemäss Gleichung \vref{eq:invfourier} in \cite{lit:vongruenigen} beschrieben.
+Zum Entwurf des Filters wurde die einfachste sogenannte Fenstermethode gewählt. Bei dieser Methode geht man vom idealen Frequenzgang des Filters aus. Dieser Frequenzgang hat im Falle eines \gls{ac:tp}-Filters bis zur Durchlassfrequenz f\low{pass} den Wert 1, bei grösseren Frequenzen den Wert 0. Aus dem Frequenzgang H\low{ideal}($e^{j\Omega}$) kann man mit der inversen Fourier-Analyse auf die Impulsantwort h\low{ideal}(n) des Filters schliessen wie in Gleichung \vref{eq:invfourier} aus \cite{lit:vongruenigen} beschrieben.
 %
 \formula{
 h_{ideal}(n) = \frac{1}{2\pi}\int_{-\pi}^{\pi} H_{ideal}(e^{j\Omega})*e^{j\Omega n}d\Omega\\
@@ -72,10 +72,10 @@ w & Fensterfunktion
 %
 % Schätzung der Orientierung
 \subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
-Um die Bewegung des Sensors im Bezugssystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem verwenden wir die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor a\low{g} und der gemessenen Erdbeschleunigung des Sensors können wir mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel sowie auf die Richtung der Rotationsachse zwischen den beiden Betrachtungssystemen schliessen.
+Um die Bewegung des Sensors im Bezugssystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor a\low{g} und der gemessenen Erdbeschleunigung des Sensors kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel sowie auf die Richtung der Rotationsachse zwischen den beiden Betrachtungssystemen geschlossen werden.
 %
 \subsubsection*{Drehwinkel}
-Der Drehwinkel entspricht gerade dem Zwischenwinkel der Beiden Vektoren a\low{g} sowie den Beschleunigungsdaten a\low{sens}. Der Zwischenwinkel zweier Vektoren können wir über das Skalarprodukt berechnen. Nach Papula \cite{lit:papula} ist dieses wie in Gleichung \vref{eq:dotp} möglich.
+Der Drehwinkel entspricht gerade dem Zwischenwinkel der beiden Vektoren a\low{g} sowie den Beschleunigungsdaten a\low{sens}. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dieses wie in Gleichung \vref{eq:dotp} möglich.
 %
 \formula{
 \overrightarrow{a\low{g}}*\overrightarrow{a\low{sens}} = \mid \overrightarrow{a\low{g}}\mid *\mid \overrightarrow{a\low{sens}}\mid *\cos(\phi)\\
@@ -88,7 +88,7 @@ Der Drehwinkel entspricht gerade dem Zwischenwinkel der Beiden Vektoren a\low{g}
 }[eq:dotp]
 %
 \subsubsection*{Rotationsachse}
-Die Rotationsachse benötigen wir, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor a\low{g} und dem vom Beschleunigungssensor aufgenommenem Vektor, stehen. Dazu verwenden wir das Vektorprodukt, auch Kreuzprodukt genannt. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge dieses Vektors (die Norm oder der Betrag) entspricht der von den beiden Vektoren aufgespannten Fläche. Wir normieren den erhaltenen Vektor zusätzlich, damit dieser stets Länge Eins hat. Die Rotationsachse $\overrightarrow{n}$	wird somit wie in Gleichung \vref{eq:cross} berechnet.
+Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor a\low{g} und dem vom Beschleunigungssensor aufgenommenem Vektor, stehen. Dazu verwenden dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser stets Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird somit wie in Gleichung \vref{eq:cross} berechnet.
 %
 \formula{
 \overrightarrow{n} = \frac{\overrightarrow{a\low{g}} \times\overrightarrow{a\low{sens}}}{ \mid \overrightarrow{a\low{g}} \times \overrightarrow{a\low{sens}}\mid}
@@ -99,10 +99,10 @@ Die Rotationsachse benötigen wir, um eine Bezugsachse für die Drehung des Koordi
 }[eq:cross]
 %
 % Verzögerung
-\subsection{Verzögerung, Berechnung der Bewegungsbeschleunigung}
-Um die Beschleunigung der Bewegung zu erhalten, möchten wir die berechnete Erdbeschleunigung am Sensor von der gemessenen Beschleunigung am Sensor subtrahieren. Die gemessene Beschleunigung am Sensor beinhaltet bekanntlich die Erdbeschleunigung sowie die gefragte Beschleunigung der Bewegung.\par
+\subsection{Berechnung der Bewegungsbeschleunigung}
+Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Zum einen kann die berechnete Erdbeschleunigung am Sensor von der gemessenen Beschleunigung am Sensor subtrahiert werden. Die gemessene Beschleunigung am Sensor beinhaltet bekanntlich die Erdbeschleunigung sowie die benötigte Beschleunigung der Bewegung. Ein weiterer Ansatz ist die zusätzliche Hochpassfilterung der gemessenen Daten. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden.\par
 %
-Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung ist, nach Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter verhält sich wie in Gleichung \vref{eq:delay} aufgezeigt.
+Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung verhält sich nach den Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter wie in Gleichung \vref{eq:delay} aufgezeigt.
 %
 \formula{
 n_{d} = \frac{n_{b}}{2}
@@ -111,24 +111,31 @@ n_{d} & Verzögerung in Samples\\
 n_{b} & Anzahl Filterkoeffizienten
 }[eq:delay]
 %
-Die durch die Filterung berechnete Erdbeschleunigung können wir nicht direkt von der gemessenen Beschleunigung am Sensor abziehen. Die gemessene Beschleunigung am Sensor müssen wir zuerst verzögern. Dies erreichen wir mit einem einfachen Verzögerungselement. Die Funktion eines solchen Elementes ist in Abbildung \vref{img:delay} dargestellt.\par
+% Subtraktion
+\subsubsection*{Verzögerung und Subtraktion}
+Die durch die Tiefpass-Filterung berechnete Erdbeschleunigung kann nicht direkt von der gemessenen Beschleunigung am Sensor abgezogen werden. Dies aus dem vorhin beschriebene Grund, dass jede Filterung eine Verzögerung des Signals bewirkt. Die gemessene Beschleunigung am Sensor muss also zuerst um die zuvor berechnete Anzahl Samples aufgrund der Anzahl Filterkoeffizienten verzögert werden. Dies kann man mit einem einfachen Verzögerungselement erreichen. Die Funktion eines solchen Elementes ist in Abbildung \vref{img:delay} dargestellt.\par
 %
 % Verzögerungselement
 \image{content/3_konzept/image/Verzoegerungselement}{scale=1}{htbp}[Verzögerungselement][img:delay]
 %
-Nachdem das gemessene Signal zusätzlich verzögert wurde, kann das gefilterte Signal nun vom verzögerten Signal abgezogen werden um die Komponente der Erdbeschleunigung abzuziehen.
+Nachdem das gemessene Signal zusätzlich verzögert wurde, kann das gefilterte Signal mit der beinhaltenden Erdbeschleunigungskomponente nun vom verzögerten Signal abgezogen werden um die Beschleunigung der Bewegung zu erhalten.
+%
+% Hochpassfilterung
+\subsubsection*{Hochpassfilterung}
+Ein weiterer Ansatz ist, dass die gemessenen Daten mit einem Hochpass gefiltert werden. Die Beschleunigungskomponenten der Bewegung können somit von der als DC-Komponente auftretenden Erdbeschleunigung getrennt werden. Dabei ist zu beachten, dass die Filterlänge des Tiefpassfilters und des Hochpassfilters gleich lang ist. Dies aus demselben oben genannten Grund, dass jede Filterung eine Verzögerung des gefilterten Signals zur Ursache hat. Da die Erdbeschleunigung zur Kompensation der Orientierung verwendet wird und später wie im Abschnitt \vref{sub:rot} gezeigt auf die Bewegungsbeschleunigung angewendet wird muss die Verzögerung beider Signale gleich ausfallen.
 %
 % Rotation
-\subsection{Rotation}
-Die Rotation benötigen wir, um das Koordinatensystem des Sensors in das Koordinatensystem des Betrachters zu transformieren. Dabei benötigen wir die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche wir das System drehen wollen sowie den Drehwinkel $\phi$ zwischen den beiden Vektoren. Die Rotationsmatrix können wir mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellen.\par
+\subsection{Rotation}\label{sub:rot}
+Die Rotation wird benötigt, um das Koordinatensystem des Sensors in das Koordinatensystem des Betrachters zu transformieren. Dabei steht die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche das System gedreht wird sowie der ermittelte Drehwinkel $\phi$ zwischen den beiden Vektoren zur Verfügung. Die Rotationsmatrix kann mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellt werden.\par
 % 
-Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation ins Koordinatensystem des Betrachters mit einer einfachen Multiplikation erreicht werden. Der Output ist dabei die Beschleunigung der Bewegung im definierten Betrachtungssystem. Die beliebige Orientierung des Beschleunigungssensors am Knie ist somit kompensiert.
+Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation ins Koordinatensystem des Betrachters mit einer einfachen Multiplikation erreicht werden. Der Output ist dabei die Beschleunigung der Bewegung im definierten Betrachtungssystem. Die Orientierung des Beschleunigungssensors am Knie, die beliebig ist, ist somit kompensiert.
 %
-
+% adaptive Filterung
+\subsection{Adaptive Filterung}
 %
 % Integration
 \subsection{Integration}
-Um von der Beschleunigung auf die Position zu schliessen, können wir die Beschleunigung bekannterweise  zweimal nach der Zeit integrieren. Integrieren wir die Beschleunigung einmal, so erhalten wir die Geschwindigkeit.
+Um von der Beschleunigung auf die Position zu schliessen, kann die Beschleunigung bekannterweise durch zweimaliges integrieren nach der Zeit berechnet werden. Integriert man die Beschleunigung einmal, so erhalten wir die Geschwindigkeit.
 %
 \formula{
 v(t) = \int a(t)dt + v_0 
@@ -138,7 +145,7 @@ v_{0} & Anfangsgeschwindigkeit [$m/s$]\\
 a & Beschleunigung [$m/s^2$]
 }[eq:geschw]
 %
-Integrieren wir diese Geschwindigkeit erneut, so erhalten wir den zurückgelegten Weg über die betrachtete Zeitdauer.
+Integriert man diese Geschwindigkeit erneut, so erhält man den zurückgelegten Weg über die betrachtete Zeitdauer.
 \formula{
 s(t) = \int v(t)dt + s_0 
 }{
