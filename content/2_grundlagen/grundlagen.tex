@@ -153,61 +153,61 @@ y(n) & Integral von Beginn bis zur Stelle n\\
 T_a & Abtastrate\\
 x(n) & Abgetasteter Wert an Stelle n 
            }[eq:trapez]
+%%
+%% Adaptives Filter
+%\section{Adaptives Filter}
+%Ein adaptives Filter ist eine besondere Art von digitalem Filter. Dieses Filter hat die Möglichkeit seine Filterkoeffizienten und somit seine Filtereigenschaften während dem Betrieb anzupassen. Die neuen Filterkoeffizienten werden dabei aus den alten Filterkoeffizienten und der ermittelten Aktualisierung berechnet (z. Bsp. anhand der Differenz/Fehler zwischen $y(n)$ und $\hat{y}(n)$). Diese Berechnung erfolgt mit jedem neuen Sample. Das Prinzip ist in Abbildung \vref{img:adaptives_Filter} ersichtlich.\par
+%% 
+%% Prinzip adaptives Filter
+%\image{content/2_grundlagen/image/adaptives_Filter}{scale=0.6}{htbp}[Prinzip eines adaptiven Filters][Prinzip eines adaptiven Filters][img:adaptives_Filter]
+%% 
+%Das Signal $x(n)$ wird von einem unbekannten System mit additivem Fehler $e(n)$ (z. Bsp. Rauschen oder Offset) zu $y(n)$ geformt. Dieses System soll mit einer adaptiven Methode geschätzt werden um somit ein geschätztes Ausgangssignal $\hat{y}(n)$ zu erhalten welches möglichst genau dem Ausgangssignal des unbekannten Systems entspricht. Aus dem geschätzten Ausgangssignal $\hat{y}(n)$ und dem Ausgang des unbekannten Systems $y(n)$ kann durch Subtraktion der Fehler $\epsilon(n)$ berechnet werden. Aus diesem Fehler und den alten Filterkoeffizienten werden die neuen Filterkoeffizienten bestimmt. Das Ausgangssignal des unbekannten Systems $y(n)$ nimmt in diesem Fall eine Art \glqq Lernfunktion\grqq ein. Das geschätzte Signal $\hat{y}(n)$ wird an diese \glqq Lernfunktion\grqq mit der adaptiven Filterung angenähert. Die Aktualisierung der Filterparameter wird mit verschiedenen Algorithmen erreicht. Ein häufig verwendetes Verfahren ist beispielsweise der \gls{ac:lms}-Algorithmus. Dieser Algorithmus ist einfach umzusetzen und beruht auf dem \gls{g:gradientenvefahren}.\par
+%%
+%Für den einfachen Fall, dass das adaptive Filter nur einen Filterkoeffizienten $w$ hat gilt, wie in Gleichung \vref{eq:adaptFilt} dargestellt, folgendes.
+%%
+%\formula{
+%\hat{y}(n) = w * x(n) \\\\
+%\epsilon(n) = y(n) -\hat{y}(n)\\ 
+% = y(n) - w * x(n)            
+%}{ 
+%\hat{y}(n) & geschätzte Funktion\\
+%w & Filterkoeffizient\\
+%x(n) & Eingangssignal\\
+%\epsilon(n) & Fehler \\
+%y(n) & Lernfunktion
+%}[eq:adaptFilt]
+%%
+%Aus dem Fehler $\epsilon$(n) und dem Filterkoeffizienten $w$ kann nach dem erwähnten \gls{ac:lms}-Algorithmus der neue Filterkoeffizient berechnet werden. Bei diesem Algorithmus wird der nächste Filterkoeffizienten mittels des Gradienten des Fehlers bestimmt. Dies ist in Gleichung \vref{eq:filtkoeff} ersichtlich. \todo{bessere erklären, herleiten}
+%%
+%\formula{
+%w_{n+1} =w_n + \mu \left\{ -\frac{\partial \epsilon(n)^2}{\partial w_n}\right\} \\
+%= w_n + \mu*\epsilon(n)*x(n)            
+%}{ 
+%w_{n+1} & neuer Filterkoeffizient\\
+%w_{n} & aktueller Filterkoeffizient\\
+%\mu & Vorfaktor\\
+%\epsilon(n) & Fehler\\
+%x(n) & Eingangssignal 
+%}[eq:filtkoeff]
+%% 
+%Der Vorfaktor $\mu$ hat Einfluss auf die Geschwindigkeit und Stabilität des Filters. Wird dieser grösser gewählt, so konvergiert das Filter zwar schneller läuft jedoch Gefahr instabil zu werden \cite{lit:adaptFiltVetter}.
+%%
+%% Gleitender Mittelwert
+%\section{Gleitender Mittelwert}
+%Beim arithmetischen Mittelwert werden bekanntlich alle Daten aufsummiert und anschliessend durch die Anzahl Messpunkte dividiert. Ein Nachteil dabei ist, dass neue Messpunkte nicht eingebunden werden respektive der gesamte Mittelwert (Aufsummierung und Division) neu berechnet werden muss falls ein neuer Messwert aufgenommen wird. Dabei bietet der gleitende Mittelwert eine elegantere Lösung. Der gleitende Mittelwert ist eine Methode zur Schätzung des Mittelwertes. Bei dieser Methode wird ein sogenanntes rekursives Verfahren angewendet, wobei bei jedem neuen Datenwert die gesuchte Schätzung aus der alten Schätzung und dem erhobenen Datenwert neu berechnet wird. Die Schätzung wird dadurch mit jedem zusätzlichen Messpunkt \glqq genauer\grqq\ und konvergiert gegen den \glqq wahren\grqq\ Wert. Die rekursive Mittelung ist nach \cite{lit:mittelung_eth} in Gleichung \vref{eq:mittelung_eth} definiert.
+%% 
+%\formula{
+%\mu _x(n) = \mu _x(n-1) + \frac{1}{n} *(x(n) - \mu _x(n-1))
+%}{ 
 %
-% Adaptives Filter
-\section{Adaptives Filter}
-Ein adaptives Filter ist eine besondere Art von digitalem Filter. Dieses Filter hat die Möglichkeit seine Filterkoeffizienten und somit seine Filtereigenschaften während dem Betrieb anzupassen. Die neuen Filterkoeffizienten werden dabei aus den alten Filterkoeffizienten und der ermittelten Aktualisierung berechnet (z. Bsp. anhand der Differenz/Fehler zwischen $y(n)$ und $\hat{y}(n)$). Diese Berechnung erfolgt mit jedem neuen Sample. Das Prinzip ist in Abbildung \vref{img:adaptives_Filter} ersichtlich.\par
-% 
-% Prinzip adaptives Filter
-\image{content/2_grundlagen/image/adaptives_Filter}{scale=0.6}{htbp}[Prinzip eines adaptiven Filters][Prinzip eines adaptiven Filters][img:adaptives_Filter]
-% 
-Das Signal $x(n)$ wird von einem unbekannten System mit additivem Fehler $e(n)$ (z. Bsp. Rauschen oder Offset) zu $y(n)$ geformt. Dieses System soll mit einer adaptiven Methode geschätzt werden um somit ein geschätztes Ausgangssignal $\hat{y}(n)$ zu erhalten welches möglichst genau dem Ausgangssignal des unbekannten Systems entspricht. Aus dem geschätzten Ausgangssignal $\hat{y}(n)$ und dem Ausgang des unbekannten Systems $y(n)$ kann durch Subtraktion der Fehler $\epsilon(n)$ berechnet werden. Aus diesem Fehler und den alten Filterkoeffizienten werden die neuen Filterkoeffizienten bestimmt. Das Ausgangssignal des unbekannten Systems $y(n)$ nimmt in diesem Fall eine Art \glqq Lernfunktion\grqq ein. Das geschätzte Signal $\hat{y}(n)$ wird an diese \glqq Lernfunktion\grqq mit der adaptiven Filterung angenähert. Die Aktualisierung der Filterparameter wird mit verschiedenen Algorithmen erreicht. Ein häufig verwendetes Verfahren ist beispielsweise der \gls{ac:lms}-Algorithmus. Dieser Algorithmus ist einfach umzusetzen und beruht auf dem \gls{g:gradientenvefahren}.\par
+%}[eq:mittelung_eth]
+%%
+%Ersetzt man $\frac{1}{k}$ mit $\alpha$ so erhält man nach Umstellen die aus den Vorlesungen bei Herrn Vetter bekannte Gleichung zur rekursiven Mittelwertbildung.
+%%
+%\formula{
+%\hat{\mu} _x(n) = \alpha * x(n) + (1-\alpha) * \hat{\mu _x}(n-1)
+%}{ 
 %
-Für den einfachen Fall, dass das adaptive Filter nur einen Filterkoeffizienten $w$ hat gilt, wie in Gleichung \vref{eq:adaptFilt} dargestellt, folgendes.
-%
-\formula{
-\hat{y}(n) = w * x(n) \\\\
-\epsilon(n) = y(n) -\hat{y}(n)\\ 
- = y(n) - w * x(n)            
-}{ 
-\hat{y}(n) & geschätzte Funktion\\
-w & Filterkoeffizient\\
-x(n) & Eingangssignal\\
-\epsilon(n) & Fehler \\
-y(n) & Lernfunktion
-}[eq:adaptFilt]
-%
-Aus dem Fehler $\epsilon$(n) und dem Filterkoeffizienten $w$ kann nach dem erwähnten \gls{ac:lms}-Algorithmus der neue Filterkoeffizient berechnet werden. Bei diesem Algorithmus wird der nächste Filterkoeffizienten mittels des Gradienten des Fehlers bestimmt. Dies ist in Gleichung \vref{eq:filtkoeff} ersichtlich. \todo{bessere erklären, herleiten}
-%
-\formula{
-w_{n+1} =w_n + \mu \left\{ -\frac{\partial \epsilon(n)^2}{\partial w_n}\right\} \\
-= w_n + \mu*\epsilon(n)*x(n)            
-}{ 
-w_{n+1} & neuer Filterkoeffizient\\
-w_{n} & aktueller Filterkoeffizient\\
-\mu & Vorfaktor\\
-\epsilon(n) & Fehler\\
-x(n) & Eingangssignal 
-}[eq:filtkoeff]
-% 
-Der Vorfaktor $\mu$ hat Einfluss auf die Geschwindigkeit und Stabilität des Filters. Wird dieser grösser gewählt, so konvergiert das Filter zwar schneller läuft jedoch Gefahr instabil zu werden \cite{lit:adaptFiltVetter}.
-%
-% Gleitender Mittelwert
-\section{Gleitender Mittelwert}
-Beim arithmetischen Mittelwert werden bekanntlich alle Daten aufsummiert und anschliessend durch die Anzahl Messpunkte dividiert. Ein Nachteil dabei ist, dass neue Messpunkte nicht eingebunden werden respektive der gesamte Mittelwert (Aufsummierung und Division) neu berechnet werden muss falls ein neuer Messwert aufgenommen wird. Dabei bietet der gleitende Mittelwert eine elegantere Lösung. Der gleitende Mittelwert ist eine Methode zur Schätzung des Mittelwertes. Bei dieser Methode wird ein sogenanntes rekursives Verfahren angewendet, wobei bei jedem neuen Datenwert die gesuchte Schätzung aus der alten Schätzung und dem erhobenen Datenwert neu berechnet wird. Die Schätzung wird dadurch mit jedem zusätzlichen Messpunkt \glqq genauer\grqq\ und konvergiert gegen den \glqq wahren\grqq\ Wert. Die rekursive Mittelung ist nach \cite{lit:mittelung_eth} in Gleichung \vref{eq:mittelung_eth} definiert.
-% 
-\formula{
-\mu _x(n) = \mu _x(n-1) + \frac{1}{n} *(x(n) - \mu _x(n-1))
-}{ 
-
-}[eq:mittelung_eth]
-%
-Ersetzt man $\frac{1}{k}$ mit $\alpha$ so erhält man nach Umstellen die aus den Vorlesungen bei Herrn Vetter bekannte Gleichung zur rekursiven Mittelwertbildung.
-%
-\formula{
-\hat{\mu} _x(n) = \alpha * x(n) + (1-\alpha) * \hat{\mu _x}(n-1)
-}{ 
-
-}[eq:mittelung_unterricht]
-%
-Da es sich um eine Schätzung handelt, wird in Gleichung \vref{eq:mittelung_unterricht} die Schreibweise $\hat{\mu _x}$ verwendet. Der Faktor $\alpha$ wird auch als Vergessensfaktor bezeichnet. Der Vergessensfaktor $\alpha$ ist $0 < \alpha < 1$ und hat Einfluss auf die Gewichtung der früheren Schätzung ($\mu _x(k-1)$). Wird der Wert nahe 0 gewählt, so werden nach Gleichung \vref{eq:mittelung_unterricht} alte Schätzungen sehr stark beachtet und die neuen Messwerte nahezu nicht gewichtet. Die Schätzung ist dadurch eher statisch. Wird $\alpha$ nahe 1 gewählt, so werden die neu aufgenommenen Werte im Gegensatz zur alten Schätzung sehr stark gewichtet und haben einen grossen Einfluss auf die Mittelwertbildung. Die Schätzung ist eher flüchtig.
+%}[eq:mittelung_unterricht]
+%%
+%Da es sich um eine Schätzung handelt, wird in Gleichung \vref{eq:mittelung_unterricht} die Schreibweise $\hat{\mu _x}$ verwendet. Der Faktor $\alpha$ wird auch als Vergessensfaktor bezeichnet. Der Vergessensfaktor $\alpha$ ist $0 < \alpha < 1$ und hat Einfluss auf die Gewichtung der früheren Schätzung ($\mu _x(k-1)$). Wird der Wert nahe 0 gewählt, so werden nach Gleichung \vref{eq:mittelung_unterricht} alte Schätzungen sehr stark beachtet und die neuen Messwerte nahezu nicht gewichtet. Die Schätzung ist dadurch eher statisch. Wird $\alpha$ nahe 1 gewählt, so werden die neu aufgenommenen Werte im Gegensatz zur alten Schätzung sehr stark gewichtet und haben einen grossen Einfluss auf die Mittelwertbildung. Die Schätzung ist eher flüchtig.
