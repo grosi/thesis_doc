@@ -158,7 +158,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 \section{Software}\label{s:konzept:sw}
 	%
 	\subsection{Rohdaten aufzeichnen}\label{ss:rohdaten_aufzeichnen}
-		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann.\par 
+		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Das fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
 		%
 		Als Basis für die \acrshort{ac:vi} dient das Standardprojekt \textsf{myRIO Project}\footnote{Das Projekt kann im Startdialog von \gls{g:labview} 2013 angewählt werden} von \gls{g:labview}, das folgende Möglichkeiten mitbringt:
 		%
@@ -266,67 +266,72 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	\subsection{Grund/Zweck der Messung}
 		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{siehe Abschnitt \vref{s:blockdiagramm}} und das erste von drei Experimental-Protokollen\footnote{die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
 		%
-		\begin{hypo}\label{hypo:rotation}	    	
-			Nach einer einmaligen Rotation haben die Komponenten X und Y den Wert \unitfrac[0]{m}{s\high{2}} und die Z-Komponente \unitfrac[9.81]{m}{s\high{2}}. Die Abweichung ist dabei nicht grösser als \unitfrac[0.01]{m}{s\high{2}}. WINKEL NOCH ERWÄHNEN
+		\begin{hypo}\label{hypo:rotation}	   
+			Der eingestellte Winkel wird durch die Schätzung richtig bestimmt.	
+			Nach einer einmaligen Rotation haben die Komponenten x und y den Wert \unitfrac[0]{m}{s\high{2}} und die z-Komponente \unitfrac[9.81]{m}{s\high{2}}. Die Abweichung ist dabei nicht grösser als \unitfrac[0.01]{m}{s\high{2}}.
 		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}
-		%\image{content/3_konzept/image/messaufbau_tran_rot}{scale=0.2}{htbp}[Messaufbau Translation, Rotation überlagert][img:messaufbau_tran_rot]
-			\input{content/3_konzept/table/messmittel_rot}	
-		
-%		\input{content/3_konzept/table/messmittel}	
-%		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
-%		\input{content/3_konzept/table/messaufbau}
+		Die Messung, respektive Schätzung der Rotationswinkel erfolgt statisch auf einer eigens für dieses Projekt entworfenen Testumgebung, die später zur Simulation eines Bewegungsablaufs des Knies gebraucht wird. Dazu siehe den Abschnitt \vref{ss:testumgebung_tran_rot}, indem auch näher auf die Möglichkeiten des Aufbaus eingegangen wird. Für dieses Protokoll wird lediglich von der Tatsache gebraucht gemacht, dass das \gls{g:myrio} kontrolliert in verschiedene Positionen gebracht und somit eine Reproduzierbarkeit der Messung gewährleistet werden kann.\par
+		%
+		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichster grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°}). Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
+		%
+		\image{content/3_konzept/image/aufbau_rot}{scale=1}{htbp}[Rotation - Testaufbau][img:messaufbau_rot]	
+		%
+		Die absolute Messung des eingestellten Winkels erfolgt über den Winkelmesser M\low{2}, der direkt am Schwenkarm befestigt ist (dazu siehe Abbildung \vref{img:messaufbau_tran_rot}). Alle verwendeten Messmittel sind in der Tabelle \vref{tab:messmittel_rot} aufgeführt und mit einer geschätzten Messgenauigkeit versehen.
+		%
+		\input{content/3_konzept/table/messmittel_rot}
 	%
 	%
 	\subsection{Methoden}
 		%
 		\subsubsection*{Messgruppen}
-			Für die Messung werden zwei Messgruppen festgelegt. Wiederum wird die eine als Testgruppe fungieren, wogegen die andere der Kontrolle dient.
+			Für die Messung werden zwei Messgruppen festgelegt. Die eine wird  als Testgruppe fungieren, wogegen die andere der Kontrolle dient.
 			%
 			\begin{itemize}
 				%
 				\item \textbf{Testgruppe} In der Testgruppe werden Beschleunigungsdaten durch das \gls{g:myrio} aufgezeichnet\footnote{siehe Abschnitt \vref{ss:rohdaten_aufzeichnen}} und gespeichert. Im Anschluss zur Messung werden die Daten in \gls{g:matlab} eingelesen und verarbeitet.
 				%
-				\item \textbf{Kontrollgruppe} Die zweite Gruppe repräsentiert die direkte Messung auf dem Rotationstisch. Sie dient gleichzeitig der Kontrolle für die folgende Interpretation.
+				\item \textbf{Kontrollgruppe} Die zweite Gruppe repräsentiert die direkte Messung mit Hilfe des Winkelmessers M\low{2}. Sie dient gleichzeitig der Kontrolle für die folgende Interpretation.
 			\end{itemize}
 			%
 			Die unabhängige Variabel dieser Gruppen stellt die Messmethodik dar. 
 		%
-		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
+		\subsubsection*{Testgruppe Messmethodik}
+			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus}, die die Winkelschätzung vornehmen. Dazu dient das \gls{g:matlab}-Skript \texttt{XXX}, das im Anhang \vref{s:anhang_matlab} zu finden ist.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
+			Der Winkel der Kontrollgruppe wird direkt mit dem Winkelmesser M\low{2} gemessen. Zu beachten ist, dass dessen Winkelskala in \unit[90]{°} Bereiche unterteilt ist und deshalb ein grösserer Winkel durch Addition ermittelt werden muss. Als Referenz für die Auslenkung dient dabei die in Abbildung \vref{img:messaufbau_rot} ersichtliche \unit[0]{°}-Linie. Gemessen wird gegen den Uhrzeigersinn.
 		%
-		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
-%			\formula{
-%				r &= \sqrt{x^2+y^2}\\
-%				&=\sqrt{47^2+515^2}=\underline{517.14}
-%			}
-%			{
-%				r & Radius in mm\\
-%				x & vertikaler Abstand in mm\\
-%				y & horizontaler Abstand in mm\\
-%			}[eq:radius]
-%			%
-%			\formula{
-%				\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
-%				&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
-%				b&=r\cdot\alpha '\\
-%				&=517.14\cdot 0.366=\underline{189.54}
-%			}
-%			{
-%				r & Radius in mm\\
-%				\alpha & Winkel in Grad\\
-%				\alpha ' & Winkel in Rad\\
-%				b & Teilumfang in mm\\
-%			}[eq:kreissegement]
+		\subsubsection*{Testbeschreibungen}
+			Es werden Messungen mit unterschiedlichen Rotationswinkel durchgeführt. Dazu wird der Testaufbau manuell in die gewünschte Ausrichtung gebracht. Es wird zwischen fünf verschiedenen Winkeln unterschieden, wie die Abbildung \vref{img:rot_winkeln} zeigt. Die Endwinkel (\unit[62]{°} und \unit[118]{°0} sind durch die mechanischen Einschränkungen bestimmt und stellen die maximale Auslenkung dar. Die Zwischenwinkel sind so gewählt, dass möglichst gleichmässig der gesamte Bereich abgedeckt wird.\par
+			%
+			\image{content/3_konzept/image/rot_winkeln}{scale=0.4}{htbp}[Rotation-Winkeln][img:rot_winkeln]
+			%
+			Der Messablauf sieht folgende Schritte vor. Sie werden jeweils bei jedem Winkel wiederholt.
+			\begin{enumerate}
+				\item Testaufbau auf den gewünschten Winkel einstellen. Dazu den Winkelmesser M\low{2} verwenden.
+				\item \gls{g:labview}-Programm starten. Es müssen während  \unit[6]{s} Daten aufgezeichnet werden\footnote{Bedingt durch die Filterlänge des Tiefpassfilters, siehe Abschnitt XXX}.
+				\item den vorherigen Schritt 5-mal wiederholen.
+				\item Datenextraktion nach mit den in Abschnitt \vref{ss:myRIO_hw} beschriebenen Methoden.
+				\item Daten mit \gls{g:matlab} verarbeiten und auswerten.
+			\end{enumerate}	
+		%
+		\subsubsection*{Datenauswertung}
+			Es gilt die Winkelschätzung hinsichtlich des eingestellten Winkels auszuwerten. Weiter muss die Rotation geprüft werden. Das Messergebnis der beiden Messgruppen stellt die abhängige Variabel dar.\par 
+			%
+			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[0.74]{°} (\unit[118]{°}). Das entspricht einem mittleren absoluten Fehler von \unit[-0.92]{°} über alle Messungen hin betrachtet.\par
+			%
+			Der relative Messabweichungen, wiederum gemittelt, bemessen sich auf \unit[-0.038]{\%} (\unit[62]{°}), \unit[-0.021]{\%} (\unit[77]{°}), \unit[-0.016]{\%} (\unit[90]{°}), \unit[-0.002]{\%} (\unit[105]{°}) und \unit[0.006]{\%} (\unit[118]{°}). Dies ergibt einen mittleren relativen Fehler von \unit[-0.014]{\%} über alle Messungen hinweg.\par
+			%
+			Analysiert man die Messabweichung hinsichtlich ihrer Standardabweichung, so ergibt dies für die absoluten Messungen \unit[0.036]{°} und für die relativen \unit[0.0003]{\%}.\par 
+			%
+			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig wenn die Rotation an sich nicht funktioniert. Daher gilt es die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a}=\begin{bmatrix}0\\0\\-1\end{bmatrix}$, was dem unbewegten Koordinatensystem des Betrachters entspricht (auf der z-Achse die Erdbeschleunigung).
+			
 	%
 	%
-	\subsection{Kontrollgruppe}
-	%
-	%
-	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
+	\subsection{Interpretation}\todo{Sind die Messungen OK?}
 %
 %
 %Verifikation Translation
@@ -337,7 +342,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 		Die Verifikation der Translation stellt das zweite Experimental-Protokoll dar. Ziel der Messung ist es den kompletten Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Die in der Hypothese \vref{hypo:translation} festgelegten Anforderungen müssen erfüllt werden.
 		%
 		\begin{hypo}\label{hypo:translation}	    	
-			Nach einer linearen Translation um eine bestimmte Distanz \textit{x} misst das Konzept dieselbe. Die Abweichung ist dabei maximal \unit[5]{mm} betragen. Die Position des \gls{g:myrio} hat keinen Einfluss auf das Messergebnis haben.
+			Nach einer linearen Translation um eine bestimmte Distanz \textit{x} misst das Konzept dieselbe. Die Abweichung ist dabei maximal \unit[1]{cm}. Die Position des \gls{g:myrio} hat keinen Einfluss auf das Messergebnis.
 		\end{hypo}
 	%
 	%
@@ -427,7 +432,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 		\end{hypo}
 	%
 	%
-	\subsection{Material/Testumgebung}
+	\subsection{Material/Testumgebung}\label{ss:testumgebung_tran_rot}
 		Für eine aussagekräftige Messung muss eine Kniebewegung möglichst exakt nachgebildet werden können. Weiter sollten die Messungen reproduzierbar sein. Für diesen Zweck wurde eigens eine Mechanik konstruiert und aufgebaut.\par 
 		%
 		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Der Aufbau erlaubt es einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontal Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht. Für das errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät angebracht, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung \vref{img:messaufbau_tran_rot} ersichtlich, wohingegen die Tabelle \vref{tab:messmittel_tran_rot} alle verwendeten Messinstrumente enthält.
