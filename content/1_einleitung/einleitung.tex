@@ -105,4 +105,16 @@ In der letzten betrachteten Arbeit der Universität Coimbra in Portugal, wurde da
 	\end{itemize}
 	%
 	Weiter wurde diverse Werkzeuge zur Erzeugung der Dokumentation eingesetzt, die jedoch keinen wesentlichen Einfluss auf das Projekt haben.
+%
+%
+% Angenäherter Bewegungsablauf
+\section{Angenäherter Bewegungsablauf} \todo{umschreiben, ergänzen} 
+	Ein Knie hat nur, gegeben durch das Kreuzband\footnote{für detaillierte Erläuterungen sei auf den Abschnitt \vref{s:funktion_kreuzband} verwiesen}, einen beschränkten Bewegungsfreiraum. Diese Einschränkung erlaubt es die geforderte Messung und dadurch das Konzept stark zu vereinfachen. Als Ausgangslage für die Approximation dienen dabei Messungen\footnote{Die Messungen wurden mit Hilfe eines Massstabs durchgeführt und haben keinen Anspruch auf hohe Genauigkeit} an einen realen Knie, die folgende Fakten zu Tage brachten:
+	\begin{itemize}
+		\item Horizontale Auslenkungen y von $\pm$\unit[5]{cm}
+		\item Eine Auslenkung in x-Richtung von \unit[5]{mm}
+		\item Einen vertikalen Versatz z von bis zu \unit[7]{mm}
+	\end{itemize}
+	Die drei Auslenkungen kombiniert ergeben einen kreisbogenförmigen Verlauf, der in der Abbildung \vref{img:knie_auslenkung} rot punktiert dargestellt ist. Dadurch das für eine Beurteilung des Heilprozesses des Kreuzbands nur die \gls{g:transversalebene} interessiert und die vertikale Auslenkung z gering ausfällt, kann der Bewegungsablauf auf eine horizontale Bewegung in der X/Y-Ebene reduziert werden. Dieser angenäherter Bewegungsablauf dient als Basis für die kommende Algorithmusentwicklung. 
+	\image{content/3_konzept/image/knie_bewegung}{scale=0.6}{htbp}[Auslenkung Knie][img:knie_auslenkung]
 

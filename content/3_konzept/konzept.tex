@@ -14,31 +14,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konzept}\label{ch:konzept}
 %
-%
-% Angenäherter Bewegungsablauf
-\section{Angenäherter Bewegungsablauf}
-	Ein Knie hat nur, gegeben durch das Kreuzband\footnote{für detaillierte Erläuterungen sei auf den Abschnitt \vref{s:funktion_kreuzband} verwiesen}, einen beschränkten Bewegungsfreiraum. Diese Einschränkung erlaubt es die geforderte Messung und dadurch das Konzept stark zu vereinfachen. Als Ausgangslage für die Approximation dienen dabei Messungen\footnote{Die Messungen wurden mit Hilfe eines Massstabs durchgeführt und haben keinen Anspruch auf hohe Genauigkeit} an einen realen Knie, die folgende Fakten zu Tage brachten:
-	\begin{itemize}
-		\item Horizontale Auslenkungen y von $\pm$\unit[5]{cm}
-		\item Eine Auslenkung in x-Richtung von \unit[5]{mm}
-		\item Einen vertikalen Versatz z von bis zu \unit[7]{mm}
-	\end{itemize}
-	Die drei Auslenkungen kombiniert ergeben einen kreisbogenförmigen Verlauf, der in der Abbildung \vref{img:knie_auslenkung} rot punktiert dargestellt ist. Dadurch das für eine Beurteilung des Heilprozesses des Kreuzbands nur die \gls{g:transversalebene} interessiert und die vertikale Auslenkung z gering ausfällt, kann der Bewegungsablauf auf eine horizontale Bewegung in der X/Y-Ebene reduziert werden. Dieser angenäherter Bewegungsablauf dient als Basis für die kommende Algorithmusentwicklung. 
-	\image{content/3_konzept/image/knie_bewegung}{scale=0.6}{htbp}[Auslenkung Knie][img:knie_auslenkung]
-	
-	
-	
-
-%
 % Blockdiagramm
-\section{Blockdiagramm}\label{s:blockdiagramm}
+\section{Algoritmus}\label{s:blockdiagramm}
 Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurden wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie haben wir uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
 Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit muss zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten sind nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
 % Blockdiagramm
 \image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=0.9,angle=90}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
-\todo{Bildposition, Grösse besser}
+\todo{Bildposition, Grösse besser, Bild ändern}
 %
 % Filterung
 \subsection{Tiefpass-Filterung}
@@ -66,8 +50,8 @@ Zum Entwurf des Filters müssen zuerst einige Spezifikationen des Filters festgel
 Zum Entwurf des Filters wurde die einfachste sogenannte Fenstermethode gewählt. Bei dieser Methode geht man vom idealen Frequenzgang des Filters aus. Dieser Frequenzgang hat im Falle eines \gls{ac:tp}-Filters bis zur Durchlassfrequenz f\low{pass} den Wert 1, bei grösseren Frequenzen den Wert 0. Aus dem Frequenzgang H\low{ideal}($e^{j\Omega}$) kann man mit der inversen Fourier-Analyse auf die Impulsantwort h\low{ideal}(n) des Filters schliessen wie in Gleichung \vref{eq:invfourier} aus \cite{lit:vongruenigen} beschrieben.
 %
 \formula{
-h_{ideal}(n) = \frac{1}{2\pi}\int_{-\pi}^{\pi} H_{ideal}(e^{j\Omega})*e^{j\Omega n}d\Omega\\
-\Omega = k\frac{2\pi}{N}
+h_{ideal}(n) &= \frac{1}{2\pi}\int_{-\pi}^{\pi} H_{ideal}(e^{j\Omega})*e^{j\Omega n}d\Omega\\
+\Omega &= k\frac{2\pi}{N}
 }{
 h_{ideal} & ideale Impulsantwort\\
 H_{ideal} & idealer Frequenzgang\\
@@ -113,7 +97,7 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordin
 }[eq:cross]
 %
 % Verzögerung
-\subsection{Berechnung der Bewegungsbeschleunigung}
+\subsection{Berechnung der Bewegungsbeschleunigung} \todo{anpassen, Verzögerung erwähnen beschreiben}
 Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Zum einen kann die berechnete Erdbeschleunigung am Sensor von der gemessenen Beschleunigung am Sensor subtrahiert werden. Die gemessene Beschleunigung am Sensor beinhaltet bekanntlich die Erdbeschleunigung sowie die benötigte Beschleunigung der Bewegung. Ein weiterer Ansatz ist die zusätzliche Hochpassfilterung der gemessenen Daten. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden.\par
 %
 Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung verhält sich nach den Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter wie in Gleichung \vref{eq:delay} aufgezeigt.
@@ -126,17 +110,17 @@ n_{b} & Anzahl Filterkoeffizienten
 }[eq:delay]
 %
 % Subtraktion
-\subsubsection*{Verzögerung und Subtraktion}
-Die durch die Tiefpass-Filterung berechnete Erdbeschleunigung kann nicht direkt von der gemessenen Beschleunigung am Sensor abgezogen werden. Dies aus dem vorhin beschriebene Grund, dass jede Filterung eine Verzögerung des Signals bewirkt. Die gemessene Beschleunigung am Sensor muss also zuerst um die zuvor berechnete Anzahl Samples aufgrund der Anzahl Filterkoeffizienten verzögert werden. Dies kann man mit einem einfachen Verzögerungselement erreichen. Die Funktion eines solchen Elementes ist in Abbildung \vref{img:delay} dargestellt.\par
-%
-% Verzögerungselement
-\image{content/3_konzept/image/Verzoegerungselement}{scale=1}{htbp}[Verzögerungselement][img:delay]
-%
-Nachdem das gemessene Signal zusätzlich verzögert wurde, kann das gefilterte Signal mit der beinhaltenden Erdbeschleunigungskomponente nun vom verzögerten Signal abgezogen werden um die Beschleunigung der Bewegung zu erhalten.
+%\subsubsection*{Verzögerung und Subtraktion}
+%Die durch die Tiefpass-Filterung berechnete Erdbeschleunigung kann nicht direkt von der gemessenen Beschleunigung am Sensor abgezogen werden. Dies aus dem vorhin beschriebene Grund, dass jede Filterung eine Verzögerung des Signals bewirkt. Die gemessene Beschleunigung am Sensor muss also zuerst um die zuvor berechnete Anzahl Samples aufgrund der Anzahl Filterkoeffizienten verzögert werden. Dies kann man mit einem einfachen Verzögerungselement erreichen. Die Funktion eines solchen Elementes ist in Abbildung \vref{img:delay} dargestellt.\par
+%%
+%% Verzögerungselement
+%\image{content/3_konzept/image/Verzoegerungselement}{scale=1}{htbp}[Verzögerungselement][img:delay]
+%%
+%Nachdem das gemessene Signal zusätzlich verzögert wurde, kann das gefilterte Signal mit der beinhaltenden Erdbeschleunigungskomponente nun vom verzögerten Signal abgezogen werden um die Beschleunigung der Bewegung zu erhalten.
 %
 % Hochpassfilterung
-\subsubsection*{Hochpassfilterung}
-Ein weiterer Ansatz ist, dass die gemessenen Daten mit einem Hochpass gefiltert werden. Die Beschleunigungskomponenten der Bewegung können somit von der als DC-Komponente auftretenden Erdbeschleunigung getrennt werden. Dabei ist zu beachten, dass die Filterlänge des Tiefpassfilters und des Hochpassfilters gleich lang ist. Dies aus demselben oben genannten Grund, dass jede Filterung eine Verzögerung des gefilterten Signals zur Ursache hat. Da die Erdbeschleunigung zur Kompensation der Orientierung verwendet wird und später wie im Abschnitt \vref{sub:rot} gezeigt auf die Bewegungsbeschleunigung angewendet wird muss die Verzögerung beider Signale gleich ausfallen.
+%\subsubsection*{Hochpassfilterung}
+%Ein weiterer Ansatz ist, dass die gemessenen Daten mit einem Hochpass gefiltert werden. Die Beschleunigungskomponenten der Bewegung können somit von der als DC-Komponente auftretenden Erdbeschleunigung getrennt werden. Dabei ist zu beachten, dass die Filterlänge des Tiefpassfilters und des Hochpassfilters gleich lang ist. Dies aus demselben oben genannten Grund, dass jede Filterung eine Verzögerung des gefilterten Signals zur Ursache hat. Da die Erdbeschleunigung zur Kompensation der Orientierung verwendet wird und später wie im Abschnitt \vref{sub:rot} gezeigt auf die Bewegungsbeschleunigung angewendet wird muss die Verzögerung beider Signale gleich ausfallen.
 %
 % Rotation
 \subsection{Rotation}\label{sub:rot}
@@ -144,8 +128,8 @@ Die Rotation wird benötigt, um das Koordinatensystem des Sensors in das Koordina
 % 
 Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation ins Koordinatensystem des Betrachters mit einer einfachen Multiplikation erreicht werden. Der Output ist dabei die Beschleunigung der Bewegung im definierten Betrachtungssystem. Die Orientierung des Beschleunigungssensors am Knie, die beliebig ist, ist somit kompensiert.
 %
-% adaptive Filterung
-\subsection{Adaptive Filterung}
+% Bewegungsdetektion
+\subsection{Bewegungsdetektion}
 %
 % Integration
 \subsection{Integration}
@@ -272,7 +256,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	    	\end{figure}\par
 	    	%	
 	%
-	\subsection{myRIO Posture Estimation}
+	\subsection{myRIO Posture Estimation} \todo{gut darauf eingehen}
 %
 %
 %Verifikation Rotation
@@ -364,8 +348,8 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 		%
 		\input{content/3_konzept/table/messmittel}
 		%
-		\subsubsection*{Translationsrichtung}
-			Durch die Tatsache das der Kreuztisch M\low{1} über keine \acrshort{ac:cnc}-Steuerung verfügt, können keine konstante statischen Bewegungen in der X/Y-Ebene gefahren werden. Es wird deshalb auf ein Freiheitsgrad verzichtet und nur eine Translation in X-Richtung vorgesehen. 
+		\subsubsection*{Translationsrichtung} \todo{umschreiben, Zeit erwähnen}
+			Durch die Tatsache das der Kreuztisch M\low{1} über keine \acrshort{ac:cnc}-Steuerung verfügt, können keine konstante statischen Bewegungen in der X/Y-Ebene gefahren werden. Es wird deshalb auf ein Freiheitsgrad verzichtet und nur eine Translation in Y-Richtung vorgesehen. 
 		%
 		\subsubsection*{Translationsgeschwindigkeit}
 			Die Translationsgeschwindigkeit ist abhängig vom Bediener des Kreuztisches. Es kann deshalb keine abschliessende Aussage über die Geschwindigkeit gemacht werden. Die subjektiv wahrgenommene Bewegung wird lediglich in die drei Stufen langsam, mittel und schnell eingestuft.
@@ -385,7 +369,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 			%
 			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
 		%
-		\subsubsection*{Testbeschreibungen}
+		\subsubsection*{Testbeschreibungen} \todo{erwartete gefahrenete Achse, Beschriftung Achse bei Bild}
 			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} unterschiedlich positioniert. Um die Anzahl Messungen in eine überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
 			%
 			\begin{itemize}
