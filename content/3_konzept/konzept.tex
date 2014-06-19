@@ -16,9 +16,9 @@
 %
 % Blockdiagramm
 \section{Algoritmus}\label{s:blockdiagramm}
-Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurden wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie haben wir uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
+Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{subsec:myposture} extrahiert werden. Dort wurden eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben wir uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
-Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit muss zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten sind nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
+Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Die statische Erdbeschleunigung kann dafür gebraucht werden. Diese zeigt stets in Richtung der z-Achse unseres Koordinatensystem des Betrachters.  Die zu detektierende Bewegung wir nur in einer Ebene betrachtet. In diesem Falle in der x-y-Ebene. Senkrecht zu dieser Ebene steht die statische Erdbeschleunigung. Die Beschleunigungskomponenten der x- und y-Achse sind noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
 % Blockdiagramm
 \image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=0.9,angle=90}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
@@ -26,9 +26,9 @@ Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achs
 %
 % Filterung
 \subsection{Tiefpass-Filterung}
-Als erste Aufgabe werden die Beschleunigungsdaten aufgetrennt in die Erdbeschleunigung und die Beschleunigung der Bewegung. Beide Komponenten können wir weiterverwenden. Die Erdbeschleunigung ermöglicht das Schätzen der Orientierung (Abschnitt \vref{subsec:orientierungsschätzung}), die Beschleunigung der Bewegung wird zum Schätzen der Position mittels doppelter Integration verwendet.\par
+Die aufgenommenen Beschleunigungsdaten werden aufgetrennt in die Erdbeschleunigung und die Beschleunigung der Bewegung. Die Erdbeschleunigung ermöglicht das Schätzen der Orientierung wie dies in Abschnitt \vref{subsec:orientierungsschätzung} genauer erklärt ist. \par
 %
-Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine DC-Komponente betrachtet werden. Mit einer Tiefpass-Filterung wird somit einfach die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt. Als Tiefpassfilter wurde ein \todo{Überprüfen ob Filterwahl gut} \gls{ac:fir}-Filter gewählt. 
+Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine reine DC-Komponente betrachtet werden. Mit einer Tiefpass-Filterung wird somit einfach die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt. Als Tiefpassfilter wurde ein \todo{Überprüfen ob Filterwahl gut} \gls{ac:fir}-Filter gewählt. 
 %
 % Filterentwurf
 \subsubsection*{Filterentwurf}
@@ -69,11 +69,35 @@ w & Fensterfunktion
 }[eq:impfir]
 %
 % Schätzung der Orientierung
-\subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}\todo{Bezugssystem XYZ erläutern}
-Um die Bewegung des Sensors im Bezugssystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor a\low{g} und der gemessenen Erdbeschleunigung des Sensors kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel sowie auf die Richtung der Rotationsachse zwischen den beiden Betrachtungssystemen geschlossen werden.
+\subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
+Um die Bewegung des Sensors im Koordinatensystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor $\overrightarrow{a_g}$ und der gemessenen Erdbeschleunigung des Sensors $\overrightarrow{a_{sens}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\Phi$ sowie auf die Richtung der Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden. Dies ist in Abbildung \vref{img:Vektor} illustriert. Mit dem Drehwinkel $\Phi$ und der Rotationsachse $\overrightarrow{n}$ kann die im Kapitel \vref{ch:grundlagen} in Abschnitt \vref{sub:rot} beschriebene Rotationsmatrix aufgestellt werden.  
+%
+\image{content/3_konzept/image/Vektor_bearb}{scale=0.7}{htbp}[Rotation][img:Vektor]
+
+%
+\subsubsection*{Betrachtungssystem}
+Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters sowie das Koordinatensystem des myRIO 1900 aufgezeigt. Das Koordinatensystem des Betrachters liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung resultieren \gls{g:transversal}e Bewegungen nach links und rechts durch eine Abnahme bzw. Zunahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
+
+\begin{figure}[htbp]
+        \centering
+        \begin{subfigure}[htbp]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{content/3_konzept/image/koordinatensystem_betrachter}
+                \caption{Koordinatensystem des Betrachters}
+                \label{img:koord_betrachter}
+        \end{subfigure}%
+        \quad \quad
+        \begin{subfigure}[htbp]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{content/3_konzept/image/koordinatensystem_myRIO}
+                \caption{Koordinatensystem myRIO 1900}
+                \label{img:koord_myRIO}
+        \end{subfigure}        
+        \caption{Koordinatensystem}\label{img:koordinatensystem}
+\end{figure}    
+%
+Das myRIO 1900 hat eine beliebige Ausrichtung im Raum. Durch die Montage des Beschleunigungssensors sind die Achsen wie in Abbildung \vref{img:koord_myRIO} ersichtlich gegeben.
 %
 \subsubsection*{Drehwinkel}
-Der Drehwinkel entspricht gerade dem Zwischenwinkel der beiden Vektoren a\low{g} sowie den Beschleunigungsdaten a\low{sens}. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dieses wie in Gleichung \vref{eq:dotp} möglich.
+Der Drehwinkel wie in Abbildung \vref{img:Vektor} gesehen entspricht gerade dem Zwischenwinkel der beiden Vektoren $\overrightarrow{a\low{g}}$ sowie den Beschleunigungsdaten $\overrightarrow{a\low{sens}}$. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dies wie in Gleichung \vref{eq:dotp} dargestellt möglich.
 %
 \formula{
 \overrightarrow{a\low{g}}*\overrightarrow{a\low{sens}} = \mid \overrightarrow{a\low{g}}\mid *\mid \overrightarrow{a\low{sens}}\mid *\cos(\phi)\\
@@ -86,7 +110,7 @@ Der Drehwinkel entspricht gerade dem Zwischenwinkel der beiden Vektoren a\low{g}
 }[eq:dotp]
 %
 \subsubsection*{Rotationsachse}
-Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor a\low{g} und dem vom Beschleunigungssensor aufgenommenem Vektor, stehen. Dazu verwenden dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser stets Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird somit wie in Gleichung \ref{eq:cross} berechnet.
+Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor $\overrightarrow{a\low{g}}$ und dem vom Beschleunigungssensor aufgenommenem Vektor $\overrightarrow{a\low{sens}}$ in welchem die Erdbeschleunigung auf die verschiedenen Komponenten verteilt ist, stehen. Dazu dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser die Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird wie in Gleichung \ref{eq:cross} berechnet.
 %
 \formula{
 \overrightarrow{n} = \frac{\overrightarrow{a\low{g}} \times\overrightarrow{a\low{sens}}}{ \mid \overrightarrow{a\low{g}} \times \overrightarrow{a\low{sens}}\mid}
@@ -98,7 +122,7 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordin
 %
 % Verzögerung
 \subsection{Berechnung der Bewegungsbeschleunigung} \todo{anpassen, Verzögerung erwähnen beschreiben}
-Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Zum einen kann die berechnete Erdbeschleunigung am Sensor von der gemessenen Beschleunigung am Sensor subtrahiert werden. Die gemessene Beschleunigung am Sensor beinhaltet bekanntlich die Erdbeschleunigung sowie die benötigte Beschleunigung der Bewegung. Ein weiterer Ansatz ist die zusätzliche Hochpassfilterung der gemessenen Daten. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden.\par
+Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Zum einen kann die berechnete Erdbeschleunigung am Sensor von der gemessenen Beschleunigung am Sensor subtrahiert werden. Die gemessene Beschleunigung am Sensor beinhaltet bekanntlich die Erdbeschleunigung sowie die benötigte Beschleunigung der Bewegung. Ein weiterer Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzliche eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden. Da sich die Autoren nach Absprache mit den Betreuern nur auf die Bewegung in einer Ebene beschränken ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Dabei ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist die Erdbeschleunigung vorhanden. \par
 %
 Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung verhält sich nach den Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter wie in Gleichung \vref{eq:delay} aufgezeigt.
 %
@@ -256,7 +280,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	    	\end{figure}\par
 	    	%	
 	%
-	\subsection{myRIO Posture Estimation} \todo{gut darauf eingehen}
+	\subsection{myRIO Posture Estimation}\label{subsec:myposture} \todo{gut darauf eingehen}
 %
 %
 %Verifikation Rotation
