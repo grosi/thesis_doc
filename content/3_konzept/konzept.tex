@@ -13,10 +13,25 @@
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konzept}\label{ch:konzept}
+%
+%
+% Angenäherter Bewegungsablauf
+\section{Angenäherter Bewegungsablauf}
+	Ein Knie hat nur, gegeben durch das Kreuzband\footnote{für detaillierte Erläuterungen sei auf den Abschnitt \vref{s:funktion_kreuzband} verwiesen}, einen beschränkten Bewegungsfreiraum. Diese Einschränkung erlaubt es die geforderte Messung und dadurch das Konzept stark zu vereinfachen. Als Ausgangslage für die Approximation dienen dabei Messungen\footnote{Die Messungen wurden mit Hilfe eines Massstabs durchgeführt und haben keinen Anspruch auf hohe Genauigkeit} an einen realen Knie, die folgende Fakten zu Tage brachten:
+	\begin{itemize}
+		\item Horizontale Auslenkungen y von $\pm$\unit[5]{cm}
+		\item Eine Auslenkung in x-Richtung von \unit[5]{mm}
+		\item Einen vertikalen Versatz z von bis zu \unit[7]{mm}
+	\end{itemize}
+	Die drei Auslenkungen kombiniert ergeben einen kreisbogenförmigen Verlauf, der in der Abbildung \vref{img:knie_auslenkung} rot punktiert dargestellt ist. Dadurch das für eine Beurteilung des Heilprozesses des Kreuzbands nur die \gls{g:transversalebene} interessiert und die vertikale Auslenkung z gering ausfällt, kann der Bewegungsablauf auf eine horizontale Bewegung in der X/Y-Ebene reduziert werden. Dieser angenäherter Bewegungsablauf dient als Basis für die kommende Algorithmusentwicklung. 
+	\image{content/3_konzept/image/knie_bewegung}{scale=0.6}{htbp}[Auslenkung Knie][img:knie_auslenkung]
+	
+	
+	
 
 %
 % Blockdiagramm
-\section{Blockdiagramm}
+\section{Blockdiagramm}\label{s:blockdiagramm}
 Das Konzept kann teilweise aus dem beschriebenen Beispielprojekt in \todo{Referenz hinzufügen} extrahiert werden. Dort wurden wie schon gesagt eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie haben wir uns entschieden die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
 Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Die aufgezeichneten Beschleunigungsdaten enthalten zum einen die Erdbeschleunigung sowie zum andern die Bewegungsbeschleunigung. Uns  interessieren jedoch nur die Beschleunigung der Bewegung. Somit muss zuerst die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Anschliessend wird die Orientierung des Sensors, welcher in beliebiger weise im Raum steht, kompensiert. Hierbei ist als Bezugssystem die Erde gewählt (z-Achse entspricht der Erdbeschleunigung). Die kompensierten Beschleunigungsdaten sind nun noch zweimal zu integrieren, um auf die Bewegung schliessen zu können. Das gesamte Blockdiagramm ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
@@ -26,7 +41,6 @@ Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achs
 \todo{Bildposition, Grösse besser}
 %
 % Filterung
-\newpage
 \subsection{Tiefpass-Filterung}
 Als erste Aufgabe werden die Beschleunigungsdaten aufgetrennt in die Erdbeschleunigung und die Beschleunigung der Bewegung. Beide Komponenten können wir weiterverwenden. Die Erdbeschleunigung ermöglicht das Schätzen der Orientierung (Abschnitt \vref{subsec:orientierungsschätzung}), die Beschleunigung der Bewegung wird zum Schätzen der Position mittels doppelter Integration verwendet.\par
 %
@@ -71,7 +85,7 @@ w & Fensterfunktion
 }[eq:impfir]
 %
 % Schätzung der Orientierung
-\subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
+\subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}\todo{Bezugssystem XYZ erläutern}
 Um die Bewegung des Sensors im Bezugssystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Mit dem Gravitätsvektor a\low{g} und der gemessenen Erdbeschleunigung des Sensors kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel sowie auf die Richtung der Rotationsachse zwischen den beiden Betrachtungssystemen geschlossen werden.
 %
 \subsubsection*{Drehwinkel}
@@ -88,7 +102,7 @@ Der Drehwinkel entspricht gerade dem Zwischenwinkel der beiden Vektoren a\low{g}
 }[eq:dotp]
 %
 \subsubsection*{Rotationsachse}
-Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor a\low{g} und dem vom Beschleunigungssensor aufgenommenem Vektor, stehen. Dazu verwenden dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser stets Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird somit wie in Gleichung \vref{eq:cross} berechnet.
+Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor a\low{g} und dem vom Beschleunigungssensor aufgenommenem Vektor, stehen. Dazu verwenden dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser stets Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird somit wie in Gleichung \ref{eq:cross} berechnet.
 %
 \formula{
 \overrightarrow{n} = \frac{\overrightarrow{a\low{g}} \times\overrightarrow{a\low{sens}}}{ \mid \overrightarrow{a\low{g}} \times \overrightarrow{a\low{sens}}\mid}
@@ -261,98 +275,21 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	\subsection{myRIO Posture Estimation}
 %
 %
-%Verifikation Translation
-\section{Verifikation Translation}\label{s:verifikation_translation}
-	%
-	%
-	\subsection{Grund/Zweck der Messung}
-		Die Verifikation der Translation stellt das erste von drei Experimental-Protokollen\footnote{die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_rotation} und \vref{s:verifikation_transaltion_rotation} zu finden} dar, die folgend für die Validierung des Konzepts als Ausgangslagen dienen sollen.  Ziel der Messung ist es den Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Bei auftretenden Diskrepanzen muss das Konzept überarbeitet und dieses Protokoll wiederholt werden.
-	%
-	%
-	\subsection{Material/Testumgebung}\label{ss:material_translation}
-		Die Messung muss reproduzierbar sein. Deshalb muss eine Testumgebung gewährleistet sein, die für eine Simulation einer geradlinigen Translation geeignet ist. Diese Voraussetzung erfüllt ein Kreuztisch einer Standbohr- / Fräsmaschine. Damit können vorgegebene Pfade präzise in der X/Y-Ebene gefahren werden.\par 
-		%
-		Für die Messung wird der Kreuztische der XXX aus der mechanischen Abteilung verwendet. Weiter kommt als zentrale Komponente das \gls{g:myrio} zum Einsatz. Ein vollständige Auflistung aller verwendeten Mittel ist der Tabelle \vref{tab:messmittel_translation} zu entnehmen. Der reale Aufbau der Umgebung entspricht der Abbildung XXX.
-		%
-		\input{content/3_konzept/table/messmittel}
-		%
-		\subsubsection*{Translationsrichtung}
-			Durch die Tatsache das der Kreuztisch M\low{1} über keine \acrshort{ac:cnc}-Steuerung verfügt können keine konstante statischen Bewegungen in der X/Y-Ebene gefahren werden. Es wird deshalb auf ein Freiheitsgrad verzichtet und nur eine Translation in X-Richtung vorgesehen. 
-		%
-		\subsubsection*{Translationsgeschwindigkeit}
-			Die Translationsgeschwindigkeit ist abhängig vom Bediener des Kreuztisches. Es kann deshalb keine abschliessende Aussage über die Geschwindigkeit gemacht werden. Die subjektiv wahrgenommene Bewegung wird lediglich in die drei Stufen langsam, mittel und schnell eingestuft.
-	%
-	%
-	\subsection{Methoden}
-		%
-		\subsubsection*{Messgruppen}
-			Es werden zwei Messgruppen definiert. Die eine dient als Testgruppe und die andere als Kontrollgruppe. 
-			%
-			\begin{itemize}
-				%
-				\item \textbf{Testgruppe} Die Testgruppe repräsentiert das \gls{g:myrio}, das zur Aufzeichnung der Beschleunigungsdaten benötigt wird. Dabei werden die Daten nur gespeichert und nicht verarbeitet\footnote{Für detailliertere Informationen zur Aufzeichnung sei auf den Abschnitt \vref{ss:rohdaten_aufzeichnen} verwiesen}. Die Signalverarbeitung erfolgt zu einem späteren Zeitpunkt auf einem Computer mit Hilfe von \gls{g:matlab}.
-				%
-				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit der Kreuztischskala dar. Sie ist gleichzeitig die Kontrollgruppe, die schlussendlich bei der Interpretation als Ausgangslage gilt.
-			\end{itemize}
-			%
-			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
-		%
-		\subsubsection*{Testbeschreibungen}
-			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} unterschiedlich positioniert. Um die Anzahl Messungen in eine überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
-			%
-			\begin{itemize}
-				\item \textbf{X-Achse Position} Das \gls{g:myrio} wird flach auf dem Kreuztisch angebracht. Dabei zeigt die X-Achse des Beschleunigungssensors nach unten, sprich gleichgerichtet wie der Gravitationsvektor. Relative Beschleunigungen erfolgen in der X/Y-Ebene in X-Richtung des Kreuztisches. Eine schematische Darstellung der Befestigung kann der Abbildung \vref{img:x_achse} entnommen werden.
-				\image{content/3_konzept/image/testaufbau_translation_position_x}{scale=0.8}{htbp}[X-Achsen Position][img:x_achse]
-				%
-				\item \textbf{Y-Achse Position} Bei der zweiten Position wird das \gls{g:myrio} so angebracht, das die Y-Achse des Beschleunigungssensors parallel zum Gravitationsvektor steht. Gemessene Beschleunigungen wirken sich somit nur auf die X- und Z-Achse aus. Die Abbildung \vref{img:y_achse} verdeutlicht diesen Aufbau.
-				\image{content/3_konzept/image/testaufbau_translation_position_y}{scale=0.8}{htbp}[Y-Achsen Position][img:y_achse]
-				%
-				\item \textbf{Z-Achse Position} Abschliessend erfolgt noch eine Positionierung mit der Z-Achse des Beschleunigungssensors in Richtung des Gravitationsvektors (gleichgerichtet). Aus dieser Konstellation ergeben sich nur Beschleunigungen auf die X- und Y-Achsen des Sensors. Die Befestigungsrichtung des \gls{g:myrio}s ist in der Abbildung \vref{img:z_achse} zu sehen.
-				\image{content/3_konzept/image/testaufbau_translation_position_z}{scale=0.8}{htbp}[Z-Achsen Position][img:z_achse]
-			\end{itemize}\par 
-			%
-			Wie im vorherigen Abschnitt \vref{ss:material_translation} erörtert, kann die Translationgeschwindigkeit nicht messtechnisch bestimmt oder gemessen werden. Daher werden lediglich drei Bereiche definiert:
-			\begin{itemize}
-				\item \textbf{langsam} Die Translation ist nicht schneller als XXX\todo{Wert eintragen} in der Minute. Diese Vorgabe wird nur rudimentär mit einer Zeitmessung verifiziert.  
-				\item \textbf{mittel} Der Kreuztisch wird schneller als die Stufe langsam bewegt, jedoch langsamer als die folgende Stufe schnell.
-				\item \textbf{schnell} Maximale Geschwindigkeit, die mit dem Kreuztisch gefahren werden kann. Auf eine Kontrolle dieser Aussage wird verzichtet, da dies sehr bedienerabhänging ist.
-			\end{itemize}\par
-			%
-			Insgesamt ergeben sich durch die verschiedenen Positionierungen und Geschwindigkeiten 9 verschiedene Messungen.\par 
-			%
-%			Für die Aufnahme der Messwerte kommen abhängig von der Messgruppe unterschiedliche Messmethodiken zum Einsatz:
-%			\begin{itemize}
-%				\item \textbf{Testgruppe}
-%				\item \textbf{Kontrollgruppe}
-%			\end{itemize}
-			Bei der Durchführungen müssen folgende Vorgaben eingehalten werden:
-			%
-			\begin{itemize}
-				\item Jede Messung ist 10 mal zu wiederholen (ergibt insgesamt 90 Messungen für dieses Protokoll)
-				\item Die Bedienung des Kreuztisches muss durch unterschiedliche Personen erfolgen
-				\item Die Translation beträgt immer \unit[200]{mm}
-				\item Die Raumtemperatur sollte \unit[25]{°C} betragen
-			\end{itemize}
-		%
-		\subsubsection*{Kontrollgruppe Messmethodik}
-			Die Aufnahme der Pfadlänge erfolgt direkt mit der Messskala am Kreuztisch. Die Skala hat eine Auflösung von XXX\todo{ergäntzen}, was eine sehr präzises Messer ermöglicht. Die Abbildung XXX zeigt die verwendet Messskala des Tisches.
-			\todo{Das Ablesen von der Skala -> Foto/Grafik}
-		%
-		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
-	%
-	%
-	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
-%
-%
 %Verifikation Rotation
-\section{Verifikation Rotation}\label{s:verifikation_rotation}
+\section{Verifikation Schätzung Rotationswinkel und Rotation}\label{s:verifikation_rotation}
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
-		Das Auslenken des Knies beinhaltet neben einer Translation auch eine Rotation. Daher muss der Algorithmus auch in dieser Hinsicht verifiziert werden. Das Ziel dieser Messung ist es wiederum die Genauigkeit und Dynamik des Konzept zu überprüfen und mit den Anforderungen zu vergleichen. 
+		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{siehe Abschnitt \vref{s:blockdiagramm}} und das erste von drei Experimental-Protokollen\footnote{die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
+		%
+		\begin{hypo}\label{hypo:rotation}	    	
+			Nach einer einmaligen Rotation haben die Komponenten X und Y den Wert \unitfrac[0]{m}{s\high{2}} und die Z-Komponente \unitfrac[9.81]{m}{s\high{2}}. Die Abweichung ist dabei nicht grösser als \unitfrac[0.01]{m}{s\high{2}}. WINKEL NOCH ERWÄHNEN
+		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}
+		%\image{content/3_konzept/image/messaufbau_tran_rot}{scale=0.2}{htbp}[Messaufbau Translation, Rotation überlagert][img:messaufbau_tran_rot]
+			\input{content/3_konzept/table/messmittel_rot}	
 		
 %		\input{content/3_konzept/table/messmittel}	
 %		\image{content/3_konzept/image/messaufbau}{scale=0.6}{htbp}[Messaufbau - Dimensionen][img:messaufbau_dimensionen]
@@ -408,12 +345,102 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
 %
 %
+%Verifikation Translation
+\section{Verifikation Translation}\label{s:verifikation_translation}
+	%
+	%
+	\subsection{Grund/Zweck der Messung}
+		Die Verifikation der Translation stellt das zweite Experimental-Protokoll dar. Ziel der Messung ist es den kompletten Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Die in der Hypothese \vref{hypo:translation} festgelegten Anforderungen müssen erfüllt werden.
+		%
+		\begin{hypo}\label{hypo:translation}	    	
+			Nach einer linearen Translation um eine bestimmte Distanz \textit{x} misst das Konzept dieselbe. Die Abweichung ist dabei maximal \unit[5]{mm} betragen. Die Position des \gls{g:myrio} hat keinen Einfluss auf das Messergebnis haben.
+		\end{hypo}
+	%
+	%
+	\subsection{Material/Testumgebung}\label{ss:material_translation}
+		Die Messung muss reproduzierbar sein. Deshalb muss eine Testumgebung gewährleistet sein, die für eine Simulation einer geradlinigen Translation geeignet ist. Diese Voraussetzung erfüllt ein Kreuztisch einer Standbohr- / Fräsmaschine. Damit können vorgegebene Pfade präzise in der X/Y-Ebene gefahren werden.\par 
+		%
+		Für die Messung wird der Kreuztische der XXX aus der mechanischen Abteilung verwendet. Weiter kommt als zentrale Komponente das \gls{g:myrio} zum Einsatz. Ein vollständige Auflistung aller verwendeten Mittel ist der Tabelle \vref{tab:messmittel_translation} zu entnehmen. Der reale Aufbau der Umgebung entspricht der Abbildung XXX.
+		%
+		\input{content/3_konzept/table/messmittel}
+		%
+		\subsubsection*{Translationsrichtung}
+			Durch die Tatsache das der Kreuztisch M\low{1} über keine \acrshort{ac:cnc}-Steuerung verfügt, können keine konstante statischen Bewegungen in der X/Y-Ebene gefahren werden. Es wird deshalb auf ein Freiheitsgrad verzichtet und nur eine Translation in X-Richtung vorgesehen. 
+		%
+		\subsubsection*{Translationsgeschwindigkeit}
+			Die Translationsgeschwindigkeit ist abhängig vom Bediener des Kreuztisches. Es kann deshalb keine abschliessende Aussage über die Geschwindigkeit gemacht werden. Die subjektiv wahrgenommene Bewegung wird lediglich in die drei Stufen langsam, mittel und schnell eingestuft.
+	%
+	%
+	\subsection{Methoden}
+		%
+		\subsubsection*{Messgruppen}
+			Es werden zwei Messgruppen definiert. Die eine dient als Testgruppe und die andere als Kontrollgruppe. 
+			%
+			\begin{itemize}
+				%
+				\item \textbf{Testgruppe} Die Testgruppe repräsentiert das \gls{g:myrio}, das zur Aufzeichnung der Beschleunigungsdaten benötigt wird. Dabei werden die Daten nur gespeichert und nicht verarbeitet\footnote{Für detailliertere Informationen zur Aufzeichnung sei auf den Abschnitt \vref{ss:rohdaten_aufzeichnen} verwiesen}. Die Signalverarbeitung erfolgt zu einem späteren Zeitpunkt auf einem Computer mit Hilfe von \gls{g:matlab}.
+				%
+				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit der Kreuztischskala dar. Sie ist gleichzeitig die Kontrollgruppe, die schlussendlich bei der Interpretation als Ausgangslage gilt.
+			\end{itemize}
+			%
+			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
+		%
+		\subsubsection*{Testbeschreibungen}
+			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} unterschiedlich positioniert. Um die Anzahl Messungen in eine überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
+			%
+			\begin{itemize}
+				\item \textbf{X-Achse Position} Das \gls{g:myrio} wird flach auf dem Kreuztisch angebracht. Dabei zeigt die X-Achse des Beschleunigungssensors nach unten, sprich gleichgerichtet wie der Gravitationsvektor. Relative Beschleunigungen erfolgen in der X/Y-Ebene in X-Richtung des Kreuztisches. Eine schematische Darstellung der Befestigung kann der Abbildung \vref{img:x_achse} entnommen werden.
+				\image{content/3_konzept/image/testaufbau_translation_position_x}{scale=0.8}{htbp}[X-Achsen Position][img:x_achse]
+				%
+				\item \textbf{Y-Achse Position} Bei der zweiten Position wird das \gls{g:myrio} so angebracht, das die Y-Achse des Beschleunigungssensors parallel zum Gravitationsvektor steht. Gemessene Beschleunigungen wirken sich somit nur auf die X- und Z-Achse aus. Die Abbildung \vref{img:y_achse} verdeutlicht diesen Aufbau.
+				\image{content/3_konzept/image/testaufbau_translation_position_y}{scale=0.8}{htbp}[Y-Achsen Position][img:y_achse]
+				%
+				\item \textbf{Z-Achse Position} Abschliessend erfolgt noch eine Positionierung mit der Z-Achse des Beschleunigungssensors in Richtung des Gravitationsvektors (gleichgerichtet). Aus dieser Konstellation ergeben sich nur Beschleunigungen auf die X- und Y-Achsen des Sensors. Die Befestigungsrichtung des \gls{g:myrio}s ist in der Abbildung \vref{img:z_achse} zu sehen.
+				\image{content/3_konzept/image/testaufbau_translation_position_z}{scale=0.8}{htbp}[Z-Achsen Position][img:z_achse]
+			\end{itemize}\par 
+			%
+			Wie im vorherigen Abschnitt \vref{ss:material_translation} erörtert, kann die Translationgeschwindigkeit nicht messtechnisch bestimmt oder gemessen werden. Daher werden lediglich drei Bereiche definiert:
+			\begin{itemize}
+				\item \textbf{langsam} Die Translation ist nicht schneller als XXX\todo{Geschwindigkeit auf Wegzeit beziehen} in der Minute. Diese Vorgabe wird nur rudimentär mit einer Zeitmessung verifiziert.  
+				\item \textbf{mittel} Der Kreuztisch wird schneller als die Stufe langsam bewegt, jedoch langsamer als die folgende Stufe schnell.
+				\item \textbf{schnell} Maximale Geschwindigkeit, die mit dem Kreuztisch gefahren werden kann. Auf eine Kontrolle dieser Aussage wird verzichtet, da dies sehr bedienerabhänging ist.
+			\end{itemize}\par
+			%
+			Insgesamt ergeben sich durch die verschiedenen Positionierungen und Geschwindigkeiten 9 verschiedene Messungen.\par 
+			%
+%			Für die Aufnahme der Messwerte kommen abhängig von der Messgruppe unterschiedliche Messmethodiken zum Einsatz:
+%			\begin{itemize}
+%				\item \textbf{Testgruppe}
+%				\item \textbf{Kontrollgruppe}
+%			\end{itemize}
+			Bei der Durchführungen müssen folgende Vorgaben eingehalten werden:
+			%
+			\begin{itemize}
+				\item Jede Messung ist 5 mal zu wiederholen (ergibt insgesamt 45 Messungen für dieses Protokoll)
+				\item Die Bedienung des Kreuztisches muss durch unterschiedliche Personen erfolgen
+				\item Die Translation beträgt immer \unit[100]{mm}
+				\item Die Raumtemperatur sollte \unit[25]{°C} betragen
+			\end{itemize}
+		%
+		\subsubsection*{Kontrollgruppe Messmethodik}
+			Die Aufnahme der Pfadlänge erfolgt direkt mit der Messskala am Kreuztisch. Die Skala hat eine Auflösung von XXX\todo{ergäntzen}, was eine sehr präzises Messer ermöglicht. Die Abbildung XXX zeigt die verwendet Messskala des Tisches.
+			\todo{Das Ablesen von der Skala -> Foto/Grafik}
+		%
+		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
+	%
+	%
+	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
+%
+%
 %Verifikation Translation und Rotation überlagert
 \section{Verifikation Translation und Rotation überlagert}\label{s:verifikation_transaltion_rotation}
 	%
 	%
-	\subsection{Grund/Zweck der Messung}
-		Der Bewegungsablauf eines Knies umfasst eine Translation, die mit einer Rotation überlagert ist. Für eine abschliessende Überprüfung des Algorithmus sollen nun diese beiden Komponenten zeitgleich überprüft werden. Im Falle eines positiven Messergebnisse kann das Konzept, respektive der Algorithmus als geeignet betrachtet und implementiert werden.
+	\subsection{Grund/Zweck der Messung}\todo{anpassen an Abschnitt 3.1}
+		Der Bewegungsablauf eines Knies umfasst eine Translation, die mit einer Rotation überlagert ist. Für eine abschliessende Überprüfung des Algorithmus sollen nun diese beiden Komponenten zeitgleich überprüft werden. Im Falle eines positiven Messergebnisse kann das Konzept, respektive der Algorithmus als geeignet betrachtet und implementiert werden. Die Anforderungen an das Messergebnis sind in der Hypothese \vref{hypo:tran_rot} festgelegt.
+		\begin{hypo}\label{hypo:tran_rot}
+			Das Messergebnis ist eine Bewegung in der \gls{g:transversalebene}. Sie ist dabei eine Widerspiegelung des  reale Ablaufs mit einer Abweichung von maximal \unit[5]{mm}.
+		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}
@@ -442,7 +469,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
 			Es werden Messungen bei unterschiedlichen Ausgangslagen durchgeführt. Sie unterscheiden sich in den Punkten Geschwindigkeit und Auslenkung. Dabei werden die Messungen auf insgesamt drei Auslenkungen und drei Geschwindigkeiten beschränkt.\par
 			%
-			Die Auslenkung $\alpha$ kann durch das Verstellen der Querstrebe (siehe Abbildung XXX) eingestellt werden. Die Position des \gls{g:myrio} wird dabei nicht verändert.
+			Die Auslenkung $\alpha$ kann durch das Verstellen der Querstrebe (siehe Abbildung XXX) eingestellt werden. Die Position des \gls{g:myrio} wird dabei nicht verändert.\todo{Auslenkungen anpassen, da mechanisch nicht möglich}
 			%
 			\begin{itemize}
 				\item \textbf{Auslenkung 1} Die erste Auslenkung beträgt \unit[6]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich.
