@@ -314,7 +314,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	\subsection{Material/Testumgebung}
 		Die Messung, respektive Schätzung der Rotationswinkel erfolgt statisch auf einer eigens für dieses Projekt entworfenen Testumgebung, die später zur Simulation eines Bewegungsablaufs des Knies gebraucht wird. Dazu siehe den Abschnitt \vref{ss:testumgebung_tran_rot}, indem auch näher auf die Möglichkeiten des Aufbaus eingegangen wird. Für dieses Protokoll wird lediglich von der Tatsache gebraucht gemacht, dass das \gls{g:myrio} kontrolliert in verschiedene Positionen gebracht und somit eine Reproduzierbarkeit der Messung gewährleistet werden kann.\par
 		%
-		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichster grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°}). Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
+		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichster grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Markierung XXX auf Schwenkarm}. Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
 		%
 		\image{content/3_konzept/image/aufbau_rot}{scale=1}{htbp}[Rotation - Testaufbau][img:messaufbau_rot]	
 		%
@@ -357,7 +357,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 				\item Daten mit \gls{g:matlab} verarbeiten und auswerten.
 			\end{enumerate}	
 		%
-		\subsubsection*{Datenauswertung}
+		\subsubsection*{Datenauswertung}\todo{Für alle Messungen separat std bestimmen; relativer Fehler kontrollieren!}
 			Es gilt die Winkelschätzung hinsichtlich des eingestellten Winkels auszuwerten. Weiter muss die Rotation geprüft werden. Das Messergebnis der beiden Messgruppen stellt die abhängige Variabel dar.\par 
 			%
 			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[0.74]{°} (\unit[118]{°}). Das entspricht einem mittleren absoluten Fehler von \unit[-0.92]{°} über alle Messungen hin betrachtet.\par
@@ -367,6 +367,10 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 			Analysiert man die Messabweichung hinsichtlich ihrer Standardabweichung, so ergibt dies für die absoluten Messungen \unit[0.036]{°} und für die relativen \unit[0.0003]{\%}.\par 
 			%
 			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig wenn die Rotation an sich nicht funktioniert. Daher gilt es die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a}=[0\quad 0\quad (-1)]^{\top}$, was dem unbewegten Koordinatensystem des Betrachters entspricht (auf der z-Achse die Erdbeschleunigung).
+			%
+			Die Auswertung der Messungen zusammengefasst ist in der Tabelle \vref{tab:auswertung_tran} ersichtlich. 
+			%
+			\input{content/3_konzept/table/auswertung_rot}	 
 			
 	%
 	%
@@ -428,6 +432,12 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 			\end{itemize}
 			%
 			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
+		%
+		\subsubsection*{Testgruppe Messmethodik}\label{ss:messmethodik_kontroll_tran}
+			Die Translation wird indirekt durch die auftretenden Beschleunigungen gemessen. Dazu werden die aufgezeichneten Daten in das \gls{g:matlab}-Skript \textit{XXX} eingelesen, wo mit Hilfe von mathematischen Operationen die Distanz bestimmt wird. Das Skript ist im Anhang \vref{s:anhang_matlab} zu finden.
+		%
+		\subsubsection*{Kontrollgruppe Messmethodik}
+			Die Aufnahme der Pfadlänge erfolgt direkt mit dem Massstab M\low{2}. Die vergebene Distanz von \unit[5]{cm} wird dabei auf dem Schlitten der Drehbank M\low{3} vermerkt.
 		%
 		\subsubsection*{Testbeschreibungen}
 			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} M\low{1} unterschiedlich positioniert. Um die Anzahl Messungen in eine überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
@@ -492,7 +502,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 				\end{figure}    
 			\end{itemize}\par 
 			%
-			Die zu fahrende Distanz wird auf \unit[5]{cm} festgelegt. Dies entspricht dem festgelegten Messbereich, der in Abschnitt \vref{ss:messbereich} erläutert ist. Bedingt durch die manuelle Durchführung der Translation kann wird die Toleranz bei der Messung auf $pm$\unit[5]{cm} festgelegt.\par
+			Die zu fahrende Distanz wird auf \unit[5]{cm} festgelegt. Dies entspricht dem  Messbereich, der in Abschnitt \vref{ss:messbereich} erläutert ist. Bedingt durch die manuelle Durchführung der Translation, kann eine Toleranz des zurückgelegten Pfades vorliegen. Diese ist innerhalb von $\pm$\unit[1]{cm} zu halten.\par
 			%
 			Wie im vorherigen Abschnitt \vref{ss:material_translation} erörtert, wird die Geschwindigkeit in direkt über die Bewegungszeit gemessen. Daher werden lediglich zwei Bereiche definiert:
 			\begin{itemize}
@@ -515,12 +525,6 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 					\end{enumerate}
 				\item Werkzeugtisch in Ursprungsposition bewegen.
 			\end{enumerate}
-		%
-		\subsubsection*{Testgruppe Messmethodik}
-			Die Translation wird indirekt durch die auftretenden Beschleunigungen gemessen. Dazu werden die aufgezeichneten Daten in das \gls{g:matlab}-Skript \textit{XXX} eingelesen, wo mit Hilfe von mathematischen Operationen die Distanz bestimmt wird. Das Skript ist im Anhang \vref{s:anhang_matlab} zu finden.
-		%
-		\subsubsection*{Kontrollgruppe Messmethodik}
-			Die Aufnahme der Pfadlänge erfolgt direkt mit dem Massstab M\low{2}. Die vergebene Distanz von \unit[5]{cm} wird dabei auf dem Schlitten der Drehbank M\low{3} vermerkt.
 		%
 		\subsubsection*{Datenauswertung}
 			Die relativ gemessene Distanz der Testgruppe muss bezogen auf die Kontrollgruppe ausgewertet werden. Die ermittelte Entfernung ist dabei die abhängige Variabel dieses Protokolls. Die Messresultate werden hinsichtlich der Messabweichung und ihrer Standardabweichung untersucht. Für die Auswertung irrelevanten Diagramme sei auf den Anhang \vref{ss:anhang_konzept_messung_translation} verwiesen.\par
@@ -569,7 +573,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 				%
 				\image{content/3_konzept/image/schnell_5_Z_Y}{scale=0.6}{htbp}[z-Position Translation schnell][img:z_tran_schnell_y]
 			%
-			Die Messerergebnisse zusammengefasst sind in der Tabelle XXX dargestellt. Darauf basierend erfolgt nun im folgenden Abschnitt \vref{ss:interpretation_tran} die Interpretation und Diskussion.
+			Die Messerergebnisse zusammengefasst sind in der Tabelle \vref{tab:auswertung_tran} dargestellt. Darauf basierend erfolgt nun im folgenden Abschnitt \vref{ss:interpretation_tran} die Interpretation und Diskussion.
 			%
 			\input{content/3_konzept/table/auswertung_tran}	 
 	%
@@ -584,70 +588,49 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	\subsection{Grund/Zweck der Messung}\todo{anpassen an Abschnitt 3.1}
 		Der Bewegungsablauf eines Knies umfasst eine Translation, die mit einer Rotation überlagert ist. Für eine abschliessende Überprüfung des Algorithmus sollen nun diese beiden Komponenten zeitgleich überprüft werden. Im Falle eines positiven Messergebnisse kann das Konzept, respektive der Algorithmus als geeignet betrachtet und implementiert werden. Die Anforderungen an das Messergebnis sind in der Hypothese \vref{hypo:tran_rot} festgelegt.
 		\begin{hypo}\label{hypo:tran_rot}
-			Das Messergebnis ist eine Bewegung in der \gls{g:transversalebene}. Sie ist dabei eine Widerspiegelung des  reale Ablaufs mit einer Abweichung von maximal \unit[5]{mm}.
+			Das Messergebnis ist eine Bewegung in der \gls{g:transversalebene}, wobei nur die y-Komponente interessiert. Sie ist dabei eine Widerspiegelung des reale Ablaufs mit einer Abweichung von $\pm$\unit[1]{cm}\footnote{Erläuterungen zur geforderten Messgenauigkeit sind im Abschnitt \vref{ss:messgenauigkeit} zu finden}.
 		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}\label{ss:testumgebung_tran_rot}
 		Für eine aussagekräftige Messung muss eine Kniebewegung möglichst exakt nachgebildet werden können. Weiter sollten die Messungen reproduzierbar sein. Für diesen Zweck wurde eigens eine Mechanik konstruiert und aufgebaut.\par 
 		%
-		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Der Aufbau erlaubt es einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontal Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht. Für das errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät angebracht, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung \vref{img:messaufbau_tran_rot} ersichtlich, wohingegen die Tabelle \vref{tab:messmittel_tran_rot} alle verwendeten Messinstrumente enthält.
+		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Der Aufbau erlaubt es einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontal Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} M\low{1} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht ist. Die Position ist dabei so gewählt, dass sie der Kniehöhe eines Durchschnittsmensches entspricht. Für das errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät M\low{2} befestigt, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung \vref{img:messaufbau_tran_rot} ersichtlich
 		%
 		\image{content/3_konzept/image/messaufbau_tran_rot}{scale=0.2}{htbp}[Messaufbau Translation, Rotation überlagert][img:messaufbau_tran_rot]
+		%
+		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung XXX, XXX und XXX am Rotationsarm}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
+		%
 		\input{content/3_konzept/table/messmittel_tran_rot}	
 	%
 	%
 	\subsection{Methoden}
 		%
 		\subsubsection*{Messgruppen}\label{sss:messgruppe_tran_rot}
-			Die Messung wird mit zwei Messgruppen durchgeführt, wobei die eine als Testgruppe und die andere als Kontrollgruppe dient.	
+			Die Messung wird mit zwei Messgruppen durchgeführt, wobei die eine als Testgruppe und die andere als Kontrollgruppe verwendet wird.	
 			%
 			\begin{itemize}
 				%
-				\item \textbf{Testgruppe} Die Testgruppe beinhaltet das \gls{g:myrio} mit integriertem Beschleunigungssensor. Die Daten werden während des Tests aufgezeichnet und später auf dem Computer mit \gls{g:matlab} verarbeitet. 
+				\item \textbf{Testgruppe} Die Testgruppe beinhaltet das \gls{g:myrio} M\low{1} mit integriertem Beschleunigungssensor. Die Daten werden während des Tests aufgezeichnet und später auf dem Computer mit \gls{g:matlab} verarbeitet. 
 				%
-				\item \textbf{Kontrollgruppe} Die Kontrollgruppe dient als Basis für die spätere Auswertung. Die Aufnahme der Daten erfolgt zume einen Messtechnisch (Radius und Winkel) und zum anderen mathematisch (Berechnung der Pfadlänge).
+				\item \textbf{Kontrollgruppe} Die Kontrollgruppe dient als Basis für die spätere Auswertung. Die Aufnahme der Daten erfolgt zum einen Messtechnisch (Radius und Winkel) und zum anderen mathematisch (Berechnung der Pfadlänge).
 			\end{itemize}
 			%
 			Das unterschiedliche Messverfahren stellt die unabhängige Variabel in diesem Protokoll dar.
 		%
-		\subsubsection*{Testbeschreibungen}\todo{Ablauf}
-			Es werden Messungen bei unterschiedlichen Ausgangslagen durchgeführt. Sie unterscheiden sich in den Punkten Geschwindigkeit und Auslenkung. Dabei werden die Messungen auf insgesamt drei Auslenkungen und drei Geschwindigkeiten beschränkt.\par
-			%
-			Die Auslenkung $\alpha$ kann durch das Verstellen der Querstrebe (siehe Abbildung XXX) eingestellt werden. Die Position des \gls{g:myrio} wird dabei nicht verändert.\todo{Auslenkungen anpassen, da mechanisch nicht möglich}
-			%
-			\begin{itemize}
-				\item \textbf{Auslenkung 1} Die erste Auslenkung beträgt \unit[6]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich.
-				\image{content/3_konzept/image/messaufbau_querstrebe_pos_1}{scale=0.8}{htbp}[Querstreben-Position 1][img:messaufbau_pos1]
-				%
-				\item \textbf{Auslenkung 2} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[95]{mm} befestigt. Damit ist ein Winkelbereich von \unit[30]{°} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
-				\image{content/3_konzept/image/messaufbau_querstrebe_pos_2}{scale=0.8}{htbp}[Querstreben-Position 2][img:messaufbau_pos2]
-				%
-				\item \textbf{Auslenkung 3} Die maximale Auslenkung von \unit[75]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[190]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt.
-				\image{content/3_konzept/image/messaufbau_querstrebe_pos_3}{scale=0.8}{htbp}[Querstreben-Position 3][img:messaufbau_pos3]
-			\end{itemize}
-			%
-			Die Geschwindigkeit wird nur indirekt durch die Betriebsspannung des DC-Motors eingestellt. Dessen Spannungsbereich liegt zwischen \unit[8]{V} und \unit[12]{V}\footnote{Nach Aussage von Herr XXX}. Für die drei Geschwindigkeiten werden die Spannungen \unit[8]{V} für langsam, \unit[10]{V} für mittel und \unit[12]{V} für schnell festgelegt.
-			%
-			Durch die verschiedenen Auslenkungen und Geschwindigkeiten ergeben sich insgesamt 9 verschieden Messungen.\par 
-			%
-			Während den Messungen müssen zudem die folgenden Punkte eingehalten werden:
-			%
-			\begin{itemize}
-				\item Jede Messung wird 10 mal wiederholt, was insgesamt 90 Messungen ergibt
-				\item Die Messungen für die Kontrollgruppe muss durch unterschiedliche Personen ausgeführt werden
-				\item Jede Messung enthält 5 Umdrehungen der Messeinrichtung (entspricht 5 Auslenkungen jeweils von rechts nach links \todo{kontrollieren})
-				\item Die Raumtemperatur sollte \unit[25]{°C} betragen
-			\end{itemize}
+		\subsubsection*{Testgruppe Messmethodik}
+			Die Messmethodik der Testgruppe ist äquivalent zur Messmethodik des vorherigen Protokolls im Abschnitt \vref{ss:messmethodik_kontroll_tran}. Für die bessere Gliederung der Protokolle wurde dennoch eigens das \gls{g:matlab}-Skript \texttt{XXX} erstellt. Für eine detaillierte Einsicht ins Skript sei auf den Anhang \vref{s:anhang_matlab} verwiesen.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
-			Die Datenaufnahme der Kontrollgruppe erfolgt, wie bereits \vpageref{sss:messgruppe_tran_rot} erläutert, mit Hilfe von Massstab M\low{4} und Winkelmesser M\low{1} mit anschliessender Berechnung der Pfadlänge. Dabei dient die Abbildung \vref{img:messaufbau_dimensionen} als Ausgangslage für die Aufnahme der skalaren Messgrössen. 
+			Wie abgetönt verwendet die Kontrollgruppe messtechnische und mathematische Verfahren um den zurückgelegte Weg zu ermitteln.  
+			Gemessen wird mit Hilfe von Massstab M\low{4} und Winkelmesser M\low{2} die aktuelle Kniehöhe (konstant über alle Messungen hinweg) und der mögliche Winkelbereich $\alpha$ der aktuellen Auslenkung. Als Ausgangslage für die Aufnahme der skalaren Messgrössen dient die Abbildung \vref{img:messaufbau_dimensionen}. 
+			%
 			\image{content/3_konzept/image/messaufbau}{scale=0.5}{htbp}[Messaufbau - Messmethodik][img:messaufbau_dimensionen]
 			%
 			Die benötigten Grössen sind zum einen der Radius $r$ (gemessen vom Drehpunkt bis Position Beschleunigungssensor) und davon abhängig die Bogenlänge $b$ (Entspricht der Pfadlänge des Bewegungsablaufs). Der Radius wird dem Satz des Pythagoras bestimmt, wie die Gleichung \vref{eq:radius} zeigt. 
 			\formula{
 				r &= \sqrt{x^2+y^2}\\
-				&=\sqrt{47^2+515^2}=\underline{517.14}
+				&=\sqrt{47^2+431^2}=\underline{433.56}
 			}
 			{
 				r & Radius in mm\\
@@ -655,12 +638,10 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 				y & horizontaler Abstand in mm\\
 			}[eq:radius]
 			%
-			Die Bogenlänge kann anschliessend mit der Gleichung \vref{eq:kreissegement} unter Berücksichtigung des Winkels $\alpha$ bestimmt werden.
+			Die Bogenlänge $b$ kann anschliessend mit der Gleichung \vref{eq:kreissegement} unter Berücksichtigung des eingestellten Winkels $\alpha$ bestimmt werden.
 			\formula{
-					\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[1ex]
-					&= \frac{21}{180}\cdot\pi = \underline{0.366}\\[2ex]
-					b&=r\cdot\alpha '\\
-					&=517.14\cdot 0.366=\underline{189.54}
+					\alpha ' &= \frac{\alpha}{180}\cdot\pi\\[2ex]
+					b&=r\cdot\alpha '
 				}
 				{
 					r & Radius in mm\\
@@ -669,7 +650,39 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 					b & Teilumfang in mm\\
 				}[eq:kreissegement]
 		%
-		\subsubsection*{Datenauswertung}\todo{abhängige Variabel}
+		\subsubsection*{Testbeschreibungen}
+			Es werden Messungen bei unterschiedlichen Auslenkungen  durchgeführt. Dazu wird die Querverbindung an drei verschiedenen Positionen, erkenntlich an Hand von Markierungen, angebracht (siehe Abbildung \vref{img:messaufbau_tran_rot}). Es wird insgesamt zwischen drei verschiedenen Auslenkungen unterschieden, wobei die Position des \gls{g:myrio} M\low{1} nicht verändert wird. 
+			%
+			\begin{itemize}
+				\item \textbf{Auslenkung 1} Die erste Auslenkung beträgt \unit[7.5]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich. Daraus ergitbt sich unter Anwendung der Gleichung \vref{eq:kreissegement} eine Pfadlänge von \unit[56.75]{mm}.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_1}{scale=0.8}{htbp}[Querstreben-Position 1 (Angaben in \unit{mm})][img:messaufbau_pos1]
+				%
+				\item \textbf{Auslenkung 2} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[30]{mm} befestigt. Damit ist ein Winkelbereich von \unit[XXX]{°} und eine Pfadlänge \unit[XXX]{mm} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_2}{scale=0.8}{htbp}[Querstreben-Position 2 (Angaben in \unit{mm})][img:messaufbau_pos2]
+				%
+				\item \textbf{Auslenkung 3} Die maximale Auslenkung von \unit[XXX]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[60]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt. Für die Pfadlänge ergibt sich mit Hilfe der Gleichung \vref{eq:kreissegement} \unit[XXX]{mm}.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_3}{scale=0.8}{htbp}[Querstreben-Position 3 (Angaben in \unit{mm})][img:messaufbau_pos3]
+			\end{itemize}
+			%
+			Der Messablauf umfasst insgesamt 4 Schritte, die für jede Auslenkung 15 mal wiederholt werden müssen.
+			\begin{enumerate}
+				\item Auslenkung wie zuvor angeben einstellen.
+				\item Den Schwenkarm genau senkrecht Ausrichten.
+				\item Das \gls{g:labview}-Programm ausführen.
+				\item Messung durchführen.
+				\begin{enumerate}
+					\item Für die Bestimmung der Rotationsmatrix \unit[4]{s} warten.
+					\item Den Rotationsarm gegen den Uhrzeigersinn einmal drehen und dabei auf eine möglichst konstante Geschwindigkeit achten.
+					\item In Ausgangsposition verharren bis \unit[12]{s} verstrichen sind.
+				\end{enumerate}
+			\end{enumerate}
+		%
+		\subsubsection*{Datenauswertung}
+			%
+			%
+			Die Messerergebnisse zusammengefasst sind in der Tabelle \vref{tab:auswertung_tran} dargestellt. Darauf basierend erfolgt nun im folgenden Abschnitt \vref{ss:interpretation_tran} die Interpretation und Diskussion.
+			%
+			\input{content/3_konzept/table/auswertung_tran_rot}	 
 	%
 	%
 	\subsection{Interpretation}\todo{Histogramm, Gruppenvergleich,Messfehler}
