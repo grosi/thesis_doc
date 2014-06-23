@@ -18,17 +18,10 @@
 \section{Algoritmus}\label{s:blockdiagramm}
 Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{subsec:myposture} extrahiert werden. Dort wurden eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
-Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse unseres Koordinatensystem des Betrachters (Achnitt \vref{subsub:betrachter} sind diese Koordinatensysteme kurz erklärt). Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir zur Vereinfachung nur in einer Ebene betrachtet. In diesem Falle in der x-y-Ebene. Senkrecht zu dieser Ebene steht die statische Erdbeschleunigung. Die Beschleunigungskomponenten der x- und y-Achse sind noch zweimal zu integrieren, um auf die Bewegung schliessen zu können.\\
-Zu Beginn jeder Messung wird der Beschleunigungssensor eine bestimmte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt, womit anschliessend diese kompensiert werden kann. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung berechnet.\par
+Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse unseres Koordinatensystem des Betrachters (im Abschnitt \vref{subsub:betrachter} sind diese Koordinatensysteme kurz erklärt). Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits über ein Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung  zu schliessen.\par
+Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung berechnet.\par
 %
-Der Algorithmus kann somit in zwei Teile aufgeteilt werden. Der erste Teil wird während den Zeit in der der Sensor nicht bewegt wird abgearbeitet. Der zweite Teil benötigt die geschätzte Orientierung zur Transformation des Sensors in das Bezugssystem des Betrachters und berechnet anschliessend der zurückgelegte Weg des Sensors.
-
-\begin{itemize}
-\item Schätzen der Orientierung des Sensors
-\item Kompensation der Orientierung und Berechnung der Position
-\end{itemize}
-
-\par 
+Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit in der der Sensor nicht bewegt wird abgearbeitet. In dieser Zeit wird die Orientierung des Sensors geschätzt. Der zweite Teil benötigt die geschätzte Orientierung zur Transformation des Sensors in das Bezugssystem des Betrachters und berechnet schliesslich der zurückgelegte Weg des Sensors in der x-y-Ebene.\par
 %
 Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
@@ -82,32 +75,32 @@ w & Fensterfunktion
 %
 % Schätzung der Orientierung
 \subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
-Um die Bewegung des Sensors im Koordinatensystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Zur Übersicht ist eine mögliche Darstellung der Vektoren in Abbildung \vref{img:Vektor} ersichtlich. Mit dem Gravitätsvektor $\overrightarrow{a_g}$ und der berechneten Erdbeschleunigung des Sensors $\overrightarrow{a_{grav}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\Phi$ sowie auf die Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden.\par
+Um die Bewegung des Sensors im Koordinatensystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Zur Übersicht ist eine mögliche Darstellung der Vektoren in Abbildung \vref{img:Vektor} ersichtlich. Mit dem Gravitätsvektor $\overrightarrow{a_g}$ und der Erdbeschleunigung des Sensors $\overrightarrow{a_{grav}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\Phi$ sowie auf die Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden.\par
 %
-Die berechnete Erdbeschleunigung des Sensors entsprechen den \gls{ac:tp}-gefilterten Beschleunigungsdaten. Mit dem Drehwinkel $\Phi$ und der Rotationsachse $\overrightarrow{n}$ kann die im Kapitel \vref{ch:grundlagen} in Abschnitt \vref{sub:rot} beschriebene Rotationsmatrix aufgestellt werden. Mit dieser Rotationsmatrix kann die Orientierung des Beschleunigungssensors in das Betrachtungssystem transformiert werden. Der Drehwinkel $\Phi$ ist der Zwischenwinkel der Vektoren $\overrightarrow{a_g}$ und $\overrightarrow{a_{grav}}$, die Rotationsachse $\overrightarrow{n}$ steht senkrecht auf diesen beiden Vektoren.
+Die gemessene Erdbeschleunigung des Sensors entsprechen den \gls{ac:tp}-gefilterten Beschleunigungsdaten. Mit dem Drehwinkel $\Phi$ und der Rotationsachse $\overrightarrow{n}$ kann die im Kapitel \vref{ch:grundlagen} in Abschnitt \vref{sub:rot} beschriebene Rotationsmatrix aufgestellt werden. Mit dieser Rotationsmatrix kann die Orientierung des Beschleunigungssensors in das Betrachtungssystem transformiert werden. Der Drehwinkel $\Phi$ ist der Zwischenwinkel der Vektoren $\overrightarrow{a_g}$ und $\overrightarrow{a_{grav}}$, die Rotationsachse $\overrightarrow{n}$ steht senkrecht auf diesen beiden Vektoren.
 %
 \image{content/3_konzept/image/Vektor_bearb}{scale=0.7}{htbp}[Rotation][img:Vektor]
 %
 \subsubsection*{Betrachtungssystem}\label{subsub:betrachter}
-Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters sowie das Koordinatensystem des myRIO 1900 aufgezeigt. Das Koordinatensystem des Betrachters liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung resultieren \gls{g:transversal}e Bewegungen nach links und rechts zu eine Abnahme bzw. Zunahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
+Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters auch \gls{g:worldframe} sowie das Koordinatensystem des \gls{g:myrio} \gls{g:bodyframe} aufgezeigt. Das Koordinatensystem des Betrachters liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung resultieren \gls{g:transversal}e Bewegungen nach links und rechts zu eine Abnahme bzw. Zunahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
 %
 \begin{figure}[htbp]
         \centering
         \begin{subfigure}[htbp]{0.3\textwidth}
                 \includegraphics[width=\textwidth]{content/3_konzept/image/koordinatensystem_betrachter}
-                \caption{Koordinatensystem des Betrachters}
+                \caption{Koordinatensystem des Betrachters \gls{g:worldframe}}
                 \label{img:koord_betrachter}
         \end{subfigure}%
         \quad \quad
         \begin{subfigure}[htbp]{0.3\textwidth}
                 \includegraphics[width=\textwidth]{content/3_konzept/image/koordinatensystem_myRIO}
-                \caption{Koordinatensystem \gls{g:myrio}}
+                \caption{Koordinatensystem \gls{g:myrio} \gls{g:bodyframe}}
                 \label{img:koord_myRIO}
         \end{subfigure}        
         \caption{Koordinatensystem}\label{img:koordinatensystem}
 \end{figure}    
 %
-Das myRIO 1900 hat bekanntlich eine beliebige Ausrichtung im Raum resp. im Koordinatensystem des Betrachters. Durch die Montage des Beschleunigungssensors sind dessen Achsen in Bezug auf das Gehäuse gegeben. Diese sind in Abbildung \vref{img:koord_myRIO} ersichtlich.
+Das \gls{g:myrio} hat bekanntlich eine beliebige Ausrichtung im Raum resp. im Koordinatensystem des Betrachters. Durch die Montage des Beschleunigungssensors sind dessen Achsen in Bezug auf das Gehäuse gegeben. Diese sind in Abbildung \vref{img:koord_myRIO} ersichtlich.
 %
 \subsubsection*{Drehwinkel}
 Der Drehwinkel $\Phi$ wie in Abbildung \vref{img:Vektor} gesehen entspricht gerade dem Zwischenwinkel der beiden Vektoren $\overrightarrow{a\low{g}}$ sowie den \gls{ac:tp}-gefilterten Beschleunigungsdaten $\overrightarrow{a\low{grav}}$. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dies wie in Gleichung \vref{eq:dotp} dargestellt möglich.
@@ -135,18 +128,18 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordin
 %
 % Verzögerung
 \subsection{Berechnung der Bewegungsbeschleunigung} \todo{anpassen, Verzögerung erwähnen beschreiben}
-Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Zum einen kann die berechnete Erdbeschleunigung am Sensor von der gemessenen Beschleunigung am Sensor subtrahiert werden. Die gemessene Beschleunigung am Sensor beinhaltet bekanntlich die Erdbeschleunigung sowie die benötigte Beschleunigung der Bewegung. Ein weiterer Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden.\par 
+Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden. Doch genau hier liegt eine Schwierigkeit. Die Durchlassfrequenz muss sehr tief angesetzt werden damit auch langsame Bewegungen beachtet werden. Somit wurde dieser Ansatz schnell verworfen.\par 
 %
-Da sich die Autoren nach Absprache mit den Betreuern nur auf die Bewegung in einer Ebene beschränken ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Dabei ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist die Erdbeschleunigung vorhanden. Die \par
-%
-Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung verhält sich nach den Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter wie in Gleichung \vref{eq:delay} aufgezeigt.
-%
-\formula{
-n_{d} = \frac{n_{b}}{2}
-}{
-n_{d} & Verzögerung in Samples\\
-n_{b} & Anzahl Filterkoeffizienten
-}[eq:delay]
+Nach Absprache mit den Betreuern beschränken sich die Autoren in dieser Arbeit nur auf die Bewegung in einer Ebene. In diesem Falle ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt. \par
+%%
+%Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung verhält sich nach den Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter wie in Gleichung \vref{eq:delay} aufgezeigt.
+%%
+%\formula{
+%n_{d} = \frac{n_{b}}{2}
+%}{
+%n_{d} & Verzögerung in Samples\\
+%n_{b} & Anzahl Filterkoeffizienten
+%}[eq:delay]
 %
 % Subtraktion
 %\subsubsection*{Verzögerung und Subtraktion}
@@ -165,14 +158,22 @@ n_{b} & Anzahl Filterkoeffizienten
 \subsection{Rotation}\label{sub:rot}
 Die Rotation wird benötigt, um das Koordinatensystem des Sensors in das Koordinatensystem des Betrachters zu transformieren. Dabei steht die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche das System gedreht wird sowie der ermittelte Drehwinkel $\phi$ zwischen den beiden Vektoren zur Verfügung. Die Rotationsmatrix kann mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellt werden.\par
 % 
-Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation ins Koordinatensystem des Betrachters mit einer einfachen Multiplikation erreicht werden. Der Output ist dabei die Beschleunigung der Bewegung im definierten Betrachtungssystem. Die Orientierung des Beschleunigungssensors am Knie, die beliebig ist, ist somit kompensiert.
+Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation vom Koordinatensystem des Sensors \gls{g:bodyframe} ins Koordinatensystem des Betrachters \gls{g:worldframe} mit einer einfachen Multiplikation erfolgen. Der Output ist dabei die Beschleunigung der Bewegung auf der x- sowie der y-Achse. Die z-Achse beinhaltet die Erdbeschleunigung. Die beliebige Orientierung des Beschleunigungssensors ist somit kompensiert.
+%
+\formula{
+a_{world} = a_{body} * R_{g; O; \overrightarrow{n}; \phi}
+}{
+a_{world} & Beschleunigung im Bezugskoordinatensystem \gls{g:worldframe}\\
+R_{g; O; \overrightarrow{n}; \phi} & Rotationsmatrix um Gerade g mit Richtung $\overrightarrow{n}$ um Winkel $\phi$\\
+a_{body} & Beschleunigung im Koordinatensystem des Sensors \gls{g:bodyframe} 
+}[eq:delay]
 %
 % Bewegungsdetektion
 \subsection{Bewegungsdetektion}
 %
 % Integration
 \subsection{Integration}
-Um von der Beschleunigung auf die Position zu schliessen, kann die Beschleunigung bekannterweise durch zweimaliges integrieren nach der Zeit berechnet werden. Integriert man die Beschleunigung einmal, so erhalten wir die Geschwindigkeit.
+Um von der Beschleunigung auf die Position zu schliessen, kann die Beschleunigung bekannterweise durch zweimaliges integrieren nach der Zeit berechnet werden. Integriert man die Beschleunigung einmal, so erhält man die Geschwindigkeit.
 %
 \formula{
 v(t) = \int a(t)dt + v_0 
@@ -183,6 +184,7 @@ a & Beschleunigung [$m/s^2$]
 }[eq:geschw]
 %
 Integriert man diese Geschwindigkeit erneut, so erhält man den zurückgelegten Weg über die betrachtete Zeitdauer.
+%
 \formula{
 s(t) = \int v(t)dt + s_0 
 }{
@@ -192,6 +194,7 @@ v & Geschwindigkeit [$m/s$]
 }[eq:weg]
 % 
 Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben nummerisch mittels der Trapezmethode.
+% 
 %
 %Software
 \section{Software}\label{s:konzept:sw}
@@ -338,7 +341,17 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 			Die unabhängige Variabel dieser Gruppen stellt die Messmethodik dar. 
 		%
 		\subsubsection*{Testgruppe Messmethodik}
-			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus}, die die Winkelschätzung vornehmen. Dazu dient das \gls{g:matlab}-Skript \texttt{XXX}, das im Anhang \vref{s:anhang_matlab} zu finden ist.
+			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{XXX}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzept aufbaut. Im Konzept wird aus den in Ruhe aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel wie in Gleichung \vref{eq:pitch} gezeigt berechnet werden. 
+%
+			\formula{
+M_{rot} &=\begin{bmatrix}a & b & c \\ d & e & f \\ g & h & i \end{bmatrix} \\
+pitch &= atan2(-g,\sqrt{a^2 + d^2})
+}{
+M_{rot} & Rotationsmatrix\\
+pitch & Nick-Winkel
+}[eq:pitch]
+%			
+			Dieser pitch-Winkel entspricht gerade im Falle des in zuvor beschriebenem Testaufbau dem Nick-Winkel um welchen das \gls{g:myrio} um die im Abschnitt \vref{subsub:betrachter} definierte x-Achse gedreht wird. Somit wird der Winkel der Testgruppe aus der aufgestellten Rotationsmatrix aus dem Konzept berechnet.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
 			Der Winkel der Kontrollgruppe wird direkt mit dem Winkelmesser M\low{2} gemessen. Zu beachten ist, dass dessen Winkelskala in \unit[90]{°} Bereiche unterteilt ist und deshalb ein grösserer Winkel durch Addition ermittelt werden muss. Als Referenz für die Auslenkung dient dabei die in Abbildung \vref{img:messaufbau_rot} ersichtliche \unit[0]{°}-Linie. Gemessen wird gegen den Uhrzeigersinn.
@@ -366,7 +379,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 			%
 			Analysiert man die Messabweichung hinsichtlich ihrer Standardabweichung, so ergibt dies für die absoluten Messungen \unit[0.036]{°} und für die relativen \unit[0.0003]{\%}.\par 
 			%
-			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig wenn die Rotation an sich nicht funktioniert. Daher gilt es die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a}=[0\quad 0\quad (-1)]^{\top}$, was dem unbewegten Koordinatensystem des Betrachters entspricht (auf der z-Achse die Erdbeschleunigung).
+			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig wenn die Rotation an sich nicht funktioniert. Daher gilt es die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a}=[0\quad 0\quad 1]^{\top}$, was dem unbewegten Koordinatensystem des Betrachters entspricht (auf der z-Achse die Erdbeschleunigung).
 			%
 			Die Auswertung der Messungen zusammengefasst ist in der Tabelle \vref{tab:auswertung_tran} ersichtlich. 
 			%
@@ -375,6 +388,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	%
 	%
 	\subsection{Interpretation}\todo{Sind die Messungen OK?}
+	Die zuvor definierte Hypothese \vref{hypo:rotation} ist bestätigt. Die vom \gls{g:bodyframe} ins \gls{g:worldframe} transformierten Beschleunigungskomponenten sind bei allen Messungen $\overrightarrow{a}=[0\quad 0\quad 1]^{\top}$. Also der Erdbeschleunigung auf der z-Achse.
 %
 %
 %Verifikation Translation
