@@ -16,7 +16,7 @@
 %
 % Blockdiagramm
 \section{Algoritmus}\label{s:blockdiagramm}
-Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{subsec:myposture} extrahiert werden. Dort wurden eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
+Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{xxx} extrahiert werden. Dort wurden eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
 Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters (im Abschnitt \vref{subsub:betrachter} sind diese Koordinatensysteme erklärt). Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
 %
@@ -25,53 +25,84 @@ Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nich
 Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
 % Blockdiagramm
-\image{content/3_konzept/image/Blockdiagramm_Konzept}{scale=0.9}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
+\image{content/3_konzept/image/Konzept_final_bilinear}{scale=0.9}{htbp}[Blockdiagramm Konzept][img:blockdiagramm]
 \todo{Bildposition, Grösse besser, Bild ändern}
 %
 % Filterung
-\subsection{Tiefpass-Filterung}
-Die aufgenommenen Beschleunigungsdaten werden aufgetrennt in die Erdbeschleunigung und die Beschleunigung der Bewegung. Die Erdbeschleunigung ermöglicht das Schätzen der Orientierung wie dies in Abschnitt \vref{subsec:orientierungsschätzung} genauer erklärt ist.\par
+\subsection{Tiefpass-Filterung}\label{ss:tp}
+Durch die \gls{ac:tp}-Filterung der gemessenen Sensordaten wird zum einen das Quantisierungsrauschen gedämpft und zum andern  der Anti-Aliasing-Effekt verhindert. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Durch den rekursiven Aufbau eines \gls{ac:iir}-Filters kann dieses zusätzlich instabil sein. Der Aufbau eines solchen Filter N-ter Ordnung  ist folgendermassen.
 %
-Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine reine DC-Komponente betrachtet werden. Mit einer Tiefpass-Filterung kann somit die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt werden. Als Tiefpassfilter wurde ein \gls{ac:fir}-Filter gewählt.  Dies aus dem Grund, da das \gls{ac:fir}-Filter eine lineare Phase hat.
+\formula{
+H(z)=\frac{b_0 + b_1z^{-1}+...+b_Nz^{-N}}{a_0 + a_1z^{-1}+...+a_Nz^{-N}}
+}{
+}[eq:iir_Filter]
+%
+Wobei $b_n$ und $a_n$ die jeweiligen Filterkoeffizienten sind.  
+\subsubsection*{Filterentwurf}
+Ein vielfach verwendetes Verfahren zum Entwurf von \gls{ac:iir}-Filtern ist die Bilineare-Transforma\-tion. Hierbei wird die Übertragungsfunktion $H(s)$ eines Analogfilters in die Übertragungsfunktion $H(z)$ eines Digitalfilters überführt. Das Analogfilter entspricht dabei einem zeitkontinuierlichen System, das Digitalfilter bekanntlich einem zeitdiskreten. Die Labplacevariable s wird  dazu durch eine Funktion der Variable z substituiert. Im Unterricht bei  Herrn Vetter im vierten Semester hat sich gezeigt, dass die Substitution 
+%
+\formula{
+s = \frac{2}{Ta}*\frac{1-z^{-1}}{1+z^{-1}}
+}{
+}[eq:iir_Filter]
+%
+gebraucht wird. Mit der bekannten Übertragungsfunktion des Analogfilters und der Abtastrate $Ta$ kann somit das Digitalfilter entworfen werden. Die Bilineare-Transformation wird zu einem späteren Zeitpunkt in Abschnitt \vref{ss:int} verwendet.\par
+%
+Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Entwurfsprogramme. In \gls{g:matlab} kann mit Befehlen wie butter, cheby1, etc. gearbeitet werden. Im Beispiel-Projekt \vref{XXX} wird ein Cauer- respektive Elliptisches-Filter eingesetzt. Diese Cauer-Approximation hat einen welligen Bereich im Durchlass- sowie im Sperrbereich. Auf anraten von Herrn Vetter ersetzen wir diese Filter durch ein Butterworth-Filter. Diese Filter-Approximation hat im Durchlass- sowie im Sperrbereich einen monotonen Amplitudengang.
 %
 % Filterentwurf
-\subsubsection*{Filterentwurf}
-Das verwendete \gls{ac:fir}-Filter hat, wie der Name schon aussagt eine endliche Impulsantwort und ist somit gezwungen stabil. Der Phasengang dieser Filter ist linear. Die Gruppenlaufzeit entspricht der Zeit, durch die das Eingangssignal eines \gls{ac:lti}-Systems verzögert wird. Diese ist durch die lineare Phase bei einem \gls{ac:fir}-Filter für alle Frequenzanteile konstant. Das Eingangssignal ist also am Ausgang nur verzögert und nicht verzerrt.\cite{lit:vongruenigen}\par
+\image{content/3_konzept/image/filterentwurf}{scale=0.8}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
 %
-Zum Entwurf des Filters müssen zuerst einige Spezifikationen des Filters festgelegt werden. Diese sind in der Abbildung \vref{img:spezfilter} ersichtlich und sind:
+Zum Entwurf des Filters müssen zuerst einige Spezifikationen des Filters festgelegt werden. Da wir auf anraten von Herrn Vettre ein Filter mit einer geringen Ordnung (Anzahl der Filterkoeffizienten) einsetzen, kann die in der Abbildung \vref{img:spezfilter} ersichtliche Dämpfung im Durchlass- und Sperrbereich nicht eingestellt werden. Im Beispielprojekt wurde im Durchlassbereich eine Dämpfung von \unit[1]{dB} zugelassen und im Sperrbereich eine Dämpfung von \unit[60]{dB}. Die Durchlassfrequenz ist normiert auf 0.125 und die Sperrfrequenz auf 0.45 gesetzt.  Dies ergäbe für ein Butterworth-Filter berechnet mit der Funktion buttord() in \gls{g:matlab} eine Ordnung von 6. Diese Ordnung ist zu gross.
 %
 \begin{itemize}
-\item f\low{pass}: Durchlassfrequenz
-\item f\low{stop}: Sperrfrequenz
-\item A\low{pass}: Rippel im Durchlassbereich
-\item A\low{stop}: Dämpfung im Sperrbereich 
+\item f\low{stop} = \unit[20]{Hz}: Sperrfrequenz
+\item N = 2: Filterordnung
 \end{itemize}
 %
-% Filterentwurf
-\image{content/3_konzept/image/filterentwurf}{scale=0.6}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
-%
-\subsubsection*{Fenstermethode}
-Zum Entwurf des Filters wurde die einfachste sogenannte Fenstermethode gewählt. Bei dieser Methode geht man vom idealen Frequenzgang des Filters aus. Dieser Frequenzgang hat im Falle eines \gls{ac:tp}-Filters bis zur Durchlassfrequenz f\low{pass} den Wert 1, bei grösseren Frequenzen den Wert 0. Aus dem Frequenzgang H\low{ideal}($e^{j\Omega}$) kann man mit der inversen Fourier-Analyse auf die Impulsantwort h\low{ideal}(n) des Filters schliessen wie in Gleichung \vref{eq:invfourier} aus \cite{lit:vongruenigen} beschrieben.
-%
-\formula{
-h_{ideal}(n) &= \frac{1}{2\pi}\int_{-\pi}^{\pi} H_{ideal}(e^{j\Omega})*e^{j\Omega n}d\Omega\\
-\Omega &= k\frac{2\pi}{N}
-}{
-h_{ideal} & ideale Impulsantwort\\
-H_{ideal} & idealer Frequenzgang\\
-N & Anzahl Samples 
-}[eq:invfourier] \todo{N richtig benamsen/überprüfen}
-%
-Diese ideale Impulsantwort ist durch den Sprung an der Durchlassfrequenz unendlich lang und somit nicht realisierbar. Eine einfache Lösung ist, die Impulsantwort mit einem Fenster zu begrenzen. Somit erhält man die Impulsantwort des \gls{ac:fir}-Filters wie in Gleichung \vref{eq:impfir} durch die Multiplikation des Fensters mit der idealer Impulsantwort des Filters.
-%
-\formula{
-h[n]=h_{ideal}[n]w[n]
-}{
-h & approximierte Impulsantwort\\
-h_{ideal} & ideale Impulsantwort\\
-w & Fensterfunktion
-}[eq:impfir]
-%
+
+%Die aufgenommenen Beschleunigungsdaten werden aufgetrennt in die Erdbeschleunigung und die Beschleunigung der Bewegung. Die Erdbeschleunigung ermöglicht das Schätzen der Orientierung wie dies in Abschnitt \vref{subsec:orientierungsschätzung} genauer erklärt ist.\par
+%%
+%Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine reine DC-Komponente betrachtet werden. Mit einer Tiefpass-Filterung kann somit die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt werden. Als Tiefpassfilter wurde ein \gls{ac:fir}-Filter gewählt.  Dies aus dem Grund, da das \gls{ac:fir}-Filter eine lineare Phase hat.
+%%
+%% Filterentwurf
+%\subsubsection*{Filterentwurf}
+%Das verwendete \gls{ac:fir}-Filter hat, wie der Name schon aussagt eine endliche Impulsantwort und ist somit gezwungen stabil. Der Phasengang dieser Filter ist linear. Die Gruppenlaufzeit entspricht der Zeit, durch die das Eingangssignal eines \gls{ac:lti}-Systems verzögert wird. Diese ist durch die lineare Phase bei einem \gls{ac:fir}-Filter für alle Frequenzanteile konstant. Das Eingangssignal ist also am Ausgang nur verzögert und nicht verzerrt.\cite{lit:vongruenigen}\par
+%%
+%Zum Entwurf des Filters müssen zuerst einige Spezifikationen des Filters festgelegt werden. Diese sind in der Abbildung \vref{img:spezfilter} ersichtlich und sind:
+%%
+%\begin{itemize}
+%\item f\low{pass}: Durchlassfrequenz
+%\item f\low{stop}: Sperrfrequenz
+%\item A\low{pass}: Rippel im Durchlassbereich
+%\item A\low{stop}: Dämpfung im Sperrbereich 
+%\end{itemize}
+%%
+%% Filterentwurf
+%\image{content/3_konzept/image/filterentwurf}{scale=0.6}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
+%%
+%\subsubsection*{Fenstermethode}
+%Zum Entwurf des Filters wurde die einfachste sogenannte Fenstermethode gewählt. Bei dieser Methode geht man vom idealen Frequenzgang des Filters aus. Dieser Frequenzgang hat im Falle eines \gls{ac:tp}-Filters bis zur Durchlassfrequenz f\low{pass} den Wert 1, bei grösseren Frequenzen den Wert 0. Aus dem Frequenzgang H\low{ideal}($e^{j\Omega}$) kann man mit der inversen Fourier-Analyse auf die Impulsantwort h\low{ideal}(n) des Filters schliessen wie in Gleichung \vref{eq:invfourier} aus \cite{lit:vongruenigen} beschrieben.
+%%
+%\formula{
+%h_{ideal}(n) &= \frac{1}{2\pi}\int_{-\pi}^{\pi} H_{ideal}(e^{j\Omega})*e^{j\Omega n}d\Omega\\
+%\Omega &= k\frac{2\pi}{N}
+%}{
+%h_{ideal} & ideale Impulsantwort\\
+%H_{ideal} & idealer Frequenzgang\\
+%N & Anzahl Samples 
+%}[eq:invfourier] \todo{N richtig benamsen/überprüfen}
+%%
+%Diese ideale Impulsantwort ist durch den Sprung an der Durchlassfrequenz unendlich lang und somit nicht realisierbar. Eine einfache Lösung ist, die Impulsantwort mit einem Fenster zu begrenzen. Somit erhält man die Impulsantwort des \gls{ac:fir}-Filters wie in Gleichung \vref{eq:impfir} durch die Multiplikation des Fensters mit der idealer Impulsantwort des Filters.
+%%
+%\formula{
+%h[n]=h_{ideal}[n]w[n]
+%}{
+%h & approximierte Impulsantwort\\
+%h_{ideal} & ideale Impulsantwort\\
+%w & Fensterfunktion
+%}[eq:impfir]
+%%
 % Schätzung der Orientierung
 \subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
 Um die Bewegung des Sensors im Koordinatensystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Zur Übersicht ist eine mögliche Darstellung der Vektoren in Abbildung \vref{img:Vektor} ersichtlich. Mit dem Gravitätsvektor $\overrightarrow{a_g}$ und der Erdbeschleunigung des Sensors $\overrightarrow{a_{grav}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\phi$ sowie auf die Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden.\par
@@ -152,7 +183,7 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordin
 %Ein weiterer Ansatz ist, dass die gemessenen Daten mit einem Hochpass gefiltert werden. Die Beschleunigungskomponenten der Bewegung können somit von der als DC-Komponente auftretenden Erdbeschleunigung getrennt werden. Dabei ist zu beachten, dass die Filterlänge des Tiefpassfilters und des Hochpassfilters gleich lang ist. Dies aus demselben oben genannten Grund, dass jede Filterung eine Verzögerung des gefilterten Signals zur Ursache hat. Da die Erdbeschleunigung zur Kompensation der Orientierung verwendet wird und später wie im Abschnitt \vref{sub:rot} gezeigt auf die Bewegungsbeschleunigung angewendet wird muss die Verzögerung beider Signale gleich ausfallen.
 %
 % Rotation
-\subsection{Rotation}\label{sub:rot}
+\subsection{Orientierungskompensation}\label{sub:rot}
 Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden. Doch genau hier liegt eine Schwierigkeit. Die Durchlassfrequenz muss sehr tief angesetzt werden damit auch langsame Bewegungen beachtet werden. Somit wurde dieser Ansatz schnell verworfen.\par 
 %
 In dieser Arbeit beschränken sich die Autoren nur auf die Bewegung in einer Ebene. In diesem Falle ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt.\par
@@ -184,7 +215,7 @@ Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In die
 Die Standardabweichung wird über ein Fenster w der Länge \unit[200]{Smaples} berechnet. Somit erhält man die in Abbildung \vref{img:bewegungdetect} im unteren subplot dargestellte Standardabweichung. Übersteigt die Standartabweichung den zuvor definierten Threshold, so wird mit der Integration begonnen. Wird der Threshold anschliessend unterschritten, so ist keine Bewegung mehr vorhanden und es wird nicht mehr integriert. 
 %
 % Integration
-\subsection{Integration}
+\subsection{Berechnung der Bewegung}\label{ss:int}
 %
 \image{content/3_konzept/image/Integration}{scale=0.7}{htbp}[Bewegung auf der y-Achse][img:bewegung_y_achse]
 %
@@ -208,7 +239,7 @@ s_{0} & Anfangsposition [m]\\
 v & Geschwindigkeit [$m/s$]
 }[eq:weg]
 % 
-Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben nummerisch mittels der Trapezmethode.
+Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben mittels der Trapezmethode.
 % 
 %
 %Software
