@@ -173,7 +173,13 @@ a_{body} & Beschleunigung im Koordinatensystem des Sensors \gls{g:bodyframe}
 %
 % Bewegungsdetektion
 \subsection{Bewegungsdetektion}
-Da die Integration einer Aufsummierung entspricht kann durch einen kleinen Fehler in der Rotation bereits ein grosser Drift entstehen. Ein Lösungsansatz ist dabei eine Bewegungsdetektion einzuführen. Die Integration wir nur durchgeführt, wenn sich der Sensor  auch bewegt. Ein Hilfsmittel über die Variation eines Signals ist deren Varianz.
+Da die Integration einer Aufsummierung entspricht kann durch einen kleinen Fehler in der Rotation bereits ein grosser Drift entstehen. Ein Lösungsansatz ist dabei eine Bewegungsdetektion einzuführen. Die Integration wir nur durchgeführt, wenn sich der Sensor  auch bewegt. Ein Hilfsmittel über die Variation eines Signals ist deren Varianz respektive Standardabweichung. Die Standardabweichung gibt uns Information über die Verteilung der Signalamplitude. Wird der Sensor in Ruhe gelassen, so ändern sich die aufgenommene Amplitude nur gering (Rauschen des Sensors laut NI \unit[3.9]{$mg_{rms}}$). Dementsprechend ist die Standardabweichung in diesem Falle tief. Wird der Sensor nun Bewegt, so resultiert eine grössere Änderung der Amplitude. Die Standardabweichung wird somit grösser.\par
+%
+Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In dieser Zeit kann der Threshold mittels der Standardabweichung über diese Zeit bestimmt werden. Da in dieser Zeit über eine verhältnismässig grosse Zeitdauer gemessen wird ist die Standardabweichung geringer als mit der Methode wo ein Fenster über das Signal gefahren wird und in diesem Fenster die Standardabweichung bestimmt wird. Aus diesem Grund wird zur Berechnung des Thresholds noch zusätzlich ein Vorfaktor zur Standardabweichung gegeben, um diesen zu heben. Dies ist sicherlich eine etwas unelegante Lösung und könnte noch besser gelöst werden. Jedoch kann mit dieser Methode eine einfache Lösung erzielt werden.\par
+%
+\image{content/3_konzept/image/Bewegungsdetect}{scale=0.7}{htbp}[Bewegungsdetektion auf der y-Achse][img:bewegungdetect]
+%
+Die Standardabweichung wird über ein Fenster w der Länge \unit[200]{Smaples} berechnet. Übersteigt die Standartabweichung den zuvor Definierten Threshold, so wird mit der Integration begonnen. Wird der Threshold anschliessend unterschritten, so ist keine Bewegung mehr vorhanden und es wird nicht mehr integriert. 
 %
 % Integration
 \subsection{Integration}
