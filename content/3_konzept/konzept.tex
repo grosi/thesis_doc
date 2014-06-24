@@ -18,10 +18,9 @@
 \section{Algoritmus}\label{s:blockdiagramm}
 Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{subsec:myposture} extrahiert werden. Dort wurden eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
-Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse unseres Koordinatensystem des Betrachters (im Abschnitt \vref{subsub:betrachter} sind diese Koordinatensysteme kurz erklärt). Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits über ein Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung  zu schliessen.\par
-Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung berechnet.\par
+Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters (im Abschnitt \vref{subsub:betrachter} sind diese Koordinatensysteme erklärt). Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
 %
-Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit in der der Sensor nicht bewegt wird abgearbeitet. In dieser Zeit wird die Orientierung des Sensors geschätzt. Der zweite Teil benötigt die geschätzte Orientierung zur Transformation des Sensors in das Bezugssystem des Betrachters und berechnet schliesslich der zurückgelegte Weg des Sensors in der x-y-Ebene.\par
+Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung in der x-y-Ebene berechnet. Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit in der der Sensor nicht bewegt wird abgearbeitet und entspricht einer Kalibrationsphase. Im zweiten Teil wird die Bewegung des Sensors in der Ebene berechnet.\par
 %
 Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
@@ -127,10 +126,8 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordin
 }[eq:cross]
 %
 % Verzögerung
-\subsection{Berechnung der Bewegungsbeschleunigung} \todo{anpassen, Verzögerung erwähnen beschreiben}
-Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden. Doch genau hier liegt eine Schwierigkeit. Die Durchlassfrequenz muss sehr tief angesetzt werden damit auch langsame Bewegungen beachtet werden. Somit wurde dieser Ansatz schnell verworfen.\par 
-%
-Nach Absprache mit den Betreuern beschränken sich die Autoren in dieser Arbeit nur auf die Bewegung in einer Ebene. In diesem Falle ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt.\todo{Nicht nur Betreuer, sondern auch Aufgabenstellung erwähnen} \par
+%\subsection{Berechnung der Bewegungsbeschleunigung} \todo{anpassen, Verzögerung erwähnen beschreiben}
+
 %%
 %Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung verhält sich nach den Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter wie in Gleichung \vref{eq:delay} aufgezeigt.
 %%
@@ -156,6 +153,12 @@ Nach Absprache mit den Betreuern beschränken sich die Autoren in dieser Arbeit n
 %
 % Rotation
 \subsection{Rotation}\label{sub:rot}
+Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden. Doch genau hier liegt eine Schwierigkeit. Die Durchlassfrequenz muss sehr tief angesetzt werden damit auch langsame Bewegungen beachtet werden. Somit wurde dieser Ansatz schnell verworfen.\par 
+%
+In dieser Arbeit beschränken sich die Autoren nur auf die Bewegung in einer Ebene. In diesem Falle ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt.\par
+%
+\image{content/3_konzept/image/Rotation_Vektor}{scale=0.7}{htbp}[Rotation der Beschleunigungsdaten][img:rotation_vektor]
+%
 Die Rotation wird benötigt, um das Koordinatensystem des Sensors in das Koordinatensystem des Betrachters zu transformieren. Dabei steht die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche das System gedreht wird sowie der ermittelte Drehwinkel $\phi$ zwischen den beiden Vektoren zur Verfügung. Die Rotationsmatrix kann mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellt werden.\par
 % 
 Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation vom Koordinatensystem des Sensors \gls{g:bodyframe} ins Koordinatensystem des Betrachters \gls{g:worldframe} mit einer einfachen Multiplikation erfolgen. Der Output ist dabei die Beschleunigung der Bewegung auf der x- sowie der y-Achse. Die z-Achse beinhaltet die Erdbeschleunigung. Die beliebige Orientierung des Beschleunigungssensors ist somit kompensiert.
@@ -170,9 +173,13 @@ a_{body} & Beschleunigung im Koordinatensystem des Sensors \gls{g:bodyframe}
 %
 % Bewegungsdetektion
 \subsection{Bewegungsdetektion}
+Da die Integration einer Aufsummierung entspricht kann durch einen kleinen Fehler in der Rotation bereits ein grosser Drift entstehen. Ein Lösungsansatz ist dabei eine Bewegungsdetektion einzuführen. Die Integration wir nur durchgeführt, wenn sich der Sensor  auch bewegt. Ein Hilfsmittel über die Variation eines Signals ist deren Varianz.
 %
 % Integration
 \subsection{Integration}
+%
+\image{content/3_konzept/image/Integration}{scale=0.7}{htbp}[Bewegung auf der y-Achse][img:bewegung_y_achse]
+%
 Um von der Beschleunigung auf die Position zu schliessen, kann die Beschleunigung bekannterweise durch zweimaliges integrieren nach der Zeit berechnet werden. Integriert man die Beschleunigung einmal, so erhält man die Geschwindigkeit.
 %
 \formula{
@@ -197,10 +204,10 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 % 
 %
 %Software
-\section{LabVIEW Rohdaten aufzeichnen}\label{s:konzept:sw}
+\section{Software}\label{s:konzept:sw}
 	%
-	%\subsection{Rohdaten aufzeichnen}\label{ss:rohdaten_aufzeichnen}
-		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Das fertige Projekt \texttt{concept\_reametric} ist im Anhang \vref{s:anhang_labview} zu finden.\par 
+	\subsection{Rohdaten aufzeichnen}\label{ss:rohdaten_aufzeichnen}
+		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Das fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
 		%
 		Als Basis für die \acrshort{ac:vi} dient das Standardprojekt \textsf{myRIO Project}\footnote{Das Projekt kann im Startdialog von \gls{g:labview} 2013 angewählt werden} von \gls{g:labview}, das folgende Möglichkeiten mitbringt:
 		%

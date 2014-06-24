@@ -101,13 +101,13 @@ scp admin@172.22.11.2:/Pfad/zur/Datei /Pfad/zur/Zieldatei
 %
 %Rotationsmatrix
 \section{Rotationsmatrix}\label{sub:rot}
-In der Linearen Algebra bietet eine Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. Im vorliegenden Falle ist eine Rotation eines Punktes um eine Gerade im Raum nötig. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
+In der Linearen Algebra bietet die Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. Im vorliegenden Falle ist eine Rotation eines Punktes um eine Gerade im Raum gewünscht. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
 %
 Ziel ist, den Punkt P mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade g in den Punkt P' mit Koordinaten $\left(x'\mid y'\mid z'\right)$ zu drehen. Die Gerade g hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
 %
 \image{content/2_grundlagen/image/rotmat}{scale=0.6}{htbp}[Drehung des Punktes P in P' \cite{img:linalg2}][Drehung des Punktes P in P'][img:rotmat]
 %           
-Die Rotationsmatrix ist wie schon erwähnt definiert durch den Drehwinkel $\phi$ und der Geraden/Rotationsachse g. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt S der Geraden g mit der Ebene E in welcher die Punkte P und P' liegen und welche Senkrecht auf die Gerade g steht berechnet. Anschliessend ist aus dem Schnittpunkt S und dem Ausgangspunkt P die Berechnung des gedrehten Punktes P' möglich. Die Berechnung des gedrehten Punktes P' mit der Rotationsmatrix lässt sich somit zusammenfassen in Gleichung \vref{eq:rot}:\par
+Die Rotationsmatrix ist wie schon erwähnt definiert durch den Drehwinkel $\phi$ und der Geraden respektive Rotationsachse g. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt S der Geraden g mit der Ebene E berechnet. In der Ebene E liegen die Punkte P und P', sie steht senkrecht auf die Gerade g. Aus dem Schnittpunkt S und dem Ausgangspunkt P ist die Berechnung des gedrehten Punktes P' möglich. Die Berechnung des gedrehten Punktes P' mit der Rotationsmatrix lässt sich wie in Gleichung \vref{eq:rot} zusammenfassen.\par
 %
 %Berechnung des gedrehten Punkt P'
 \formula{
@@ -133,24 +133,24 @@ Bei der Rechtecknäherung wird zwischen der linken und rechten Näherung unterschi
 % Rechtecknäherung
 \image{content/2_grundlagen/image/rechtecknaeherung_bearb}{scale=0.6}{htbp}[Rechtecknäherung \cite{img:baeni}][Rechtecknäherung][img:rechteck]	
 %
-Das Integral setzt sich anschliessend als Summe aller dieser berechneten Flächen zusammen und kann somit rekursiv, wie in Gleichung \vref{eq:rechteck} für die rechte Rechtecknäherung aufgezeigt, berechnet werden.
+Das Integral setzt sich anschliessend als Summe aller dieser berechneten Flächen zusammen und kann rekursiv, wie in Gleichung \vref{eq:rechteck} für die linke Rechtecknäherung aufgezeigt, berechnet werden.
 %
 \formula{
-y(n) = y(n-1) + T_a * x(n)            
+y(n) = y(n-1) + T_a * x(n-1)            
 }{ 
 y(n) & Integral von Beginn bis zur Stelle n\\
 T_a & Abtastrate\\
-x(n) & Abgetasteter Wert an Stelle n 
+x(n-1) & Abgetasteter Wert an Stelle n -1 
            }[eq:rechteck]
 %
 % Trapeszmethode
 \subsubsection*{Trapezmethode}
-Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreichen man mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung als das diese mit einer der beiden Rechtecknäherungen erreichen werden könnte. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
+Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreichen man mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung im Vergleich zur Rechtecknäherungen. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
 %
 % Trapeszmethode
 \image{content/2_grundlagen/image/trapeznaeherung_bearb}{scale=0.6}{htbp}[Trapeznäherung \cite{img:baeni}][Trapeznäherung][img:trapez]
 %
-Auch in diesem Fall kann das Integral auf relativ einfache Weise rekursiv berechnet werden wie dies in der Gleichung \vref{eq:trapez} zu sehen ist.
+Auch hier kann das Integral auf relativ einfache Weise rekursiv berechnet werden wie in Gleichung \vref{eq:trapez} zu sehen ist.
 %
 \formula{
 y(n) = y(n-1) + \frac{T_a}{2}  (x(n)+x(n-1))            
@@ -159,6 +159,7 @@ y(n) & Integral von Beginn bis zur Stelle n\\
 T_a & Abtastrate\\
 x(n) & Abgetasteter Wert an Stelle n 
            }[eq:trapez]
+%           
 %%
 %% Adaptives Filter
 %\section{Adaptives Filter}
