@@ -12,7 +12,92 @@
 %
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Implementierung}\label{ch:implementierung}
-\section{Portierung MATLAB}
-\section{Demonstrator}
+\chapter{Implementierung}\label{ch:implementierung}\todo{myRIO, FPGA erwähnen / erläutern}
+%
+%
+% Analyse Portierung MATLAB 
+\section{Analyse Portierung MATLAB}\label{s:analyse_portierung_matlab}\todo{Keine Umsetzung, nur Design und VIs!}
+	Für die Implementierung des im vorgehrigen Kapitels \vref{ch:konzept} konzeptionierten Algorithmus muss das erstellte \gls{g:matlab}-Skript analysiert werden. Es gilt \gls{ac:vi}s zu finden, die möglichst die gleiche Funktion haben wie die verwendeten Befehle und Toolboxen in \gls{g:matlab}. Dabei wird auf das Verwendenen von \gls{g:matlab}-Skripten innerhalb von \gls{g:labview} verzichtet um die Eigenständigkeit der Implementierung zu gewährleisten\footnote{Mit der \gls{g:matlab}-Node ist es möglich \gls{g:matlab}-Code auzuführen. Jedoch werden nicht alle Funktionen unterstützt und für das Ausführen muss lokal \gls{g:matlab} installiert sein \cite{lit:labview_matlab}}. Weiter soll eine Struktur gefunden werden, die den Ablauf des \gls{g:matlab}-Skripts wiederspiegelt.
+	%
+	\subsection{Struktur}\todo{Zustandsmaschine}
+	\subsection{Tiefpass-Filterung}\todo{Implementierung der VIs beschreiben}
+	\subsection{Schätzung der Orientierung} \todo{Implementierung der VIs beschreiben}
+	\subsection{Rotation} \todo{Implementierung der VIs beschreiben}
+	\subsection{Bewegungsdetektion} \todo{Implementierung der VIs beschreiben}
+	\subsection{Integration} \todo{Implementierung der VIs beschreiben}
+%
+%
+% Demonstrator
+\section{Demonstrator}\label{s:demonstrator}
+	Der Demonstrator stellt die Umsetzung des zuvor analysierten \gls{g:matlab}-Skripts dar. Er dient hauptsächlich zur Demonstration des entwickelten Algorithmus, soll aber auch dessen Funktionalität auf einer embedded Hardware zeigen. Die Implementierung basiert auf dem Beispielprojekt \textsf{Posture Estimation} von \gls{ac:ni}, das der Installation von \gls{g:labview} beiliegt. Die Daten der folgend beschriebenen Umsetzung (Projekt \texttt{reametric}) sind im Anhang \vref{s:anhang_labview} zu finden.\par 
+	%
+	%
+	\subsection{Target}
+		\subsubsection*{Zustandswechsel}
+			\image{content/4_implementierung/image/button}{scale=.7}{htbp}[Zustandswechsel][img:state_switch]
+		%
+		\subsubsection*{Initialierungs-Zustand}
+			%
+			\image{content/4_implementierung/image/init_phase}{scale=.7}{htbp}[Initialiserungs-Zustand][img:init_phase]
+			%
+			\begin{enumerate}
+				\item Filterung \texttt{Filter.vi}
+				%
+				\item Rotationsmatrix \texttt{Mrot.vi}
+					%
+					\image{content/4_implementierung/image/mrot}{scale=.7}{htbp}[Rotationsmatrix][img:mrot]
+				%
+				\item Rotation \texttt{Rot.vi}
+					%
+					\image{content/4_implementierung/image/rot}{scale=.7}{htbp}[Rotation][img:rot]
+				%
+				\item Standardabweichung
+			\end{enumerate}
+		%
+		%
+		\subsubsection*{Signalverarbeitungs-Zustand}
+			%
+			\image{content/4_implementierung/image/progress_phase}{scale=.7}{htbp}[Signalverarbeitungs-Zustand][img:sig_phase]
+			%
+			\begin{enumerate}
+				\item Filterung \texttt{Filter.vi}
+				%
+				\item Rotation \texttt{Rot.vi}
+				%
+				\item Integration \texttt{Inta.vi}
+					%
+					\image{content/4_implementierung/image/inta}{scale=.7}{htbp}[Integration][img:inta]
+				%
+				\item Netwerk-Stream
+			\end{enumerate}
+		%
+		%
+		\subsubsection*{Frontpanel}
+			%
+			\image{content/4_implementierung/image/front_myrio}{scale=1}{htbp}[Frontpanel \gls{g:myrio}][img:front_myrio]
+		
+	%
+	%
+	\subsection{Host}
+		\subsubsection*{Visualisierung}
+			%
+			\image{content/4_implementierung/image/net_end_host}{scale=.7}{htbp}[Daten Empfangen][img:rx_data]
+			%
+			\begin{enumerate}
+				\item Daten Extraktion
+				\item Translation
+				\item x-y-Graph
+					%
+					\image{content/4_implementierung/image/graph_chart_host}{scale=.7}{htbp}[Graph zu Chart][img:graph]
+			\end{enumerate}
+		%
+		%
+		\subsubsection*{Frontpanel}
+			%
+			\image{content/4_implementierung/image/front_host}{scale=.7}{htbp}[Frontpanel Host][img:front_host]
+%
+%
+% Bedienung
+\section{Bedienung}
+%
 \section{Validierung}

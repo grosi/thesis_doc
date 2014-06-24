@@ -130,7 +130,7 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordin
 \subsection{Berechnung der Bewegungsbeschleunigung} \todo{anpassen, Verzögerung erwähnen beschreiben}
 Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden. Doch genau hier liegt eine Schwierigkeit. Die Durchlassfrequenz muss sehr tief angesetzt werden damit auch langsame Bewegungen beachtet werden. Somit wurde dieser Ansatz schnell verworfen.\par 
 %
-Nach Absprache mit den Betreuern beschränken sich die Autoren in dieser Arbeit nur auf die Bewegung in einer Ebene. In diesem Falle ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt. \par
+Nach Absprache mit den Betreuern beschränken sich die Autoren in dieser Arbeit nur auf die Bewegung in einer Ebene. In diesem Falle ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt.\todo{Nicht nur Betreuer, sondern auch Aufgabenstellung erwähnen} \par
 %%
 %Jede Filterung hat eine Verzögerung des Signals zur Folge. Diese Verzögerung verhält sich nach den Notizen in der Vorlesung Digitale Signalverarbeitung (BTE5034 DIGSV) bei Herrn Rolf Vetter wie in Gleichung \vref{eq:delay} aufgezeigt.
 %%
@@ -197,10 +197,10 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 % 
 %
 %Software
-\section{Software}\label{s:konzept:sw}
+\section{LabVIEW Rohdaten aufzeichnen}\label{s:konzept:sw}
 	%
-	\subsection{Rohdaten aufzeichnen}\label{ss:rohdaten_aufzeichnen}
-		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Das fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
+	%\subsection{Rohdaten aufzeichnen}\label{ss:rohdaten_aufzeichnen}
+		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Das fertige Projekt \texttt{concept\_reametric} ist im Anhang \vref{s:anhang_labview} zu finden.\par 
 		%
 		Als Basis für die \acrshort{ac:vi} dient das Standardprojekt \textsf{myRIO Project}\footnote{Das Projekt kann im Startdialog von \gls{g:labview} 2013 angewählt werden} von \gls{g:labview}, das folgende Möglichkeiten mitbringt:
 		%
@@ -298,7 +298,7 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 	    	\end{figure}\par
 	    	%	
 	%
-	\subsection{myRIO Posture Estimation}\label{subsec:myposture} \todo{gut darauf eingehen}
+	%\subsection{myRIO Posture Estimation}\label{subsec:myposture} \todo{gut darauf eingehen}
 %
 %
 %Verifikation Rotation
@@ -344,12 +344,12 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{XXX}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzept aufbaut. Im Konzept wird aus den in Ruhe aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel wie in Gleichung \vref{eq:pitch} gezeigt berechnet werden. 
 %
 			\formula{
-M_{rot} &=\begin{bmatrix}a & b & c \\ d & e & f \\ g & h & i \end{bmatrix} \\
-pitch &= atan2(-g,\sqrt{a^2 + d^2})
-}{
-M_{rot} & Rotationsmatrix\\
-pitch & Nick-Winkel
-}[eq:pitch]
+			M_{rot} &=\begin{bmatrix}a & b & c \\ d & e & f \\ g & h & i \end{bmatrix} \\[1ex]
+			pitch &= atan2(-g,\sqrt{a^2 + d^2})
+			}{
+			M_{rot} & Rotationsmatrix\\
+			pitch & Nick-Winkel
+			}[eq:pitch]
 %			
 			Dieser pitch-Winkel entspricht gerade im Falle des in zuvor beschriebenem Testaufbau dem Nick-Winkel um welchen das \gls{g:myrio} um die im Abschnitt \vref{subsub:betrachter} definierte x-Achse gedreht wird. Somit wird der Winkel der Testgruppe aus der aufgestellten Rotationsmatrix aus dem Konzept berechnet.
 		%
@@ -387,7 +387,7 @@ pitch & Nick-Winkel
 			
 	%
 	%
-	\subsection{Interpretation}\todo{Sind die Messungen OK?}
+	\subsection{Interpretation}\todo{Noch auf Messergebnisse Eingehen -> Sind sie plausibel?}
 	Die zuvor definierte Hypothese \vref{hypo:rotation} ist bestätigt. Die vom \gls{g:bodyframe} ins \gls{g:worldframe} transformierten Beschleunigungskomponenten sind bei allen Messungen $\overrightarrow{a}=[0\quad 0\quad 1]^{\top}$. Also der Erdbeschleunigung auf der z-Achse.
 %
 %
