@@ -12,11 +12,11 @@
 %
 % 0.0.0       Erstellung der Datei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Implementierung}\label{ch:implementierung}\todo{myRIO, FPGA erwähnen / erläutern}
+\chapter{Implementierung}\label{ch:implementierung}
 %
 %
 % Analyse Portierung MATLAB 
-\section{Analyse Portierung MATLAB}\label{s:analyse_portierung_matlab}\todo{Keine Umsetzung, nur Design und VIs!}
+\section{Analyse Portierung MATLAB}\label{s:analyse_portierung_matlab}
 	Für die Implementierung des im vorherigen Kapitels \vref{ch:konzept} konzeptionierten Algorithmus muss das erstellte \gls{g:matlab}-Skript analysiert werden. Es gilt \gls{ac:vi}s zu finden, die möglichst die gleiche Funktion haben wie die verwendeten Befehle und Toolboxen in \gls{g:matlab}. Dabei wird auf das Verwenden von \gls{g:matlab}-Skripten innerhalb von \gls{g:labview} verzichtet um die Eigenständigkeit der Implementierung zu gewährleisten\footnote{Mit der \gls{g:matlab}-Node ist es möglich \gls{g:matlab}-Code auszuführen, jedoch nicht auf einem Real-Time System wie das \gls{g:myrio} eines ist. Ausserdem muss für das Ausführen lokal \gls{g:matlab} installiert sein \cite{lit:labview_matlab}.}. Weiter soll eine Struktur gefunden werden, die den Ablauf des \gls{g:matlab}-Skripts widerspiegelt.
 	%
 	\subsection{Struktur}\label{ss:struktur}
