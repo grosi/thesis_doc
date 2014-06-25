@@ -542,7 +542,7 @@ b_1 &= \frac{T_a}{2}
 			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} M\low{1} unterschiedlich positioniert. Um die Anzahl Messungen in eine überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
 			%
 			\begin{itemize}
-				\item \textbf{x-Achse Position} Das \gls{g:myrio} M\low{1} wird flach auf dem Kreuztisch angebracht. Dabei zeigt die x-Achse des Beschleunigungssensors nach unten, sprich gleichgerichtet wie der Gravitationsvektor. Relative Beschleunigungen erfolgen in der x-y-Ebene in y-Richtung des Werkzeugtisches. Dies entspricht ebenfalls der y-Richtung (negativ) im Koordinatensystem des Betrachters, Abbildung \vref{img:koord_betrachter}. Eine schematische und reale Darstellung der Befestigung kann den Abbildungen \vref{img:x_achse} entnommen werden.
+				\item \textbf{x-Achse Position} Das \gls{g:myrio} M\low{1} wird flach auf dem Kreuztisch angebracht. Dabei zeigt die x-Achse des Beschleunigungssensors nach unten, sprich gleichgerichtet wie der Gravitationsvektor. Relative Beschleunigungen erfolgen in der x-y-Ebene in y-Richtung des Werkzeugtisches. Dies entspricht ebenfalls der y-Richtung (negativ) im \gls{g:worldframe}, Abbildung \vref{img:koord_betrachter}. Eine schematische und reale Darstellung der Befestigung kann den Abbildungen \vref{img:x_achse} entnommen werden.
 				%
 				\begin{figure}[htbp]
 					\centering
@@ -562,7 +562,7 @@ b_1 &= \frac{T_a}{2}
 					\label{img:x_achse}
 				\end{figure}    
 				%
-				\item \textbf{y-Achse Position} Bei der zweiten Position wird das \gls{g:myrio} so angebracht, das die y-Achse des Beschleunigungssensors parallel zum Gravitationsvektor steht. Gemessene Beschleunigungen wirken sich somit nur auf die x- und z-Achse aus. Die Abbildung \vref{img:y_achse} verdeutlicht diesen Aufbau. Die Translation wird in der y-Achse (positiv) erfolgen, bezogen auf das Koordinatensystem des Betrachters.
+				\item \textbf{y-Achse Position} Bei der zweiten Position wird das \gls{g:myrio} so angebracht, das die y-Achse des Beschleunigungssensors parallel zum Gravitationsvektor steht. Gemessene Beschleunigungen wirken sich somit nur auf die x- und z-Achse aus. Die Abbildung \vref{img:y_achse} verdeutlicht diesen Aufbau. Die Translation wird in der y-Achse (positiv) erfolgen, bezogen auf das \gls{g:worldframe}.
 				\begin{figure}[htbp]
 					\centering
 					\begin{subfigure}[htbp]{0.49\textwidth}
@@ -581,7 +581,7 @@ b_1 &= \frac{T_a}{2}
 					\label{img:y_achse}
 				\end{figure}    
 				%
-				\item \textbf{z-Achse Position} Abschliessend erfolgt noch eine Positionierung mit der z-Achse des Beschleunigungssensors in Richtung des Gravitationsvektors (gleichgerichtet). Aus dieser Konstellation ergeben sich nur Beschleunigungen auf die x- und y-Achsen des Sensors, was eine negative Translation in negativer y-Richtung, bezogen auf das Koordinatensystem des Betrachters, zur Folge hat. Die Befestigungsrichtung des \gls{g:myrio}s M\low{1} ist in der Abbildung \vref{img:z_achse} zu sehen.
+				\item \textbf{z-Achse Position} Abschliessend erfolgt noch eine Positionierung mit der z-Achse des Beschleunigungssensors in Richtung des Gravitationsvektors (gleichgerichtet). Aus dieser Konstellation ergeben sich nur Beschleunigungen auf die x- und y-Achsen des Sensors, was eine negative Translation in negativer y-Richtung, bezogen auf das \gls{g:worldframe}, zur Folge hat. Die Befestigungsrichtung des \gls{g:myrio}s M\low{1} ist in der Abbildung \vref{img:z_achse} zu sehen.
 				\begin{figure}[htbp]
 					\centering
 					\begin{subfigure}[htbp]{0.49\textwidth}
@@ -660,13 +660,15 @@ b_1 &= \frac{T_a}{2}
 	%
 	%
 	\subsection{Interpretation}\label{ss:interpretation_tran}
-	
-	\todo{Auf Ergenis eingehen der einzelnen drei Achsen was wurde gemessen? -> Fehler der Testgruppe, anschliessend als gesamtes Ergebnis Betrachten darauf eingehen}
-	\todo{Begründung allgemeiner Fehler -> Kontrollgruppe genau? nein da 5cm von "Hand" gefahren}
-	\todo{bekannte Fehler zurückbringen auf Kontrollgruppe, Fehler auf Testgruppe oder Kontrollgruppe?}
-	\todo{eingehen auf Geschwindigkeiten, Position des Sensors (warum y-achse schlecht)}
-	\todo{Abschluss: Brauchbar? Auf Hypothese 2 verweisen, Bestätigt oder Widerlegt?}
-	
+		Über alle Messungen und Positionen kam es zu Abweichung bezogen auf die Kontrollgruppe. Dabei kam es zu einer maximalen Abweichung von \unit[2.203]{cm} bei der y-/z-Position und langsamer Geschwindigkeit, was bereits einem Fehler von \unit[44.1]{\%} entspricht. Diesen beiden Messvoraussetzungen stellen hinsichtlich dieser grossen Abweichung eine Ausnahme dar, sind die übrigen Messungen doch innerhalb von \unit[30]{\%}. Weiter ist auffallend das der Mittelwert bei den Postionen x und z geringer als \unit[5]{cm} ausfiel, wohingegen die y-Position einen Wert darüber hat. Eine letzte Auffälligkeit zeigt sich bei den Standardabweichungen der Messungen. Wiederum sticht die y-Position mit einem höheren Wert bei beiden Geschwindigkeiten heraus.\par
+		%
+		Die Hohe Abweichung bei langsamer Geschwindigkeit der Positionen y und z kann nicht begründet werden. Weder die relativ hohe Ungenauigkeit der Kontrollgruppe von geforderten $\pm$\unit[1]{cm} noch ein anderer Einfluss kann dieses Phänomen erklären. Denn die übrige Messung, die x-Position, hat bei der gleichen Geschwindigkeit lediglich einen absoluten Fehler von \unit[0.341]{cm}. Eine grössere Anzahl von Messungen könnte hier eventuell die Situation klären.\par 
+		%
+		Wie erwähnt kommt es bei der y-Position, im Gegensatz zu den übrigen Positionen, zu einer Überschätzung der aktuellen Position. Dies kann auf einen Messfehler des Beschleunigungssensor zurückgeführt werden. Ein beständiger Offset auf den gemessenen Werten hat, bedingt durch die zweifache Integration, einen Drift zur Folge\footnote{In der Literatur ist dies unter dem Begriff \textsf{Integration Drift} bekannt \cite{lit:drift_int}}. Durch die Bewegungsdetektion wird dies zwar weitestgehend unterdrückt, jedoch nur wenn der Sensor in Ruhe ist. Bei einer Bewegung kommt dieses Fehlverhalten zum Zuge und hat entweder einen positive (y-Position) oder negative Verfälschung des Resultates zur Folge (x- und z-Position).
+		%
+		Der auffallende Punkt bezüglich der Standardabweichung der y-Position lässt sich ebenfalls begründen. Betrachtet man den Testaufbau und die Befestigungsart währende dieser Messung in Abbildung \vref{img:z_real}, so fällt auf wie exponiert das \gls{g:myrio} war. Durch diese eher instabilen Aufbau war der Sensor erhöhten Vibrationen ausgesetzt. Diese widerspiegeln sich in der Standardabweichung und sogar in der Messgenauigkeit (die Abweichungen von \unit[44.1]{\%}, respektive \unit[26.8]{\%} sind beide auffallend hoch).\par
+		%
+		Abschliessend kann die aufgestellte Hypothese \vref{hypo:translation} widerlegt werden. Die geforderte Genauigkeit von $\pm$\unit[1]{cm} konnte, trotz der Berücksichtigung der Ungenauigkeit der Kontrollgruppe, von zwei Messungen (y- und z-Position bei der Geschwindigkeit langsam) nicht eingehalten werden. Weiter ist das Konzept sehr anfällig auf Vibrationen, wie die Messung y-Position schnell zeigt. Aus diesen Gründen gilt das Protokoll als nicht erfüllt. Es bleibt jedoch die erwähnten Probleme näher zu untersuchen und für aussagekräftigere Resultate eine höhere Anzahl an Messungen durchzuführen.	
 %
 %
 %Verifikation Translation und Rotation überlagert
