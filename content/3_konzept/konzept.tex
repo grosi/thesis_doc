@@ -261,8 +261,8 @@ Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt
 Aus der Regelungstechnik ist bekannt, dass die Übertragungsfunktion eines Integrators $H(s) = \frac{1}{s}$ entspricht. Dies ist somit die Übertragungsform eines Analogfilters also einem zeitkontinuierlichem \gls{g:lti}-System. Um auf die Übertragungsfunktion des Digitalfilters zu gelangen, kann nun die Bilineare-Transformation angewendet werden. Wie in Gleichung \vref{eq:bilinear_trans} zuvor gezeigt.
 %
 \formula{
-H(s) &= \frac{1}{s}\\
-H(z) &= H(s)\mid s = \frac{2}{T_a}*\frac{1-z^{-1}}{1+z^{-1}}
+H(s) &= \frac{1}{s}\\[1ex]
+H(z) &= H(s)\mid _{s = \frac{2}{T_a}*\frac{1-z^{-1}}{1+z^{-1}}}
 }{
 }[eq:trans_filter]
 %
@@ -276,9 +276,9 @@ H(z) &= \frac{T_a}{2}*\frac{1+z^{-1}}{1-z^{-1}}
 Wird dei Gleichung \vref{eq:int_filter} ausmultipliziert so erhält man die in Gleichung \vref{eq:iir_Filter} definierten Filterkoeffizienten womit das Digitalfilter definiert ist.
 %
 \formula{
-a_0 &= 1\\
-a_1 &= -1\\
-b_0 &= \frac{T_a}{2}\\
+a_0 &= 1\\[1ex]
+a_1 &= -1\\[1ex]
+b_0 &= \frac{T_a}{2}\\[1ex]
 b_1 &= \frac{T_a}{2}
 }{
 }[eq:koeff_filter]
@@ -449,22 +449,20 @@ b_1 &= \frac{T_a}{2}
 			Der Messablauf sieht folgende Schritte vor. Sie werden jeweils bei jedem Winkel wiederholt.
 			\begin{enumerate}
 				\item Testaufbau auf den gewünschten Winkel einstellen. Dazu den Winkelmesser M\low{2} verwenden.
-				\item \gls{g:labview}-Programm starten. Es müssen während  \unit[6]{s} Daten aufgezeichnet werden\footnote{Bedingt durch die Filterlänge des Tiefpassfilters, siehe Abschnitt XXX}.
+				\item \gls{g:labview}-Programm starten. Es müssen während  \unit[6]{s} Daten aufgezeichnet werden\footnote{definierte minimale Messdauer, vorgeben durch das Konzept}.
 				\item den vorherigen Schritt 5-mal wiederholen.
 				\item Datenextraktion nach mit den in Abschnitt \vref{ss:myRIO_hw} beschriebenen Methoden.
 				\item Daten mit \gls{g:matlab} verarbeiten und auswerten.
 			\end{enumerate}	
 		%
-		\subsubsection*{Datenauswertung}\todo{Für alle Messungen separat std bestimmen; relativer Fehler kontrollieren!}
+		\subsubsection*{Datenauswertung}
 			Es gilt die Winkelschätzung hinsichtlich des eingestellten Winkels auszuwerten. Weiter muss die Rotation geprüft werden. Das Messergebnis der beiden Messgruppen stellt die abhängige Variabel dar.\par 
 			%
-			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[0.74]{°} (\unit[118]{°}). Das entspricht einem mittleren absoluten Fehler von \unit[-0.92]{°} über alle Messungen hin betrachtet.\par
+			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[0.74]{°} (\unit[118]{°}). Dies entspricht den relativen Fehlern von \unit[-0.038]{\%} (\unit[62]{°}), \unit[-0.021]{\%} (\unit[77]{°}), \unit[-0.016]{\%} (\unit[90]{°}), \unit[-0.002]{\%} (\unit[105]{°}) und \unit[0.006]{\%} (\unit[118]{°}).\par
 			%
-			Der relative Messabweichungen, wiederum gemittelt, bemessen sich auf \unit[-0.038]{\%} (\unit[62]{°}), \unit[-0.021]{\%} (\unit[77]{°}), \unit[-0.016]{\%} (\unit[90]{°}), \unit[-0.002]{\%} (\unit[105]{°}) und \unit[0.006]{\%} (\unit[118]{°}). Dies ergibt einen mittleren relativen Fehler von \unit[-0.014]{\%} über alle Messungen hinweg.\par
+			Analysiert man die Messungen hinsichtlich ihrer Standardabweichung und des Mittelwerts, so ergibt dies bei \unit[62]{°} den Mittelwert \unit[59.72]{°} und die Standardabweichung \unit[0.009]{°}. Für die übrigen Winkeln sind es \unit[75.35]{°}, \unit[88.55]{°}, \unit[104.78]{°} und \unit[118.74]{°} (Winkel \unit[77]{°}, \unit[90]{°}, \unit[105]{°} und \unit[118]{°}, in dieser Reihenfolge )für den Mittelwert und \unit[0.005]{°}, \unit[0.009]{°}, \unit[0.003]{°} und \unit[0.152]{°} für die Standardabweichung.\par 
 			%
-			Analysiert man die Messabweichung hinsichtlich ihrer Standardabweichung, so ergibt dies für die absoluten Messungen \unit[0.036]{°} und für die relativen \unit[0.0003]{\%}.\par 
-			%
-			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig wenn die Rotation an sich nicht funktioniert. Daher gilt es die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a}=[0\quad 0\quad 1]^{\top}$, was dem unbewegten Koordinatensystem des Betrachters entspricht (auf der z-Achse die Erdbeschleunigung).
+			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig wenn die Rotation an sich nicht funktioniert. Daher gilt es die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a}=[0\quad 0\quad 1]^{\top}$, was dem unbewegten \gls{g:worldframe} entspricht (auf der z-Achse die Erdbeschleunigung).
 			%
 			Die Auswertung der Messungen zusammengefasst ist in der Tabelle \vref{tab:auswertung_tran} ersichtlich. 
 			%
@@ -472,8 +470,10 @@ b_1 &= \frac{T_a}{2}
 			
 	%
 	%
-	\subsection{Interpretation}\todo{Noch auf Messergebnisse Eingehen -> Sind sie plausibel?}
-	Die zuvor definierte Hypothese \vref{hypo:rotation} ist bestätigt. Die vom \gls{g:bodyframe} ins \gls{g:worldframe} transformierten Beschleunigungskomponenten sind bei allen Messungen $\overrightarrow{a}=[0\quad 0\quad 1]^{\top}$. Also der Erdbeschleunigung auf der z-Achse.
+	\subsection{Interpretation}
+		Bei allen Winkelmessungen der Testgruppe sind Abweichungen aufgetreten. Diese halten sich mit maximal \unit[2.28]{°} im Rahmen des Erwarteten. Es dabei zu berücksichtigen, dass die absolute Winkelmessung mit dem Winkelmesser M\low{2} eine relative hohe Ungenauigkeit von $\pm$\unit[1]{°} aufweist. Es könnte darum durchaus im Bereich des Möglichen liegen, dass die Kontrollgruppe hier die grössere Abweichungen von der Wirklichkeit hat als die Testgruppe. Die Messungen an sich weisen eine hohe Konstanz auf, was sich in den geringen Standardabweichungen widerspiegelt. Über den Erwartungen sind die Ergebnisse hinsichtlich der Rotation. Bei jeder Auslenkung konnte das \gls{g:bodyframe} erfolgreich und mit keinerlei Abweichung in das \gls{g:worldframe} rotiert werden.\par
+		%
+		In Anbetracht der Auswertung kann damit die Hypothese \vref{hypo:rotation} vollumfänglich bestätigt werden. Mit dem Erfüllen des ersten Protokolls ist zugleich das Fundament für folgenden Bestandteilen des Konzepts gelegt.
 %
 %
 %Verifikation Translation
@@ -619,7 +619,7 @@ b_1 &= \frac{T_a}{2}
 				\item Messung starten
 					\begin{enumerate}
 						\item \unit[4]{s} warten bis die Rotationswinkel geschätzt sind.
-						\item Translation durchführen (langsam oder schnell).
+						\item Translation durchführen (\unit[5]{cm}, langsam oder schnell).
 						\item Warten bis \unit[10]{s} verstrichen sind (totale Messzeit).
 					\end{enumerate}
 				\item Werkzeugtisch in Ursprungsposition bewegen.
@@ -629,46 +629,28 @@ b_1 &= \frac{T_a}{2}
 			Die relativ gemessene Distanz der Testgruppe muss bezogen auf die Kontrollgruppe ausgewertet werden. Die ermittelte Entfernung ist dabei die abhängige Variabel dieses Protokolls. Die Messresultate werden hinsichtlich der Messabweichung und ihrer Standardabweichung untersucht. Für die Auswertung irrelevanten Diagramme sei auf den Anhang \vref{ss:anhang_konzept_messung_translation} verwiesen.\par
 			%
 			\paragraph*{x-Achsen Position}
-				Über 15 Messungen mit der langsamen Geschwindigkeit tritt ein mittlere absoluter Fehler von \unit[0.44]{cm} auf, was ein relativ \unit[8.8]{\%} ergibt. Die gemessenen Translationen, zu sehen in der Abbildung \vref{img:x_tran_langsam_y}, weissten eine mittlere Distanz von \unit[-4.56]{cm} (blaue Linie) mit einer Standardabweichung (rote Linien) von \unit[0.477]{cm} auf.
+				Über 15 Messungen mit der langsamen Geschwindigkeit tritt ein mittlere absoluter Fehler von \unit[0.341]{cm} auf, was ein relativ \unit[6.8]{\%} ergibt. Die gemessenen Translationen, zu sehen in der Abbildung \vref{img:x_tran_langsam_y}, weissten eine mittlere Distanz von \unit[-4.659]{cm} (blaue Linie) mit einer Standardabweichung (rote Linien) von \unit[0.348]{cm} auf.
 				\image{content/3_konzept/image/mittel_5_X_Y}{scale=0.6}{htbp}[x-Position Translation langsam][img:x_tran_langsam_y]
 				%
-				Wird die Geschwindigkeit verdoppelt auf Stufe schnell, so verbessert sich der mittlere absolute Fehler auf \unit[0.205]{cm}. Dies entspricht einer relativen Abweichung von \unit[4.1]{\%}. Daraus ergibt sich ein mittlere gemessene Distanz von \unit[-4.795]{cm} mit einer Standardabweichung von \unit[0.369]{cm}. Ersichtlich ist die Messung und die Auswertung in der Abbildung \vref{img:x_tran_schnell_y}.
+				Wird die Geschwindigkeit verdoppelt auf Stufe schnell, so verbessert sich der mittlere absolute Fehler auf \unit[0.192]{cm}. Dies entspricht einer relativen Abweichung von \unit[3.8]{\%}. Daraus ergibt sich ein mittlere gemessene Distanz von \unit[-4.808]{cm} mit einer Standardabweichung von \unit[0.349]{cm}. Ersichtlich ist die Messung und die Auswertung in der Abbildung \vref{img:x_tran_schnell_y}.
 				%
-				\image{content/3_konzept/image/mittel_5_X_Y}{scale=0.6}{htbp}[x-Position Translation schnell][img:x_tran_schnell_y]
-%				\begin{figure}[htbp]
-%					\centering
-%					\begin{subfigure}[htbp]{0.8\textwidth}
-%						\centering
-%						\includegraphics[height=8cm]{content/3_konzept/image/mittel_5_X_Y}
-%						\caption{langsam}
-%						\label{img:x_tran_langsam_y}
-%						\vspace*{1.5ex}
-%					\end{subfigure}\\
-%					\begin{subfigure}[htbp]{0.8\textwidth}
-%						\centering
-%						\includegraphics[height=8cm]{content/3_konzept/image/schnell_5_X_Y}
-%						\caption{schnell}
-%						\label{img:x_tran_schnell_y}
-%					\end{subfigure}        
-%					\caption{x-Position Translation y-Richtung}
-%					\label{img:x_tran_schnell}
-%				\end{figure}    
+				\image{content/3_konzept/image/mittel_5_X_Y}{scale=0.6}{htbp}[x-Position Translation schnell][img:x_tran_schnell_y] 
 			%
 			\paragraph*{y-Achsen Position}
-				Befindet sich das \gls{g:myrio} in der y-Achsen Position, so ergibt sich über 15 Messungen ein mittlerer absoluter Fehler von \unit[1.338]{cm} (relativ \unit[26.8]{\%}). Dies bei der Geschwindigkeit langsam. Die Analyse hinsichtlich des gemessenen Mittelwertes und Standardabweichung ergibt \unit[6.338]{cm} und \unit[1.355]{cm}. Die Abbildung \vref{img:y_tran_langsam_y} zeigt die 15 Messungen mit eingezeichneten Kenngrössen (blau Mittelwert der Messung und rot die Standardabweichung).
+				Befindet sich das \gls{g:myrio} in der y-Achsen Position, so ergibt sich über 15 Messungen ein mittlerer absoluter Fehler von \unit[2.203]{cm} (relativ \unit[44.1]{\%}). Dies bei der Geschwindigkeit langsam. Die Analyse hinsichtlich des gemessenen Mittelwertes und Standardabweichung ergibt \unit[7.203]{cm} und \unit[0.467]{cm}. Die Abbildung \vref{img:y_tran_langsam_y} zeigt die 15 Messungen mit eingezeichneten Kenngrössen (blau Mittelwert der Messung und rot die Standardabweichung).
 				%
 				\image{content/3_konzept/image/mittel_5_Y_Y}{scale=0.6}{htbp}[y-Position Translation langsam][img:y_tran_langsam_y]
 				%
-				Ein Erhöhung der Geschwindigkeit bringt einen mittleren absoluten Messfehler von \unit[1.360]{cm} und ein relativen von \unit[27.2]{\%} zu Tage. Dies bei einem ermittelten Mittelwert von \unit[6.360]{cm} und einer Standardabweichung von \unit[0.697]{cm}, wie die Abbildung \vref{img:y_tran_schnell_y}.
+				Ein Erhöhung der Geschwindigkeit bringt einen mittleren absoluten Messfehler von \unit[1.343]{cm} und ein relativen von \unit[26.8]{\%} zu Tage. Dies bei einem ermittelten Mittelwert von \unit[6.343]{cm} und einer Standardabweichung von \unit[0.558]{cm}, wie die Abbildung \vref{img:y_tran_schnell_y}.
 				%
 				\image{content/3_konzept/image/schnell_5_Y_Y}{scale=0.6}{htbp}[y-Position Translation schnell][img:y_tran_schnell_y]
 			%
 			\paragraph*{z-Achsen Position}
-				Die abschliessende Messung in der z-Achsen Position ergibt bei der langsamen Geschwindigkeit einen absoluten mittleren Fehler von \unit[2.043]{cm}, was einem relativen Fehler von \unit[40.9]{\%} entspricht. Betrachtet man die Abbildung \vref{img:z_tran_langsam_y}, so zeigt sich bei der blauen Linie ein Mittelwert von \unit[-2.957]{cm} bei einer Standardabweichung von \unit[0.323]{cm}.
+				Die abschliessende Messung in der z-Achsen Position ergibt bei der langsamen Geschwindigkeit einen absoluten mittleren Fehler von \unit[2.203]{cm}, was einem relativen Fehler von \unit[44.1]{\%} entspricht. Betrachtet man die Abbildung \vref{img:z_tran_langsam_y}, so zeigt sich bei der blauen Linie ein Mittelwert von \unit[-2.797]{cm} bei einer Standardabweichung von \unit[0.364]{cm}.
 				%
 				\image{content/3_konzept/image/mittel_5_Z_Y}{scale=0.6}{htbp}[z-Position Translation y-Richtung langsam][img:z_tran_langsam_y]
 				%
-				Bei der Geschwindigkeit schnell erhöht sich wiederum der absolute Fehler auf \unit[0.769]{cm} (entspricht relativ \unit[15.4]{\%}). Die Messung an sich hat einen Mittelwert von \unit[-4.231]{cm} bei einer Standardabweichung von \unit[0.255]{cm}. Die Abbildung \vref{img:z_tran_schnell_y} zeigt das gemessene Ergebnis.\par 
+				Bei der Geschwindigkeit schnell verringert sich der absolute Fehler auf \unit[0.709]{cm} (entspricht relativ \unit[14.1]{\%}). Die Messung an sich hat einen Mittelwert von \unit[-4.294]{cm} bei einer Standardabweichung von \unit[0.231]{cm}. Die Abbildung \vref{img:z_tran_schnell_y} zeigt das gemessene Ergebnis.\par 
 				%
 				\image{content/3_konzept/image/schnell_5_Z_Y}{scale=0.6}{htbp}[z-Position Translation schnell][img:z_tran_schnell_y]
 			%
@@ -698,7 +680,7 @@ b_1 &= \frac{T_a}{2}
 		%
 		\image{content/3_konzept/image/messaufbau_tran_rot}{scale=0.2}{htbp}[Messaufbau Translation, Rotation überlagert][img:messaufbau_tran_rot]
 		%
-		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung XXX, XXX und XXX am Rotationsarm}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
+		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung TR1, TR2 und TR3 am Rotationsarm}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
 		%
 		\input{content/3_konzept/table/messmittel_tran_rot}	
 	%
@@ -753,14 +735,14 @@ b_1 &= \frac{T_a}{2}
 			Es werden Messungen bei unterschiedlichen Auslenkungen  durchgeführt. Dazu wird die Querverbindung an drei verschiedenen Positionen, erkenntlich an Hand von Markierungen, angebracht (siehe Abbildung \vref{img:messaufbau_tran_rot}). Es wird insgesamt zwischen drei verschiedenen Auslenkungen unterschieden, wobei die Position des \gls{g:myrio} M\low{1} nicht verändert wird. 
 			%
 			\begin{itemize}
-				\item \textbf{Auslenkung 1} Die erste Auslenkung beträgt \unit[7.5]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich. Daraus ergitbt sich unter Anwendung der Gleichung \vref{eq:kreissegement} eine Pfadlänge von \unit[56.75]{mm}.
-				\image{content/3_konzept/image/messaufbau_querstrebe_pos_1}{scale=0.8}{htbp}[Querstreben-Position 1 (Angaben in \unit{mm})][img:messaufbau_pos1]
+				\item \textbf{Auslenkung 1 TR1} Die erste Auslenkung beträgt \unit[7.5]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich. Daraus ergitbt sich unter Anwendung der Gleichung \vref{eq:kreissegement} eine Pfadlänge von \unit[56.75]{mm}.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_1}{scale=0.8}{htbp}[Querstreben-Position 1 (Angaben in \unit{mm})][Querstreben-Position 1][img:messaufbau_pos1]
 				%
-				\item \textbf{Auslenkung 2} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[30]{mm} befestigt. Damit ist ein Winkelbereich von \unit[XXX]{°} und eine Pfadlänge \unit[XXX]{mm} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
-				\image{content/3_konzept/image/messaufbau_querstrebe_pos_2}{scale=0.8}{htbp}[Querstreben-Position 2 (Angaben in \unit{mm})][img:messaufbau_pos2]
+				\item \textbf{Auslenkung 2 TR2} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[30]{mm} befestigt. Damit ist ein Winkelbereich von \unit[15]{°} und eine Pfadlänge \unit[113.5]{mm} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_2}{scale=0.8}{htbp}[Querstreben-Position 2 (Angaben in \unit{mm})][Querstreben-Position 2][img:messaufbau_pos2]
 				%
-				\item \textbf{Auslenkung 3} Die maximale Auslenkung von \unit[XXX]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[60]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt. Für die Pfadlänge ergibt sich mit Hilfe der Gleichung \vref{eq:kreissegement} \unit[XXX]{mm}.
-				\image{content/3_konzept/image/messaufbau_querstrebe_pos_3}{scale=0.8}{htbp}[Querstreben-Position 3 (Angaben in \unit{mm})][img:messaufbau_pos3]
+				\item \textbf{Auslenkung 3 TR3} Die maximale Auslenkung von \unit[23.5]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[60]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt. Für die Pfadlänge ergibt sich mit Hilfe der Gleichung \vref{eq:kreissegement} \unit[174.04]{mm}.
+				\image{content/3_konzept/image/messaufbau_querstrebe_pos_3}{scale=0.8}{htbp}[Querstreben-Position 3 (Angaben in \unit{mm})][Querstreben-Position 3][img:messaufbau_pos3]
 			\end{itemize}
 			%
 			Der Messablauf umfasst insgesamt 4 Schritte, die für jede Auslenkung 15 mal wiederholt werden müssen.
@@ -777,13 +759,18 @@ b_1 &= \frac{T_a}{2}
 			\end{enumerate}
 		%
 		\subsubsection*{Datenauswertung}
+			Die Messergebnisse der Testgruppe muss hinsichtlich der Kontrollgruppe ausgewertet werden. Dabei ist die ermittelte Entfernung die abhängige Variabel. Untersucht werden die absoluten und relativen Messfehler, sowie die Standardabweichung der Messung. Durch die einmalig Umdrehung wird eine Endposition gleich der Startposition (Ursprung = \unit[0]{cm}) erwartet, was auch als Referenz zur Bestimmung der Fehlerabweichung dient. 
 			%
-			
-			\paragraph*{Auslenkung 1}
+			\paragraph*{Auslenkung 1} 
+				Über alle Messungen hinweg ergibt sich bei der Auslenkung 1 einen mittleren absoluten Fehler von \unit[-348.02]{cm} was relativ \unit[-6'960.5]{\%} entspricht. Die Messung an sich weist einen Mittelwert von \unit[-348.06]{cm} und eine Standardabweichung von \unit[76.39]{cm} auf. Das Ergebnis, inklusive des eingezeichneten Mittelwerts (blau) und der Standardabweichung (rot) ist in der Abbildung \vref{img:auslenkung_1_y} ersichtlich. 
 				\image{content/3_konzept/image/auslenkung_1_Y}{scale=0.8}{htbp}[Translation Rotation Auslenkung 1][img:auslenkung_1_y]
+			%
 			\paragraph*{Auslenkung 2}
+				Bei der zweiten Auslenkung kann wie zuvor eine lineare Translation beobachtet werden. Gemittelt über alle Messungen weist sie einen Mittelwert von \unit[-665.05]{cm} auf, was zugleich dem absoluten Fehler entspricht (der relative Fehler ist \unit[-13'301]{\%}). Die Standardabweichung beträgt \unit[82.57]{cm}. Die Abbildung \vref{img:auslenkung_2_y} zeigt die 15 durchgeführten Messungen.
 				\image{content/3_konzept/image/auslenkung_2_Y}{scale=0.8}{htbp}[Translation Rotation Auslenkung 2][img:auslenkung_2_y]
+			%
 			\paragraph*{Auslenkung 3}
+				Wird die Auslenkung auf \unit[23.5]{°} erhöht, ergibt sich ein absoluter Fehler von \unit[-1'111.68]{cm}. Dies ist gleichbedeutend mit einem relativen Fehler von \unit[-22'233.5]{\%}. Der Mittelwert der Messungen beläuft sich auf \unit[-1'111.68]{cm}. Dies bei einer Standardabweichung von \unit[179.450]{cm}. Die Ergebnisse der dritten Auslenkung sind in der Abbildung \vref{img:auslenkung_3_y} dargestellt.\par 
 				\image{content/3_konzept/image/auslenkung_3_Y}{scale=0.8}{htbp}[Translation Rotation Auslenkung 3][img:auslenkung_3_y]
 			%
 			%
