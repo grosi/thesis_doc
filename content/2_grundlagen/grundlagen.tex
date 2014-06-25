@@ -88,7 +88,8 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 				Daufhin präsentiert sich ein einfacher Dateiexplorer, wie Abbildung \vref{img:myrio_webdav} zeigt.
 				\image{content/2_grundlagen/image/webdav_myrio}{scale=0.5}{htbp}[Dateiexplorer][img:myrio_webdav]
 				%
-				\item[\gls{g:labview}]\todo{data-stream erklären}
+				\item[\gls{g:labview}] Sollen die Daten während des Ausführens des \gls{ac:vi}s an den Host übertragen werden, bietet sich ein Netzwerk-Stream an. Dieser erlaubt es ein zuvor definierte Datenstruktur kontinuierlich zu übertragen. Für das Aufbauen einen Netzwerkverbindung muss zum einen auf dem Target ein \textsf{Network Stream Writer Endpoint} erzeugt werden, auf den Daten entweder einzeln oder in Paketen geschrieben werden können. Dieser Writer Endpoint wird jedoch nur erfolgreich erzeugt wenn auf seitens des Host ein \textsf{Network Stream Reader Endpoint} erzeugt wird. Der Reader Endpoint erlaubt es die übertragenen Daten aus dem Stream zu extrahieren, wonach sie weiter verarbeitet, angezeigt und/oder gespeichert werden können. Ein minimales Konstrukt, was die Übertragung von Daten erlaubt, ist in der Abbildung \vref{img:netstream} ersichtlich. Für detaillierte Informationen über die Möglichkeiten eines Netzwerk-Streams sei auf \cite{lit:labview_networkstream} hingewiesen.
+				\image{content/2_grundlagen/image/network}{scale=0.9}{htbp}[Netzwerk-Stream \cite{img:labview_networkstream}][Netzwerk-Stream][img:netstream]
 				%
 				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \gls{ac:sftp} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter Terminal \vpageref{i:terminal} erwähnten Bedingungen erfüllt sein. Für den Dateitransfer dient das Kommando \texttt{scp}, das wie in Listing \vref{list:sftp} gezeigt angewendet wird.
 				%
