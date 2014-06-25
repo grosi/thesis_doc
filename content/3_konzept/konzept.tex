@@ -30,7 +30,7 @@ Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersich
 %
 % Filterung
 \subsection{Filterung der Sensordaten}\label{ss:tp}
-Durch die \gls{ac:tp}-Filterung der gemessenen Sensordaten wird zum einen das Quantisierungsrauschen gedämpft und zum andern  der Anti-Aliasing-Effekt verhindert. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Der Aufbau eines solchen Filter N-ter Ordnung ist folgendermassen.
+Durch die \gls{ac:tp}-Filterung der gemessenen Sensordaten werden unerwünschte hochfrequente Bewegungen gedämpft. Es werden somit nur Bewegungen mit einer Frequenz unterhalb der festgelegten Durchlassfrequenz betrachtet. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Der Aufbau eines solchen Filter N-ter Ordnung ist folgendermassen.
 %
 \formula{
 H(z)=\frac{b_0 + b_1z^{-1}+...+b_Nz^{-N}}{a_0 + a_1z^{-1}+...+a_Nz^{-N}}
@@ -225,7 +225,7 @@ Die Wirkung dieser Rotation ist in Abbildung \vref{img:rotation_vektor} ersichtl
 \subsection{Bewegungsdetektion} \todo{auf offset eingehen}
 Da die Integration einer Aufsummierung entspricht kann durch einen kleinen Fehler in der Rotation resultierend durch einen Offset bereits ein grosser Drift entstehen. Ein Lösungsansatz ist dabei eine Bewegungsdetektion einzuführen. Die Integration wir nur durchgeführt, wenn sich der Sensor auch bewegt. Ein Hilfsmittel über die Variation eines Signals ist deren Varianz respektive Standardabweichung. Die Standardabweichung gibt uns Information über die Verteilung der Signalamplitude. Wird der Sensor in Ruhe gelassen, so ändern sich die aufgenommene Amplitude nur gering (Rauschen des Sensors laut NI \unit[3.9]{$mg_{rms}}$). Dementsprechend ist die Standardabweichung klein. Wird der Sensor bewegt, so resultiert eine grössere Änderung der Amplitude. Die Standardabweichung wird somit grösser.\par
 %
-Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In dieser Zeit kann der Threshold mittels der Standardabweichung über diese Zeit bestimmt werden. Da in dieser Zeit über eine verhältnismässig grosse Zeitdauer gemessen wird ist die Standardabweichung geringer als mit der Methode wo ein Fenster über das Signal gefahren wird und in diesem Fenster die Standardabweichung bestimmt wird. Aus diesem Grund wird zur Berechnung des Thresholds noch zusätzlich ein Vorfaktor zur Standardabweichung multipliziert. Somit ist der Threshold grösser als die Standardabweichung des Rauschen. Dies ist sicherlich eine etwas unelegante Lösung und könnte noch verbessert werden. Jedoch wurde mit dieser Methode eine schnelle und einfache Lösung erzielt.\par
+Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In dieser Zeit kann der Threshold mittels der Standardabweichung bestimmt werden. Da die Standardabweichung über eine verhältnismässig grosse Dauer gemessen wird, ist diese geringer als mit der Methode wo ein kleineres Fenster als die vier Sekunden über das Signal gefahren und in diesem Fenster die Standardabweichung bestimmt wird. Aus diesem Grund kann zur Berechnung des Thresholds noch zusätzlich ein Vorfaktor zur Standardabweichung multipliziert werden. Somit ist der Threshold grösser als die Standardabweichung des Rauschen. Dies ist sicherlich nicht eine optimale Lösung und könnte noch verbessert werden. Jedoch wurde mit dieser Methode eine schnelle und einfache Lösung erzielt.\par
 %
 \image{content/3_konzept/image/Bewegungsdetect}{scale=0.7}{htbp}[Bewegungsdetektion auf der y-Achse][img:bewegungdetect]
 %
@@ -703,7 +703,7 @@ b_1 &= \frac{T_a}{2}
 				%
 				\item \textbf{Testgruppe} Die Testgruppe beinhaltet das \gls{g:myrio} M\low{1} mit integriertem Beschleunigungssensor. Die Daten werden während des Tests aufgezeichnet und später auf dem Computer mit \gls{g:matlab} verarbeitet. 
 				%
-				\item \textbf{Kontrollgruppe} Die Kontrollgruppe dient als Basis für die spätere Auswertung. Die Aufnahme der Daten erfolgt zum einen Messtechnisch (Radius und Winkel) und zum anderen mathematisch (Berechnung der Pfadlänge).
+				\item \textbf{Kontrollgruppe} Die Kontrollgruppe dient als Basis für die spätere Auswertung. Die Aufnahme der Daten erfolgt zum einen messtechnisch (Radius und Winkel) und zum anderen mathematisch (Berechnung der Pfadlänge).
 			\end{itemize}
 			%
 			Das unterschiedliche Messverfahren stellt die unabhängige Variabel in diesem Protokoll dar.
@@ -712,7 +712,7 @@ b_1 &= \frac{T_a}{2}
 			Die Messmethodik der Testgruppe ist äquivalent zur Messmethodik des vorherigen Protokolls im Abschnitt \vref{ss:messmethodik_kontroll_tran}. Für die bessere Gliederung der Protokolle wurde dennoch eigens das \gls{g:matlab}-Skript \texttt{XXX} erstellt. Für eine detaillierte Einsicht ins Skript sei auf den Anhang \vref{s:anhang_matlab} verwiesen.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
-			Wie abgetönt verwendet die Kontrollgruppe messtechnische und mathematische Verfahren um den zurückgelegte Weg zu ermitteln.  
+			Wie angetönt verwendet die Kontrollgruppe messtechnische und mathematische Verfahren um den zurückgelegte Weg zu ermitteln.  
 			Gemessen wird mit Hilfe von Massstab M\low{4} und Winkelmesser M\low{2} die aktuelle Kniehöhe (konstant über alle Messungen hinweg) und der mögliche Winkelbereich $\alpha$ der aktuellen Auslenkung. Als Ausgangslage für die Aufnahme der skalaren Messgrössen dient die Abbildung \vref{img:messaufbau_dimensionen}. 
 			%
 			\image{content/3_konzept/image/messaufbau}{scale=0.5}{htbp}[Messaufbau - Messmethodik][img:messaufbau_dimensionen]
@@ -763,7 +763,7 @@ b_1 &= \frac{T_a}{2}
 				\begin{enumerate}
 					\item Für die Bestimmung der Rotationsmatrix \unit[4]{s} warten.
 					\item Den Rotationsarm gegen den Uhrzeigersinn einmal drehen und dabei auf eine möglichst konstante Geschwindigkeit achten.
-					\item In Ausgangsposition verharren bis \unit[12]{s} verstrichen sind.
+					\item In Ausgangsposition verharren bis \unit[11]{s} verstrichen sind.
 				\end{enumerate}
 			\end{enumerate}
 		%
@@ -788,7 +788,8 @@ b_1 &= \frac{T_a}{2}
 			\input{content/3_konzept/table/auswertung_tran_rot}
 	%
 	%
-	\subsection{Interpretation}\label{ss:interpretation_tran_rot}\todo{Histogramm, Gruppenvergleich,Messfehler}
+	\subsection{Interpretation}\label{ss:interpretation_tran_rot}
+Gemäss dem zuvor beschriebenem Testaufbau sollte eine Translation in negative und positive y-Richtung ersichtlich sein. Da der Startpunkt der Bewegung dem Endpunkt entspricht, sollte zum Schluss der Messung dieselbe Position  ersichtlich sein. Diese Position (y = \unit[0]{cm}) wird für die Fehlerbetrachtung als Referenz verwendet. Die gemessene Endposition wird zu dieser soll Endposition verglichen. In der Tabelle \vref{tab:auswertung_tran_rot} sowie den dargestellten Messungen zeigen alle drei Auslenkungen einen enormen Fehler auf. Dabei ist der Fehler der ersten Auslenkung geringer als der Fehler der zweiten Auslenkung. Der Fehler der zweiten Auslenkung jedoch geringer als der der dritten.
 
 todo{Auf Ergenis eingehen der einzelnen drei Achsen was wurde gemessen? -> Fehler der Testgruppe, anschliessend als gesamtes Ergebnis Betrachten darauf eingehen}
 	\todo{Begründung allgemeiner Fehler -> Kontrollgruppe genau? nein da 5cm von "Hand" gefahren}
