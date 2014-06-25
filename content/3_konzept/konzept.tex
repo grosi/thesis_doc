@@ -16,9 +16,9 @@
 %
 % Blockdiagramm
 \section{Algoritmus}\label{s:blockdiagramm}
-Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{xxx} extrahiert werden. Dort wurden eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
+Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{xxx} extrahiert werden. Dort wurde eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
-Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters (im Abschnitt \vref{subsub:betrachter} sind diese Koordinatensysteme erklärt). Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
+Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters dem \gls{g:worldframe}. Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
 %
 Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung in der x-y-Ebene berechnet. Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit in der der Sensor nicht bewegt wird abgearbeitet und entspricht einer Kalibrationsphase. Im zweiten Teil wird die Bewegung des Sensors in der Ebene berechnet.\par
 %
@@ -29,7 +29,7 @@ Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersich
 \todo{Bildposition, Grösse besser, Bild ändern}
 %
 % Filterung
-\subsection{Tiefpass-Filterung}\label{ss:tp}
+\subsection{Filterung der Sensordaten}\label{ss:tp}
 Durch die \gls{ac:tp}-Filterung der gemessenen Sensordaten wird zum einen das Quantisierungsrauschen gedämpft und zum andern  der Anti-Aliasing-Effekt verhindert. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Der Aufbau eines solchen Filter N-ter Ordnung ist folgendermassen.
 %
 \formula{
@@ -40,21 +40,21 @@ H(z)=\frac{b_0 + b_1z^{-1}+...+b_Nz^{-N}}{a_0 + a_1z^{-1}+...+a_Nz^{-N}}
 Wobei $b_n$ und $a_n$ die jeweiligen Filterkoeffizienten sind. Ein Vorteil des \gls{ac:iir}-Filters und Grund weshalb es dem \gls{ac:fir}-Filters oft vorgezogen wird ist, dass es eine grössere Effizient auf eine kurze Verzögerung aufweist. Um mit einem \gls{ac:fir}-Filter dieselbe Filterwirkung wie mit einem \gls{ac:iir}-Filter zu erreichen ist eine deutlich grössere Filterordnung nötig. Somit vergrössert sich wie erwähnt die Verzögerung durch das Filter. Ein Nachteil ist, dass durch den rekursiven Aufbau das \gls{ac:iir}-Filters instabil sein kann.
 % 
 \subsubsection*{Filterentwurf}\label{subsub:filterentwurf}
-Ein vielfach verwendetes Verfahren zum Entwurf von \gls{ac:iir}-Filtern ist die Bilineare-Transforma\-tion. Hierbei wird die Übertragungsfunktion $H(s)$ eines Analogfilters in die Übertragungsfunktion $H(z)$ eines Digitalfilters überführt. Das Analogfilter entspricht dabei einem zeitkontinuierlichen System, das Digitalfilter bekanntlich einem zeitdiskreten. Die Labplacevariable s wird  dazu durch eine Funktion der Variable z substituiert. Im Unterricht bei  Herrn Vetter im vierten Semester hat sich gezeigt, dass die Substitution 
+Ein vielfach verwendetes Verfahren zum Entwurf von \gls{ac:iir}-Filtern ist die Bilineare-Transforma\-tion. Hierbei wird die Übertragungsfunktion $H(s)$ eines Analogfilters in die Übertragungsfunktion $H(z)$ eines Digitalfilters überführt. Das Analogfilter entspricht dabei einem zeitkontinuierlichem \gls{g:lti}-System, das Digitalfilter bekanntlich einem zeitdiskreten \gls{g:lti}-System. Ein Ansatz ist, die Labplacevariable s durch eine Funktion der Variable z zu substituiert. Im Unterricht im Modul Digitale Signalverarbeitung (BTE5034 DIGSV) im vierten Semester hat sich gezeigt, dass die Substitution 
 %
 \formula{
-s = \frac{2}{Ta}*\frac{1-z^{-1}}{1+z^{-1}}
+s = \frac{2}{T_a}*\frac{1-z^{-1}}{1+z^{-1}}
 }{
-}[eq:iir_Filter]
+}[eq:bilinear_trans]
 %
-gebraucht wird. Mit der bekannten Übertragungsfunktion des Analogfilters und der Abtastrate $Ta$ kann somit das Digitalfilter entworfen werden. Die Bilineare-Transformation wird zu einem späteren Zeitpunkt in Abschnitt \vref{ss:int} verwendet.\par
+dazu gebraucht wird. Diese Substitution wird Bilineare-Transformation genannt. Mit der bekannten Übertragungsfunktion des Analogfilters und der Abtastrate $T_a$ kann somit das Digitalfilter entworfen werden. Die Bilineare-Transformation wird zu einem späteren Zeitpunkt in Abschnitt \vref{ss:int} verwendet.\par
 %
-Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Entwurfsprogramme. In \gls{g:matlab} kann mit Befehlen wie butter, cheby1, etc. gearbeitet werden. Im Beispiel-Projekt \vref{XXX} wird ein Cauer- respektive Elliptisches-Filter eingesetzt. Diese Cauer-Approximation hat einen welligen Bereich im Durchlass- sowie im Sperrbereich. Auf anraten von Herrn Vetter ersetzen wir diese Filter durch ein Butterworth-Filter. Diese Filter-Approximation hat im Durchlass- sowie im Sperrbereich einen monotonen Amplitudengang.
+Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Entwurfsprogramme. In \gls{g:matlab} kann zum Entwurf mit Befehlen wie butter, cheby1, ellip gearbeitet werden. Im Beispiel-Projekt \vref{XXX} wird ein Elliptisches-Filter eingesetzt. Diese Elliptische-Approximation hat einen welligen Bereich im Durchlass- sowie im Sperrbereich. Dieses Filter wird durch ein Butterworth-Filter ersetzt. Diese Filter-Approximation hat im Durchlass- sowie im Sperrbereich einen monotonen Amplitudengang.
 %
 % Filterentwurf
 \image{content/3_konzept/image/filterentwurf}{scale=0.8}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
 %
-Zum Entwurf des Filters müssen zuerst einige Spezifikationen des Filters festgelegt werden. Da wir auf anraten von Herrn Vettre ein Filter mit einer geringen Ordnung (Anzahl der Filterkoeffizienten) einsetzen, kann die in der Abbildung \vref{img:spezfilter} ersichtliche Dämpfung im Durchlass- und Sperrbereich nicht eingestellt werden. Im Beispielprojekt wurde im Durchlassbereich eine Dämpfung von \unit[1]{dB} zugelassen und im Sperrbereich eine Dämpfung von \unit[60]{dB}. Die Durchlassfrequenz ist normiert auf 0.125 und die Sperrfrequenz auf 0.45 gesetzt.  Dies ergäbe für ein Butterworth-Filter berechnet mit der Funktion buttord() in \gls{g:matlab} eine Ordnung von 6. Diese Ordnung ist zu gross. Nach Absprache mit den Betreuern wurde die Sperrfrequenz wie im Beispielprojekt gewählt und die Ordnung folgendermassen festgelegt. 
+Zum Entwurf des Filters müssen zuerst die Spezifikationen des Filters festgelegt werden. Im Beispielprojekt wurde wie schon erwähnt ein Elliptisches-Filter verwendet. Die Ordnung des Elliptischen-Filters wurde dort auf 2 gesetzt. Die Sperrfrequenz auf 30 Hz. Nach Absprache mit den Betreuern wurde die Sperrfrequenz sowie die Ordnung wie im Beispielprojekt festgelegt, einzig der Filtertyp wurde angepasst auf ein Butterworth-Filter. 
 %
 \begin{itemize}
 \item f\low{stop} = \unit[30]{Hz}: Sperrfrequenz
@@ -258,8 +258,30 @@ v & Geschwindigkeit [$m/s$]
 % 
 Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben mittels der Trapezmethode. Speziel dabei ist, dass dafür ein \gls{ac:iir}-Filter angewendet wird. Dazu wird die in Abschnitt \vref{subsub:filterentwurf} beschriebene Bilineare-Transformation verwendet.\par
 %
-
+Aus der Regelungstechnik ist bekannt, dass die Übertragungsfunktion eines Integrators $H(s) = \frac{1}{s}$ entspricht. Dies ist somit die Übertragungsform eines Analogfilters also einem zeitkontinuierlichem \gls{g:lti}-System. Um auf die Übertragungsfunktion des Digitalfilters zu gelangen, kann nun die Bilineare-Transformation angewendet werden. Wie in Gleichung \vref{eq:bilinear_trans} zuvor gezeigt.
+%
+\formula{
+H(s) &= \frac{1}{s}\\
+H(z) &= H(s)\mid s = \frac{2}{T_a}*\frac{1-z^{-1}}{1+z^{-1}}
+}{
+}[eq:trans_filter]
+%
+Aus dieser Transformation lässt sich die Übertragungsfunktion des Digitalfilters berechnen.
+%
+\formula{
+H(z) &= \frac{T_a}{2}*\frac{1+z^{-1}}{1-z^{-1}}
+}{
+}[eq:int_filter]
 % 
+Wird dei Gleichung \vref{eq:int_filter} ausmultipliziert so erhält man die in Gleichung \vref{eq:iir_Filter} definierten Filterkoeffizienten womit das Digitalfilter definiert ist.
+%
+\formula{
+a_0 &= 1\\
+a_1 &= -1\\
+b_0 &= \frac{T_a}{2}\\
+b_1 &= \frac{T_a}{2}
+}{
+}[eq:koeff_filter]
 %
 %Software
 \section{LabVIEW Rohdaten aufzeichnen}\label{s:konzept:sw}
