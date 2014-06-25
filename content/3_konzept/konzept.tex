@@ -789,15 +789,17 @@ b_1 &= \frac{T_a}{2}
 	%
 	%
 	\subsection{Interpretation}\label{ss:interpretation_tran_rot}
-Gemäss dem zuvor beschriebenem Testaufbau sollte eine Translation in negative und positive y-Richtung ersichtlich sein. Da der Startpunkt der Bewegung dem Endpunkt entspricht, sollte zum Schluss der Messung dieselbe Position  ersichtlich sein. Diese Position (y = \unit[0]{cm}) wird für die Fehlerbetrachtung als Referenz verwendet. Die gemessene Endposition wird zu dieser soll Endposition verglichen. In der Tabelle \vref{tab:auswertung_tran_rot} sowie den dargestellten Messungen zeigen alle drei Auslenkungen einen enormen Fehler auf. Dabei ist der Fehler der ersten Auslenkung geringer als der Fehler der zweiten Auslenkung. Der Fehler der zweiten Auslenkung jedoch geringer als der der dritten.
-
-todo{Auf Ergenis eingehen der einzelnen drei Achsen was wurde gemessen? -> Fehler der Testgruppe, anschliessend als gesamtes Ergebnis Betrachten darauf eingehen}
-	\todo{Begründung allgemeiner Fehler -> Kontrollgruppe genau? nein da 5cm von "Hand" gefahren}
-	\todo{bekannte Fehler zurückbringen auf Kontrollgruppe, Fehler auf Testgruppe oder Kontrollgruppe?}
-	\todo{eingehen auf Geschwindigkeiten, Position des Sensors (warum y-achse schlecht)}
-	\todo{Abschluss: Brauchbar? Auf Hypothese 2 verweisen, Bestätigt oder Widerlegt?}
+Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen bezogen auf die Kontrollgruppe zu verbuchen. Die maximale Abweichung von \unit[-11.1]{m}, was einem Fehler von \unit[-22'233.5]{\%} entspricht, sind bei den Messungen der Auslenkung 3 zu verbuchen. Die Abweichungen in Auslenkung 1 und 2 sind zwar geringer als in Auslenkung 3, jedoch auch enorm gross (Auslenkung 1 \unit[-3.5]{m}, Auslenkung 2 \unit[-6.7]{m}).\par
+%
+Die enormen Abweichungen kann mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung durch eine Rotation des Sensors, so wird diese nicht mehr richtig kompensiert. Die Erdbeschleunigung ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultaten.\par
+%
+Da bei der Auslenkung 3 die grösste Rotation bezogen auf die Drehung des Sensors durchgeführt wurde, sind bei diesen Messungen die Abweichungen am grössten. Die Erdbeschleunigung hat in diesem Fall den grössten Einfluss auf die Messungen. Somit werden die x- und y-Komponenten stärker verfälscht und dementsprechend ist auch die Integration fehlerbehafteter.
+% 
+Theoretisch gesehen sollte die Endposition von jeder Messung trotz Drift am selben Ort zustehen kommen. Dies setzt voraus, dass für jede Messung dieselbe Umlaufdauer besteht. Also über eine gleiche Zeitdauer integriert wird. Eine unrealistische Annahme, wenn man bedenkt dass der Rotationsarm von Hand gedreht wurde. Die Standartabweichung sagt aus diesem Grund wenig über die Messresultate als über die Konstanz der Drehdauer aus.\par
+%
+Die Hypothese \vref{hypo:tran_rot} wird widerlegt. Die geforderte Genauigkeit von \unit[$\pm$1]{cm} kann nicht im entferntesten erreicht werden. Die Funktion des Konzeptes ist somit nicht gewährleistet. Das Protokoll gilt als nicht erfüllt.
 %
 %
 %Validierung
-\section{Validierung}
-\todo{Auswertung Konzept}
+\section{Validierung}\todo{Auswertung Konzept}
+
