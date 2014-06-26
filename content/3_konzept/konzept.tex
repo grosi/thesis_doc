@@ -470,7 +470,7 @@ b_1 &= \frac{T_a}{2}
 			
 	%
 	%
-	\subsection{Interpretation}
+	\subsection{Interpretation}\label{ss:rot}
 		Bei allen Winkelmessungen der Testgruppe sind Abweichungen aufgetreten. Diese halten sich mit maximal \unit[2.28]{°} im Rahmen des Erwarteten. Es ist dabei zu berücksichtigen, dass die absolute Winkelmessung mit dem Winkelmesser M\low{2} eine relative hohe Ungenauigkeit von $\pm$\unit[1]{°} aufweist. Es könnte darum durchaus im Bereich des Möglichen liegen, dass die Kontrollgruppe hier die grössere Abweichungen von der Wirklichkeit hat als die Testgruppe. Die Messungen an sich weisen eine hohe Konstanz auf, was sich in den geringen Standardabweichungen widerspiegelt. Über den Erwartungen sind die Ergebnisse hinsichtlich der Rotation. Bei jeder Auslenkung konnte das \gls{g:bodyframe} erfolgreich und mit keinerlei Abweichung in das \gls{g:worldframe} rotiert werden.\par
 		%
 		In Anbetracht der Auswertung kann damit die Hypothese \vref{hypo:rotation} vollumfänglich bestätigt werden. Mit dem Erfüllen des ersten Protokolls ist zugleich das Fundament für folgenden Bestandteilen des Konzepts gelegt.
@@ -789,17 +789,27 @@ b_1 &= \frac{T_a}{2}
 	%
 	%
 	\subsection{Interpretation}\label{ss:interpretation_tran_rot}
-Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen bezogen auf die Kontrollgruppe zu verbuchen. Die maximale Abweichung von \unit[-11.1]{m}, was einem Fehler von \unit[-22'233.5]{\%} entspricht, sind bei den Messungen der Auslenkung 3 zu verbuchen. Die Abweichungen in Auslenkung 1 und 2 sind zwar geringer als in Auslenkung 3, jedoch auch enorm gross (Auslenkung 1 \unit[-3.5]{m}, Auslenkung 2 \unit[-6.7]{m}).\par
+Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen bezogen auf die Kontrollgruppe zu verbuchen. Die maximale Abweichung von \unit[-11.1]{m}, was einem Fehler von \unit[-22'233.5]{\%} entspricht, sind bei den Messungen der Auslenkung 3 aufgetreten. Die Abweichungen in Auslenkung 1 und 2 sind zwar geringer als in Auslenkung 3, jedoch auch enorm gross (Auslenkung 1 \unit[-3.5]{m}, Auslenkung 2 \unit[-6.7]{m}).\par
+%
+Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal einen cm genau angefahren werden kann ist, diese Genauigkeit bei weitem kleiner als die gemessenen Abweichungen.\par
+%
+Wie schon in  Abschnitt \vref{ss:interpretation_tran} gesehen ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, so wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige cm auf einem Messdauer von \unit[10]{s} ausmacht wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
 %
 Die enormen Abweichungen kann mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung durch eine Rotation des Sensors, so wird diese nicht mehr richtig kompensiert. Die Erdbeschleunigung ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultaten.\par
 %
-Da bei der Auslenkung 3 die grösste Rotation bezogen auf die Drehung des Sensors durchgeführt wurde, sind bei diesen Messungen die Abweichungen am grössten. Die Erdbeschleunigung hat in diesem Fall den grössten Einfluss auf die Messungen. Somit werden die x- und y-Komponenten stärker verfälscht und dementsprechend ist auch die Integration fehlerbehafteter.
-% 
-Theoretisch gesehen sollte die Endposition von jeder Messung trotz Drift am selben Ort zustehen kommen. Dies setzt voraus, dass für jede Messung dieselbe Umlaufdauer besteht. Also über eine gleiche Zeitdauer integriert wird. Eine unrealistische Annahme, wenn man bedenkt dass der Rotationsarm von Hand gedreht wurde. Die Standartabweichung sagt aus diesem Grund wenig über die Messresultate als über die Konstanz der Drehdauer aus.\par
+Da bei der Auslenkung 3 die grösste Rotation bezogen auf die Drehung des Sensors durchgeführt wurde, sind bei diesen Messungen die Abweichungen am grössten. Die Erdbeschleunigung hat in diesem Fall einen deutlichen Einfluss auf die Messungen. Somit werden die x- und y-Komponenten stärker verfälscht, dementsprechend ist auch die Integration fehlerbehafteter.\par
 %
 Die Hypothese \vref{hypo:tran_rot} wird widerlegt. Die geforderte Genauigkeit von \unit[$\pm$1]{cm} kann nicht im entferntesten erreicht werden. Die Funktion des Konzeptes ist somit nicht gewährleistet. Das Protokoll gilt als nicht erfüllt.
 %
 %
 %Validierung
-\section{Validierung}\todo{Auswertung Konzept}
-
+\section{Validierung}
+Die drei verschiedenen Verifikationen des Konzeptes haben gezeigt, dass das Konzept für den Anwendungsfall am Knie fehlerbehaftet ist. In diesem Anwendungsfall kommen Bewegungen vor, welche zum einen einer Translation in der \gls{g:transversalebene} sowie einer Rotation entsprechen.\par 
+%
+Das Konzept ist bekanntlich in zwei Teile aufgeteilt. Der erste Teil dient zum Schätzen der Orientierung des Sensors um anschliessend daraus die Kompensation zu berechnen. Dieser Teil des Konzeptes funktioniert gut, was in Abschnitt \vref{ss:rot} verifiziert wurde. Die Orientierung des Sensors vom \gls{g:bodyframe} in das \gls{g:worldframe} kann bei jeder Messung durchgeführt werden.\par
+%
+Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies wie in Abschnitt \vref{s:verifikation_translation} gezeigt auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissem Fehler nachempfunden werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung} erstaunlich geringe Standardabweichung von unterhalb \unit[0.6]{cm} auf. Somit wird der zurückgelegte Weg zwar nicht exakt berechnet, jedoch streuen Messungen derselben zurückgelegten Distanz sehr gering.\par
+% 
+Die Verifikation der Translation mit überlagerten Rotation hingegen zeigen auf, dass der zweite Teil des Konzeptes in welchem die Bewegung berechnet wird im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept ist bewusst nicht beachtet, dass eine Rotation des Sensors vorkommen kann und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung. Die Erdbeschleunigung verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem additionalem DC-Anteil woraus der in Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
+%
+\todo{dynamisch-statisch}
