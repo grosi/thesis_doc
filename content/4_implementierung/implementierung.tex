@@ -178,4 +178,17 @@
 		\item Die Messung wird beendet durch das Betätigen der Schaltflächen \textsf{stop} in den jeweiligen \gls{ac:vi}s. Die Ausführung sollte nicht einfach direkt abgebrochen werden, da ansonsten das Target sich einem undefinierten Zustand befinden kann\footnote{\gls{g:labview} präsentiert entsprechende Fehlermeldungen}.
 	\end{enumerate}
 %
-\section{Validierung}
+\section{Vergleich Konzept - Implementierung}
+	Um eine Aussage bezüglich der Güte der Implementation machen zu können, muss diese mit dem Konzept verglichen werden. Dazu müssen identische Rohdaten durch die beiden Abläufe (\gls{g:matlab}-Skript \texttt{XXX} und \gls{g:labview}-Projekt \texttt{reametric}) verarbeitet und die Ergebnisse einander gegenübergestellt werden\footnote{Durch die Tatsache, dass das \gls{g:matlab}-Skript segment-basiert und die Implementierung sample-basiert arbeiten können nicht dieselben Daten verwendet werden (hätte eine Abänderung der Implementierung oder des Konzepts zur Folge). Deshalb werden zwei unabhängige Messungen unter den identischen Bedingungen durchgeführt und jeweils ausgewertet.}. Angelehnt an die drei Protokolle in den Abschnitten \ref{s:verifikation_rotation} bis \ref{s:verifikation_transaltion_rotation} werden dabei speziell die Rotation, Translation und Rotation, Translation überlagert kontrolliert\footnote{Auf Grund der negativen Ergebnisse der Protokolle wird auf ein detailliertes wiederholen verzichtet und die Implementation nur prinzipiell Überprüft}.
+	%
+	\subsection*{Schätzung Rotationswinkel und Rotation}
+		Für das Überprüfen der Rotationswinkel und der anschliessenden Rotation wird ein statische Messung in z-Position (erläutert in Abschnitt \vref{ss:methode_tran}, Testbeschreibung) durchgeführt. Die Kontrolle beschränkt sich auf das Endergebnis der Rotation, das $a_{Soll}=[0\quad0\quad 9.81]$ sein sollte.\par
+		%
+		Wie erwartet liefert das Konzept ein ähnliches Resultat von $a_{Konzept} = [-0.004\quad0.004\quad9.971]$. Unter den gleichen Bedingungen errechnet die Implementierung einen Beschleunigungsvektor von $a_{Implementation}=[0.008\quad0.013\quad9.934]$. Vergleicht man die beiden Resultate, kann man auf eine korrekte Implementation des Konzepts schliessen. Die geringen Abweichungen könnten darin Begründet sein, das die Auflösung der verwendeten Datentypen sich in \gls{g:matlab} und \gls{g:labview} unterscheiden. 
+	%	
+	\subsubsection*{Translation}
+		Wiederum werden zwei Messungen in der z-Position durchgeführt. Zusätzlich zu der Kalibrationsphase wird nun noch eine Translation in der \gls{g:transversalebene} von \unit[5]{cm} in y-Richtung durchgeführt (Bewegungszeit \unit[1]{cm}). Erwartet wird ein zurückgelegter Weg von \unit[5]{cm} (mit einer Abweichung von $\pm$\unit[1]{cm}) in der gefahrenen Richtung.\par
+		%
+		Gemittelt über fünf Messungen ergibt das Konzept ein äquivalentes Resultat wie im Protokoll in Abschnitt XXX beschrieben. Die ermittelte Strecke beläuft sich auf \unit[4.31]{cm}. Die Implementierung dagegen liefert eine mittlere Distanz von \unit[255.2]{nm}. Dazu wird nach der Auslenkung die ursprüngliche Position angegeben. Die Richtung der Translation hingegen stimmt mit der Erwartung überein.\par
+		%
+		Die Analyse des ungenügenden Resultats konnte auf eine fehlerhafte Integration durch die \gls{ac:iir}-Filter zurückgeführt werden.
