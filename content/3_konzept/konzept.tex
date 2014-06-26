@@ -518,7 +518,7 @@ b_1 &= \frac{T_a}{2}
 		\input{content/3_konzept/table/messmittel}
 	%
 	%
-	\subsection{Methoden}\label{ss:methode_tran}
+	\subsection{Methoden}
 		%
 		\subsubsection*{Messgruppen}
 			Es werden zwei Messgruppen definiert. Die eine dient als Testgruppe und die andere als Kontrollgruppe. 
@@ -791,9 +791,9 @@ b_1 &= \frac{T_a}{2}
 	\subsection{Interpretation}\label{ss:interpretation_tran_rot}
 Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen bezogen auf die Kontrollgruppe zu verbuchen. Die maximale Abweichung von \unit[-11.1]{m}, was einem Fehler von \unit[-22'233.5]{\%} entspricht, sind bei den Messungen der Auslenkung 3 aufgetreten. Die Abweichungen in Auslenkung 1 und 2 sind zwar geringer als in Auslenkung 3, jedoch auch enorm gross (Auslenkung 1 \unit[-3.5]{m}, Auslenkung 2 \unit[-6.7]{m}).\par
 %
-Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal einen cm genau angefahren werden kann\footnote{Diese Angabe beruht auf einer Schätzung}, ist diese Genauigkeit bei weitem kleiner als die gemessenen Abweichungen.\par
+Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal einen cm genau angefahren werden kann ist, diese Genauigkeit bei weitem kleiner als die gemessenen Abweichungen.\par
 %
-Wie schon in  Abschnitt \vref{ss:interpretation_tran} erläutert, ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, so wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige cm auf einem Messdauer von \unit[10]{s} ausmacht wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
+Wie schon in  Abschnitt \vref{ss:interpretation_tran} gesehen ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, so wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige cm auf einem Messdauer von \unit[10]{s} ausmacht wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
 %
 Die enormen Abweichungen kann mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung durch eine Rotation des Sensors, so wird diese nicht mehr richtig kompensiert. Die Erdbeschleunigung ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultaten.\par
 %
@@ -804,12 +804,83 @@ Die Hypothese \vref{hypo:tran_rot} wird widerlegt. Die geforderte Genauigkeit vo
 %
 %Validierung
 \section{Validierung}
-Die drei verschiedenen Verifikationen des Konzeptes haben gezeigt, dass das Konzept für den Anwendungsfall am Knie fehlerbehaftet ist. In diesem Fall kommen Bewegungen vor, welche zum einen einer Translation in der \gls{g:transversalebene} sowie einer Rotation entsprechen.\par 
+Die drei verschiedenen Verifikationen des Konzeptes haben gezeigt, dass das Konzept für den Anwendungsfall am Knie fehlerbehaftet ist. In diesem Anwendungsfall kommen Bewegungen vor, welche zum einen einer Translation in der \gls{g:transversalebene} sowie einer Rotation entsprechen.\par 
 %
 Das Konzept ist bekanntlich in zwei Teile aufgeteilt. Der erste Teil dient zum Schätzen der Orientierung des Sensors um anschliessend daraus die Kompensation zu berechnen. Dieser Teil des Konzeptes funktioniert gut, was in Abschnitt \vref{ss:rot} verifiziert wurde. Die Orientierung des Sensors vom \gls{g:bodyframe} in das \gls{g:worldframe} kann bei jeder Messung durchgeführt werden.\par
 %
-Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies wie in Abschnitt \vref{s:verifikation_translation} gezeigt auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissem Fehler nachempfunden werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung} erstaunlich geringe Standardabweichung von unterhalb \unit[0.6]{cm} auf. Somit wird der zurückgelegte Weg zwar nicht exakt berechnet, jedoch streuen Messungen derselben zurückgelegten Distanz nur gering.\par
+Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies wie in Abschnitt \vref{s:verifikation_translation} gezeigt auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissem Fehler nachempfunden werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung} erstaunlich geringe Standardabweichung von unterhalb \unit[0.6]{cm} auf. Somit wird der zurückgelegte Weg zwar nicht exakt berechnet, jedoch streuen Messungen derselben zurückgelegten Distanz sehr gering.\par
 % 
-Die Verifikation der Translation mit überlagerten Rotation hingegen zeigt auf, dass der zweite Teil des Konzeptes in welchem die Bewegung berechnet wird im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept ist bewusst nicht beachtet, dass eine Rotation des Sensors vorkommen kann und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung. Die Erdbeschleunigung verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem zusätzlichen DC-Anteil woraus der in Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
+Die Verifikation der Translation mit überlagerten Rotation hingegen zeigen auf, dass der zweite Teil des Konzeptes in welchem die Bewegung berechnet wird im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept ist bewusst nicht beachtet, dass eine Rotation des Sensors vorkommen kann und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung durch die Projektion der Gravitation auf die Beschleunigung der Bewegung. Die Erdbeschleunigung verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem additionalem DC-Anteil woraus der in Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
 %
-\todo{dynamisch-statisch}
+Da das Konzept fehlerhaft ist, wurde der Bewegungsablauf am Knie genauer analysiert. Dazu wird ein einfaches Bewegungsmodell erstellt. Dieses ist in Abbildung \vref{img:dynamisch_statisch} dargestellt.\par
+%
+\image{content/3_konzept/image/dynamisch_statisch}{scale=0.8}{htbp}[Bewegungsmodell Knie][img:dynamisch_statisch]
+%
+Die Auslenkung des Knies kann als harmonische Funktion approximiert werden. Dabei müssen drei Parameter festgelegt werden. Diese sind die Kniehöhe L, die maximale laterale Auslenkung d sowie die Frequenz der Bewegung f\low{0}. Die laterale Auslenkung $x_l(t)$ kann somit folgendermassen beschrieben werden. 
+%
+\formula{
+x_l(t) = d * sin(2  \pi  f_0  t)
+}
+{
+x_l(t) & laterale Auslenkung\\ 
+d & maximale laterale Auslenkung\\
+f_0 & Frequenz der Bewegung
+}[eq:auslenkung_weg]
+%
+Die laterale Beschleunigung $a_{l mov}(t)$ kann mittels der zweifachen Ableitung aus der lateralen Bewegung berechnet werden.
+%
+\formula{
+a_{l mov}(t) &= \frac{\partial^2 x_l(t)}{\partial t^2}\\[2ex]
+&= -(2 \pi f_0)^2 * d * sin(2 \pi f_0) 
+}
+{
+a_{l mov}(t) & laterale Beschleunigung\\ 
+d & maximale laterale Auslenkung\\
+f_0 & Frequenz der Bewegung
+}[eq:auslenkung_beschl]
+%
+Da bei der Bewegung zur Translation zusätzlich eine Rotation hinzukommt wird die Gravitation auf die laterale Beschleunigung projektiert. Dies mach sich mit $a_{g l}(t))$ bemerkbar\footnote{in Abbildung \vref{img:dynamisch_statisch} gut ersichtlich}. Diese Projektion ist von $\alpha$, dem Winkel der Auslenkung, abhängig und kann mit der Höhe L des Knies, der laterale Auslenkung $x_l(t)$ und der Erdbeschleunigung g berechnet werden. Die Auslenkung $\alpha$ ist einfach mittels Trigonometrie zu berechnen.
+%
+\formula{
+\alpha = sin(\frac{x_l(t)}{L})
+}
+{
+\alpha & Auslenkung der Bewegung\\ 
+x_l(t) & laterale Auslenkung\\
+L & Länge des Knies
+}[eq:auslenkung_beschl]
+%
+Da die laterale Auslenkung im Vergleich zur Kniehöhe deutlich kleiner ist, kann die Kleinwinkelnäherung angewendet werden ($\alpha = sin(\alpha)$). Die projektiert Gravitation $a_{l g}$ ist somit.
+%
+\formula{
+a_{l g} = g*\frac{x_l(t)}{L}
+}
+{
+a_{l g} & projektierte Gravitation\\ 
+g 	&	Gravitationskonstante\\
+x_l(t) & laterale Auslenkung\\
+L & Länge des Knies
+}[eq:auslenkung_beschl]
+%   
+Werden nun die Amplituden der lateralen Beschleunigung $a_{l mov}(t)$ und der projektierten Gravitation $a_{l g}$ bei verschiedenen Frequenzen verglichen, so wird eine kritische Frequenz ersichtlich bei der beide Amplituden gleich gross sind. Dazu setzen wir die beiden Beschleunigungen gleich. Das Vorzeichen bei $a_{l mov}(t)$ kann hier vernachlässigt werden, es entspricht nur einer Phasendrehung um 180°. 
+%
+\formula{
+a_{l mov}(t) &= a_{l g} \\[2ex]
+(2 \pi f_0)^2 * d * sin(2 \pi f_0) &= g*\frac{d * sin(2  \pi  f_0  t)}{L}
+}
+{
+}[eq:auslenkung_beschl]
+% 
+Die maximale Auslenkung d sowie die Abhängigkeit der Zeit kürzen sich weg und wir erhalten für die kritische Frequenz $f_k$.
+ %
+\formula{
+f_k = \sqrt{\frac{g}{(2\pi)^2*L}}
+}
+{
+}[eq:auslenkung_beschl]
+%
+Diese kritische Frequenz liegt bei einer Kniehöhe von L = \unit[0.5]{m} auf $f_k$ = \unit[0.7]{Hz}. Ist die Frequenz der Bewegung viel grösser als diese Grenzfrequenz, so hat die projektierte Gravitation nahezu keinen Einfluss auf die resultierende Beschleunigung, dies ist der dynamische Fall. Ist die Grenzfrequenz kleiner so liegt der statische Fall vor, wo die Projektion der Gravitation grösser als die laterale Beschleunigung der Bewegung ist. Dies wurde in \gls{g:matlab} simuliert und in Abbildung \vref{img:kritische_freq} dargestellt.\par
+%
+\image{content/3_konzept/image/kritische_freq}{scale=0.8}{htbp}[kritische Frequenz statische, dynamische Bewegung][img:kritische_freq]
+%
+Aufgrund dieser Erkenntnis kann ein neuer Algorithmus entwickelt werden. Dies umfasst jedoch nicht mehr diese Arbeit. 
