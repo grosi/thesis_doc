@@ -14,11 +14,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Grundlagen}\label{ch:grundlagen}
 %
-
 %
 % Anatomie des Knies
 \section{Anatomie des Knies}
-Das Kniegelenk, gezeigt in der Abbildung \vref{img:trapez}, ist eines der grössten und komplexesten Gelenke im Körper. Das Knie ist die Verbindung zwischen Ober- und Unterschenkel. An diesem Gelenk sind somit diese beiden Knochen sowie die Kniescheibe angebracht. Die Kniescheibe schützt das Gelenk von vorne. Die Funktion des Gelenks kann als Art Drehscharnier verstanden werden. Der medizinische Begriff ist Dreh-Winkelgelenk. Dieser Gelenktyp erlaubt eine sehr grosse Beweglichkeit und unterstützt sowohl Scharnier- wie auch Rotationsbewegungen. Das Gelenk besitzt zwei Freiheitsgarde. Die Bewegung des Kniegelenks findet also in zwei Ebenen statt, diese sind die \gls{g:sagitalebene} sowie die \gls{g:transversalebene}. Die meisten Bewegungen kommen in der \gls{g:sagitalebene} vor. Das Kniegelenk ist in zwei Gelenke unterteilt. Eines verbindet Oberschenkel und Schienbein, ein weiteres Oberschenkel und Kniescheibe.  Das Wadenbein ist nicht am Gelenk beteiligt. \par 
+Das Kniegelenk, gezeigt in der Abbildung \vref{img:trapez}, ist eines der grössten und komplexesten Gelenke im Körper. Das Knie ist die Verbindung zwischen Ober- und Unterschenkel. An diesem Gelenk sind somit diese beiden Knochen sowie die Kniescheibe angebracht. Die Kniescheibe schützt das Gelenk von vorne. Die Funktion des Gelenks kann als Art Drehscharnier verstanden werden. Der medizinische Begriff ist Dreh-Winkelgelenk. Dieser Gelenktyp erlaubt eine sehr grosse Beweglichkeit und unterstützt sowohl Scharnier- wie auch Rotationsbewegungen. Das Gelenk besitzt zwei Freiheitsgrade. Die Bewegung des Kniegelenks findet also in zwei Ebenen statt, diese sind die \gls{g:sagitalebene} sowie die \gls{g:transversalebene}. Die meisten Bewegungen kommen in der \gls{g:sagitalebene} vor. Das Kniegelenk ist in zwei Gelenke unterteilt. Eines verbindet Oberschenkel und Schienbein, ein weiteres Oberschenkel und Kniescheibe.  Das Wadenbein ist nicht am Gelenk beteiligt. \par 
 %
 \image{content/2_grundlagen/image/anatomie_Knie}{scale=0.6}{htbp}[Aufbau des Kniegelenkes \cite{img:knie}][Trapeznäherung][img:trapez]
 %
@@ -26,9 +25,9 @@ Zwei Bandsysteme sichern die Stabilität des Kniegelenkes und führen die Bewegung
 %
 % Funktion des Kreuzbandes
 \subsection{Kreuzbandriss}\label{s:funktion_kreuzband}
-Das Kreuzband hat im Knie als erste Funktion die Bewegungsfähigkeit des Kniegelenkes zu beschränken. Somit kann das Knie nicht überstreckt oder beliebig gebeugt werden. Die zweite Funktion ist die Stabilisierung der Verbindung zwischen Ober- und Unterschenkel. Genau diese Stabilität ist bei einem verletzen Kreuzband nicht mehr gewährleistet, was sich bei Belastung mit einer schrägen Auslenkung des Knies bemerkbar macht. \par
+Das Kreuzband hat im Knie als erste Funktion die Bewegungsfähigkeit des Kniegelenkes zu beschränken. Somit kann das Knie nicht überstreckt oder beliebig gebeugt werden. Die zweite Funktion ist die Stabilisierung der Verbindung zwischen Ober- und Unterschenkel. Genau diese Stabilität ist bei einem verletzten Kreuzband nicht mehr gewährleistet, was sich bei Belastung mit einer schrägen Auslenkung des Knies bemerkbar macht. \par
 %
-Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tätigkeiten wie Rennen, Springen oder allgemein in stop \& go-Sportarten wie Unihockey oder Fussball besonders belastet. Eine Gute Rehabilitation des Verletzen Sportlers ist besonders wichtig. Studien der USA in der professionellen Football-Liga haben gezeigt, dass die Karriere von Sportlern mit mehrfachem Kreuzbandriss im Durchschnitt kürzer ist als solche von Sportlern mit nur einfachem oder keinem Kreuzbandriss. Aus diesem Grund sollte ein möglichst grossen Wert auf den richtig getimten Wiedereinstieg ins Training gelegt werden. Somit können Folgeschäden am Kreuzband und darauffolgende Beeinträchtigungen der Karriere des Sportlers vermindert werden \cite{lit:knie}.
+Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tätigkeiten wie Rennen, Springen oder allgemein in stop \& go-Sportarten wie Unihockey oder Fussball besonders belastet. Eine gute Rehabilitation des verletzten Sportlers ist besonders wichtig. Studien der USA in der professionellen American Football-Liga haben gezeigt, dass die Karrieren von Sportlern mit mehrfachem Kreuzbandriss im Durchschnitt kürzer sind, als solche von Sportlern mit nur einfachem oder keinem Kreuzbandriss. Aus diesem Grund sollte ein möglichst grosser Wert auf den richtig getimten Wiedereinstieg ins Training gelegt werden. Somit können Folgeschäden am Kreuzband und darauffolgende Beeinträchtigungen der Karriere des Sportlers vermindert werden \cite{lit:knie}.
 %
 %
 %LabVIEW auf NI myRIO
@@ -38,7 +37,7 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 	\subsection{Aufbau und Struktur}\label{ss:aufbau_struktur}
 		Ein \gls{g:labview}-Projekt besteht aus mindestens einem \gls{ac:vi}, indem sich Funktionsblöcke oder weitere \gls{ac:vi}s befinden können. Eine \gls{ac:vi} stellt sich zusammen aus einem Frontpanel und einem Blockdiagramm zusammen. Das Frontpanel stellt dabei die Benutzeroberfläche dar, wogegen das Blockdiagramm die eigentliche Funktionalität beinhaltet.\par
 		%
-		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei der Computer mit installiertem \gls{g:labview} und das \gls{g:target} ein zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf demselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessen aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}}. Ebenso wird zwischen \gls{ac:vi}s auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
+		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei den Computer mit installiertem \gls{g:labview} und das \gls{g:target} eine zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten, die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf derselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessend aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}}. Ebenso wird zwischen \gls{ac:vi}s auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
 		%
 		\image{content/2_grundlagen/image/labview_gliederung}{scale=0.7}{htbp}[\gls{g:labview}-Gliederung][img:labview_gliederung]
 	%
@@ -55,7 +54,7 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 			\item Accelerometer, 3 Achsen, $\pm$\unit[8]{g}, \unit[12]{bit} Auflösung
 		\end{itemize}
 		%
-		Die gesamte Hardware, inklusive Beschleunigungssensor ist in einem kompakten Gehäuse verbaut, wie die Abbildung \vref{img:myrio} zeigt. Die Befestigung kann auf einfache weise mithilfe von drei Schrauben erfolgen.
+		Die gesamte Hardware, inklusive Beschleunigungssensor ist in einem kompakten Gehäuse verbaut, wie die Abbildung \vref{img:myrio} zeigt. Die Befestigung kann mithilfe von drei Schrauben erfolgen.
 		%
 		\image{content/2_grundlagen/image/myrio}{scale=0.2}{htbp}[\gls{g:myrio} \cite{img:myrio}][\gls{g:myrio}][img:myrio]
 		%
@@ -70,7 +69,7 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 				%
 				\item[Weboberfläche] Das \gls{g:myrio} stellt eine Weboberfläche für die Konfiguration bereit. Damit können im gleichen Umfang wie in der Software NI MAX Einstellungen vorgenommen werden. Ergänzend besteht die Möglichkeit auf das interne Dateisystem via HTTP zu zugreifen. Aufgerufen wird die Oberfläche über die IP-Adresse 172.22.11.2 mit einem Internet-Browser.
 				%
-				\item[Terminal] \label{i:terminal}Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}. Als Alternative kann auch Cygwin mit den richtigen Paketen dienen: \url{http://cygwin.com/index.html}}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nenn sich die Option \textsf{Enable Secure Shell Server (sshd)}} aktiviert werden (via NI MAX oder Weboberfläche). Für ein Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
+				\item[Terminal] \label{i:terminal}Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}. Als Alternative kann auch Cygwin mit den richtigen Paketen dienen: \url{http://cygwin.com/index.html}}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nennt sich die Option \textsf{Enable Secure Shell Server (sshd)}} aktiviert werden (via NI MAX oder Weboberfläche). Für einen Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
 				\begin{itemize}
 					\item IP-Adresse: 172.22.11.2
 					\item Benutzername: admin
@@ -89,10 +88,10 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 					\item Benutzername: admin
 					\item Passwort: \textit{leer}
 				\end{itemize}
-				Daufhin präsentiert sich ein einfacher Dateiexplorer, wie ihn die Abbildung \vref{img:myrio_webdav} zeigt.
+				Daraufhin präsentiert sich ein einfacher Dateiexplorer, wie ihn die Abbildung \vref{img:myrio_webdav} zeigt.
 				\image{content/2_grundlagen/image/webdav_myrio}{scale=0.5}{htbp}[Dateiexplorer][img:myrio_webdav]
 				%
-				\item[\gls{g:labview}] Sollen die Daten während des Ausführens des \gls{ac:vi}s an den \gls{g:host} übertragen werden, bietet sich ein Netzwerk-Stream an. Dieser erlaubt es ein zuvor definierte Datenstruktur kontinuierlich zu übertragen. Für das Aufbauen einen Netzwerkverbindung muss zum einen auf dem \gls{g:target} ein \textsf{Network Stream Writer Endpoint} erzeugt werden, auf den Daten entweder einzeln oder in Paketen geschrieben werden können. Dieser Writer Endpoint wird jedoch nur erfolgreich erzeugt wenn auf seitens des \gls{g:host} ein \textsf{Network Stream Reader Endpoint} erzeugt wird. Der Reader Endpoint erlaubt es die übertragenen Daten aus dem Stream zu extrahieren, wonach sie weiter verarbeitet, angezeigt und/oder gespeichert werden können. Ein minimales Konstrukt, was die Übertragung von Daten erlaubt, ist in der Abbildung \vref{img:netstream} ersichtlich. Für detaillierte Informationen über die Möglichkeiten eines Netzwerk-Streams sei auf \cite{lit:labview_networkstream} hingewiesen.
+				\item[\gls{g:labview}] Sollen die Daten während des Ausführens des \gls{ac:vi}s an den \gls{g:host} übertragen werden, bietet sich ein Netzwerk-Stream an. Dieser erlaubt, eine zuvor definierte Datenstruktur kontinuierlich zu übertragen. Für das Aufbauen einer Netzwerkverbindung muss zum einen auf dem \gls{g:target} ein \textsf{Network Stream Writer Endpoint} erzeugt werden, auf den Daten entweder einzeln oder in Paketen geschrieben werden können. Dieser Writer Endpoint wird jedoch nur erfolgreich erzeugt, wenn auf seitens des \gls{g:host} ein \textsf{Network Stream Reader Endpoint} erzeugt wird. Der Reader Endpoint erlaubt die übertragenen Daten aus dem Stream zu extrahieren, wonach sie weiter verarbeitet, angezeigt und/oder gespeichert werden können. Ein minimales Konstrukt, was die Übertragung von Daten erlaubt, ist in der Abbildung \vref{img:netstream} ersichtlich. Für detaillierte Informationen über die Möglichkeiten eines Netzwerk-Streams sei auf \cite{lit:labview_networkstream} hingewiesen.
 				\image{content/2_grundlagen/image/network}{scale=0.9}{htbp}[Netzwerk-Stream \cite{img:labview_networkstream}][Netzwerk-Stream][img:netstream]
 				%
 				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \gls{ac:sftp} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter \textsf{Terminal} \vpageref{i:terminal} erwähnten Bedingungen erfüllt sein. Für den Dateitransfer dient das Kommando \texttt{scp}, das wie in Listing \vref{list:sftp} gezeigt angewendet wird.
@@ -106,13 +105,13 @@ scp admin@172.22.11.2:/Pfad/zur/Datei /Pfad/zur/Zieldatei
 %
 %Rotationsmatrix
 \section{Rotationsmatrix}\label{sub:rot}
-In der Linearen Algebra bietet die Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. Im vorliegenden Falle ist eine Rotation eines Punktes um eine Gerade im Raum gewünscht. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
+In der Linearen Algebra bietet die Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. Im vorliegenden Fall ist eine Rotation eines Punktes um eine Gerade im Raum gewünscht. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
 %
 Ziel ist, den Punkt $P$ mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade $g$ in den Punkt $P'$ mit Koordinaten $\left(x'\mid y'\mid z'\right)$ zu drehen. Die Gerade $g$ hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
 %
-\image{content/2_grundlagen/image/rotmat}{scale=0.6}{htbp}[Drehung des Punktes $P$ in $P'$ \cite{img:linalg2}][Drehung des Punktes $P$ in $P'$][img:rotmat]
+\image{content/2_grundlagen/image/rotmat}{scale=0.8}{htbp}[Drehung des Punktes $P$ in $P'$ \cite{img:linalg2}][Drehung des Punktes $P$ in $P'$][img:rotmat]
 %           
-Die Rotationsmatrix ist wie schon erwähnt definiert durch den Drehwinkel $\phi$ und der Geraden respektive Rotationsachse $g$. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt $S$ der Geraden $g$ mit der Ebene $E$ berechnet. In der Ebene $E$ liegen die Punkte $P$ und $P'$, sie steht senkrecht auf die Gerade $g$. Aus dem Schnittpunkt $S$ und dem Ausgangspunkt $P$ ist die Berechnung des gedrehten Punktes $P'$ möglich. Die Berechnung des gedrehten Punktes $P'$ mit der Rotationsmatrix lässt sich wie in Gleichung \vref{eq:rot} zusammenfassen.\par
+Die Rotationsmatrix ist, wie schon erwähnt, definiert durch den Drehwinkel $\phi$ und der Geraden, respektive Rotationsachse $g$. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt $S$ der Geraden $g$ mit der Ebene $E$ berechnet. In der Ebene $E$ liegen die Punkte $P$ und $P'$, sie steht senkrecht auf die Gerade $g$. Aus dem Schnittpunkt $S$ und dem Ausgangspunkt $P$ ist die Berechnung des gedrehten Punktes $P'$ möglich. Die Berechnung des gedrehten Punktes $P'$ mit der Rotationsmatrix lässt sich wie in Gleichung \vref{eq:rot} zusammenfassen.\par
 %
 %Berechnung des gedrehten Punkt P'
 \formula{
@@ -124,7 +123,8 @@ Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden
 %
 % Aufbau der Rotationsmatrix
 \formula{
-            R_{g; O; \overrightarrow{n}; \phi} &= \cos(\phi)*\begin{bmatrix}1 & 0 & 0 \\0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}+\frac{(1-\cos(\phi))}{a^{2}+b^{2}+c^{2}}*\begin{bmatrix}a^{2} & ab & ac \\ ab & b^{2} & bc \\ ac & bc & c^{2} \end{bmatrix}\\&+\frac{\sin(\phi)}{\sqrt{a^{2}+b^{2}+c^{2}}}*\begin{bmatrix}0 & -c & b \\ c & 0 & -a \\ -b & a & 0 \end{bmatrix}
+            R_{g; O; \overrightarrow{n}; \phi} &= \cos(\phi)*\begin{bmatrix}1 & 0 & 0 \\0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}+\frac{(1-\cos(\phi))}{a^{2}+b^{2}+c^{2}}*\begin{bmatrix}a^{2} & ab & ac \\ ab & b^{2} & bc \\ ac & bc & c^{2} \end{bmatrix}\\[1ex]
+            &+\frac{\sin(\phi)}{\sqrt{a^{2}+b^{2}+c^{2}}}*\begin{bmatrix}0 & -c & b \\ c & 0 & -a \\ -b & a & 0 \end{bmatrix}
         }{ 
            }[eq:rotmax]        
 %
@@ -150,7 +150,7 @@ x(n-1) & Abgetasteter Wert an Stelle n -1
 %
 % Trapeszmethode
 \subsubsection*{Trapezmethode}
-Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreichen man mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung im Vergleich zur Rechtecknäherungen. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
+Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreicht man mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung im Vergleich zur Rechtecknäherungen. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
 %
 % Trapeszmethode
 \image{content/2_grundlagen/image/trapeznaeherung_bearb}{scale=0.6}{htbp}[Trapeznäherung \cite{img:baeni}][Trapeznäherung][img:trapez]
