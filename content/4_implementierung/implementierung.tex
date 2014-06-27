@@ -28,7 +28,7 @@
 			Der erste Zustand stellt die Initialisierung dar. Er wird aufgerufen wenn der Taster am \gls{g:myrio} gedrückt wird. Wie im Konzept vorgesehen werden die Rotationswinkel geschätzt und die Rotationsmatrix bestimmt. Dies geschieht über eine einstellbare Anzahl von Samples. Anzumerken ist, dass während der Aufzeichnung dieser Samples das \gls{g:myrio} nicht berührt werden darf\footnote{Verfälscht die Schätzung der Winkel, was eine inkorrekte Matrix zur Folge hat.}. Im Unterschied zum Konzept wird ausserdem die Standardabweichung der aufgezeichneten Daten bestimmt. Diese wird im Zustand Signalverarbeitung für die Bewegungsdetektion verwendet\footnote{Im Konzept wird dies während der Signalverarbeitung durchgeführt, da Segment basierend.}. 
 		%
 		\subsubsection*{Signalverarbeitungs-Zustand}
-			Im zweiten Zustand erfolgt wie vorgesehen die Signalverarbeitung bestehend aus den Teilen Rotieren, Bewegungsdetektion und Integrieren. Für korrekte Ergebnisse muss zuvor eine Initialisation durchgeführt worden sein. Im Gegensatz zum Konzept und dem vorherigen Zustand erfolgt die Verarbeitung Sample basierend. So kann eine schnelle Laufzeit und ein geringerer Speicherverbrauch forciert, jedoch nicht garantiert werden. Zusätzlich zum Konzept muss noch eine Möglichkeit bestehen die verarbeiteten Daten aus dem Target zu extrahieren. Dazu muss, wie in Abschnitt \vref{ss:myRIO_hw} beschrieben, ein Netzwerkstream zum Host aufgebaut werden. 
+			Im zweiten Zustand erfolgt wie vorgesehen die Signalverarbeitung bestehend aus den Teilen Rotieren, Bewegungsdetektion und Integrieren. Für korrekte Ergebnisse muss zuvor eine Initialisation durchgeführt worden sein. Im Gegensatz zum Konzept und dem vorherigen Zustand erfolgt die Verarbeitung Sample basierend. So kann eine schnelle Laufzeit und ein geringerer Speicherverbrauch forciert, jedoch nicht garantiert werden. Zusätzlich zum Konzept muss noch eine Möglichkeit bestehen die verarbeiteten Daten aus dem Target zu extrahieren. Dazu muss, wie in Abschnitt \vref{ss:myRIO_hw} beschrieben, ein Netzwerkstream zum \gls{g:host} aufgebaut werden. 
 	%
 	\subsection{Tiefpass-Filterung}
 		\gls{g:labview} bietet eine Vielzahl von Möglichkeiten Filter einzusetzen. Sie unterscheiden sich hauptsächlich durch ihre Charakteristik und Implementierung. Bezüglich der Umsetzung existieren Segment und Sample basierte \gls{ac:vi}s. Da die Signalverarbeitung mit Samples arbeitet, kann ein Tiefpassfilter der \texttt{NI\_PtByPt} Bibliothek eingesetzt werden\footnote{\gls{ac:vi} Bezeichnung \texttt{Butterworth Filter PtByPt.vi}}. Die Charakteristik ist wie im Konzept Butterworth (\acrshort{ac:iir}-Filter).
@@ -42,16 +42,17 @@
 	\subsection{Bewegungsdetektion}
 		Wie im Abschnitt \vref{ss:struktur} angetönt erfolgt die Bewegungsdetektion in zwei Schritten. Im ersten werden die Schwellen für eine ruhende Position des \gls{g:myrio} ermittelt. Diese dienen bei der Signalverarbeitung als Vergleichswert, was das Erkennen einer Bewegung ermöglicht. Begründet durch diese Aufteilung kann dieser Vorgang nicht einem einzelnen \gls{ac:vi} erfolgen, sondern muss durch einzelne vorhandene Komponenten umgesetzt werden.	
 	%
-	\subsection{Integration}\label{ss:implementierung_int}
-		Für die zweifache Integration werden \acrshort{ac:iir}-Filter eingesetzt die durch eine bilineare Transformation eines Integrators bestimmt wurden. \gls{g:labview} bietet eine \gls{ac:vi} Namens \texttt{IIR Cascade Filter PtByPt.vi}, die es erlaubt direkt die Filterkoeffizienten anzugeben. Die Implementierung ist dabei wie in Gleichung \vref{eq:irr_filter} dargestellt. Zu beachten ist, dass die Koeffizienten nicht vertauscht werden, da die Angabe in der Reihenfolge Nenner $a_x$ Zähler $b_x$ erfolgt.
+	\subsection{Berechnung der Bewegung}\label{ss:implementierung_int}
+		Für die zweifache Integration werden \acrshort{ac:iir}-Filter eingesetzt die durch eine bilineare Transformation eines Integrators bestimmt wurden. \gls{g:labview} bietet eine \gls{ac:vi} Namens \texttt{Discrete Zero-Pole-Gain.vi}, die es erlaubt direkt die Filterkoeffizienten anzugeben. Die Implementierung ist dabei wie in Gleichung \vref{eq:irr_filter} dargestellt. Zu beachten ist, dass für die Darstellung, im Gegensatz zur Gleichung \vref{eq:int_filter} im Konzept, die Pol-Nullstellen-Form verwendet wird.
 		%
 		\formula{
-		H(z)=\frac{b_0+b_1\cdot z^{-1}+\cdots+b_{N_b-1}\cdot z^{-(N_b-1)}}{1+a_1\cdot z^{-1}+\cdots+a_{N_a-1}\cdot z^{-(N_a-1)}}
+		&H(z)=k\cdot\frac{(z-Z_1)(z-Z_2)\ldots (z-Z_m)}{(z-P_1)(z-P_2)\ldots (z-P_n})\\[2ex]
+		&\Longrightarrow H(z)=\frac{T_a}{2}\cdot\frac{z+1}{z-1}
 		}{
-		b_x & Forward Koeffizienten\\
-		a_x & Reverse Koeffizienten\\
-		N_b & Anzahl Forward Koeffizienten\\
-		N_a & Anzahl Reverse Koeffizienten\\
+		k & Verstärkungsfaktor\\
+		Z_x & Nullstellen\\
+		P_x & Polstellen\\
+		T_a & Abtastfrequenz\\
 		}[eq:irr_filter]
 %
 %
@@ -61,14 +62,14 @@
 	%
 	%
 	\subsection{Target}\label{ss:demo_target}
-		Das \gls{g:labview}-Projekt ist in zwei Teile gegliedert. Der eine beinhaltet \gls{ac:vi}s die auf dem Target ausgeführt werden (\texttt{RT Main.vi}) und der andere diejenigen des Hosts \texttt{Desktop Main.vi}. Dieser Umstand ist im Abschnitt \vref{ss:aufbau_struktur} näher erläutert. Für die Ausführung auf seitens des Targets werden die erstellten \gls{ac:vi}s einem Kompilationsprozess unterzogen, der für das Target ausführbaren Code erzeugt. Im Falle des \gls{g:myrio} wird dies Code für die beiden ARM-Cores und das FPGA sein. Diese Aussage kann jedoch mangels Transparenz des Prozesses nicht bewiesen werden ist nur eine Annahme.
+		Das \gls{g:labview}-Projekt ist in zwei Teile gegliedert. Der eine beinhaltet \gls{ac:vi}s die auf dem Target ausgeführt werden (\texttt{RT Main.vi}) und der andere diejenigen des \gls{g:host}s \texttt{Desktop Main.vi}. Dieser Umstand ist im Abschnitt \vref{ss:aufbau_struktur} näher erläutert. Für die Ausführung auf seitens des Targets werden die erstellten \gls{ac:vi}s einem Kompilationsprozess unterzogen, der für das Target ausführbaren Code erzeugt. Im Falle des \gls{g:myrio} wird dies Code für die beiden ARM-Cores und das FPGA sein. Diese Aussage kann jedoch mangels Transparenz des Prozesses nicht bewiesen werden ist nur eine Annahme.
 		%
 		\subsubsection*{Zustandsmaschine}
 			Die Zustandsmaschine wird mit Hilfe einer Case Structure umgesetzt, wie bereits im Abschnitt \vref{ss:struktur} angetönt. Für den Wechsel zwischen den beiden Vorhanden Zuständen dient ein Taster als Auslöser eines entsprechenden Events. Um die Bedienung komfortabel zu gestalten kann auf zwei Möglichkeiten eine Initialisierung ausgelöst werden.
 			%
 			\begin{itemize}
 				\item \textbf{Hardware Taster} Für die eine Reinitialisierung direkt beim Messaufbau kann der Taster \textsf{Button0} am Gehäuse des \gls{g:myrio} betätigt werden.
-				\item \textbf{Software Taster} Erfolgt die Bedienung von Messaufbau entfernt via des Host, so bietet die \textit{RT Main}-\gls{ac:vi} einen entsprechenden Taster.
+				\item \textbf{Software Taster} Erfolgt die Bedienung von Messaufbau entfernt via des \gls{g:host}, so bietet die \textit{RT Main}-\gls{ac:vi} einen entsprechenden Taster.
 			\end{itemize}
 			%
 			Implementiert wird diese Funktion zum einen mit einer speziellen \gls{ac:vi} des \gls{g:myrio} für das Abfragen des Tasters und zum anderen mit einer \gls{ac:vi} für die Flankenerkennung (\texttt{Edge Detect.vi}). Der Software Taster wird mit diesem Aufbau durch ein ODER-Gatter verknüpft. Die Abbildung \vref{img:state_switch} zeigt das gesamte Konstrukt.
@@ -96,20 +97,18 @@
 		%
 		%
 		\subsubsection*{Signalverarbeitungs-Zustand}
-			Die Signalverarbeitung erfolgt, wie in Abschnitt \vref{ss:struktur} genau beschrieben, mit Samples. Sie umfasst ebenfalls 4 Schritte, für deren korrekte Funktionalität eine Initialisierung benötigen wird (erfolgt durch ein Wechsel in den Initialisierungs-Zustand). Die erforderlichen Daten des vorherigen Zustandes werden durch Schieberegister übertragen. Die Abbildung \vref{img:sig_phase} zeigt den vollständigen Zustand, inklusive den Schieberegistern (orange, horizontale Linien).
+			Die Signalverarbeitung erfolgt, wie in Abschnitt \vref{ss:struktur} genau beschrieben, mit Samples. Sie umfasst 3 Schritte, für deren korrekte Funktionalität eine Initialisierung benötigen wird (erfolgt durch ein Wechsel in den Initialisierungs-Zustand). Die erforderlichen Daten des vorherigen Zustandes werden durch Schieberegister übertragen. Die Abbildung \vref{img:sig_phase} zeigt den vollständigen Zustand, inklusive den Schieberegistern (orange, horizontale Linien).
 			%
 			\image{content/4_implementierung/image/progress_phase}{scale=.7}{htbp}[Signalverarbeitungs-Zustand][img:sig_phase]
 			%
 			\begin{enumerate}
-				\item Filterung \texttt{Filter.vi}: Für das herausfiltern des Quantisierungsrauschens und anderen hochfrequenten Signale wird ein Tiefpass eingesetzt. Dazu wird dieselbe \gls{ac:vi} verwendet wie zuvor bei der Initialisierung (\gls{ac:iir}-Filter mit Butterworth Charakteristik).
-				%
 				\item Rotation \texttt{Rot.vi}: Erfolgt analog mit derselben \gls{ac:vi} wie im Initialisierungs-Zustand. Die benötigte Rotationsmatrix wird vom vorherigen Zustand durch ein Schieberegister übernommen. 
 				%
 				\item Integration \texttt{Inta.vi}: Für die Wegbestimmung muss die Beschleunigung zweifach integriert werden. Zuvor erfolgt noch eine Auswertung der aktuellen Standardabweichung (ermittelt mit der \gls{ac:vi} \texttt{Standard Deviation PtByPt.vi}), die mit der Standardabweichung des während des Initialisierungs-Zustand aufgenommenen Segments verglichen wird. Fällt sie höher aus, kann von einer Bewegung ausgegangen werden. Die folgende Integration wird, wie zuvor in Abschnitt \vref{ss:implementierung_int} beschrieben, durch jeweils zwei \acrshort{ac:iir}-Filter bewerkstelligt. Speziell zu beachten ist, dass im Falle der ruhenden Position (keine Bewegung detektiert) der zurückgelegte Weg gleich wohl angezeigt werden muss. Für dieses Verhalten wird eine Feedback Node \gls{ac:vi} eingesetzt.
 					%
 					\image{content/4_implementierung/image/inta}{scale=.7}{htbp}[Integration][img:inta]
 				%
-				\item Netwerk-Stream: Der Netzwerk-Stream wird dazu verwendet die verarbeiteten Daten an den Host zu übertragen. Die Grundlagen dazu sind im Abschnitt \vref{ss:myRIO_hw} unter Daten extrahieren erläutert. Die Daten, die für eine Darstellung der Ergebnisse auf den Host benötigt werden, beschränken sich auf die x-y-Koordinaten.
+				\item Netwerk-Stream: Der Netzwerk-Stream wird dazu verwendet die verarbeiteten Daten an den \gls{g:host} zu übertragen. Die Grundlagen dazu sind im Abschnitt \vref{ss:myRIO_hw} unter Daten extrahieren erläutert. Die Daten, die für eine Darstellung der Ergebnisse auf den \gls{g:host} benötigt werden, beschränken sich auf die x-y-Koordinaten.
 			\end{enumerate}
 		%
 		%
@@ -121,16 +120,16 @@
 				\item Der Taster \textsf{Init} dient zum Auslösen einer Reinitialisierung. Beschrieben ist dieser Vorgang im Abschnitt \vref{ss:demo_target} unter Zustandsmaschine.
 				\item Durch den Indikator \textsf{Init} wird die Initialisierungs-Phase visualisiert (leuchtet grün).
 				\item Die Dauer, respektive die Anzahl Samples die für die Bestimmung der Rotationsmatrix im Initialisierungs-Zustand verwendet werden kann zwischen 1000 und 5000 eingestellt werden. Mit der aktuell eingestellten Abtastrate von \unit[1]{kHz} entspricht diese Angabe ebenfalls der benötigten zeit in \unit{ms}.
-				\item Die Schaltfläche \textsf{stop} dient zum Beenden der laufenden \gls{ac:vi}. Durch dessen Betätigung wird ebenfalls, nachdem verstreichen eines Timeouts, die \gls{ac:vi} des Host abgebrochen (Netwerk-Stream Fehler). 
+				\item Die Schaltfläche \textsf{stop} dient zum Beenden der laufenden \gls{ac:vi}. Durch dessen Betätigung wird ebenfalls, nachdem verstreichen eines Timeouts, die \gls{ac:vi} des \gls{g:host} abgebrochen (Netwerk-Stream Fehler). 
 				\item Sollen die Elemente zur Wegbestimmung auf ihre Standardwerte zurückgestellt werden, so kann die Schaltfläche \textsf{initalize} gedrückt werden.
-				\item Konnte erfolgreich eine Netzwerkverbindung zum Host hergestellt werden, wird dies durch den Indikator \textsf{connected?} dargestellt.
+				\item Konnte erfolgreich eine Netzwerkverbindung zum \gls{g:host} hergestellt werden, wird dies durch den Indikator \textsf{connected?} dargestellt.
 			\end{enumerate}
 			%
 			\image{content/4_implementierung/image/front_myrio}{scale=1.5}{htbp}[Frontpanel \gls{g:myrio}][img:front_myrio]	
 	%
 	%
 	\subsection{Host}\label{ss:host}
-		Der Host Teil des Demonstrators dient lediglich der Darstellung der auf dem Target verarbeiteten Daten. In der Projektstruktur ist die \gls{ac:vi} des Hosts unter dem Namen \texttt{Desktop Main.vi} zu finden. Die Ausführung erfolgt direkt in \gls{g:labview}, sprich es wird keine Kompilation durchgeführt\footnote{Diese Aussage beruht auf eigens gemachte Beobachtungen der Autoren und kann bewiesen werden}.
+		Der \gls{g:host}-Teil des Demonstrators dient lediglich der Darstellung der auf dem \gls{g:target} verarbeiteten Daten. In der Projektstruktur ist die \gls{ac:vi} des \gls{g:host} unter dem Namen \texttt{Desktop Main.vi} zu finden. Die Ausführung erfolgt direkt in \gls{g:labview}, sprich es wird keine Kompilation durchgeführt\footnote{Diese Aussage beruht auf eigens gemachte Beobachtungen der Autoren und kann bewiesen werden}.
 		%
 		\subsubsection*{Visualisierung}
 			Die Darstellung der übertragenen Daten erfolgt sample-basiert. Dazu müssen die Daten zuerst extrahiert und anschliessend ansprechend dargestellt werden. Weite Teile dieses \gls{ac:vi} wurden aus dem Beispielprojekt übernommen, wie auch die Abbildung \vref{img:rx_data} zeigt. Die Darstellung erfolgt durch ein 3D-Modell des \gls{g:myrio} und einem Pfadverlauf in einem x-y-Graph.
@@ -153,7 +152,7 @@
 			Die Abbildung \vref{img:front_host} zeigt das gesamte Panel. Auf die vorhanden Elemente wird folgt nun eingegangen.
 			\begin{enumerate}
 				\item Im Texteingabefeld \textsf{myRIO IP-Address} muss die aktuelle IP-Adresse des \gls{g:myrio} angegeben werden. Diese kann je nach Netzwerkkonfiguration unterschiedlich ausfallen muss jeweils kurz kontrolliert werden.
-				\item Konnte eine Verbindung zum Target aufgebaut werden, so wird dies durch ein grünes Leuchten des Indikators \textsf{connected?} kundgetan. 
+				\item Konnte eine Verbindung zum \gls{g:target} aufgebaut werden, so wird dies durch ein grünes Leuchten des Indikators \textsf{connected?} kundgetan. 
 				\item Darstellung des 3D-Modells im dreidimensionalen Raum.
 				\item Zurückgelegter Pfad in der x-y-Ebene. Die Auflösung der Achsen wird dabei laufend angepasst und ist unbedingt zu beachten.
 				\item Die Schaltfläche \textsf{stop} dient zum Beenden der laufenden \gls{ac:vi}. Dies hat ebenfalls eine Unterbrechung der Netzwerkverbindung zur Folge.
@@ -161,25 +160,25 @@
 				\item Die beiden Text-Labels \textsf{x} und \textsf{y} zeigen die aktuelle Position an.
 			\end{enumerate}
 			%
-			\image{content/4_implementierung/image/front_host}{scale=.7}{htbp}[Frontpanel Host][img:front_host]
+			\image{content/4_implementierung/image/front_host}{scale=.7}{htbp}[Frontpanel \gls{g:host}][img:front_host]
 %
 %
 % Bedienung
 \section{Bedienung}
-	Für einen erfolgreichen Betrieb des Demonstrators sind einige Dinge zu beachten. Falls einer der folgt aufgeführten Schritte nicht funktioniert, sollte zuerst die Verbindung zum \gls{g:myrio} überprüft werden. Dies beinhaltet ebenfalls den aktuelle Zustand des Treibers\footnote{Während der Implementationsphase kam es zu diversen Abstürzen. Durch einen Neustart des Host konnte dieses Problem jedoch jedes mal behoben werden}.\par
+	Für einen erfolgreichen Betrieb des Demonstrators sind einige Dinge zu beachten. Falls einer der folgt aufgeführten Schritte nicht funktioniert, sollte zuerst die Verbindung zum \gls{g:myrio} überprüft werden. Dies beinhaltet ebenfalls den aktuelle Zustand des Treibers\footnote{Während der Implementationsphase kam es zu diversen Abstürzen. Durch einen Neustart des \gls{g:host} konnte dieses Problem jedoch jedes mal behoben werden}.\par
 	%
 	Die gesamte Bedienung umfasst insgesamt XXX Schritte.
 	\begin{enumerate}
-		\item Das \gls{g:myrio} mit dem Host-System verbinden.
+		\item Das \gls{g:myrio} mit dem \gls{g:host}-System verbinden.
 		\item \gls{g:labview} starten und das Projekt \texttt{reametric} öffnen (ist im Anhang \vref{s:anhang_labview} zu finden).
-		\item Starten der \texttt{RT Main.vi}. Konnte ein Verbindung zum Target hergestellt werden, wird der Kompilationsprozess ohne Probleme beendet werden. Ist dies nicht der Fall, so müssen die Schritte 1 und 2 wiederholt werden.
+		\item Starten der \texttt{RT Main.vi}. Konnte ein Verbindung zum \gls{g:target} hergestellt werden, wird der Kompilationsprozess ohne Probleme beendet werden. Ist dies nicht der Fall, so müssen die Schritte 1 und 2 wiederholt werden.
 		\item Abschliessend folgt der Start der \texttt{Desktop Main.vi}. Konnte eine Verbindung zur \texttt{RT Main.vi} aufgebaut werden, so wird dies durch Indikatoren visualisiert (siehe Abschnitt \vref{ss:demo_target} und \vref{ss:host}, Frontpanel).
 		\item Für korrekte Ergebnisse muss zu Beginn eine Initialisierung durchgeführt werden. Dies erfolgt durch entsprechende Bedienelemente am \gls{g:myrio} oder der \texttt{RT Main.vi} (siehe Abschnitt \vref{ss:demo_target}, Frontpanel).
-		\item Die Messung wird beendet durch das Betätigen der Schaltflächen \textsf{stop} in den jeweiligen \gls{ac:vi}s. Die Ausführung sollte nicht einfach direkt abgebrochen werden, da ansonsten das Target sich einem undefinierten Zustand befinden kann\footnote{\gls{g:labview} präsentiert entsprechende Fehlermeldungen}.
+		\item Die Messung wird beendet durch das Betätigen der Schaltflächen \textsf{stop} in den jeweiligen \gls{ac:vi}s. Die Ausführung sollte nicht einfach direkt abgebrochen werden, da ansonsten das \gls{g:target} sich einem undefinierten Zustand befinden kann\footnote{\gls{g:labview} präsentiert entsprechende Fehlermeldungen}.
 	\end{enumerate}
 %
 \section{Vergleich Konzept - Implementierung}
-	Um eine Aussage bezüglich der Güte der Implementation machen zu können, muss diese mit dem Konzept verglichen werden. Dazu müssen identische Rohdaten durch die beiden Abläufe (\gls{g:matlab}-Skript \texttt{XXX} und \gls{g:labview}-Projekt \texttt{reametric}) verarbeitet und die Ergebnisse einander gegenübergestellt werden\footnote{Durch die Tatsache, dass das \gls{g:matlab}-Skript segment-basiert und die Implementierung sample-basiert arbeiten können nicht dieselben Daten verwendet werden (hätte eine Abänderung der Implementierung oder des Konzepts zur Folge). Deshalb werden zwei unabhängige Messungen unter den identischen Bedingungen durchgeführt und jeweils ausgewertet.}. Angelehnt an die drei Protokolle in den Abschnitten \ref{s:verifikation_rotation} bis \ref{s:verifikation_transaltion_rotation} werden dabei speziell die Rotation, Translation und Rotation, Translation überlagert kontrolliert\footnote{Auf Grund der negativen Ergebnisse der Protokolle wird auf ein detailliertes wiederholen verzichtet und die Implementation nur prinzipiell Überprüft}.
+	Um eine Aussage bezüglich der Güte der Implementation machen zu können, muss diese mit dem Konzept verglichen werden. Dazu müssen identische Rohdaten durch die beiden Abläufe (\gls{g:matlab}-Skript \texttt{XXX} und \gls{g:labview}-Projekt \texttt{reametric}) verarbeitet und die Ergebnisse einander gegenübergestellt werden\footnote{Durch die Tatsache, dass das \gls{g:matlab}-Skript segment-basiert und die Implementierung sample-basiert arbeiten können nicht dieselben Daten verwendet werden (hätte eine Abänderung der Implementierung oder des Konzepts zur Folge). Deshalb werden zwei unabhängige Messungen unter den identischen Bedingungen durchgeführt und jeweils ausgewertet.}. Angelehnt an die drei Protokolle in den Abschnitten \ref{s:verifikation_rotation} bis \ref{s:verifikation_transaltion_rotation} werden dabei speziell die \textsf{Rotation}, \textsf{Translation} und \textsf{Rotation, Translation überlagert} kontrolliert\footnote{Auf Grund der negativen Ergebnisse der Protokolle wird auf ein detailliertes wiederholen verzichtet und die Implementation nur prinzipiell Überprüft}.
 	%
 	\subsection*{Schätzung Rotationswinkel und Rotation}
 		Für das Überprüfen der Rotationswinkel und der anschliessenden Rotation wird ein statische Messung in z-Position (erläutert in Abschnitt \vref{ss:methode_tran}, Testbeschreibung) durchgeführt. Die Kontrolle beschränkt sich auf das Endergebnis der Rotation, das $a_{Soll}=[0\quad0\quad 9.81]$ sein sollte.\par
@@ -187,8 +186,15 @@
 		Wie erwartet liefert das Konzept ein ähnliches Resultat von $a_{Konzept} = [-0.004\quad0.004\quad9.971]$. Unter den gleichen Bedingungen errechnet die Implementierung einen Beschleunigungsvektor von $a_{Implementation}=[0.008\quad0.013\quad9.934]$. Vergleicht man die beiden Resultate, kann man auf eine korrekte Implementation des Konzepts schliessen. Die geringen Abweichungen könnten darin Begründet sein, das die Auflösung der verwendeten Datentypen sich in \gls{g:matlab} und \gls{g:labview} unterscheiden. 
 	%	
 	\subsubsection*{Translation}
-		Wiederum werden zwei Messungen in der z-Position durchgeführt. Zusätzlich zu der Kalibrationsphase wird nun noch eine Translation in der \gls{g:transversalebene} von \unit[5]{cm} in y-Richtung durchgeführt (Bewegungszeit \unit[1]{cm}). Erwartet wird ein zurückgelegter Weg von \unit[5]{cm} (mit einer Abweichung von $\pm$\unit[1]{cm}) in der gefahrenen Richtung.\par
+		Wiederum werden zwei Messungen in der z-Position durchgeführt. Zusätzlich zu der Kalibrationsphase wird nun noch eine Translation in der \gls{g:transversalebene} von \unit[5]{cm} in y-Richtung durchgeführt (Bewegungszeit \unit[1]{s}). Erwartet wird ein zurückgelegter Weg von \unit[5]{cm} (mit einer Abweichung von $\pm$\unit[1]{cm}) in der gefahrenen Richtung.\par
 		%
-		Gemittelt über fünf Messungen ergibt das Konzept ein äquivalentes Resultat wie im Protokoll in Abschnitt XXX beschrieben. Die ermittelte Strecke beläuft sich auf \unit[4.31]{cm}. Die Implementierung dagegen liefert eine mittlere Distanz von \unit[255.2]{nm}. Dazu wird nach der Auslenkung die ursprüngliche Position angegeben. Die Richtung der Translation hingegen stimmt mit der Erwartung überein.\par
+		Gemittelt über fünf Messungen ergibt das Konzept ein äquivalentes Resultat wie im Protokoll in Abschnitt \vref{s:verifikation_translation} beschrieben. Die ermittelte Strecke beläuft sich auf \unit[4.31]{cm}. Die Implementierung dagegen liefert ein um Faktor 1000 kleineres Resultat. Dazu wird nur eine Auslenkung in eine Richtung detektiert. Ein Translation zurück zum Ursprung der Messung hat demzufolge eine entgegengesetzte Bewegung zur Folge. Die Unterscheidung hinsichtlich der gefahrenen Achse x und y wird dagegen korrekt erkannt.\par
 		%
-		Die Analyse des ungenügenden Resultats konnte auf eine fehlerhafte Integration durch die \gls{ac:iir}-Filter zurückgeführt werden.
+		Die Analyse des ungenügenden Resultats konnte auf eine fehlerhafte Integration durch die \gls{ac:iir}-Filter zurückgeführt werden. Simulationen mit bekannten Signalen kräftigen die Vermutung, dass der Fehler mit der Abtastrate der Beschleunigungsdaten zusammenhängt. Folgende Untersuchungen müssen dies jedoch noch bestätigen.
+	%
+	\subsubsection*{Rotation, Translation überlagert}
+		Wegen dem negative Resultat des Protokolls in Abschnitt \vref{s:verifikation_transaltion_rotation} und dem bekannten fehlerbehafteten Integrieren der Implementation	wird auf eine genauere Untersuchung dieses Testfalls verzichtet. Konzeptbedingt ist dazu kein aussagekräftiger Vergleich zu erwarten.
+		
+		
+		
+		
