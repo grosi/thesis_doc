@@ -45,7 +45,11 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 	\subsection{Hardware}\label{ss:myRIO_hw}
 		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{nähere Angaben sind im Datenblatt im Anhang \vref{ch:datasheet_myrio} zu finden}:
 		\begin{itemize}
-			\item Prozessor/FPGA Xilinx Z-7010 (Cortex A9), 2 Kerne à \unit[667]{MHz}
+			\item \acrshort{ac:soc} Xilinx Z-7010
+			\begin{itemize}
+				\item 2 ARM Cortex A9 Kerne à \unit[667]{MHz}
+				\item Artix-7 \acrshort{ac:fpga}
+			\end{itemize}
 			\item \unit[256]{MB} Flash, \unit[512]{MB} RAM
 			\item USB 2.0 Hi-Speed
 			\item Accelerometer, 3 Achsen, $\pm$\unit[8]{g}, \unit[12]{bit} Auflösung

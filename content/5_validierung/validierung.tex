@@ -14,13 +14,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Validierung}\label{ch:validierung}
 \section{Ergebnis der Arbeit}
-Das entwickelte Konzept zeichnet die Auslenkung des Knies in einer Ebene senkrecht zur Gravitation auf. Die Kompensation der Orientierung des Sensors durch Rotation wurde erfolgreich validiert. Die Auslenkung des Knies in der \gls{g:transversalebene} wurde ebenfalls in einem experimentelle Umfeld ausgewertet. Dabei wurde für den fall der Translation eine geeignete Performance erreicht. Die Schätzungsgenauigkeit, was für die vorliegende Anwendung bei weitem ausreicht.\par
+Das entwickelte Konzept zeichnet die Auslenkung des Knies in einer Ebene senkrecht zur Gravitation auf. Die Kompensation der Orientierung des Sensors durch Rotation wurde erfolgreich verifiziert. Die Auslenkung des Knies in der \gls{g:transversalebene} wurde ebenfalls in einem experimentelle Umfeld ausgewertet. Dabei wurde für den Fall der Translation eine geeignete Performance erreicht.\par
 %
-Bei Auslenkungen, welche zusätzlich eine Rotation beinhalten, erhöhen sich die Fehler durch die Projektionen der Gravitationskomponente auf die \gls{g:transversalebene}. Diese Verfälschung wird mit integriert und führt zu einem nicht akzeptablen Fehler in der Auslenkungsschätzung. Das Konzept ist bei dieser Art von Bewegung noch fehlerhaft. In dieser Beziehung besteht noch Verbesserungspotenzial.\par
+Bei Auslenkungen, welche zusätzlich eine Rotation beinhalten, erhöhen sich die Fehler durch die Projektionen der Gravitationskomponente auf die \gls{g:transversalebene}. Diese Verfälschung wird mit integriert und führt zu einem nicht akzeptablen Fehler in der Auslenkungsschätzung. Das Konzept ist bei dieser Art von Bewegung noch fehlerhaft und es besteht diesbezüglich noch Verbesserungspotenzial.\par
 %
-Die theoretische Analyse der Bewegung am Knie bietet die Möglichkeit weitere Verbesserungsmöglichkeiten am Konzept aufzuzeigen. Die Bewegung kann mittels eines Modells in einen dynamischen und einen statischen Fall unterteilt werden. Das Model beschreibt die Bewegung als eine harmonische Funktion. Der dynamische Fall unterscheidet sich vom statischen durch eine definierte Grenzfrequenz. Diese ist nur abhängig von der Kniehöhe. Im dynamischen Fall hat bei einer Auslenkung welche eine Translation und eine Rotation beinhaltet die projektierte Gravitation einen vernachlässigbar kleinen Einfluss. Dieses Modell wurde mathematisch hergeleitet und anschliessend simuliert und soll als Grundlage zur Erarbeitung zukünftiger Auslenkungs-Schätzungsmethoden dienen.
+Die theoretische Analyse der Bewegung am Knie bietet die Möglichkeit weitere Verbesserungsmöglichkeiten am Konzept aufzuzeigen. Die Bewegung kann mittels eines Modells in einen dynamischen und einen statischen Fall unterteilt werden. Das Model beschreibt die Bewegung als eine harmonische Funktion. Der dynamische Fall unterscheidet sich vom statischen durch eine definierte Grenzfrequenz. Diese ist nur abhängig von der Kniehöhe. Im dynamischen Fall hat bei einer Auslenkung, welche eine Translation und eine Rotation beinhaltet, die projektierte Gravitation einen vernachlässigbar kleinen Einfluss. Dieses Modell wurde mathematisch hergeleitet und anschliessend simuliert und soll als Grundlage zur Erarbeitung zukünftiger Auslenkungs-Schätzungsmethoden dienen.\par 
 %
-Die Implementation wurde in \gls{g:labview} durchgeführt. Aufgrund der Probleme bei der Konzeptentwicklung konnte die Implementierung nicht vollständig umgesetzt werden. Hier besteht das teilweise umgesetzte Konzept. Probleme bestehen momentan bei der Integration der Beschleunigungsdaten, die noch nicht zuverlässig funktioniert. Aus diesem Grund konnte die Implementierung auch noch nicht vollständig validiert werden. 
+Die Implementation wurde in \gls{g:labview} durchgeführt. Aufgrund der Probleme bei der Konzeptentwicklung konnte die Implementierung nicht vollständig umgesetzt werden. Hier besteht das teilweise umgesetzte Konzept. Probleme bestehen momentan bei der Integration der Beschleunigungsdaten, die noch nicht zuverlässig funktioniert. Aus diesem Grund konnte die Implementierung auch noch nicht vollständig validiert werden.
+%
+Für reproduzierbare Validierungen von Konzepten hinsichtlich dieses Messumfelds sind drei verschiedene Experimental-Protokolle erstellt worden. Diese Umfassen...
 %
 %
 % Soll/Ist-Vergleich Zeitplan
@@ -31,8 +33,8 @@ Die Implementation wurde in \gls{g:labview} durchgeführt. Aufgrund der Probleme 
 	%
 	\image{content/5_validierung/image/zeit_ist_soll}{scale=1}{htbp}[Zeitplan Soll- (blau)/Ist- (rot) Vergleich][Zeitplan Soll/Ist Vergleich][img:soll_ist]
 	%
-	
-\section{Erkenntnisse, Ausblick}
+	%
+\section{Erkenntnisse, Ausblick}\todo{Ausblick -> Wir haben einen Testaufbau erstellt}
 	\begin{itemize}
 		\item Das Konzept muss umgebaut werden, damit die Rotation kontinuierlich neu berechnet wird und nicht nur zu Beginn der Messung, wenn der Sensor in Ruhe ist.
 		\item Die berechnete Grenzfrequenz ist für die Entwicklung des verfeinerten Konzeptes zu beachten. Das Konzept kann damit in eine Berechnung der Bewegung im statischen Fall sowie im dynamischen Fall unterteilt werden.

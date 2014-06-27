@@ -62,7 +62,7 @@
 	%
 	%
 	\subsection{Target}\label{ss:demo_target}
-		Das \gls{g:labview}-Projekt ist in zwei Teile gegliedert. Der eine beinhaltet \gls{ac:vi}s die auf dem Target ausgeführt werden (\texttt{RT Main.vi}) und der andere diejenigen des \gls{g:host}s \texttt{Desktop Main.vi}. Dieser Umstand ist im Abschnitt \vref{ss:aufbau_struktur} näher erläutert. Für die Ausführung auf seitens des Targets werden die erstellten \gls{ac:vi}s einem Kompilationsprozess unterzogen, der für das Target ausführbaren Code erzeugt. Im Falle des \gls{g:myrio} wird dies Code für die beiden ARM-Cores und das FPGA sein. Diese Aussage kann jedoch mangels Transparenz des Prozesses nicht bewiesen werden ist nur eine Annahme.
+		Das \gls{g:labview}-Projekt ist in zwei Teile gegliedert. Der eine beinhaltet \gls{ac:vi}s die auf dem Target ausgeführt werden (\texttt{RT Main.vi}) und der andere diejenigen des \gls{g:host}s \texttt{Desktop Main.vi}. Dieser Umstand ist im Abschnitt \vref{ss:aufbau_struktur} näher erläutert. Für die Ausführung auf seitens des Targets werden die erstellten \gls{ac:vi}s einem Kompilationsprozess unterzogen, der für das Target ausführbaren Code erzeugt. Im Falle des \gls{g:myrio} wird dies Code für die beiden ARM-Cores und das \acrshort{ac:fpga} sein. Diese Aussage kann jedoch mangels Transparenz des Prozesses nicht bewiesen werden ist nur eine Annahme.
 		%
 		\subsubsection*{Zustandsmaschine}
 			Die Zustandsmaschine wird mit Hilfe einer Case Structure umgesetzt, wie bereits im Abschnitt \vref{ss:struktur} angetönt. Für den Wechsel zwischen den beiden Vorhanden Zuständen dient ein Taster als Auslöser eines entsprechenden Events. Um die Bedienung komfortabel zu gestalten kann auf zwei Möglichkeiten eine Initialisierung ausgelöst werden.
