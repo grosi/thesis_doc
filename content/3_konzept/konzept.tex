@@ -20,7 +20,7 @@ Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Absch
 %
 Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten drei Achsen Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Falle ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters dem \gls{g:worldframe}. Die zu detektierende Bewegung welche einer seitlichen Auslenkung des Knies entspricht, wir nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
 %
-Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung in der x-y-Ebene berechnet. Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit in der der Sensor nicht bewegt wird abgearbeitet und entspricht einer Kalibrationsphase. Im zweiten Teil wird die Bewegung des Sensors in der Ebene berechnet.\par
+Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung in der x-y-Ebene berechnet. Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit in der der Sensor nicht bewegt wird abgearbeitet und entspricht einer Kalibrationsphase. Im zweiten Teil wird die Bewegung des Sensors in der Integrationsebene berechnet.\par
 %
 Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
@@ -30,7 +30,7 @@ Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersich
 %
 % Filterung
 \subsection{Filterung der Sensordaten}\label{ss:tp}
-Durch die \gls{ac:tp}-Filterung der gemessenen Sensordaten werden unerwünschte hochfrequente Bewegungen gedämpft. Es werden somit nur Bewegungen mit einer Frequenz unterhalb der festgelegten Durchlassfrequenz betrachtet. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Der Aufbau eines solchen Filter N-ter Ordnung ist folgendermassen.
+Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine \glqq DC-Komponente\glqq\ betrachtet werden. Mit einer \gls{ac:tp}-Filterung kann somit die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt werden. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Der Aufbau eines solchen Filter N-ter Ordnung ist folgendermassen.
 %
 \formula{
 H(z)=\frac{b_0 + b_1z^{-1}+...+b_Nz^{-N}}{a_0 + a_1z^{-1}+...+a_Nz^{-N}}
@@ -54,7 +54,7 @@ Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Ent
 % Filterentwurf
 \image{content/3_konzept/image/filterentwurf}{scale=0.8}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
 %
-Zum Entwurf des Filters müssen zuerst die Spezifikationen des Filters festgelegt werden. Im Beispielprojekt wurde wie schon erwähnt ein Elliptisches-Filter verwendet. Die Ordnung des Elliptischen-Filters wurde dort auf 2 gesetzt. Die Sperrfrequenz auf 30 Hz. Nach Absprache mit den Betreuern wurde die Sperrfrequenz sowie die Ordnung wie im Beispielprojekt festgelegt, einzig der Filtertyp wurde angepasst auf ein Butterworth-Filter. 
+Zum Entwurf des Filters müssen zuerst die Spezifikationen des Filters festgelegt werden. Im Beispielprojekt wurde wie schon erwähnt ein Elliptisches-Filter verwendet. Die Ordnung des Elliptischen-Filters wurde dort auf 2 gesetzt. Die Sperrfrequenz auf 30 Hz. Die Sperrfrequenz sowie die Ordnung wurde wie im Beispielprojekt festgelegt, einzig der Filtertyp wurde angepasst auf ein Butterworth-Filter. Die Sperrfrequenz muss jedoch noch angepasst werden, wie sich später zeigen wird.  
 %
 \begin{itemize}
 \item f\low{stop} = \unit[30]{Hz}: Sperrfrequenz
@@ -122,14 +122,14 @@ axfilt = filter(b_TP,a_TP,ax);
 %%
 % Schätzung der Orientierung
 \subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
-Um die Bewegung des Sensors im Koordinatensystem des Betrachters darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Zur Übersicht ist eine mögliche Darstellung der Vektoren in Abbildung \vref{img:Vektor} ersichtlich. Mit dem Gravitätsvektor $\overrightarrow{a_g}$ und der Erdbeschleunigung des Sensors $\overrightarrow{a_{grav}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\phi$ sowie auf die Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden.\par
+Um die Bewegung des Sensors im Koordinatensystem des Betrachters dem \gls{g:worldframe} darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Zur Übersicht ist eine Darstellung der möglich auftretenden Vektoren in Abbildung \vref{img:Vektor} ersichtlich. Mit dem Gravitationsvektor $\overrightarrow{a_g}$ und der Erdbeschleunigung des Sensors $\overrightarrow{a_{grav}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\phi$ sowie auf die Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden.\par
 %
-Die gemessene Erdbeschleunigung des Sensors entsprechen den \gls{ac:tp}-gefilterten Beschleunigungsdaten. Mit dem Drehwinkel $\phi$ und der Rotationsachse $\overrightarrow{n}$ kann die im Kapitel \vref{ch:grundlagen} in Abschnitt \vref{sub:rot} beschriebene Rotationsmatrix aufgestellt werden. Mit dieser Rotationsmatrix kann die Orientierung des Beschleunigungssensors in das Betrachtungssystem transformiert werden. Der Drehwinkel $\phi$ ist der Zwischenwinkel der Vektoren $\overrightarrow{a_g}$ und $\overrightarrow{a_{grav}}$, die Rotationsachse $\overrightarrow{n}$ steht senkrecht auf diesen beiden Vektoren.
+Die gemessene Erdbeschleunigung des Sensors entspricht den \gls{ac:tp}-gefilterten Beschleunigungsdaten. Mit dem Drehwinkel $\phi$ und der Rotationsachse $\overrightarrow{n}$ kann die im Kapitel \vref{ch:grundlagen} in Abschnitt \vref{sub:rot} beschriebene Rotationsmatrix aufgestellt werden. Mit dieser Rotationsmatrix kann die Orientierung des Beschleunigungssensors (\gls{g:bodyframe}) in das Betrachtungssystem (\gls{g:worldframe}) transformiert werden. Der Drehwinkel $\phi$ ist der Zwischenwinkel der Vektoren $\overrightarrow{a_g}$ und $\overrightarrow{a_{grav}}$, die Rotationsachse $\overrightarrow{n}$ steht senkrecht auf diesen beiden Vektoren.
 %
 \image{content/3_konzept/image/Vektor_bearb}{scale=0.7}{htbp}[Rotation][img:Vektor]
 %
 \subsubsection*{Betrachtungssystem}\label{subsub:betrachter}
-Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters auch \gls{g:worldframe} sowie das Koordinatensystem des \gls{g:myrio} \gls{g:bodyframe} aufgezeigt. Das Koordinatensystem des Betrachters liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung resultieren \gls{g:transversal}e Bewegungen nach links und rechts zu eine Abnahme bzw. Zunahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
+Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters, das \gls{g:worldframe}, sowie das Koordinatensystem des \gls{g:myrio}, das \gls{g:bodyframe}, aufgezeigt. Das \gls{g:worldframe} liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung resultieren \gls{g:transversal}e Bewegungen nach links und rechts zu einer Abnahme bzw. Zunahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
 %
 \begin{figure}[htbp]
         \centering
@@ -147,7 +147,7 @@ Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung 
         \caption{Koordinatensystem}\label{img:koordinatensystem}
 \end{figure}    
 %
-Das \gls{g:myrio} hat bekanntlich eine beliebige Ausrichtung im Raum resp. im Koordinatensystem des Betrachters. Durch die Montage des Beschleunigungssensors sind dessen Achsen in Bezug auf das Gehäuse gegeben. Diese sind in Abbildung \vref{img:koord_myRIO} ersichtlich.
+Das \gls{g:myrio} hat bekanntlich eine beliebige Ausrichtung im \gls{g:worldframe}. Durch die Montage des Beschleunigungssensors sind dessen Achsen in Bezug auf das Gehäuse gegeben und bilden somit das \gls{g:bodyframe}. Diese ist in Abbildung \vref{img:koord_myRIO} ersichtlich.
 %
 \subsubsection*{Drehwinkel}
 Der Drehwinkel $\phi$ wie in Abbildung \vref{img:Vektor} gesehen entspricht gerade dem Zwischenwinkel der beiden Vektoren $\overrightarrow{a\low{g}}$ sowie den \gls{ac:tp}-gefilterten Beschleunigungsdaten $\overrightarrow{a\low{grav}}$. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dies wie in Gleichung \vref{eq:dotp} dargestellt möglich.
@@ -163,7 +163,7 @@ Der Drehwinkel $\phi$ wie in Abbildung \vref{img:Vektor} gesehen entspricht gera
 }[eq:dotp]
 %
 \subsubsection*{Rotationsachse}
-Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordinatensystems des Sensors in das Koordinatensystems des Betrachters vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitätsvektor $\overrightarrow{a\low{g}}$ und dem vom Beschleunigungssensor aufgenommenem Vektor $\overrightarrow{a\low{grav}}$ in welchem die Erdbeschleunigung auf die verschiedenen Komponenten verteilt ist, stehen. Dazu dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche sowie natürlich der Länge des Vektors. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser die Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird wie in Gleichung \ref{eq:cross} berechnet.
+Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des \gls{g:bodyframe}s in das \gls{g:worldframe} vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitationsvektor $\overrightarrow{a\low{g}}$ und dem vom Beschleunigungssensor aufgenommenem Vektor $\overrightarrow{a\low{grav}}$ in welchem die Erdbeschleunigung auf die verschiedenen Achsen verteilt ist, stehen. Dazu dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche sowie der Länge des Vektors. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser die Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird wie in Gleichung \ref{eq:cross} berechnet.
 %
 \formula{
 \overrightarrow{n} = \frac{\overrightarrow{a\low{g}} \times\overrightarrow{a\low{grav}}}{ \mid \overrightarrow{a\low{g}} \times \overrightarrow{a\low{grav}}\mid}
@@ -201,11 +201,11 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des Koordin
 %
 % Rotation
 \subsection{Orientierungskompensation}\label{sub:rot}
-Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Die Komponenten der Bewegungsbeschleunigung können somit mit einem Hochpass mit tief angelegter Durchlassfrequenz ermittelt werden. Doch genau hier liegt eine Schwierigkeit. Die Durchlassfrequenz muss sehr tief angesetzt werden damit auch langsame Bewegungen beachtet werden. Somit wurde dieser Ansatz schnell verworfen.\par 
+Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Dabei müsste jedoch die Durchlassfrequenz des Hochpass sehr tief angelegt werden, damit auch langsame Bewegungen beachtet werden. Aus diesem Grund wurde dieser Ansatz wieder verworfen.\par 
 %
 In dieser Arbeit beschränken sich die Autoren nur auf die Bewegung in einer Ebene. In diesem Falle ist es ausreichen nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt.\par
 %
-Die Rotation wird benötigt, um das Koordinatensystem des Sensors in das Koordinatensystem des Betrachters zu transformieren. Dabei steht die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche das System gedreht wird sowie der ermittelte Drehwinkel $\phi$ zwischen den beiden Vektoren zur Verfügung. Die Rotationsmatrix kann mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellt werden.\par
+Die Rotation wird benötigt, um das Koordinatensystem des Sensors (\gls{g:bodyframe}) in das Koordinatensystem des Betrachters (\gls{g:worldframe}) zu transformieren. Dabei steht die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche das System gedreht wird sowie der ermittelte Drehwinkel $\phi$ zwischen den beiden Vektoren zur Verfügung. Die Rotationsmatrix kann mit diesen Parametern nach der im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellt werden.\par
 %
 Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation vom Koordinatensystem des Sensors \gls{g:bodyframe} ins Koordinatensystem des Betrachters \gls{g:worldframe} mit einer einfachen Multiplikation erfolgen.
 %
@@ -223,9 +223,9 @@ Die Wirkung dieser Rotation ist in Abbildung \vref{img:rotation_vektor} ersichtl
 %
 % Bewegungsdetektion
 \subsection{Bewegungsdetektion} \todo{auf offset eingehen}
-Da die Integration einer Aufsummierung entspricht kann durch einen kleinen Fehler in der Rotation resultierend durch einen Offset bereits ein grosser Drift entstehen. Ein Lösungsansatz ist dabei eine Bewegungsdetektion einzuführen. Die Integration wir nur durchgeführt, wenn sich der Sensor auch bewegt. Ein Hilfsmittel über die Variation eines Signals ist deren Varianz respektive Standardabweichung. Die Standardabweichung gibt uns Information über die Verteilung der Signalamplitude. Wird der Sensor in Ruhe gelassen, so ändern sich die aufgenommene Amplitude nur gering (Rauschen des Sensors laut NI \unit[3.9]{$mg_{rms}}$). Dementsprechend ist die Standardabweichung klein. Wird der Sensor bewegt, so resultiert eine grössere Änderung der Amplitude. Die Standardabweichung wird somit grösser.\par
+Da die Integration einer Aufsummierung entspricht kann durch einen kleinen Fehler in der Rotation bereits ein grosser Drift entstehen. Ein Lösungsansatz ist, eine Bewegungsdetektion einzuführen. Die Integration wir nur durchgeführt, wenn sich der Sensor auch bewegt. Ein Hilfsmittel über die Variation eines Signals ist deren Varianz respektive Standardabweichung. Die Standardabweichung gibt uns Information über die Verteilung der Signalamplitude. Wird der Sensor in Ruhe gelassen, so ändern sich die aufgenommene Amplitude nur gering, was dem Rauschen des Sensors entspricht. Dementsprechend ist die Standardabweichung klein. Wird der Sensor bewegt, so resultiert eine grössere Änderung der Amplitude. Die Standardabweichung wird somit grösser.\par
 %
-Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In dieser Zeit kann der Threshold mittels der Standardabweichung bestimmt werden. Da die Standardabweichung über eine verhältnismässig grosse Dauer gemessen wird, ist diese geringer als mit der Methode wo ein kleineres Fenster als die vier Sekunden über das Signal gefahren und in diesem Fenster die Standardabweichung bestimmt wird. Aus diesem Grund kann zur Berechnung des Thresholds noch zusätzlich ein Vorfaktor zur Standardabweichung multipliziert werden. Somit ist der Threshold grösser als die Standardabweichung des Rauschen. Dies ist sicherlich nicht eine optimale Lösung und könnte noch verbessert werden. Jedoch wurde mit dieser Methode eine schnelle und einfache Lösung erzielt.\par
+Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In dieser Zeit kann der Threshold mittels der Standardabweichung bestimmt werden. Da die Standardabweichung über eine verhältnismässig grosse Dauer gemessen wird, ist diese geringer als mit der Methode wo ein kleineres Fenster als die vier Sekunden über das Signal gefahren und in diesem Fenster die Standardabweichung bestimmt wird. Aus diesem Grund wird zur Berechnung des Thresholds noch zusätzlich ein Vorfaktor zur Standardabweichung multipliziert. Somit ist der Threshold grösser als die Standardabweichung des Rauschen. Dies ist sicherlich nicht eine optimale Lösung und könnte noch verbessert werden. Jedoch wurde mit dieser Methode eine schnelle und einfache Lösung erzielt.\par
 %
 \image{content/3_konzept/image/Bewegungsdetect}{scale=0.7}{htbp}[Bewegungsdetektion auf der y-Achse][img:bewegungdetect]
 %
@@ -256,9 +256,9 @@ s_{0} & Anfangsposition [m]\\
 v & Geschwindigkeit [$m/s$]
 }[eq:weg]
 % 
-Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben mittels der Trapezmethode. Speziel dabei ist, dass dafür ein \gls{ac:iir}-Filter angewendet wird. Dazu wird die in Abschnitt \vref{subsub:filterentwurf} beschriebene Bilineare-Transformation verwendet.\par
+Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben mittels der Trapezmethode. Speziell dabei ist, dass dafür ein \gls{ac:iir}-Filter angewendet wird. Dazu wird die in Abschnitt \vref{subsub:filterentwurf} beschriebene Bilineare-Transformation verwendet.\par
 %
-Aus der Regelungstechnik ist bekannt, dass die Übertragungsfunktion eines Integrators $H(s) = \frac{1}{s}$ entspricht. Dies ist somit die Übertragungsform eines Analogfilters also einem zeitkontinuierlichem \gls{g:lti}-System. Um auf die Übertragungsfunktion des Digitalfilters zu gelangen, kann nun die Bilineare-Transformation angewendet werden. Wie in Gleichung \vref{eq:bilinear_trans} zuvor gezeigt.
+Aus der Regelungstechnik ist bekannt, dass die Übertragungsfunktion eines Integrators $H(s) = \frac{1}{s}$ entspricht. Dies ist somit die Übertragungsform eines Analogfilters also einem zeitkontinuierlichem \gls{g:lti}-System. Um auf die Übertragungsfunktion des Digitalfilters zu gelangen, kann nun die Bilineare-Transformation angewendet werden. Wie in Gleichung \vref{eq:bilinear_trans} gezeigt.
 %
 \formula{
 H(s) &= \frac{1}{s}\\[1ex]
@@ -273,7 +273,7 @@ H(z) &= \frac{T_a}{2}*\frac{1+z^{-1}}{1-z^{-1}}
 }{
 }[eq:int_filter]
 % 
-Wird dei Gleichung \vref{eq:int_filter} ausmultipliziert so erhält man die in Gleichung \vref{eq:iir_Filter} definierten Filterkoeffizienten womit das Digitalfilter definiert ist.
+Wird die Gleichung \vref{eq:int_filter} ausmultipliziert so erhält man die in Gleichung \vref{eq:iir_Filter} definierten Filterkoeffizienten womit das Digitalfilter definiert ist.
 %
 \formula{
 a_0 &= 1\\[1ex]
@@ -283,6 +283,7 @@ b_1 &= \frac{T_a}{2}
 }{
 }[eq:koeff_filter]
 %
+Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gesehen mit dem Befehl filter() in \gls{g:matlab} auf die Beschleunigungsdaten angewandt. Der Output ist bei erster Anwendung die Geschwindigkeit und bei zweiter Anwendung der zurückgelegte Weg. 
 %Software
 \section{LabVIEW Rohdaten aufzeichnen}\label{s:konzept:sw}
 		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Das fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
@@ -791,11 +792,11 @@ b_1 &= \frac{T_a}{2}
 	\subsection{Interpretation}\label{ss:interpretation_tran_rot}
 Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen bezogen auf die Kontrollgruppe zu verbuchen. Die maximale Abweichung von \unit[-11.1]{m}, was einem Fehler von \unit[-22'233.5]{\%} entspricht, sind bei den Messungen der Auslenkung 3 aufgetreten. Die Abweichungen in Auslenkung 1 und 2 sind zwar geringer als in Auslenkung 3, jedoch auch enorm gross (Auslenkung 1 \unit[-3.5]{m}, Auslenkung 2 \unit[-6.7]{m}).\par
 %
-Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal einen cm genau angefahren werden kann ist, diese Genauigkeit bei weitem kleiner als die gemessenen Abweichungen.\par
+Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal einen cm genau angefahren werden kann. Diese Genauigkeit ist bei weitem kleiner als die gemessenen Abweichungen.\par
 %
 Wie schon in  Abschnitt \vref{ss:interpretation_tran} gesehen ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, so wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige cm auf einem Messdauer von \unit[10]{s} ausmacht wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
 %
-Die enormen Abweichungen kann mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung durch eine Rotation des Sensors, so wird diese nicht mehr richtig kompensiert. Die Erdbeschleunigung ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultaten.\par
+Die enormen Abweichungen kann mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung des Sensors durch eine Rotation, so wird diese nicht mehr richtig kompensiert. Eine Projektion der Gravitation ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultaten.\par
 %
 Da bei der Auslenkung 3 die grösste Rotation bezogen auf die Drehung des Sensors durchgeführt wurde, sind bei diesen Messungen die Abweichungen am grössten. Die Erdbeschleunigung hat in diesem Fall einen deutlichen Einfluss auf die Messungen. Somit werden die x- und y-Komponenten stärker verfälscht, dementsprechend ist auch die Integration fehlerbehafteter.\par
 %
@@ -810,7 +811,9 @@ Das Konzept ist bekanntlich in zwei Teile aufgeteilt. Der erste Teil dient zum S
 %
 Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies wie in Abschnitt \vref{s:verifikation_translation} gezeigt auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissem Fehler nachempfunden werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung} erstaunlich geringe Standardabweichung von unterhalb \unit[0.6]{cm} auf. Somit wird der zurückgelegte Weg zwar nicht exakt berechnet, jedoch streuen Messungen derselben zurückgelegten Distanz sehr gering.\par
 % 
-Die Verifikation der Translation mit überlagerten Rotation hingegen zeigen auf, dass der zweite Teil des Konzeptes in welchem die Bewegung berechnet wird im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept ist bewusst nicht beachtet, dass eine Rotation des Sensors vorkommen kann und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung durch die Projektion der Gravitation auf die Beschleunigung der Bewegung. Die Erdbeschleunigung verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem additionalem DC-Anteil woraus der in Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
+Die Verifikation der Translation mit überlagerten Rotation hingegen zeigen auf, dass der zweite Teil des Konzeptes in welchem die Bewegung berechnet wird im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept wurde nicht beachtet, dass eine Rotation des Sensors vorkommt und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung durch die Projektion der Gravitation auf die Beschleunigung der Bewegung. Die Gravitation verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem additionalem \glqq DC-Anteil\glqq\ woraus der in Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
+%
+Ein wichtiger Punkt zur Verbesserung des Konzeptes, ist die Rotation laufend zu berechnen. In diesem Fall könnten Rotationen des Sensors kompensiert werden und die Gravitation hätte keinen Einfluss auf die Messungen.\par
 %
 Da das Konzept fehlerhaft ist, wurde der Bewegungsablauf am Knie genauer analysiert. Dazu wird ein einfaches Bewegungsmodell erstellt. Dieses ist in Abbildung \vref{img:dynamisch_statisch} dargestellt.\par
 %
