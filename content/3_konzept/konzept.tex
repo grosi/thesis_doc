@@ -16,11 +16,11 @@
 %
 % Blockdiagramm
 \section{Algoritmus}\label{s:blockdiagramm}
-Das Konzept kann teilweise aus dem \gls{g:labview}-Beispielprojekt \textsf{Posture Estimation} von \gls{ac:ni} extrahiert werden. Dort wurde eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
+Das Konzept kann teilweise aus einem \gls{g:labview}-Beispielprojekt \textsf{Posture Estimation} von \gls{ac:ni} extrahiert werden. Dort wurde eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen, wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
-Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten Drei-Achsen-Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Fall ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters dem \gls{g:worldframe}. Die zu detektierende Bewegung, welche einer seitlichen Auslenkung des Knies entspricht, wird nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
+Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten Drei-Achsen-Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Fall ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters, dem \gls{g:worldframe}. Die zu detektierende Bewegung, welche einer seitlichen Auslenkung des Knies entspricht, wird nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
 %
-Zu Beginn jeder Messung wird der Beschleunigungssensor eine definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors Kompensiert und die Bewegung in der x-y-Ebene berechnet. Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit in der der Sensor nicht bewegt wird abgearbeitet und entspricht einer Kalibrationsphase. Im zweiten Teil, der Bewegungsphase, wird die Bewegung des Sensors in der Integrationsebene berechnet.\par
+Zu Beginn jeder Messung wird der Beschleunigungssensor während einer definierte Zeit nicht bewegt. In dieser Zeit wird die Orientierung des Beschleunigungssensors bestimmt. Anschliessend wird die Orientierung des Sensors kompensiert und die Bewegung in der x-y-Ebene berechnet. Der Algorithmus kann in zwei Teile aufgeteilt werden. Der erste Teil wird während der Zeit abgearbeitet, in welcher der Sensor nicht bewegt wird. Diese Zeit entspricht einer Kalibrationsphase. Im zweiten Teil, der Bewegungsphase, wird die Bewegung des Sensors in der Integrationsebene berechnet.\par
 %
 Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersichtlich. Auf die einzelnen Blöcke soll in den folgenden Unterkapiteln näher eingegangen werden.
 %
@@ -30,38 +30,38 @@ Das Blockdiagramm des Konzeptes ist in Abbildung \vref{img:blockdiagramm} ersich
 %
 % Filterung
 \subsection{Filterung der Sensordaten}\label{ss:tp}
-Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine \glqq DC-Komponente\glqq\ betrachtet werden. Mit einer \gls{ac:tp}-Filterung kann somit die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt werden. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Der Aufbau eines solchen Filter N-ter Ordnung ist folgendermassen.
+Die Erdbeschleunigung ist in jedem Falle eine konstante Beschleunigung. Aus diesem Grund kann diese Beschleunigung als eine \glqq DC-Komponente\grqq\ betrachtet werden. Mit einer \gls{ac:tp}-Filterung kann somit die Erdbeschleunigung von der Beschleunigung der Bewegung getrennt werden. Als Filter wird ein \gls{ac:iir}-Filter verwendet. Wie der Name bereits sagt, hat dieses Filter eine unendlich lange Impulsantwort. Der Aufbau eines solchen Filters N-ter Ordnung ist folgendermassen.
 %
 \formula{
 H(z)=\frac{b_0 + b_1z^{-1}+...+b_Nz^{-N}}{a_0 + a_1z^{-1}+...+a_Nz^{-N}}
 }{
 }[eq:iir_Filter]
 %
-Wobei $b_n$ und $a_n$ die jeweiligen Filterkoeffizienten sind. Ein Vorteil des \gls{ac:iir}-Filters und Grund weshalb es dem \gls{ac:fir}-Filters oft vorgezogen wird ist, dass es eine grössere Effizient auf eine kurze Verzögerung aufweist. Um mit einem \gls{ac:fir}-Filter dieselbe Filterwirkung wie mit einem \gls{ac:iir}-Filter zu erreichen ist eine deutlich grössere Filterordnung nötig. Somit vergrössert sich wie erwähnt die Verzögerung durch das Filter. Ein Nachteil ist, dass durch den rekursiven Aufbau das \gls{ac:iir}-Filters instabil sein kann.
+Dabei sind $a_n$ und $b_n$ die jeweiligen Filterkoeffizienten. Ein Vorteil des \gls{ac:iir}-Filters und der Grund weshalb es dem \gls{ac:fir}-Filter oft vorgezogen wird, ist, dass es eine grössere Effizienz auf eine kurze Verzögerung aufweist. Um mit einem \gls{ac:fir}-Filter dieselbe Filterwirkung wie mit einem \gls{ac:iir}-Filter zu erreichen ist eine deutlich grössere Filterordnung nötig. Somit vergrössert sich, wie erwähnt, die Verzögerung durch das Filter. Ein Nachteil ist, dass durch den rekursiven Aufbau das \gls{ac:iir}-Filter instabil sein kann.
 % 
 \subsubsection*{Filterentwurf}\label{subsub:filterentwurf}
-Ein vielfach verwendetes Verfahren zum Entwurf von \gls{ac:iir}-Filtern ist die Bilineare-Transforma\-tion. Hierbei wird die Übertragungsfunktion $H(s)$ eines Analogfilters in die Übertragungsfunktion $H(z)$ eines Digitalfilters überführt. Das Analogfilter entspricht dabei einem zeitkontinuierlichem \gls{g:lti}-System, das Digitalfilter bekanntlich einem zeitdiskreten \gls{g:lti}-System. Ein Ansatz ist, die Labplacevariable $s$ durch eine Funktion der Variable $z$ zu substituieren. Im Unterricht im Modul Digitale Signalverarbeitung (BTE5034 DIGSV) im vierten Semester hat sich gezeigt, dass die Substitution 
+Ein vielfach verwendetes Verfahren zum Entwurf von \gls{ac:iir}-Filtern ist die Bilineare-Transforma\-tion. Hierbei wird die Übertragungsfunktion $H(s)$ eines Analogfilters in die Übertragungsfunktion $H(z)$ eines Digitalfilters überführt. Das Analogfilter entspricht dabei einem zeitkontinuierlichem \gls{g:lti}-System, das Digitalfilter bekanntlich einem zeitdiskreten \gls{g:lti}-System. Ein Ansatz ist, die Labplacevariable $s$ durch eine Funktion der Variablen $z$ zu substituieren. Im Unterrichtsmodul Digitale Signalverarbeitung (BTE5034 DIGSV) hat sich gezeigt, dass die Substitution 
 %
 \formula{
 s = \frac{2}{T_a}*\frac{1-z^{-1}}{1+z^{-1}}
 }{
 }[eq:bilinear_trans]
 %
-dazu gebraucht wird. Diese Substitution wird Bilineare-Transformation genannt. Mit der bekannten Übertragungsfunktion des Analogfilters und der Abtastrate $T_a$ kann somit das Digitalfilter entworfen werden. Die Bilineare-Transformation wird zu einem späteren Zeitpunkt in Abschnitt \vref{ss:int} verwendet.\par
+dazu benötigt wird. Diese Substitution wird Bilineare-Transformation genannt. Mit der bekannten Übertragungsfunktion des Analogfilters und der Abtastrate $T_a$ kann somit das Digitalfilter entworfen werden. Die Bilineare-Transformation wird zu einem späteren Zeitpunkt in Abschnitt \vref{ss:int} verwendet.\par
 %
-Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Entwurfsprogramme. In \gls{g:matlab} kann zum Entwurf mit Befehlen wie \texttt{butter}, \texttt{cheby1}, \texttt{ellip} gearbeitet werden. Im \gls{g:labview}-Beispielprojekt \textsf{Posture Estimation} wird ein Elliptisches-Filter eingesetzt. Diese Elliptische-Approximation hat einen welligen Bereich im Durchlass- sowie im Sperrbereich. Dieses Filter wird durch ein Butterworth-Filter ersetzt. Diese Filter-Approximation hat im Durchlass- sowie im Sperrbereich einen monotonen Amplitudengang.
+Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Entwurfsprogramme. In \gls{g:matlab} kann zum Entwurf mit Befehlen wie \texttt{butter}, \texttt{cheby1}, \texttt{ellip} gearbeitet werden. Im \gls{g:labview}-Beispielprojekt \textsf{Posture Estimation} wird ein elliptisches Filter eingesetzt. Diese elliptische Approximation hat einen welligen Bereich im Durchlass- sowie im Sperrbereich. Es wird durch ein butterworth Filter ersetzt, welches im Durchlass- und im Sperrbereich einen monotonen Amplitudengang aufweist.\par
 %
 % Filterentwurf
 \image{content/3_konzept/image/filterentwurf}{scale=0.8}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
 %
-Zum Entwurf des Filters müssen zuerst die Spezifikationen des Filters festgelegt werden. Im Beispielprojekt wurde wie schon erwähnt ein Elliptisches-Filter verwendet. Die Ordnung des Elliptischen-Filters wurde dort auf 2 gesetzt. Die Sperrfrequenz auf 30 Hz. Die Sperrfrequenz sowie die Ordnung wurde wie im Beispielprojekt festgelegt, einzig der Filtertyp wurde angepasst auf ein Butterworth-Filter. Die Sperrfrequenz muss jedoch noch angepasst werden, wie sich später zeigen wird.  
+Zum Entwurf des Filters müssen zuerst seine Spezifikationen des Filters festgelegt werden. Im Beispielprojekt wurde, wie schon erwähnt, ein elliptisches Filter verwendet. Die Ordnung wurde dort auf 2 gesetzt. Die Sperrfrequenz auf \unit[30]{Hz}. Die Sperrfrequenz sowie die Ordnung wurde wie im Beispielprojekt festgelegt, einzig der Filtertyp wurde auf ein butterworth Filter angepasst. Die Sperrfrequenz muss jedoch noch angepasst werden, wie sich später zeigen wird.  
 %
 \begin{itemize}
 \item f\low{stop} = \unit[30]{Hz}: Sperrfrequenz
 \item N = 2: Filterordnung
 \end{itemize}
 %
-Der Filterentwurf kann anschliessend in \gls{g:matlab} mit dem Befehl butter() erfolgen.
+Der Filterentwurf kann anschliessend in \gls{g:matlab} mit dem Befehl \textsf{butter()} erfolgen.
 %
 \begin{lstlisting}[style=Matlab,caption={Butterworth-Filterentwurf mit butter()},label={list:butter}]
 fs = 30;       % Sperrfrequenz [Hz]
@@ -71,7 +71,7 @@ Ordnung = 2;    % Ordnung des Filters
 [b_TP,a_TP] = butter(Ordnung,fs_norm);
 \end{lstlisting}
 %
-Die Filterkoeffizienten sind in b\low{TP} und a\low{TP} abgelegt und können mit der Funktion filter() auf das Signal angewendet werden.
+Die Filterkoeffizienten sind in $b_{TP}$ und $a_{TP}$ abgelegt und können mit der Funktion  \textsf{filter()} auf das Signal angewendet werden.
 % 
 \begin{lstlisting}[style=Matlab,caption={Anwenden des Filters},label={list:filter}]
 % Tiefpassfilterung
@@ -122,14 +122,14 @@ axfilt = filter(b_TP,a_TP,ax);
 %%
 % Schätzung der Orientierung
 \subsection{Schätzung der Orientierung}\label{subsec:orientierungsschätzung}
-Um die Bewegung des Sensors im Koordinatensystem des Betrachters dem \gls{g:worldframe} darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Zur Übersicht ist eine Darstellung der möglich auftretenden Vektoren in Abbildung \vref{img:Vektor} ersichtlich. Mit dem Gravitationsvektor $\overrightarrow{a_g}$ und der Erdbeschleunigung des Sensors $\overrightarrow{a_{grav}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\phi$ sowie auf die Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden.\par
+Um die Bewegung des Sensors im Koordinatensystem des Betrachters, dem \gls{g:worldframe}, darstellen zu können, muss die Orientierung des Sensors bekannt sein. Als Bezugssystem dient die Erde, bei welcher die z-Achse des Koordinatensystems parallel zur Erdbeschleunigung liegt. Zur Übersicht ist eine Darstellung der möglich auftretenden Vektoren in Abbildung \vref{img:Vektor} ersichtlich. Mit dem Gravitationsvektor $\overrightarrow{a_g}$ und der Erdbeschleunigung des Sensors $\overrightarrow{a_{grav}}$ kann mit einfachen, grundlegenden Vektoroperationen auf den Drehwinkel $\phi$ sowie auf die Rotationsachse $\overrightarrow{n}$ zwischen den beiden Vektoren geschlossen werden.\par
 %
-Die gemessene Erdbeschleunigung des Sensors entspricht den \gls{ac:tp}-gefilterten Beschleunigungsdaten. Mit dem Drehwinkel $\phi$ und der Rotationsachse $\overrightarrow{n}$ kann die im Kapitel \vref{ch:grundlagen} in Abschnitt \vref{sub:rot} beschriebene Rotationsmatrix aufgestellt werden. Mit dieser Rotationsmatrix kann die Orientierung des Beschleunigungssensors (\gls{g:bodyframe}) in das Betrachtungssystem (\gls{g:worldframe}) transformiert werden. Der Drehwinkel $\phi$ ist der Zwischenwinkel der Vektoren $\overrightarrow{a_g}$ und $\overrightarrow{a_{grav}}$, die Rotationsachse $\overrightarrow{n}$ steht senkrecht auf diesen beiden Vektoren.
+Die gemessene Erdbeschleunigung des Sensors entspricht den \gls{ac:tp}-gefilterten Beschleunigungsdaten. Mit dem Drehwinkel $\phi$ und der Rotationsachse $\overrightarrow{n}$ kann die in Abschnitt \vref{sub:rotmat} beschriebene Rotationsmatrix aufgestellt werden. Mit dieser Rotationsmatrix kann die Orientierung des Beschleunigungssensors (\gls{g:bodyframe}) in das Betrachtungssystem (\gls{g:worldframe}) transformiert werden. Der Drehwinkel $\phi$ ist der Zwischenwinkel der Vektoren $\overrightarrow{a_g}$ und $\overrightarrow{a_{grav}}$, die Rotationsachse $\overrightarrow{n}$ steht senkrecht auf diesen beiden Vektoren.
 %
 \image{content/3_konzept/image/Vektor_bearb}{scale=0.7}{htbp}[Rotation][img:Vektor]
 %
 \subsubsection*{Betrachtungssystem}\label{subsub:betrachter}
-Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters, das \gls{g:worldframe}, sowie das Koordinatensystem des \gls{g:myrio}, das \gls{g:bodyframe}, aufgezeigt. Das \gls{g:worldframe} liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung resultieren \gls{g:transversal}e Bewegungen nach links und rechts zu einer Abnahme bzw. Zunahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
+Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters, das \gls{g:worldframe}, sowie das Koordinatensystem des \gls{g:myrio}, das \gls{g:bodyframe}, aufgezeigt. Das \gls{g:worldframe} liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung von \gls{g:transversal}en Bewegungen nach recht und links resultiert eine Zu- oder Abnahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
 %
 \begin{figure}[htbp]
         \centering
@@ -150,7 +150,7 @@ Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung 
 Das \gls{g:myrio} hat bekanntlich eine beliebige Ausrichtung im \gls{g:worldframe}. Durch die Montage des Beschleunigungssensors sind dessen Achsen in Bezug auf das Gehäuse gegeben und bilden somit das \gls{g:bodyframe}. Diese ist in Abbildung \vref{img:koord_myRIO} ersichtlich.
 %
 \subsubsection*{Drehwinkel}
-Der Drehwinkel $\phi$ wie in Abbildung \vref{img:Vektor} gesehen entspricht gerade dem Zwischenwinkel der beiden Vektoren $\overrightarrow{a\low{g}}$ sowie den \gls{ac:tp}-gefilterten Beschleunigungsdaten $\overrightarrow{a\low{grav}}$. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dies wie in Gleichung \vref{eq:dotp} dargestellt möglich.
+Der Drehwinkel $\phi$, wie in Abbildung \vref{img:Vektor} gesehen, entspricht gerade dem Zwischenwinkel der beiden Vektoren $\overrightarrow{a\low{g}}$ sowie den \gls{ac:tp}-gefilterten Beschleunigungsdaten $\overrightarrow{a\low{grav}}$. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dies wie in Gleichung \vref{eq:dotp} dargestellt möglich.
 %
 \formula{
 \overrightarrow{a\low{g}}*\overrightarrow{a\low{grav}} = \mid \overrightarrow{a\low{g}}\mid *\mid \overrightarrow{a\low{grav}}\mid *\cos(\phi)\\
@@ -163,7 +163,7 @@ Der Drehwinkel $\phi$ wie in Abbildung \vref{img:Vektor} gesehen entspricht gera
 }[eq:dotp]
 %
 \subsubsection*{Rotationsachse}
-Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des \gls{g:bodyframe}s in das \gls{g:worldframe} vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren, dem Gravitationsvektor $\overrightarrow{a\low{g}}$ und dem vom Beschleunigungssensor aufgenommenen Vektor $\overrightarrow{a\low{grav}}$, in welchem die Erdbeschleunigung auf die verschiedenen Achsen verteilt ist, stehen. Dazu dient das Vektorprodukt, auch Kreuzprodukt genannt als Hilfsmittel. Das Vektorprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge auch Norm oder Betrag dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche sowie der Länge des Vektors. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser die Länge Eins. Die Rotationsachse $\overrightarrow{n}$ wird wie in Gleichung \ref{eq:cross} berechnet.
+Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des \gls{g:bodyframe}s in das \gls{g:worldframe} vorzunehmen. Die Rotationsachse muss somit senkrecht auf dem von den beiden bekannten Vektoren stehen, dem Gravitationsvektor $\overrightarrow{a\low{g}}$ und dem vom Beschleunigungssensor aufgenommenen Vektor $\overrightarrow{a\low{grav}}$, in welchem die Erdbeschleunigung auf die verschiedenen Achsen verteilt ist. Dazu dient das Vektorprodukt, auch Kreuzprodukt genannt, als Hilfsmittel. Das Kreuzprodukt zweier Vektoren berechnet den Vektor, welcher senkrecht auf die von den beiden Vektoren aufgespannten Ebene steht. Die Länge (auch Norm oder Betrag) dieses Vektors entspricht der von den beiden Vektoren aufgespannten Fläche sowie der Länge des Vektors. Wird der erhaltene Vektor zusätzlich normiert, so hat dieser die Länge eins. Die Rotationsachse $\overrightarrow{n}$ wird wie in Gleichung \ref{eq:cross} berechnet.
 %
 \formula{
 \overrightarrow{n} = \frac{\overrightarrow{a\low{g}} \times\overrightarrow{a\low{grav}}}{ \mid \overrightarrow{a\low{g}} \times \overrightarrow{a\low{grav}}\mid}
@@ -201,13 +201,13 @@ Die Rotationsachse benötigt man, um eine Bezugsachse für die Drehung des \gls{g:
 %
 % Rotation
 \subsection{Orientierungskompensation}\label{sub:rot}
-Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Hiermit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Dabei müsste jedoch die Durchlassfrequenz des Hochpass sehr tief angelegt werden, damit auch langsame Bewegungen beachtet werden. Aus diesem Grund wurde dieser Ansatz wieder verworfen.\par 
+Um die Beschleunigung der Bewegung zu erhalten, können mehrere Ansätze verfolgt werden. Ein Ansatz ist, auf die gemessenen Beschleunigungsdaten zusätzlich eine Hochpassfilterung anzuwenden. Damit wird gerade das Gegenteil zur Tiefpassfilterung erreicht. Mit der Hochpassfilterung werden die Beschleunigungsdaten von der Erdbeschleunigung gekapselt. Dabei müsste jedoch die Durchlassfrequenz des Hochpasses sehr tief angelegt werden, damit auch langsame Bewegungen registriert werden. Aus diesem Grund wurde dieser Ansatz verworfen.\par 
 %
-In dieser Arbeit beschränken sich die Autoren nur auf die Bewegung in einer Ebene. In diesem Fall ist es ausreichend nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt.\par
+In dieser Arbeit beschränken sich die Autoren nur auf die Bewegung in einer Ebene. In diesem Fall ist es ausreichend, nur eine Rotation in das Betrachtungssystem vorzunehmen. Anschliessend ist die Bewegung auf der x- und y-Achse auszuwerten. Auf der z-Achse ist nach der Rotation nur die Erdbeschleunigung vorhanden. Wird die Rotation richtig ausgeführt, so ist die Erdbeschleunigung somit von der Bewegungsbeschleunigung entkoppelt.\par
 %
-Die Rotation wird benötigt, um das Koordinatensystem des Sensors (\gls{g:bodyframe}) in das Koordinatensystem des Betrachters (\gls{g:worldframe}) zu transformieren. Dabei steht die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche das System gedreht wird sowie der ermittelte Drehwinkel $\phi$ zwischen den beiden Vektoren zur Verfügung. Die Rotationsmatrix kann mit diesen Parametern nach dem im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sub:rot} beschriebenen Vorgehen aufstellt werden.\par
+Die Rotation wird benötigt, um das Koordinatensystem des Sensors (\gls{g:bodyframe}) in das Koordinatensystem des Betrachters (\gls{g:worldframe}) zu transformieren. Dabei steht die zuvor berechnete Rotationsachse $\overrightarrow{n}$, um welche das System gedreht wird, sowie der ermittelte Drehwinkel $\phi$ zwischen den beiden Vektoren zur Verfügung. Die Rotationsmatrix kann mit diesen Parametern nach dem im Abschnitt \vref{sub:rotmat} beschriebenen Vorgehen aufstellt werden.\par
 %
-Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation vom Koordinatensystem des Sensors \gls{g:bodyframe} ins Koordinatensystem des Betrachters \gls{g:worldframe} mit einer einfachen Multiplikation erfolgen.
+Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die Transformation vom Koordinatensystem des Sensors (\gls{g:bodyframe}) ins Koordinatensystem des Betrachters (\gls{g:worldframe}) mit einer einfachen Multiplikation erfolgen.
 %
 \formula{
 a_{world} = a_{body} * R_{g; O; \overrightarrow{n}; \phi}
@@ -217,26 +217,26 @@ R_{g; O; \overrightarrow{n}; \phi} & Rotationsmatrix um Gerade g mit Richtung $\
 a_{body} & Beschleunigung im Koordinatensystem des Sensors \gls{g:bodyframe} 
 }[eq:delay]
 %
-Die Wirkung dieser Rotation ist in Abbildung \vref{img:rotation_vektor} ersichtlich. Hier ist eine Messung des beliebig orientierten Sensors im ruhenden Zustand und dessen rotierter Vektor dargestellt. Die z-Achse beinhaltet die Erdbeschleunigung, die Beschleunigung der Bewegung ist auf der x- sowie der y-Achse auszuwerten. Die Orientierung des Beschleunigungssensors ist kompensiert.
+Die Wirkung dieser Rotation ist in Abbildung \vref{img:rotation_vektor} ersichtlich. In dieser Abbildung sind die Beschleunigungsdaten des beliebig orientierten Sensors dargestellt. Zusätzlich sind die  Beschleunigungsdaten nach der Rotation ersichtlich. Da der Sensor zu diesem Zeitpunkt der Messung ruht, wirkt nur die Erdbeschleunigung. Nach der Rotation sollte also nur eine Komponente von \unit[9.81]{m/s\high{2}} auf der z-Achse vorhanden sein. Die Orientierung des Beschleunigungssensors ist kompensiert.
 % 
 \image{content/3_konzept/image/Rotation_Vektor}{scale=0.7}{htbp}[Rotation der Beschleunigungsdaten][img:rotation_vektor]
 %
 % Bewegungsdetektion
 \subsection{Bewegungsdetektion}
-Da die Integration einer Aufsummierung entspricht kann durch einen kleinen Fehler in der Rotation bereits ein grosser Drift entstehen. Ein Lösungsansatz ist, eine Bewegungsdetektion einzuführen. Die Integration wird nur durchgeführt, wenn sich der Sensor auch bewegt. Ein Hilfsmittel über die Variation eines Signals ist deren Varianz respektive Standardabweichung. Die Standardabweichung gibt uns Information über die Verteilung der Signalamplitude. Wird der Sensor in Ruhe gelassen, so ändern sich die aufgenommenen Amplitude nur gering, was dem Rauschen des Sensors entspricht. Dem entsprechend ist die Standardabweichung klein. Wird der Sensor bewegt, so resultiert eine grössere Änderung der Amplitude. Die Standardabweichung wird somit grösser.\par
+Da die Integration einer Aufsummierung entspricht, kann durch einen kleinen Fehler in der Rotation bereits ein grosser Drift entstehen. Ein Lösungsansatz ist, eine Bewegungsdetektion einzuführen. Die Integration wird nur durchgeführt, wenn sich der Sensor auch bewegt. Ein Hilfsmittel zur Bestimmung der Variation eines Signals ist deren Varianz respektive Standardabweichung. Die Standardabweichung gibt uns Informationen über die Verteilung der Signalamplitude. Wird der Sensor in Ruhe gelassen, so ändert sich die aufgenommene Amplitude nur gering, was dem Rauschen des Sensors entspricht. Dementsprechend ist die Standardabweichung klein. Wird der Sensor bewegt, so resultiert eine grössere Änderung der Amplitude. Die Standardabweichung wird somit grösser.\par
 %
-Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In dieser Zeit kann der Threshold mittels der Standardabweichung bestimmt werden. Da die Standardabweichung über eine verhältnismässig grosse Dauer gemessen wird, ist diese geringer als mit der Methode wo ein kleineres Fenster als die vier Sekunden über das Signal gefahren und in diesem Fenster die Standardabweichung bestimmt wird. Aus diesem Grund wird zur Berechnung des Thresholds noch zusätzlich ein Vorfaktor zur Standardabweichung multipliziert. Somit ist der Threshold grösser als die Standardabweichung des Rauschen. Dies ist sicherlich nicht eine optimale Lösung und könnte noch verbessert werden. Jedoch wurde mit dieser Methode eine schnelle und einfache Lösung erzielt.\par
+Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In dieser Zeit kann der Threshold mittels der Standardabweichung bestimmt werden. Da die Standardabweichung über eine verhältnismässig grosse Dauer gemessen wird, ist diese geringer als mit der Fenstermethode. Bei der Fenstermethode wird ein Fenster der Grösse \unit[200]{Samples} (\unit[0.2]{s} bei $f_a$ = \unit[1'000]{Hz}) über das Signal gefahren und in diesem Fenster die Standardabweichung bestimmt. Aus diesem Grund wird zur Berechnung des Thresholds noch zusätzlich ein Vorfaktor zur Standardabweichung multipliziert. Somit ist der Threshold grösser als die Standardabweichung des Rauschens. Dies ist sicherlich nicht eine optimale Lösung; sie könnte noch verbessert werden. Mit dieser Methode wurde jedoch eine schnelle und einfache Lösung gefunden.\par
 %
 \image{content/3_konzept/image/Bewegungsdetect}{scale=0.7}{htbp}[Bewegungsdetektion auf der y-Achse][img:bewegungdetect]
 %
-Die Standardabweichung wird über ein Fenster w der Länge \unit[200]{Smaples} berechnet. Somit erhält man die in Abbildung \vref{img:bewegungdetect} im unteren subplot dargestellte Standardabweichung. Übersteigt die Standartabweichung den zuvor definierten Threshold, so wird mit der Integration begonnen. Wird der Threshold anschliessend unterschritten, so ist keine Bewegung mehr vorhanden und es wird nicht mehr integriert. 
+Die Standardabweichung wird, wie schon erwähnt, über ein Fenster w der Länge \unit[200]{Smaples} berechnet. Somit erhält man die in Abbildung \vref{img:bewegungdetect} im unteren subplot dargestellte Standardabweichung. Übersteigt die Standartabweichung den zuvor definierten Threshold, so wird mit der Integration begonnen. Wird der Threshold anschliessend unterschritten, so ist keine Bewegung mehr vorhanden und es wird nicht mehr integriert. 
 %
 % Integration
 \subsection{Berechnung der Bewegung}\label{ss:int}
 %
 \image{content/3_konzept/image/Integration}{scale=0.7}{htbp}[Bewegung auf der y-Achse][img:bewegung_y_achse]
 %
-Um von der Beschleunigung auf die Position zu schliessen, kann die Beschleunigung bekannterweise durch zweimaliges integrieren nach der Zeit berechnet werden. Integriert man die Beschleunigung einmal, so erhält man die Geschwindigkeit.
+Um von der Beschleunigung auf die Position zu schliessen, kann die Beschleunigung bekanntlich, nach dem Grundgesetz der Kinematik, durch zweimaliges Integrieren nach der Zeit berechnet werden. Integriert man die Beschleunigung einmal, so erhält man die Geschwindigkeit.
 %
 \formula{
 v(t) = \int a(t)dt + v_0 
@@ -256,9 +256,9 @@ s_{0} & Anfangsposition [m]\\
 v & Geschwindigkeit [$m/s$]
 }[eq:weg]
 % 
-Die Integration erfolgt wie bereits im Kapitel \vref{ch:grundlagen} im Abschnitt \vref{sec:numint} beschrieben mittels der Trapezmethode. Speziell dabei ist, dass dafür ein \gls{ac:iir}-Filter angewendet wird. Dazu wird die in Abschnitt \vref{subsub:filterentwurf} beschriebene Bilineare-Transformation verwendet.\par
+Die Integration erfolgt, wie bereits im Abschnitt \vref{sec:numint} beschrieben, mittels der Trapezmethode. Speziell dabei ist, dass dafür ein \gls{ac:iir}-Filter angewendet wird. Dazu wird die in Abschnitt \vref{subsub:filterentwurf} beschriebene Bilineare-Transformation verwendet.\par
 %
-Aus der Regelungstechnik ist bekannt, dass die Übertragungsfunktion eines Integrators $H(s) = \frac{1}{s}$ entspricht. Dies ist somit die Übertragungsform eines Analogfilters also einem zeitkontinuierlichem \gls{g:lti}-System. Um auf die Übertragungsfunktion des Digitalfilters zu gelangen, kann nun die Bilineare-Transformation angewendet werden. Wie in Gleichung \vref{eq:bilinear_trans} gezeigt.
+Aus der Regelungstechnik ist bekannt, dass die Übertragungsfunktion eines Integrators $H(s) = \frac{1}{s}$ entspricht. Dies ist die Übertragungsform eines Analogfilters, also einem zeitkontinuierlichen \gls{g:lti}-System. Um auf die Übertragungsfunktion des Digitalfilters zu gelangen, kann nun die Bilineare-Transformation angewendet werden. Wie in Gleichung \vref{eq:bilinear_trans} gezeigt.
 %
 \formula{
 H(s) &= \frac{1}{s}\\[1ex]
@@ -273,7 +273,7 @@ H(z) &= \frac{T_a}{2}*\frac{1+z^{-1}}{1-z^{-1}}
 }{
 }[eq:int_filter]
 % 
-Wird die Gleichung \vref{eq:int_filter} ausmultipliziert so erhält man die in Gleichung \vref{eq:iir_Filter} definierten Filterkoeffizienten womit das Digitalfilter definiert ist.
+Wird die Gleichung \vref{eq:int_filter} ausmultipliziert, so erhält man die in Gleichung \vref{eq:iir_Filter} definierten Filterkoeffizienten, womit das Digitalfilter festgelegt ist.
 %
 \formula{
 a_0 &= 1\\[1ex]
@@ -283,10 +283,10 @@ b_1 &= \frac{T_a}{2}
 }{
 }[eq:koeff_filter]
 %
-Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gesehen mit dem Befehl \texttt{filter} in \gls{g:matlab} auf die Beschleunigungsdaten angewandt. Der Output ist bei erster Anwendung die Geschwindigkeit und bei zweiter Anwendung der zurückgelegte Weg. 
+Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} gesehen mit dem Befehl \texttt{filter} in \gls{g:matlab} auf die Beschleunigungsdaten angewandt. Der Output ist bei erster Anwendung die Geschwindigkeit und bei zweiter Anwendung der zurückgelegte Weg. 
 %Software
 \section{LabVIEW Rohdaten aufzeichnen}\label{s:konzept:sw}
-		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Die fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
+		Für die Verifikation des Konzepts müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Die fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
 		%
 		Als Basis für die \acrshort{ac:vi} dient das Standardprojekt \textsf{myRIO Project}\footnote{Das Projekt kann im Startdialog von \gls{g:labview} 2013 angewählt werden.} von \gls{g:labview}, das folgende Möglichkeiten mitbringt:
 		%
@@ -296,10 +296,10 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			\item Start und Stopp der Messung
 		\end{itemize}
 		%
-		Damit die dargestellten Daten aufgezeichnet werden können, muss das bestehende Projekt mit den Komponenten Datei anlegen, Daten buffern und Daten speichern ergänzt werden. Für diesen Zweck werden die drei Zustände der bestehenden Sequenz angepasst.
+		Damit die dargestellten Daten aufgezeichnet werden können, muss das bestehende Projekt mit den Komponenten \textsf{Datei anlegen}, \textsf{Daten buffern} und \textsf{Daten speichern} ergänzt werden. Für diesen Zweck werden die drei Zustände der bestehenden Sequenz angepasst.
 		%
 		\subsubsection*{Initialisierungs-Zustand}
-			In der Initialisierung muss eine Datei für das spätere Speichern der Rohdaten erstellt werden. Dazu wird der in Abbildung \vref{img:init_file} ersichtliche Ablauf verwendet. Der Dateiname kann mit Hilfe eines Eingabefeldes (siehe Abbildung \vref{img:init_file_indicator}) individuell angepasst werden, muss aber die Endung \texttt{*.xlsx} aufweisen. Der Pfad der angelegten Datei bezieht sich auf das Home-Directory des \texttt{lvuser}, einem lokalen Benutzer des \gls{ac:ni} Real Time Linux. Der endgültige Speicherpfad wird anschliessend im letzten Zustand (Schliessen-Zustand) ausgegeben.
+			In der Initialisierung muss eine Datei für das spätere Speichern der Rohdaten erstellt werden. Dazu wird der in Abbildung \vref{img:init_file} ersichtliche Ablauf verwendet. Der Dateiname kann mithilfe eines Eingabefeldes (siehe Abbildung \vref{img:init_file_indicator}) individuell angepasst werden, muss aber die Endung \texttt{*.xlsx} aufweisen. Der Pfad der angelegten Datei bezieht sich auf das Home-Directory des \texttt{lvuser}, einem lokalen Benutzer des \gls{ac:ni} Real-Time-Linux. Der endgültige Speicherpfad wird anschliessend im letzten Zustand (Schliessen-Zustand) ausgegeben.
 			%
 			\begin{figure}[htbp] %htbp
 				\centering
@@ -340,8 +340,8 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	    	\end{figure}
 	    	%	
 		%
-		\subsubsection*{Datenaufzeichnen und Verarbeiten-Zustand}
-			Der Hauptzustand dieses \gls{ac:vi}s besteht aus zwei Teilen. Der erste Teil beinhaltet eine Endlosschlaufe\footnote{Genauer ein Time Loop, der eine genaue zyklische Ausführung gewährleistet.}, die zyklisch Beschleunigungsdaten und Timestamps einliest und buffert. Zusätzlich werden die aktuellen Daten im Diagramm auf dem Frontpanel ausgegeben. Wird die Endlosschleife durch einen Fehler oder durch Betätigung der Stopp-Schaltfläche beendet, so werden im zweiten Teil die gebufferten Daten mit Labels versehen, zu einer N x 4 Matrix zusammen gefasst und in eine Excel-Tabelle geschrieben. Dargestellt ist dieser Ablauf in der Abbildung \vref{img:process}. Die für die Bedienung erforderlichen Komponenten können der Abbildung \vref{img:process_indicator} entnommen werden.
+		\subsubsection*{Daten-Aufzeichnen und -Verarbeiten-Zustand}
+			Der Hauptzustand dieses \gls{ac:vi} besteht aus zwei Teilen. Der erste Teil beinhaltet eine Endlosschlaufe\footnote{Genauer ein Time Loop, der eine genaue zyklische Ausführung gewährleistet.}, die zyklisch Beschleunigungsdaten und Timestamps einliest und buffert. Zusätzlich werden die aktuellen Daten im Diagramm auf dem Frontpanel ausgegeben. Wird die Endlosschleife durch einen Fehler oder durch Betätigung der Stopp-Schaltfläche beendet, so werden im zweiten Teil die gebufferten Daten mit Labels versehen, zu einer N x 4 Matrix zusammengefasst und in eine Excel-Tabelle geschrieben. Dargestellt ist dieser Ablauf in der Abbildung \vref{img:process}. Die für die Bedienung erforderlichen Komponenten können der Abbildung \vref{img:process_indicator} entnommen werden.
 			%
 			\begin{figure}[htbp] %htbp
 				\centering
@@ -363,7 +363,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	    	%	
 		%
 		\subsubsection*{Schliessen-Zustand}
-			Abgeschlossen wird das \gls{ac:vi} durch den Schliessen-Zustand. Dabei wird das \gls{g:myrio} auf den Ursprung zurückgesetzt und der Speicherpfad der Daten ausgegeben. Für diesen Zweck wird eine vorgefertigte \gls{ac:vi} von \gls{ac:ni} verwendet, die das Reseten des \gls{g:myrio}s durchführt. Die Ausgabe des Pfades erfolgt bereits im vorderen Zustand, wird jedoch erst hier visualisiert. Für das Blockdiagramm und das UI sei auf die Abbildung \vref{img:speicherpfad} verwiesen.
+			Abgeschlossen wird das \gls{ac:vi} durch den Schliessen-Zustand. Dabei wird das \gls{g:myrio} auf den Ursprung zurückgesetzt und der Speicherpfad der Daten ausgegeben. Für diesen Zweck wird eine vorgefertigte \gls{ac:vi} von \gls{ac:ni} verwendet, die das Reseten des \gls{g:myrio} durchführt. Die Ausgabe des Pfades erfolgt bereits im vorderen Zustand, wird jedoch erst hier visualisiert. Für das Blockdiagramm und das UI sei auf die Abbildung \vref{img:speicherpfad} verwiesen.
 			%
 			\begin{figure}[htbp] %htbp
 				\centering
@@ -392,7 +392,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
-		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{siehe Abschnitt \vref{s:blockdiagramm}.} und das erste von drei Experimental-Protokollen\footnote{Die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
+		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{siehe Abschnitt \vref{s:blockdiagramm}.} und das erste von drei Experimental-Protokollen\footnote{Die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen, ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
 		%
 		\begin{hypo}\label{hypo:rotation}	   
 			Der eingestellte Winkel wird durch die Schätzung richtig bestimmt.	
@@ -401,13 +401,13 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	%
 	%
 	\subsection{Material/Testumgebung}
-		Die Messung, respektive Schätzung der Rotationswinkel erfolgt statisch auf einer eigens für dieses Projekt entworfenen Testumgebung, die später zur Simulation eines Bewegungsablaufs des Knies gebraucht wird. Dazu siehe den Abschnitt \vref{ss:testumgebung_tran_rot}, indem auch näher auf die Möglichkeiten des Aufbaus eingegangen wird. Für dieses Protokoll wird lediglich von der Tatsache Gebrauch gemacht, dass das \gls{g:myrio} kontrolliert in verschiedene Positionen gebracht und somit eine Reproduzierbarkeit der Messung gewährleistet werden kann.\par
+		Die Messung, respektive Schätzung der Rotationswinkel erfolgt statisch auf einer eigens für dieses Projekt entworfenen Testumgebung, die später zur Simulation eines Bewegungsablaufs des Knies gebraucht wird. Siehe dazu den Abschnitt \vref{ss:testumgebung_tran_rot}, in welchem auch näher auf die Möglichkeiten des Aufbaus eingegangen wird. Für dieses Protokoll wird lediglich von der Tatsache Gebrauch gemacht, dass das \gls{g:myrio} kontrolliert in verschiedene Positionen gebracht und somit eine Reproduzierbarkeit der Messung gewährleistet werden kann.\par
 		%
-		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Die Markierung \textsf{R} auf dem Schwenkarm.}. Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
+		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Die Markierung \textsf{R} auf dem Schwenkarm.}. Dazu wird der Rotationsarm sowie die Querverbindung, wie in Abbildung  \vref{img:messaufbau_rot} gezeigt, angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarms.\par
 		%
-		\image{content/3_konzept/image/aufbau_rot}{scale=1}{htbp}[Rotation - Testaufbau][img:messaufbau_rot]	
+		\image{content/3_konzept/image/aufbau_rot}{scale=1}{htbp}[Testaufbau Rotation][img:messaufbau_rot]	
 		%
-		Die absolute Messung des eingestellten Winkels erfolgt über den Winkelmesser M\low{2}, der direkt am Schwenkarm befestigt ist (dazu siehe Abbildung \vref{img:messaufbau_tran_rot}). Alle verwendeten Messmittel sind in der Tabelle \vref{tab:messmittel_rot} aufgeführt und mit einer geschätzten Messgenauigkeit versehen.
+		Die absolute Messung des eingestellten Winkels erfolgt über den Winkelmesser M\low{2}, der direkt am Schwenkarm befestigt ist (siehe Abbildung \vref{img:messaufbau_tran_rot}). Alle verwendeten Messmittel sind in der Tabelle \vref{tab:messmittel_rot} aufgeführt und mit einer geschätzten Messgenauigkeit versehen.
 		%
 		\input{content/3_konzept/table/messmittel_rot}
 	%
@@ -415,19 +415,19 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	\subsection{Methoden}
 		%
 		\subsubsection*{Messgruppen}
-			Für die Messung werden zwei Messgruppen festgelegt. Die eine wird  als Testgruppe fungieren, wogegen die andere der Kontrolle dient.
+			Für die Messung werden zwei Messgruppen festgelegt. Die eine fungieren als Testgruppe, wogegen die andere der Kontrolle dient.
 			%
 			\begin{itemize}
 				%
-				\item \textbf{Testgruppe} In der Testgruppe werden Beschleunigungsdaten durch das \gls{g:myrio} M\low{1} aufgezeichnet\footnote{siehe Abschnitt \vref{s:konzept:sw}} und gespeichert. Im Anschluss zur Messung werden die Daten in \gls{g:matlab} eingelesen und verarbeitet.
+				\item \textbf{Testgruppe} In der Testgruppe werden Beschleunigungsdaten durch das \gls{g:myrio} M\low{1} aufgezeichnet\footnote{siehe Abschnitt \vref{s:konzept:sw}} und gespeichert. Im Anschluss an die Messung werden die Daten in \gls{g:matlab} eingelesen und verarbeitet.
 				%
-				\item \textbf{Kontrollgruppe} Die zweite Gruppe repräsentiert die direkte Messung mit Hilfe des Winkelmessers M\low{2}. Sie dient gleichzeitig der Kontrolle für die folgende Interpretation.
+				\item \textbf{Kontrollgruppe} Die zweite Gruppe repräsentiert die direkte Messung mithilfe des Winkelmessers M\low{2}. Sie dient gleichzeitig der Kontrolle für die folgende Interpretation.
 			\end{itemize}
 			%
-			Die unabhängige Variabel dieser Gruppen stellt die Messmethodik dar. 
+			Die unabhängige Variable dieser Gruppen stellt die Messmethodik dar. 
 		%
 		\subsubsection*{Testgruppe Messmethodik}
-			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{Siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus.}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{Check\_Rotation\_final.m}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzept aufbaut. Im Konzept wird aus den in Ruhe aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel wie in Gleichung \vref{eq:pitch} gezeigt berechnet werden. 
+			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{Siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus.}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{Check\_Rotation\_final.m}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzepts aufbaut. Im Konzept wird aus den im Ruhezustand aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel, wie in Gleichung \vref{eq:pitch} gezeigt, berechnet werden. 
 %
 			\formula{
 			M_{rot} &=\begin{bmatrix}a & b & c \\ d & e & f \\ g & h & i \end{bmatrix} \\[1ex]
@@ -440,41 +440,41 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			Dieser pitch-Winkel entspricht gerade im Falle des in zuvor beschriebenem Testaufbau dem Nick-Winkel um welchen das \gls{g:myrio} um die im Abschnitt \vref{subsub:betrachter} definierte x-Achse gedreht wird. Somit wird der Winkel der Testgruppe aus der aufgestellten Rotationsmatrix aus dem Konzept berechnet.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
-			Der Winkel der Kontrollgruppe wird direkt mit dem Winkelmesser M\low{2} gemessen. Zu beachten ist, dass dessen Winkelskala in \unit[90]{°} Bereiche unterteilt ist und deshalb ein grösserer Winkel durch Addition ermittelt werden muss. Als Referenz für die Auslenkung dient dabei die in Abbildung \vref{img:messaufbau_rot} ersichtliche \unit[0]{°}-Linie. Gemessen wird gegen den Uhrzeigersinn.
+			Der Winkel der Kontrollgruppe wird direkt mit dem Winkelmesser M\low{2} gemessen. Zu beachten ist, dass dessen Winkelskala in \unit[90]{°}-Bereiche unterteilt ist und deshalb ein grösserer Winkel durch Addition ermittelt werden muss. Als Referenz für die Auslenkung dient dabei die in Abbildung \vref{img:messaufbau_rot} ersichtliche \unit[0]{°}-Linie. Gemessen wird gegen den Uhrzeigersinn.
 		%
 		\subsubsection*{Testbeschreibungen}
-			Es werden Messungen mit unterschiedlichen Rotationswinkel durchgeführt. Dazu wird der Testaufbau manuell in die gewünschte Ausrichtung gebracht. Es wird zwischen fünf verschiedenen Winkeln unterschieden, wie die Abbildung \vref{img:rot_winkeln} zeigt. Die Endwinkel (\unit[62]{°} und \unit[118]{°} sind durch die mechanischen Einschränkungen bestimmt und stellen die maximale Auslenkung dar. Die Zwischenwinkel sind so gewählt, dass möglichst gleichmässig der gesamte Bereich abgedeckt wird.\par
+			Es werden Messungen mit unterschiedlichen Rotationswinkeln durchgeführt. Dazu wird der Testaufbau manuell in die gewünschte Ausrichtung gebracht. Es wird zwischen fünf verschiedenen Winkeln unterschieden, wie die Abbildung \vref{img:rot_winkeln} zeigt. Die Endwinkel (\unit[62]{°} und \unit[118]{°}) sind durch die mechanischen Einschränkungen bestimmt und stellen die maximale Auslenkung dar. Die Zwischenwinkel sind so gewählt, dass möglichst gleichmässig der gesamte Bereich abgedeckt wird.\par
 			%
-			\image{content/3_konzept/image/rot_winkeln}{scale=0.4}{htbp}[Rotation-Winkeln][img:rot_winkeln]
+			\image{content/3_konzept/image/rot_winkeln}{scale=0.4}{htbp}[Rotation-Winkel][img:rot_winkeln]
 			%
 			Der Messablauf sieht folgende Schritte vor. Sie werden jeweils bei jedem Winkel wiederholt.
 			\begin{enumerate}
-				\item Testaufbau auf den gewünschten Winkel einstellen. Dazu den Winkelmesser M\low{2} verwenden.
-				\item \gls{g:labview}-Programm starten. Es müssen während  \unit[6]{s} Daten aufgezeichnet werden\footnote{Die definierte minimale Messdauer, vorgeben durch das Konzept.}.
-				\item den vorherigen Schritt 5-mal wiederholen.
-				\item Datenextraktion nach mit den in Abschnitt \vref{ss:myRIO_hw} beschriebenen Methoden.
-				\item Daten mit \gls{g:matlab} verarbeiten und auswerten.
+				\item Testaufbau auf den gewünschten Winkel einstellen. Dazu den Winkelmesser M\low{2} verwenden
+				\item \gls{g:labview}-Programm starten. Es müssen während \unit[6]{s} Daten aufgezeichnet werden\footnote{Die definierte minimale Messdauer, vorgeben durch das Konzept.}
+				\item Den vorherigen Schritt 5-mal wiederholen
+				\item Datenextraktion nach mit den in Abschnitt \vref{ss:myRIO_hw} beschriebenen Methoden
+				\item Daten mit \gls{g:matlab} verarbeiten und auswerten
 			\end{enumerate}	
 		%
 		\subsubsection*{Datenauswertung}
-			Es gilt die Winkelschätzung hinsichtlich des eingestellten Winkels auszuwerten. Weiter muss die Rotation geprüft werden. Das Messergebnis der beiden Messgruppen stellt die abhängige Variabel dar.\par 
+			Es gilt die Winkelschätzung hinsichtlich des eingestellten Winkels auszuwerten. Weiter muss die Rotation geprüft werden. Das Messergebnis der beiden Messgruppen stellt die abhängige Variable dar.\par 
 			%
-			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet.} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[0.74]{°} (\unit[118]{°}). Dies entspricht den relativen Fehlern von \unit[-0.038]{\%} (\unit[62]{°}), \unit[-0.021]{\%} (\unit[77]{°}), \unit[-0.016]{\%} (\unit[90]{°}), \unit[-0.002]{\%} (\unit[105]{°}) und \unit[0.006]{\%} (\unit[118]{°}).\par
+			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet.} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[+0.74]{°} (\unit[118]{°}). Dies entspricht den relativen Fehlern von \unit[-0.038]{\%} (\unit[62]{°}), \unit[-0.021]{\%} (\unit[77]{°}), \unit[-0.016]{\%} (\unit[90]{°}), \unit[-0.002]{\%} (\unit[105]{°}) und \unit[+0.006]{\%} (\unit[118]{°}).\par
 			%
-			Analysiert man die Messungen hinsichtlich ihrer Standardabweichung und des Mittelwerts, so ergibt dies bei \unit[62]{°} den Mittelwert \unit[59.72]{°} und die Standardabweichung \unit[0.009]{°}. Für die übrigen Winkeln sind es \unit[75.35]{°}, \unit[88.55]{°}, \unit[104.78]{°} und \unit[118.74]{°} (Winkel \unit[77]{°}, \unit[90]{°}, \unit[105]{°} und \unit[118]{°}, in dieser Reihenfolge )für den Mittelwert und \unit[0.005]{°}, \unit[0.009]{°}, \unit[0.003]{°} und \unit[0.152]{°} für die Standardabweichung.\par 
+			Analysiert man die Messungen hinsichtlich ihrer Standardabweichung und des Mittelwerts, so ergibt dies bei \unit[62]{°} den Mittelwert \unit[59.72]{°} und die Standardabweichung \unit[0.009]{°}. Für die übrigen Winkel sind es \unit[75.35]{°}, \unit[88.55]{°}, \unit[104.78]{°} und \unit[118.74]{°} (Winkel \unit[77]{°}, \unit[90]{°}, \unit[105]{°} und \unit[118]{°}, in dieser Reihenfolge) für den Mittelwert und \unit[0.005]{°}, \unit[0.009]{°}, \unit[0.003]{°} und \unit[0.152]{°} für die Standardabweichung.\par 
 			%
-			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig wenn die Rotation an sich nicht funktioniert. Daher gilt es die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a}=[0\quad 0\quad 1]^{\top}$, was dem unbewegten \gls{g:worldframe} entspricht (auf der z-Achse die Erdbeschleunigung).
+			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig, wenn die Rotation an sich nicht funktioniert. Daher gilt es, die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a_{grav}}=[0\quad 0\quad 1]^{\top}$, was dem unbewegten \gls{g:worldframe} entspricht (auf der z-Achse die Erdbeschleunigung).
 			%
-			Die Auswertung der Messungen zusammengefasst ist in der Tabelle \vref{tab:auswertung_tran} ersichtlich. 
+			Die Auswertung der Messungen ist in der Tabelle \vref{tab:auswertung_tran} zusammengefasst. 
 			%
-			\input{content/3_konzept/table/auswertung_rot}	 
+			\input{content/3_konzept/table/auswertung_rot} 
 			
 	%
 	%
 	\subsection{Interpretation}\label{ss:rot}
-		Bei allen Winkelmessungen der Testgruppe sind Abweichungen aufgetreten. Diese halten sich mit maximal \unit[2.28]{°} im Rahmen des Erwarteten. Es ist dabei zu berücksichtigen, dass die absolute Winkelmessung mit dem Winkelmesser M\low{2} eine relative hohe Ungenauigkeit von $\pm$\unit[1]{°} aufweist. Es könnte darum durchaus im Bereich des Möglichen liegen, dass die Kontrollgruppe hier die grössere Abweichungen von der Wirklichkeit hat als die Testgruppe. Die Messungen an sich weisen eine hohe Konstanz auf, was sich in den geringen Standardabweichungen widerspiegelt. Über den Erwartungen sind die Ergebnisse hinsichtlich der Rotation. Bei jeder Auslenkung konnte das \gls{g:bodyframe} erfolgreich und mit keinerlei Abweichung in das \gls{g:worldframe} rotiert werden.\par
+		Bei allen Winkelmessungen der Testgruppe sind Abweichungen aufgetreten. Diese bewegen sich mit maximal \unit[2.28]{°} im Rahmen der geschätzten Genauigkeit. Es ist dabei zu berücksichtigen, dass die absolute Winkelmessung mit dem Winkelmesser M\low{2} eine relative hohe Ungenauigkeit von $\pm$\unit[1]{°} aufweist. Es könnte darum durchaus im Bereich des Möglichen liegen, dass die Kontrollgruppe hier die grösseren Abweichungen von der Wirklichkeit aufweist als die Testgruppe. Die Messungen an sich weisen eine hohe Konstanz auf, was sich in den geringen Standardabweichungen widerspiegelt. Über den Erwartungen sind die Ergebnisse hinsichtlich der Rotation. Bei jeder Auslenkung konnte das \gls{g:bodyframe} erfolgreich und mit keinerlei Abweichung in das \gls{g:worldframe} rotiert werden.\par
 		%
-		In Anbetracht der Auswertung kann damit die Hypothese \vref{hypo:rotation} vollumfänglich bestätigt werden. Mit dem Erfüllen des ersten Protokolls ist zugleich das Fundament für folgenden Bestandteilen des Konzepts gelegt.
+		In Anbetracht der Auswertung kann damit die Hypothese \vref{hypo:rotation} vollumfänglich bestätigt werden. Mit dem Erfüllen des ersten Protokolls ist zugleich das Fundament für die folgenden Bestandteile des Konzepts gelegt.
 %
 %
 %Verifikation Translation
@@ -482,17 +482,17 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
-		Die Verifikation der Translation stellt das zweite Experimental-Protokoll dar. Ziel der Messung ist es den kompletten Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Die in der Hypothese \vref{hypo:translation} festgelegten Anforderungen müssen erfüllt werden.
+		Die Verifikation der Translation stellt das zweite Experimental-Protokoll dar. Ziel der Messung ist es, den kompletten Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es, relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Die in der Hypothese \vref{hypo:translation} festgelegten Anforderungen müssen erfüllt werden.
 		%
 		\begin{hypo}\label{hypo:translation}	    	
-			Nach einer linearen Translation um die Distanz \unit[5]{cm} ist das Ergebnis des Algorithmus dieselbe. Die Abweichung ist dabei maximal $\pm$\unit[1]{cm}\footnote{Die Messgenauigkeit ist im Abschnitt \vref{ss:messgenauigkeit} erläutert.}. Die Position des \gls{g:myrio} hat keinen Einfluss auf das Messergebnis.
+			Nach einer linearen Translation um die Distanz \unit[5.0]{cm} ist das Ergebnis des Algorithmus dieselbe. Die Abweichung ist dabei maximal $\pm$\unit[1.0]{cm}\footnote{Die Messgenauigkeit ist im Abschnitt \vref{ss:messgenauigkeit} erläutert.}. Die Position des \gls{g:myrio} hat keinen Einfluss auf das Messergebnis.
 		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}\label{ss:material_translation}
-		Die Messung muss reproduzierbar sein. Deshalb muss eine Testumgebung gewährleistet sein, die für eine Simulation einer geradlinigen Translation geeignet ist. Diese Voraussetzung erfüllt ein Kreuztisch einer Standbohr- / Fräsmaschine oder ein Werkzeugschlitten einer Drehbank. Damit können vorgegebene Pfade präzise in der x-y-Ebene gefahren werden.\par 
+		Die Messung muss reproduzierbar sein. Deshalb muss eine Testumgebung gewährleistet sein, die für eine Simulation einer geradlinigen Translation geeignet ist. Diese Voraussetzung erfüllt der Kreuztisch einer Standbohr-/Fräsmaschine oder der Werkzeugschlitten einer Drehbank. Damit können vorgegebene Pfade präzise in der x-y-Ebene gefahren werden.\par 
 		%
-		Für die Messung wird der Werkzeugschlitten der Schaublin-Villeneuve M\low{3} aus der mechanischen Abteilung verwendet (siehe Abbildung \vref{img:drehbank}). Dieser erlaubt es eine kontrollierte Translation in der y-Richtung vorzunehmen. Weiter kommt als zentrale Komponente das \gls{g:myrio} M\low{1} zum Einsatz. Es dient der Aufzeichnung der Beschleunigungsdaten. Die gefahrene Distanz wird mit Hilfe des Massstabs M\low{3} angezeichnet\footnote{Der genau Vorschub kann der Bewegungsanforderung hinsichtlich der Geschwindigkeit nicht gerecht werden.} (Abbildung \vref{img:distanz}).\par
+		Für die Messung wird der Werkzeugschlitten der Schaublin-Villeneuve M\low{3} aus der mechanischen Abteilung verwendet (siehe Abbildung \vref{img:drehbank}). Dieser erlaubt es, eine kontrollierte Translation in der y-Richtung vorzunehmen. Weiter kommt als zentrale Komponente das \gls{g:myrio} M\low{1} zum Einsatz. Es dient der Aufzeichnung der Beschleunigungsdaten. Die gefahrene Distanz wird mit Hilfe des Massstabs M\low{3} angezeichnet\footnote{Der genau Vorschub kann der Bewegungsanforderung hinsichtlich der Geschwindigkeit nicht gerecht werden.} (Abbildung \vref{img:distanz}).\par
 		%
 		\begin{figure}[htbp]
 			\centering
@@ -505,16 +505,16 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			%
 			\begin{subfigure}[htbp]{0.32\textwidth}
 			      \includegraphics[height=3.5cm]{content/3_konzept/image/testaufbau_tran_distanz}
-			      \caption{Translation-Distanz}
+			      \caption{Translations-Distanz}
 			      \label{img:distanz}
 			\end{subfigure}        
-			\caption{Translation - Testaufbau}
+			\caption{Testaufbau Translation}
 			\label{img:messaufbau_tran}
 		\end{figure}    
 		%
 		Die Translation wird durch das Drehen des Drehrads ausgelöst. Die zurückgelegte Distanz wird dabei optisch durch den Bediener überprüft (absolute Messung). Ein Setzen von mechanischen Anschlägen würde das Messergebnis negativ beeinflussen, weshalb darauf verzichtet wird. Es wird zwischen zwei Translationsgeschwindigkeiten unterschieden, wobei die Geschwindigkeit durch die Bewegungszeit, gemessen mit der Stoppuhr M\low{4}, klassifiziert wird.\par
 		%
-		Das \gls{g:myrio} für die Messungen in unterschiedlichen Positionen am Werkzeugtisch angebracht. Für die Befestigung dient ein Spannblock. Alle zum Einsatz gekommen Messmittel dieses Protokolls sind in der Tabelle \vref{tab:messmittel_translation} aufgelistet. Zudem ist eine geschätzte Genauigkeit angeben, die jedoch hinsichtlich der manuell durchgeführten Translation vernachlässigbar ist.
+		Das \gls{g:myrio} wird für die Messungen in unterschiedlichen Positionen am Werkzeugtisch angebracht. Zur Befestigung dient ein Spannblock. Alle zum Einsatz kommenden Messmittel dieses Protokolls sind in der Tabelle \vref{tab:messmittel_translation} aufgelistet. Zudem ist eine geschätzte Genauigkeit angegeben, die jedoch hinsichtlich der manuell durchgeführten Translation vernachlässigbar ist.
 		%
 		\input{content/3_konzept/table/messmittel}
 	%
@@ -528,22 +528,22 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 				%
 				\item \textbf{Testgruppe} Die Testgruppe repräsentiert das \gls{g:myrio} M\low{1}, das zur Aufzeichnung der Beschleunigungsdaten benötigt wird. Dabei werden die Daten nur gespeichert und nicht verarbeitet\footnote{Für detailliertere Informationen zur Aufzeichnung sei auf den Abschnitt \vref{s:konzept:sw} verwiesen.}. Die Signalverarbeitung erfolgt zu einem späteren Zeitpunkt auf einem Computer mit Hilfe von \gls{g:matlab}.
 				%
-				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit dem Werkzeugtisch dar. Sie ist gleichzeitig die Kontrollgruppe, die schlussendlich bei der Interpretation als Ausgangslage gilt.
+				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit dem Werkzeugtisch dar. Sie ist gleichzeitig die Kontrollgruppe, die schliesslich bei der Interpretation als Ausgangslage gilt.
 			\end{itemize}
 			%
-			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
+			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variable dar.
 		%
 		\subsubsection*{Testgruppe Messmethodik}\label{ss:messmethodik_kontroll_tran}
-			Die Translation wird indirekt durch die auftretenden Beschleunigungen gemessen. Dazu werden die aufgezeichneten Daten in das \gls{g:matlab}-Skript \texttt{Check\_Translation\_final.m} eingelesen, wo mit Hilfe von mathematischen Operationen die Distanz bestimmt wird. Das Skript ist im Anhang \vref{s:anhang_matlab} zu finden.
+			Die Translation wird indirekt durch die auftretenden Beschleunigungen gemessen. Dazu werden die aufgezeichneten Daten in das \gls{g:matlab}-Skript \texttt{Check\_Translation\_final.m} eingelesen, wo mithilfe von mathematischen Operationen die Distanz bestimmt wird. Das Skript ist im Anhang \vref{s:anhang_matlab} zu finden.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
-			Die Aufnahme der Pfadlänge erfolgt direkt mit dem Massstab M\low{2}. Die vergebene Distanz von \unit[5]{cm} wird dabei auf dem Schlitten der Drehbank M\low{3} vermerkt.
+			Die Aufnahme der Pfadlänge erfolgt direkt mit dem Massstab M\low{2}. Die vorgegebene Distanz von \unit[5.0]{cm} wird dabei auf dem Schlitten der Drehbank M\low{3} vermerkt.
 		%
 		\subsubsection*{Testbeschreibungen}
-			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} M\low{1} unterschiedlich positioniert. Um die Anzahl Messungen in eine überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
+			Es werden mehrere unterschiedliche Messungen, die sich hinsichtlich Geschwindigkeit und Positionierung unterscheiden, durchgeführt. Dazu wird das \gls{g:myrio} M\low{1} unterschiedlich positioniert. Um die Anzahl Messungen in einem überschaubaren Rahmen zu halten, wird der Test auf 3 Positionen beschränkt. 
 			%
 			\begin{itemize}
-				\item \textbf{x-Achse Position} Das \gls{g:myrio} M\low{1} wird flach auf dem Kreuztisch angebracht. Dabei zeigt die x-Achse des Beschleunigungssensors nach unten, sprich gleichgerichtet wie der Gravitationsvektor. Relative Beschleunigungen erfolgen in der x-y-Ebene in y-Richtung des Werkzeugtisches. Dies entspricht ebenfalls der y-Richtung (negativ) im \gls{g:worldframe}, Abbildung \vref{img:koord_betrachter}. Eine schematische und reale Darstellung der Befestigung kann den Abbildungen \vref{img:x_achse} entnommen werden.
+				\item \textbf{x-Achse Position} Das \gls{g:myrio} M\low{1} wird flach auf dem Kreuztisch angebracht. Dabei zeigt die x-Achse des Beschleunigungssensors nach unten, sprich gleichgerichtet wie der Gravitationsvektor. Relative Beschleunigungen erfolgen in der x-y-Ebene in y-Richtung des Werkzeugtisches. Dies entspricht ebenfalls der y-Richtung (negativ) im \gls{g:worldframe}, siehe Abbildung \vref{img:koord_betrachter}. Eine schematische und reale Darstellung der Befestigung kann den Abbildungen \vref{img:x_achse} entnommen werden.
 				%
 				\begin{figure}[htbp]
 					\centering
@@ -582,7 +582,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 					\label{img:y_achse}
 				\end{figure}    
 				%
-				\item \textbf{z-Achse Position} Abschliessend erfolgt noch eine Positionierung mit der z-Achse des Beschleunigungssensors in Richtung des Gravitationsvektors (gleichgerichtet). Aus dieser Konstellation ergeben sich nur Beschleunigungen auf die x- und y-Achsen des Sensors, was eine negative Translation in negativer y-Richtung, bezogen auf das \gls{g:worldframe}, zur Folge hat. Die Befestigungsrichtung des \gls{g:myrio}s M\low{1} ist in der Abbildung \vref{img:z_achse} zu sehen.
+				\item \textbf{z-Achse Position} Abschliessend erfolgt noch eine Positionierung mit der z-Achse des Beschleunigungssensors in Richtung des Gravitationsvektors (gleichgerichtet). Aus dieser Konstellation ergeben sich nur Beschleunigungen auf die x- und y-Achsen des Sensors, was eine negative Translation in negativer y-Richtung, bezogen auf das \gls{g:worldframe}, zur Folge hat. Die Befestigungseinrichtung des \gls{g:myrio}s M\low{1} ist in der Abbildung \vref{img:z_achse} zu sehen.
 				\begin{figure}[htbp]
 					\centering
 					\begin{subfigure}[htbp]{0.49\textwidth}
@@ -602,60 +602,60 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 				\end{figure}    
 			\end{itemize}\par 
 			%
-			Die zu fahrende Distanz wird auf \unit[5]{cm} festgelegt. Dies entspricht dem  Messbereich, der in Abschnitt \vref{ss:messbereich} erläutert ist. Bedingt durch die manuelle Durchführung der Translation, kann eine Toleranz des zurückgelegten Pfades vorliegen. Diese ist innerhalb von $\pm$\unit[1]{cm} zu halten.\par
+			Die zu fahrende Distanz wird auf \unit[5.0]{cm} festgelegt. Dies entspricht dem  Messbereich, der in Abschnitt \vref{ss:messbereich} erläutert ist. Bedingt durch die manuelle Durchführung der Translation, kann eine Toleranz des zurückgelegten Pfades vorliegen. Diese ist innerhalb von $\pm$\unit[1.0]{cm} zu halten.\par
 			%
 			Wie im vorherigen Abschnitt \vref{ss:material_translation} erörtert, wird die Geschwindigkeit indirekt über die Bewegungszeit gemessen. Daher werden lediglich zwei Bereiche definiert:
 			\begin{itemize}
-				\item \textbf{langsam} Die Translation dauert \unit[2]{s}. Diese Vorgabe wird nur rudimentär mit einer Zeitmessung verifiziert (Stoppuhr M\low{4}).  
+				\item \textbf{langsam} Die Translation dauert \unit[2.0]{s}. Diese Vorgabe wird nur rudimentär mit einer Zeitmessung verifiziert (Stoppuhr M\low{4}).  
 				%
-				\item \textbf{schnell} Eine Bewegungszeit von \unit[1]{s}.
+				\item \textbf{schnell} Eine Bewegungszeit von \unit[1.0]{s}.
 			\end{itemize}\par
 			%
-			Insgesamt ergeben sich durch die verschiedenen Positionierungen und Geschwindigkeiten 6 verschiedene Messungen. Der Messablauf gliedert sich in 5 Schritte. Alle Schritte sind bei jeder Positionierung und Geschwindigkeit 15 mal zu wiederholen. 
+			Insgesamt ergeben sich durch die verschiedenen Positionierungen und Geschwindigkeiten 6\todo{sechs am ahi nehmen} verschiedene Messungen. Der Messablauf gliedert sich in 5 Schritte. Alle Schritte sind bei jeder Positionierung und Geschwindigkeit 15-mal zu wiederholen. 
 			%
 			\begin{enumerate}
-				\item Das \gls{g:myrio} M\low{1} wie vorgegeben Positionieren.
+				\item Das \gls{g:myrio} M\low{1} wie vorgegeben positionieren
 				\item Den Werkzeugtisch an die markierte Startposition bewegen
-				\item Das \gls{g:labview}-Programm starten.
+				\item Das \gls{g:labview}-Programm starten
 				\item Messung starten
 					\begin{enumerate}
-						\item \unit[4]{s} warten bis die Rotationswinkel geschätzt sind.
-						\item Translation durchführen (\unit[5]{cm}, langsam oder schnell).
-						\item Warten bis \unit[10]{s} verstrichen sind (totale Messzeit).
+						\item \unit[4]{s} warten, bis die Rotationswinkel geschätzt sind
+						\item Translation durchführen (\unit[5.0]{cm}, langsam oder schnell)
+						\item Warten bis \unit[10]{s} verstrichen sind (totale Messzeit)
 					\end{enumerate}
-				\item Werkzeugtisch in Ursprungsposition bewegen.
+				\item Werkzeugtisch in Ursprungsposition bewegen
 			\end{enumerate}
 		%
 		\subsubsection*{Datenauswertung}
-			Die relativ gemessene Distanz der Testgruppe muss bezogen auf die Kontrollgruppe ausgewertet werden. Die ermittelte Entfernung ist dabei die abhängige Variabel dieses Protokolls. Die Messresultate werden hinsichtlich der Messabweichung und ihrer Standardabweichung untersucht. Für die Auswertung irrelevanten Diagramme sei auf den Anhang \vref{ss:anhang_konzept_messung_translation} verwiesen.\par
+			Die relativ gemessene Distanz der Testgruppe muss bezogen auf die Kontrollgruppe ausgewertet werden. Die ermittelte Entfernung ist dabei die abhängige Variable dieses Protokolls. Die Messresultate werden hinsichtlich der Messabweichung und ihrer Standardabweichung untersucht. Für die Auswertung irrelevanter Diagramme sei auf den Anhang \vref{ss:anhang_konzept_messung_translation} verwiesen.\par
 			%
 			\paragraph*{x-Achsen Position}
-				Bei über 15 Messungen mit der langsamen Geschwindigkeit tritt ein mittlerer absoluter Fehler von \unit[0.341]{cm} auf, was ein relativ \unit[6.8]{\%} ergibt. Die gemessenen Translationen, zu sehen in der Abbildung \vref{img:x_tran_langsam_y}, weisen eine mittlere Distanz von \unit[-4.659]{cm} (blaue Linie) mit einer Standardabweichung (rote Linien) von \unit[0.348]{cm} auf.
+				Bei über 15 Messungen mit der langsamen Geschwindigkeit tritt ein mittlerer absoluter Fehler von \unit[0.341]{cm} auf, was \unit[6.8]{\%} ergibt. Die gemessenen Translationen, zu sehen in der Abbildung \vref{img:x_tran_langsam_y}, weisen eine mittlere Distanz von \unit[-4.659]{cm} (blaue Linie) mit einer Standardabweichung (rote Linien) von \unit[0.348]{cm} auf.
 				\image{content/3_konzept/image/mittel_5_X_Y}{scale=0.6}{htbp}[x-Position Translation langsam][img:x_tran_langsam_y]
 				%
-				Wird die Geschwindigkeit verdoppelt auf Stufe schnell, so verbessert sich der mittlere absolute Fehler auf \unit[0.192]{cm}. Dies entspricht einer relativen Abweichung von \unit[3.8]{\%}. Daraus ergibt sich eine mittlere gemessene Distanz von \unit[-4.808]{cm} mit einer Standardabweichung von \unit[0.349]{cm}. Ersichtlich ist die Messung und die Auswertung in der Abbildung \vref{img:x_tran_schnell_y}.
+				Wird die Geschwindigkeit auf Stufe \textsf{schnell} verdoppelt, so verkleinert sich der mittlere absolute Fehler auf \unit[0.192]{cm}. Dies entspricht einer relativen Abweichung von \unit[3.8]{\%}. Daraus ergibt sich eine mittlere gemessene Distanz von \unit[-4.808]{cm} mit einer Standardabweichung von \unit[0.349]{cm}. Ersichtlich sind die Messung und die Auswertung in der Abbildung \vref{img:x_tran_schnell_y}.
 				%
 				\image{content/3_konzept/image/mittel_5_X_Y}{scale=0.6}{htbp}[x-Position Translation schnell][img:x_tran_schnell_y] 
 			%
 			\paragraph*{y-Achsen Position}
-				Befindet sich das \gls{g:myrio} in der y-Achsen Position, so ergibt sich über 15 Messungen ein mittlerer absoluter Fehler von \unit[2.203]{cm} (relativ \unit[44.1]{\%}). Dies bei der Geschwindigkeit langsam. Die Analyse hinsichtlich des gemessenen Mittelwertes und Standardabweichung ergibt \unit[7.203]{cm} und \unit[0.467]{cm}. Die Abbildung \vref{img:y_tran_langsam_y} zeigt die 15 Messungen mit eingezeichneten Kenngrössen (blau Mittelwert der Messung und rot die Standardabweichung).
+				Befindet sich das \gls{g:myrio} in der y-Achsen Position, so ergibt sich über 15 Messungen ein mittlerer absoluter Fehler von \unit[2.203]{cm} (relativ \unit[44.1]{\%}). Dies bei der Geschwindigkeit \textsf{langsam}. Die Analyse hinsichtlich des gemessenen Mittelwerts und Standardabweichung ergibt \unit[7.203]{cm} und \unit[0.467]{cm}. Die Abbildung \vref{img:y_tran_langsam_y} zeigt die 15 Messungen mit eingezeichneten Kenngrössen (blau Mittelwert der Messung und rot die Standardabweichung).
 				%
 				\image{content/3_konzept/image/mittel_5_Y_Y}{scale=0.6}{htbp}[y-Position Translation langsam][img:y_tran_langsam_y]
 				%
-				Eine Erhöhung der Geschwindigkeit bringt einen mittleren absoluten Messfehler von \unit[1.343]{cm} und ein relativen von \unit[26.8]{\%} zu Tage. Dies bei einem ermittelten Mittelwert von \unit[6.343]{cm} und einer Standardabweichung von \unit[0.558]{cm}, wie die Abbildung \vref{img:y_tran_schnell_y}.
+				Eine Erhöhung der Geschwindigkeit bringt einen mittleren absoluten Messfehler von \unit[1.343]{cm} und einen relativen von \unit[26.8]{\%} zutage. Dies bei einem Mittelwert von \unit[6.343]{cm} und einer Standardabweichung von \unit[0.558]{cm}; siehe Abbildung \vref{img:y_tran_schnell_y}.
 				%
 				\image{content/3_konzept/image/schnell_5_Y_Y}{scale=0.6}{htbp}[y-Position Translation schnell][img:y_tran_schnell_y]
 			%
 			\paragraph*{z-Achsen Position}
-				Die abschliessende Messung in der z-Achsen Position ergibt bei der langsamen Geschwindigkeit einen absoluten mittleren Fehler von \unit[2.203]{cm}, was einem relativen Fehler von \unit[44.1]{\%} entspricht. Betrachtet man die Abbildung \vref{img:z_tran_langsam_y}, so zeigt sich bei der blauen Linie ein Mittelwert von \unit[-2.797]{cm} bei einer Standardabweichung von \unit[0.364]{cm}.
+				Die abschliessende Messung in der z-Achsen Position ergibt bei der \textsf{langsamen} Geschwindigkeit einen absoluten mittleren Fehler von \unit[2.203]{cm}, was einem relativen Fehler von \unit[44.1]{\%} entspricht. Betrachtet man die Abbildung \vref{img:z_tran_langsam_y}, so zeigt sich bei der blauen Linie ein Mittelwert von \unit[-2.797]{cm} bei einer Standardabweichung von \unit[0.364]{cm}.
 				%
 				\image{content/3_konzept/image/mittel_5_Z_Y}{scale=0.6}{htbp}[z-Position Translation y-Richtung langsam][img:z_tran_langsam_y]
 				%
-				Bei der Geschwindigkeit schnell verringert sich der absolute Fehler auf \unit[0.709]{cm} (entspricht relativ \unit[14.1]{\%}). Die Messung an sich hat einen Mittelwert von \unit[-4.294]{cm} bei einer Standardabweichung von \unit[0.231]{cm}. Die Abbildung \vref{img:z_tran_schnell_y} zeigt das gemessene Ergebnis.\par 
+				Bei der Geschwindigkeit \textsf{schnell} verringert sich der absolute Fehler auf \unit[0.709]{cm} (entspricht relativ \unit[14.1]{\%}). Die Messung an sich hat einen Mittelwert von \unit[-4.294]{cm} bei einer Standardabweichung von \unit[0.231]{cm}. Die Abbildung \vref{img:z_tran_schnell_y} zeigt das gemessene Ergebnis.\par 
 				%
 				\image{content/3_konzept/image/schnell_5_Z_Y}{scale=0.6}{htbp}[z-Position Translation schnell][img:z_tran_schnell_y]
 			%
-			Die Messerergebnisse zusammengefasst sind in der Tabelle \vref{tab:auswertung_tran} dargestellt. Darauf basierend erfolgt nun im folgenden Abschnitt \vref{ss:interpretation_tran} die Interpretation und Diskussion.
+			Die Messerergebnisse sind in der Tabelle \vref{tab:auswertung_tran} zusammengefasst. Darauf erfolgen nun im Abschnitt \vref{ss:interpretation_tran} Interpretation und Diskussion.
 			%
 			\input{content/3_konzept/table/auswertung_tran}	 
 	%
