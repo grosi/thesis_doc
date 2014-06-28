@@ -21,32 +21,32 @@ Das Kniegelenk, gezeigt in der Abbildung \vref{img:trapez}, ist eines der grösst
 %
 \image{content/2_grundlagen/image/anatomie_Knie}{scale=0.6}{htbp}[Aufbau des Kniegelenkes \cite{img:knie}][Trapeznäherung][img:trapez]
 %
-Zwei Bandsysteme sichern die Stabilität des Kniegelenkes und führen die Bewegung des Kniegelenkes. Dies sind zum einen zwei Seitenbänder (Aussen- und Innenband), die an der Seite des Knies angebracht sind und zum andern die Kreuzbänder. Die Seitenbänder sichern das gestreckte Gelenk und lassen in diesem Fall keine Rotationsbewegung zu. Die Kreuzbänder hingegen halten das Gelenk zusammen und sorgen für die Stabilität falls das Knie gebeugt ist \cite{lit:knie2}. 
+Zwei Bandsysteme sichern die Stabilität und führen die Bewegung des Kniegelenkes. Dies sind zum einen zwei Seitenbänder (Aussen- und Innenband), die an der Seite des Knies angebracht sind und zum andern die Kreuzbänder. Die Seitenbänder sichern das gestreckte Gelenk und lassen in diesem Fall keine Rotationsbewegung zu. Die Kreuzbänder hingegen halten das Gelenk zusammen und sorgen für die Stabilität, falls das Knie gebeugt ist \cite{lit:knie2}. 
 %
 % Funktion des Kreuzbandes
 \subsection{Kreuzbandriss}\label{s:funktion_kreuzband}
 Das Kreuzband hat im Knie als erste Funktion die Bewegungsfähigkeit des Kniegelenkes zu beschränken. Somit kann das Knie nicht überstreckt oder beliebig gebeugt werden. Die zweite Funktion ist die Stabilisierung der Verbindung zwischen Ober- und Unterschenkel. Genau diese Stabilität ist bei einem verletzten Kreuzband nicht mehr gewährleistet, was sich bei Belastung mit einer schrägen Auslenkung des Knies bemerkbar macht. \par
 %
-Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tätigkeiten wie Rennen, Springen oder allgemein in stop \& go-Sportarten wie Unihockey oder Fussball besonders belastet. Eine gute Rehabilitation des verletzten Sportlers ist besonders wichtig. Studien der USA in der professionellen American Football-Liga haben gezeigt, dass die Karrieren von Sportlern mit mehrfachem Kreuzbandriss im Durchschnitt kürzer sind, als solche von Sportlern mit nur einfachem oder keinem Kreuzbandriss. Aus diesem Grund sollte ein möglichst grosser Wert auf den richtig getimten Wiedereinstieg ins Training gelegt werden. Somit können Folgeschäden am Kreuzband und darauffolgende Beeinträchtigungen der Karriere des Sportlers vermindert werden \cite{lit:knie}.
+Das Kreuzband wird in Sportarten, in welchen grosse Belastungen des Knies mit Tätigkeiten wie Rennen, Springen oder allgemein in Stop-and-go-Sportarten wie Unihockey oder Fussball besonders belastet. Eine gute Rehabilitation des verletzten Sportlers ist besonders wichtig. Studien über die American Football-League haben gezeigt, dass die Karrieren von Sportlern mit mehrfachem Kreuzbandriss im Durchschnitt kürzer sind als solche von Sportlern mit nur einfachem oder keinem Kreuzbandriss. Aus diesem Grund sollte ein möglichst grosser Wert auf den richtig getimten Wiedereinstieg ins Training gelegt werden. Damit können Folgeschäden am Kreuzband und darauffolgende Beeinträchtigungen der Karriere des Sportlers vermindert werden \cite{lit:knie}.
 %
 %
 %LabVIEW auf NI myRIO
 \section{LabVIEW auf NI myRIO} %\footnote{für detaillierte Erläuterungen zu den Projektphasen sei auf den Abschnitt \vref{ss:ablauf_gliederung_projekt} verwiesen}
-	In der Konzept- und Implementationsphase wird das Werkzeug \gls{g:labview} der Firma \gls{ac:ni} verwendet. \gls{g:labview} ist die Abkürzung für \textsf{Laboratory Virtual Instrument Engineering Workbench} und stellt eine Entwicklungsumgebung und eine grafische Programmiersprache dar. Es wurde in den 70er Jahren von den Mitgründer von \gls{ac:ni}, Jim Truchard und Jeff Kodosky entworfen und wird stetig weiter entwickelt. Im Gegensatz zu den gängigen Hochsprachen wie C/C++ ist in \gls{g:labview} der Datenfluss im Zentrum und nicht Kontrollstrukturen, soll heissen das Datenflussprinzip wird verfolgt \cite[19-22]{lit:labview}.
+	In der Konzept- und Implementationsphase wird das Werkzeug \gls{g:labview} der Firma \gls{ac:ni} verwendet. \gls{g:labview} ist die Abkürzung für \textsf{Laboratory Virtual Instrument Engineering Workbench} und stellt eine Entwicklungsumgebung und eine grafische Programmiersprache dar. Es wurde in den 70er-Jahren von den Mitgründern von \gls{ac:ni}, Jim Truchard und Jeff Kodosky, entworfen und wird stetig weiter entwickelt. Im Gegensatz zu den gängigen Hochsprachen wie C/C++ ist in \gls{g:labview} der Datenfluss im Zentrum und nicht Kontrollstrukturen, das heisst, das Datenflussprinzip wird verfolgt \cite[19-22]{lit:labview}.
 	%
 	\subsection{Aufbau und Struktur}\label{ss:aufbau_struktur}
-		Ein \gls{g:labview}-Projekt besteht aus mindestens einem \gls{ac:vi}, indem sich Funktionsblöcke oder weitere \gls{ac:vi}s befinden können. Eine \gls{ac:vi} stellt sich zusammen aus einem Frontpanel und einem Blockdiagramm zusammen. Das Frontpanel stellt dabei die Benutzeroberfläche dar, wogegen das Blockdiagramm die eigentliche Funktionalität beinhaltet.\par
+		Ein \gls{g:labview}-Projekt besteht aus mindestens einem \gls{ac:vi}, in welchem sich Funktionsblöcke oder weitere \gls{ac:vi} befinden können. Eine \gls{ac:vi} besteht aus einem Frontpanel und einem Blockdiagramm. Das Frontpanel stellt dabei die Benutzeroberfläche dar, wogegen das Blockdiagramm die eigentliche Funktionalität beinhaltet.\par
 		%
-		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei den Computer mit installiertem \gls{g:labview} und das \gls{g:target} eine zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten, die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf derselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessend aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}.}. Ebenso wird zwischen \gls{ac:vi}s auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
+		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei den Computer mit installiertem \gls{g:labview} und das \gls{g:target} eine zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten, die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf derselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessend aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}.}. Ebenso wird zwischen \gls{ac:vi} auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
 		%
 		\image{content/2_grundlagen/image/labview_gliederung}{scale=0.7}{htbp}[\gls{g:labview}-Gliederung][img:labview_gliederung]
 	%
 	\subsection{Hardware}\label{ss:myRIO_hw}
-		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{nähere Angaben sind im Datenblatt im Anhang \vref{s:anhang_datasheets} zu finden}:
+		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{nähere Angaben sind im Datenblatt im Anhang \vref{s:anhang_datasheets} zu finden.}:
 		\begin{itemize}
 			\item \acrshort{ac:soc} Xilinx Z-7010
 			\begin{itemize}
-				\item 2 ARM Cortex A9 Kerne à \unit[667]{MHz}
+				\item 2 ARM-Cortex A9 Cores à \unit[667]{MHz}
 				\item Artix-7 \acrshort{ac:fpga}
 			\end{itemize}
 			\item \unit[256]{MB} Flash, \unit[512]{MB} RAM
@@ -59,30 +59,30 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 		\image{content/2_grundlagen/image/myrio}{scale=0.2}{htbp}[\gls{g:myrio} \cite{img:myrio}][\gls{g:myrio}][img:myrio]
 		%
 		\subsubsection*{Bedienung}
-			Das \gls{g:myrio} benutzt als Betriebssystem ein Real Time Linux von \gls{ac:ni}. Dies bietet dem Nutzer eine Vielzahl von Möglichkeiten das \gls{g:myrio} zu bedienen \cite{lit:rt_linux}.
+			Das \gls{g:myrio} benutzt als Betriebssystem ein Real-Time-Linux von \gls{ac:ni}. Dies bietet dem Nutzer eine Vielzahl von Möglichkeiten, das \gls{g:myrio} zu bedienen \cite{lit:rt_linux}.
 			%
 			\begin{description}
-				\item[\gls{g:labview}] Normalerweise erfolgt die Bedienung via \gls{g:labview}. Dabei werden \gls{ac:vi}s erstellt und auf das \gls{g:myrio} geladen. Zusätzlich besteht die Möglichkeit mit Hilfe vorgefertigter \gls{ac:vi}s direkt auf das Real Time Linux zuzugreifen (siehe Abbildung \vref{img:myrio_cmd}).
-				\image{content/2_grundlagen/image/labview_myrio_cmd}{scale=0.9}{htbp}[System-\gls{ac:vi}s auf \gls{g:myrio} \cite{img:myrio_labview}][System-\gls{ac:vi}s auf \gls{g:myrio}][img:myrio_cmd]
+				\item[\gls{g:labview}] Normalerweise erfolgt die Bedienung via \gls{g:labview}. Dabei werden \gls{ac:vi} erstellt und auf das \gls{g:myrio} geladen. Zusätzlich besteht die Möglichkeit, mithilfe vorgefertigter \gls{ac:vi} direkt auf das Real-Time-Linux zuzugreifen (siehe Abbildung \vref{img:myrio_cmd}).
+				\image{content/2_grundlagen/image/labview_myrio_cmd}{scale=0.9}{htbp}[System-\gls{ac:vi}s auf \gls{g:myrio} \cite{img:myrio_labview}][System-\gls{ac:vi} auf \gls{g:myrio}][img:myrio_cmd]
 				%
-				\item[NI MAX] MAX steht für Measurement \& Automation Explorer und ist ein Werkzeug für die Verbindungsaufnahme und Konfiguration von \gls{ac:ni} Hardware wie das \gls{g:myrio}. Ausserdem stehen abhängig von der Hardware unterschiedliche Diagnose-Werkzeuge zur Verfügung. Die Installation von NI MAX erfolgt zeitgleich mit \gls{g:labview} \cite{lit:ni_max}. 
+				\item[NI MAX] MAX steht für Measurement and Automation-Explorer und ist ein Werkzeug für die Verbindungsaufnahme und Konfiguration von \gls{ac:ni}-Hardware wie das \gls{g:myrio}. Ausserdem stehen abhängig von der Hardware unterschiedliche Diagnose-Werkzeuge zur Verfügung. Die Installation von NI MAX erfolgt zeitgleich mit \gls{g:labview} \cite{lit:ni_max}. 
 				%
-				\item[Weboberfläche] Das \gls{g:myrio} stellt eine Weboberfläche für die Konfiguration bereit. Damit können im gleichen Umfang wie in der Software NI MAX Einstellungen vorgenommen werden. Ergänzend besteht die Möglichkeit auf das interne Dateisystem via HTTP zu zugreifen. Aufgerufen wird die Oberfläche über die IP-Adresse 172.22.11.2 mit einem Internet-Browser.
+				\item[Web-Oberfläche] Das \gls{g:myrio} stellt eine Web-Oberfläche für die Konfiguration bereit. Damit können im gleichen Umfang wie in der Software NI MAX Einstellungen vorgenommen werden. Ergänzend besteht die Möglichkeit, auf das interne Dateisystem via HTTP zuzugreifen. Aufgerufen wird die Oberfläche über die IP-Adresse 172.22.11.2 mit einem Internet-Browser.
 				%
-				\item[Terminal] \label{i:terminal}Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}. Als Alternative kann auch Cygwin mit den richtigen Paketen dienen: \url{http://cygwin.com/index.html}.}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nennt sich die Option \textsf{Enable Secure Shell Server (sshd)}.} aktiviert werden (via NI MAX oder Weboberfläche). Für einen Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
+				\item[Terminal] \label{i:terminal}Um die Möglichkeiten des Real-Time-Linux direkt anzuwenden, kann via \gls{g:ssh} eine Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}. Als Alternative kann auch Cygwin mit den richtigen Paketen dienen: \url{http://cygwin.com/index.html}.}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nennt sich die Option \textsf{Enable Secure Shell Server (sshd)}.} aktiviert werden (via NI MAX oder Web-Oberfläche). Für einen Verbindungsaufbau werden zusätzlich IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Werden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
 				\begin{itemize}
 					\item IP-Adresse: 172.22.11.2
 					\item Benutzername: admin
 					\item Passwort: \textit{leer}
 				\end{itemize}
-				Konnte eine Kommunikation hergestellt werden, so erscheint eine normale Terminal-Prompt, wie in der Abbildung \vref{img:myrio_ssh} ersichtlich.
+				Kommt eine Kommunikation zustande, erscheint ein normales Terminal-Prompt wie in der Abbildung \vref{img:myrio_ssh} ersichtlich.
 				\image{content/2_grundlagen/image/putty_myrio}{scale=0.7}{htbp}[Bedienung via \gls{g:ssh}][img:myrio_ssh]
 			\end{description}
 		%
 		\subsubsection*{Daten extrahieren}
 			Wie in Abschnitt \vref{ss:aufbau_struktur} bereits erläutert, werden in \gls{g:labview} erstellte Dateien auf dem internen Speicher der \gls{g:myrio} abgelegt. Der Datentransfer zum \gls{g:host} kann über drei Arten erfolgen:
 			\begin{description}
-				\item[HTTP/\gls{g:webdav}] Die einfachste Möglichkeit ist die Daten via eines Webbrowsers direkt vom \gls{g:myrio} herunterzuladen. Dies wird ermöglicht durch \gls{g:webdav}, einem offenem Standard für Datenkommunikation im Internet. Für den Zugriff muss zum einem der richtige Pfad und zum anderen die korrekten Benutzerdaten angegeben werden:
+				\item[HTTP/\gls{g:webdav}] Die einfachste Möglichkeit ist, die Daten via Webbrowser direkt vom \gls{g:myrio} herunterzuladen. Dies wird ermöglicht durch \gls{g:webdav}, einem offenem Standard für Datenkommunikation im Internet. Für den Zugriff muss zum einem der richtige Pfad und müssen zum anderen die korrekten Benutzerdaten angegeben werden:
 				\begin{itemize}
 					\item Pfad: \texttt{http://172.22.11.2/files/}
 					\item Benutzername: admin
@@ -91,10 +91,10 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 				Daraufhin präsentiert sich ein einfacher Dateiexplorer, wie ihn die Abbildung \vref{img:myrio_webdav} zeigt.
 				\image{content/2_grundlagen/image/webdav_myrio}{scale=0.5}{htbp}[Dateiexplorer][img:myrio_webdav]
 				%
-				\item[\gls{g:labview}] Sollen die Daten während des Ausführens des \gls{ac:vi}s an den \gls{g:host} übertragen werden, bietet sich ein Netzwerk-Stream an. Dieser erlaubt, eine zuvor definierte Datenstruktur kontinuierlich zu übertragen. Für das Aufbauen einer Netzwerkverbindung muss zum einen auf dem \gls{g:target} ein \textsf{Network Stream Writer Endpoint} erzeugt werden, auf den Daten entweder einzeln oder in Paketen geschrieben werden können. Dieser Writer Endpoint wird jedoch nur erfolgreich erzeugt, wenn auf seitens des \gls{g:host} ein \textsf{Network Stream Reader Endpoint} erzeugt wird. Der Reader Endpoint erlaubt die übertragenen Daten aus dem Stream zu extrahieren, wonach sie weiter verarbeitet, angezeigt und/oder gespeichert werden können. Ein minimales Konstrukt, was die Übertragung von Daten erlaubt, ist in der Abbildung \vref{img:netstream} ersichtlich. Für detaillierte Informationen über die Möglichkeiten eines Netzwerk-Streams sei auf \cite{lit:labview_networkstream} hingewiesen.
+				\item[\gls{g:labview}] Sollen die Daten während des Ausführens des \gls{ac:vi} an den \gls{g:host} übertragen werden, bietet sich ein Netzwerk-Stream an. Dieser erlaubt, eine zuvor definierte Datenstruktur kontinuierlich zu übertragen. Für das Aufbauen einer Netzwerkverbindung muss zum einen auf dem \gls{g:target} ein \textsf{Network Stream Writer Endpoint} erzeugt werden, auf den Daten entweder einzeln oder in Paketen geschrieben werden können. Dieser Writer Endpoint wird jedoch nur erfolgreich erzeugt, wenn aufseiten des \gls{g:host} ein \textsf{Network Stream Reader Endpoint} erzeugt wird. Der Reader Endpoint erlaubt, die übertragenen Daten aus dem Stream zu extrahieren, wonach sie weiter verarbeitet, angezeigt und/oder gespeichert werden können. Ein minimales Konstrukt, welches die Übertragung von Daten erlaubt, ist in der Abbildung \vref{img:netstream} ersichtlich. Für detaillierte Informationen über die Möglichkeiten eines Netzwerk-Streams sei auf \cite{lit:labview_networkstream} hingewiesen.
 				\image{content/2_grundlagen/image/network}{scale=0.9}{htbp}[Netzwerk-Stream \cite{img:labview_networkstream}][Netzwerk-Stream][img:netstream]
 				%
-				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \gls{ac:sftp} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter \textsf{Terminal} \vpageref{i:terminal} erwähnten Bedingungen erfüllt sein. Für den Dateitransfer dient das Kommando \texttt{scp}, das wie in Listing \vref{list:sftp} gezeigt angewendet wird.
+				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \gls{ac:sftp} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter \textsf{Terminal} \vpageref{i:terminal} erwähnten Bedingungen erfüllt sein. Für den Dateitransfer dient das Kommando \texttt{scp}, das wie in Listing \vref{list:sftp} gezeigt, angewendet wird.
 				%
 				\begin{lstlisting}[style=bash,caption={\gls{ac:sftp} angewendet},label={list:sftp}]
 scp admin@172.22.11.2:/Pfad/zur/Datei /Pfad/zur/Zieldatei
@@ -105,13 +105,13 @@ scp admin@172.22.11.2:/Pfad/zur/Datei /Pfad/zur/Zieldatei
 %
 %Rotationsmatrix
 \section{Rotationsmatrix}\label{sub:rot}
-In der Linearen Algebra bietet die Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. Im vorliegenden Fall ist eine Rotation eines Punktes um eine Gerade im Raum gewünscht. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) mit Herrn Jenni im zweiten Semester behandelt \cite{lit:linalg2}.\par
+In der Linearen Algebra bietet die Rotationsmatrix die Möglichkeit, einen Punkt im Raum um einen bestimmten Winkel $\phi$ zu drehen. Im vorliegenden Fall ist die Rotation eines Punktes um eine Gerade im Raum gewünscht. Dies wurde in der Linearen Algebra und Geometrie 2 (BZG1104 LINAL2) im zweiten Semester behandelt \cite{lit:linalg2}.\par
 %
 Ziel ist, den Punkt $P$ mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade $g$ in den Punkt $P'$ mit Koordinaten $\left(x'\mid y'\mid z'\right)$ zu drehen. Die Gerade $g$ hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
 %
 \image{content/2_grundlagen/image/rotmat}{scale=0.8}{htbp}[Drehung des Punktes $P$ in $P'$ \cite{img:linalg2}][Drehung des Punktes $P$ in $P'$][img:rotmat]
 %           
-Die Rotationsmatrix ist, wie schon erwähnt, definiert durch den Drehwinkel $\phi$ und der Geraden, respektive Rotationsachse $g$. In dieser Matrix wird wie in Abbildung \vref{img:rotmat} ersichtlich zuerst der Schnittpunkt $S$ der Geraden $g$ mit der Ebene $E$ berechnet. In der Ebene $E$ liegen die Punkte $P$ und $P'$, sie steht senkrecht auf die Gerade $g$. Aus dem Schnittpunkt $S$ und dem Ausgangspunkt $P$ ist die Berechnung des gedrehten Punktes $P'$ möglich. Die Berechnung des gedrehten Punktes $P'$ mit der Rotationsmatrix lässt sich wie in Gleichung \vref{eq:rot} zusammenfassen.\par
+Die Rotationsmatrix ist, wie schon erwähnt, definiert durch den Drehwinkel $\phi$ und die Geraden respektive Rotationsachse $g$. In dieser Matrix wird, wie in Abbildung \vref{img:rotmat} ersichtlich, zuerst der Schnittpunkt $S$ der Geraden $g$ mit der Ebene $E$ berechnet. In der Ebene $E$ liegen die Punkte $P$ und $P'$; die Ebene $E$ steht senkrecht auf der Gerade $g$. Aus dem Schnittpunkt $S$ und dem Ausgangspunkt $P$ ist die Berechnung des gedrehten Punktes $P'$ möglich. Die Berechnung des gedrehten Punktes $P'$ mit der Rotationsmatrix lässt sich wie in Gleichung \vref{eq:rot} zusammenfassen.\par
 %
 %Berechnung des gedrehten Punkt P'
 \formula{
@@ -119,7 +119,7 @@ Die Rotationsmatrix ist, wie schon erwähnt, definiert durch den Drehwinkel $\phi
         }{
             R_{g;O;\overrightarrow{n};\phi} & Rotationsmatrix mit Winkel $\phi$ um die Gerade g}[eq:rot]\par
 %
-Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden. Sie beinhaltet die oben genannten Rechnungsschritte. Zur Anwendung genügt der Aufbau der Matrix zu kennen, welcher in Gleichung \vref{eq:rotmax} ersichtlich ist:\par  
+Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden. Sie beinhaltet die oben genannten Rechnungsschritte. Zur Anwendung genügt es, den Aufbau der Matrix zu kennen, welcher in Gleichung \vref{eq:rotmax} ersichtlich ist:\par  
 %
 % Aufbau der Rotationsmatrix
 \formula{
@@ -128,12 +128,12 @@ Auf die Zusammensetzung der Rotationsmatrix soll nicht weiter eingegangen werden
         }{ 
            }[eq:rotmax]        
 %
-% nummerische Integration          
-\section{Nummerische Integration}\label{sec:numint}
-Da nicht alle Integrale analytisch unter der Verwendung von elementaren Funktionen berechnet werden können, ist man auf nummerische Verfahren angewiesen. Mittels diesen nummerischen Verfahren wird das Integral mit in unserem Fall durch die Abtastfrequenz bestimmter Genauigkeit approximiert. In der Vorlesung Analysis 2 (BZG1102 ANALY2) im zweiten Semester bei Herrn Bäni wurden dazu drei verschiedene Verfahren präsentiert. Diese sind die linke und rechte Rechtecknäherung sowie die Trapeznäherung. Die hier genannten Angaben wurden mithilfe der Quelle \cite{lit:baeni} erarbeitet.
+% numerische Integration          
+\section{Numerische Integration}\label{sec:numint}
+Da nicht alle Integrale analytisch unter der Verwendung von elementaren Funktionen berechnet werden können, ist man auf numerische Verfahren angewiesen. Mittels dieser numerischen Verfahren wird das Integral, mit in unserem Fall durch die Abtastfrequenz bestimmter Genauigkeit, approximiert. In der Vorlesung Analysis 2 (BZG1102 ANALY2) wurden dazu drei verschiedene Verfahren präsentiert. Diese sind die linke und rechte Rechtecknäherung sowie die Trapeznäherung. Die hier genannten Angaben wurden mithilfe der Quelle \cite{lit:baeni} erarbeitet.
 %
 \subsubsection*{Rechtecknäherung}
-Bei der Rechtecknäherung wird zwischen der linken und rechten Näherung unterschieden. Bei der linken Rechtecknäherung wird der linke Funktionswert wie in Abbildung \vref{img:rechteck} dargestellt als Höhe der zur berechnenden Fläche unter der Kurve verwendet. Bei der rechten Näherung dementsprechend der rechte Funktionswert. \par
+Bei der Rechtecknäherung wird zwischen der linken und rechten Näherung unterschieden. Bei der linken Rechtecknäherung wird der linke Funktionswert, wie in Abbildung \vref{img:rechteck} dargestellt, als Höhe der zu berechnenden Fläche unter der Kurve verwendet. Bei der rechten Näherung dementsprechend der rechte Funktionswert. \par
 %
 % Rechtecknäherung
 \image{content/2_grundlagen/image/rechtecknaeherung_bearb}{scale=0.6}{htbp}[Rechtecknäherung \cite{img:baeni}][Rechtecknäherung][img:rechteck]	
@@ -150,12 +150,12 @@ x(n-1) & Abgetasteter Wert an Stelle n -1
 %
 % Trapeszmethode
 \subsubsection*{Trapezmethode}
-Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreicht man mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung im Vergleich zur Rechtecknäherungen. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
+Bei der Trapezmethode wird der Funktionswert zwischen den beiden abgetasteten Werten zusätzlich linear approximiert. Damit erreicht man mit nahezu gleichem Rechenaufwand eine wesentlich bessere Näherung im Vergleich zu den  Rechtecknäherungen. Diese Verbesserung ist in Abbildung \vref{img:trapez} ersichtlich. \par
 %
 % Trapeszmethode
 \image{content/2_grundlagen/image/trapeznaeherung_bearb}{scale=0.6}{htbp}[Trapeznäherung \cite{img:baeni}][Trapeznäherung][img:trapez]
 %
-Auch hier kann das Integral auf relativ einfache Weise rekursiv berechnet werden wie in Gleichung \vref{eq:trapez} zu sehen ist.
+Auch hier kann das Integral auf relativ einfache Weise rekursiv berechnet werden, wie in Gleichung \vref{eq:trapez} zu sehen ist.
 %
 \formula{
 y(n) = y(n-1) + \frac{T_a}{2}  (x(n)+x(n-1))            
