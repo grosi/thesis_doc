@@ -37,12 +37,12 @@ Das Kreuzband wird in Sportarten, in welchen grosse Belastungen des Knies mit Tä
 	\subsection{Aufbau und Struktur}\label{ss:aufbau_struktur}
 		Ein \gls{g:labview}-Projekt besteht aus mindestens einem \gls{ac:vi}, in welchem sich Funktionsblöcke oder weitere \gls{ac:vi} befinden können. Eine \gls{ac:vi} besteht aus einem Frontpanel und einem Blockdiagramm. Das Frontpanel stellt dabei die Benutzeroberfläche dar, wogegen das Blockdiagramm die eigentliche Funktionalität beinhaltet.\par
 		%
-		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei den Computer mit installiertem \gls{g:labview} und das \gls{g:target} eine zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten, die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf derselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessend aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}.}. Ebenso wird zwischen \gls{ac:vi} auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
+		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei den Computer mit installiertem \gls{g:labview} und das \gls{g:target} eine zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten, die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf derselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessend aus diesem Speicher extrahiert werden\footnote{Dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}.}. Ebenso wird zwischen \gls{ac:vi} auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
 		%
 		\image{content/2_grundlagen/image/labview_gliederung}{scale=0.7}{htbp}[\gls{g:labview}-Gliederung][img:labview_gliederung]
 	%
 	\subsection{Hardware}\label{ss:myRIO_hw}
-		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{nähere Angaben sind im Datenblatt im Anhang \vref{s:anhang_datasheets} zu finden.}:
+		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{Nähere Angaben sind im Datenblatt im Anhang \vref{s:anhang_datasheets} zu finden.}:
 		\begin{itemize}
 			\item \acrshort{ac:soc} Xilinx Z-7010
 			\begin{itemize}
@@ -56,14 +56,14 @@ Das Kreuzband wird in Sportarten, in welchen grosse Belastungen des Knies mit Tä
 		%
 		Die gesamte Hardware, inklusive Beschleunigungssensor ist in einem kompakten Gehäuse verbaut, wie die Abbildung \vref{img:myrio} zeigt. Die Befestigung kann mithilfe von drei Schrauben erfolgen.
 		%
-		\image{content/2_grundlagen/image/myrio}{scale=0.2}{htbp}[\gls{g:myrio} \cite{img:myrio}][\gls{g:myrio}][img:myrio]
+		\image{content/2_grundlagen/image/myrio}{scale=0.18}{htbp}[\gls{g:myrio} \cite{img:myrio}][\gls{g:myrio}][img:myrio]
 		%
 		\subsubsection*{Bedienung}
 			Das \gls{g:myrio} benutzt als Betriebssystem ein Real-Time-Linux von \gls{ac:ni}. Dies bietet dem Nutzer eine Vielzahl von Möglichkeiten, das \gls{g:myrio} zu bedienen \cite{lit:rt_linux}.
 			%
 			\begin{description}
 				\item[\gls{g:labview}] Normalerweise erfolgt die Bedienung via \gls{g:labview}. Dabei werden \gls{ac:vi} erstellt und auf das \gls{g:myrio} geladen. Zusätzlich besteht die Möglichkeit, mithilfe vorgefertigter \gls{ac:vi} direkt auf das Real-Time-Linux zuzugreifen (siehe Abbildung \vref{img:myrio_cmd}).
-				\image{content/2_grundlagen/image/labview_myrio_cmd}{scale=0.9}{htbp}[System-\gls{ac:vi}s auf \gls{g:myrio} \cite{img:myrio_labview}][System-\gls{ac:vi} auf \gls{g:myrio}][img:myrio_cmd]
+				\image{content/2_grundlagen/image/labview_myrio_cmd}{scale=0.9}{htbp}[System-\gls{ac:vi} auf \gls{g:myrio} \cite{img:myrio_labview}][System-\gls{ac:vi} auf \gls{g:myrio}][img:myrio_cmd]
 				%
 				\item[NI MAX] MAX steht für Measurement and Automation-Explorer und ist ein Werkzeug für die Verbindungsaufnahme und Konfiguration von \gls{ac:ni}-Hardware wie das \gls{g:myrio}. Ausserdem stehen abhängig von der Hardware unterschiedliche Diagnose-Werkzeuge zur Verfügung. Die Installation von NI MAX erfolgt zeitgleich mit \gls{g:labview} \cite{lit:ni_max}. 
 				%
@@ -83,6 +83,8 @@ Das Kreuzband wird in Sportarten, in welchen grosse Belastungen des Knies mit Tä
 			Wie in Abschnitt \vref{ss:aufbau_struktur} bereits erläutert, werden in \gls{g:labview} erstellte Dateien auf dem internen Speicher der \gls{g:myrio} abgelegt. Der Datentransfer zum \gls{g:host} kann über drei Arten erfolgen:
 			\begin{description}
 				\item[HTTP/\gls{g:webdav}] Die einfachste Möglichkeit ist, die Daten via Webbrowser direkt vom \gls{g:myrio} herunterzuladen. Dies wird ermöglicht durch \gls{g:webdav}, einem offenem Standard für Datenkommunikation im Internet. Für den Zugriff muss zum einem der richtige Pfad und müssen zum anderen die korrekten Benutzerdaten angegeben werden:
+%				\image{content/2_grundlagen/image/webdav_myrio}{scale=0.5}{htbp}[Dateiexplorer][img:myrio_webdav]
+				\newpage
 				\begin{itemize}
 					\item Pfad: \texttt{http://172.22.11.2/files/}
 					\item Benutzername: admin
@@ -109,7 +111,7 @@ In der Linearen Algebra bietet die Rotationsmatrix die Möglichkeit, einen Punkt 
 %
 Ziel ist, den Punkt $P$ mit den Koordinaten $\left(x\mid y\mid z\right)$ um den Winkel $\phi$ im Gegenuhrzeigersinn um die Gerade $g$ in den Punkt $P'$ mit Koordinaten $\left(x'\mid y'\mid z'\right)$ zu drehen. Die Gerade $g$ hat dabei die Richtung $\overrightarrow{n}=\left(a\;b\;c\right)^{T}$ und verläuft durch den Ursprung. Ihre Parameterdarstellung ist somit: $\overrightarrow{r}= \lambda*\overrightarrow{n}$ mit $\lambda\;\epsilon\;\mathbb{R}$.\par
 %
-\image{content/2_grundlagen/image/rotmat}{scale=0.8}{htbp}[Drehung des Punktes $P$ in $P'$ \cite{img:linalg2}][Drehung des Punktes $P$ in $P'$][img:rotmat]
+\image{content/2_grundlagen/image/rotmat}{scale=0.75}{htbp}[Drehung des Punktes $P$ in $P'$ \cite{img:linalg2}][Drehung des Punktes $P$ in $P'$][img:rotmat]
 %           
 Die Rotationsmatrix ist, wie schon erwähnt, definiert durch den Drehwinkel $\phi$ und die Geraden respektive Rotationsachse $g$. In dieser Matrix wird, wie in Abbildung \vref{img:rotmat} ersichtlich, zuerst der Schnittpunkt $S$ der Geraden $g$ mit der Ebene $E$ berechnet. In der Ebene $E$ liegen die Punkte $P$ und $P'$; die Ebene $E$ steht senkrecht auf der Gerade $g$. Aus dem Schnittpunkt $S$ und dem Ausgangspunkt $P$ ist die Berechnung des gedrehten Punktes $P'$ möglich. Die Berechnung des gedrehten Punktes $P'$ mit der Rotationsmatrix lässt sich wie in Gleichung \vref{eq:rot} zusammenfassen.\par
 %
