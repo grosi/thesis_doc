@@ -661,15 +661,15 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 	%
 	%
 	\subsection{Interpretation}\label{ss:interpretation_tran}
-		Über alle Messungen und Positionen kam es zu Abweichung bezogen auf die Kontrollgruppe. Dabei kam es zu einer maximalen Abweichung von \unit[2.203]{cm} bei der y-/z-Position und langsamer Geschwindigkeit, was bereits einem Fehler von \unit[44.1]{\%} entspricht. Diesen beiden Messvoraussetzungen stellen hinsichtlich dieser grossen Abweichung eine Ausnahme dar, sind die übrigen Messungen doch innerhalb von \unit[30]{\%}. Weiter ist auffallend das der Mittelwert bei den Postionen x und z geringer als \unit[5]{cm} ausfiel, wohingegen die y-Position einen Wert darüber hat. Eine letzte Auffälligkeit zeigt sich bei den Standardabweichungen der Messungen. Wiederum sticht die y-Position mit einem höheren Wert bei beiden Geschwindigkeiten heraus.\par
+		Über alle Messungen und Positionen kam es, bezogen auf die Kontrollgruppe, zu Abweichungen. Dabei kam es zu einer maximalen Abweichung von \unit[2.203]{cm} bei der y-/z-Position und langsamer Geschwindigkeit, was bereits einem Fehler von \unit[44.1]{\%} entspricht. Diese beiden Messvoraussetzungen stellen hinsichtlich dieser grossen Abweichung eine Ausnahme dar, liegen die übrigen Messungen doch innerhalb von \unit[30]{\%}. Weiter ist auffallend, dass der Mittelwert bei den Postionen x und z kleiner als \unit[5.0]{cm} ausfiel, wohingegen die y-Position einen Wert hat, der darüber liegt. Eine letzte Auffälligkeit zeigt sich bei den Standardabweichungen der Messungen. Wiederum sticht die y-Position mit einem höheren Wert bei beiden Geschwindigkeiten heraus.\par
 		%
-		Die Hohe Abweichung bei langsamer Geschwindigkeit der Positionen y und z kann nicht begründet werden. Weder die relativ hohe Ungenauigkeit der Kontrollgruppe von geforderten $\pm$\unit[1]{cm} noch ein anderer Einfluss kann dieses Phänomen erklären. Denn die übrige Messung, die x-Position, hat bei der gleichen Geschwindigkeit lediglich einen absoluten Fehler von \unit[0.341]{cm}. Eine grössere Anzahl von Messungen könnte hier eventuell die Situation klären.\par 
+		Die Hohe Abweichung bei \textsf{langsamer} Geschwindigkeit der Positionen y und z kann nicht begründet werden. Weder die relativ hohe Ungenauigkeit der Kontrollgruppe von geforderten $\pm$\unit[1.0]{cm} noch kann ein anderer Einfluss dieses Phänomen erklären. Denn die übrige Messung, die x-Position, hat bei der gleichen Geschwindigkeit lediglich einen absoluten Fehler von \unit[0.341]{cm}. Eine grössere Anzahl von Messungen könnte hier eventuell die Situation klären.\par 
 		%
-		Wie erwähnt kommt es bei der y-Position, im Gegensatz zu den übrigen Positionen, zu einer Überschätzung der aktuellen Position. Dies kann auf einen Messfehler des Beschleunigungssensor zurückgeführt werden. Ein beständiger Offset auf den gemessenen Werten hat, bedingt durch die zweifache Integration, einen Drift zur Folge\footnote{In der Literatur ist dies unter dem Begriff \textsf{Integration Drift} bekannt \cite{lit:drift_int}.}. Durch die Bewegungsdetektion wird dies zwar weitestgehend unterdrückt, jedoch nur wenn der Sensor in Ruhe ist. Bei einer Bewegung kommt dieses Fehlverhalten zum Zuge und hat entweder einen positive (y-Position) oder negative Verfälschung des Resultates zur Folge (x- und z-Position).
+		Wie erwähnt, kommt es bei der y-Position, im Gegensatz zu den übrigen Positionen, zu einer Überschätzung der aktuellen Position. Dies kann auf einen Messfehler des Beschleunigungssensors zurückgeführt werden. Ein beständiger Offset auf den gemessenen Werten hat, bedingt durch die zweifache Integration, einen Drift zur Folge\footnote{In der Literatur ist dies unter dem Begriff \textsf{Integration Drift} bekannt \cite{lit:drift_int}.}. Durch die Bewegungsdetektion wird dies zwar weitestgehend unterdrückt, jedoch nur, wenn der Sensor in Ruhe ist. Bei einer Bewegung kommt dieses Fehlverhalten zum Zuge und hat entweder eine positive (y-Position) oder eine negative Verfälschung des Resultates zur Folge (x- und z-Position).
 		%
-		Der auffallende Punkt bezüglich der Standardabweichung der y-Position lässt sich ebenfalls begründen. Betrachtet man den Testaufbau und die Befestigungsart währende dieser Messung in Abbildung \vref{img:z_real}, so fällt auf wie exponiert das \gls{g:myrio} war. Durch diese eher instabilen Aufbau war der Sensor erhöhten Vibrationen ausgesetzt. Diese widerspiegeln sich in der Standardabweichung und sogar in der Messgenauigkeit (die Abweichungen von \unit[44.1]{\%}, respektive \unit[26.8]{\%} sind beide auffallend hoch).\par
+		Der auffallende Punkt bezüglich der Standardabweichung der y-Position lässt sich ebenfalls begründen. Betrachtet man den Testaufbau und die Befestigungsart währende dieser Messung in Abbildung \vref{img:z_real}, so fällt auf, wie exponiert das \gls{g:myrio} in dieser Position ist. Durch diesen eher instabilen Aufbau ist der Sensor erhöhten Vibrationen ausgesetzt. Diese widerspiegeln sich in der Standardabweichung und sogar in der Messgenauigkeit (die Abweichungen von \unit[44.1]{\%}, respektive \unit[26.8]{\%} sind beide auffallend hoch).\par
 		%
-		Abschliessend kann die aufgestellte Hypothese \vref{hypo:translation} widerlegt werden. Die geforderte Genauigkeit von $\pm$\unit[1]{cm} konnte, trotz der Berücksichtigung der Ungenauigkeit der Kontrollgruppe, von zwei Messungen (y- und z-Position bei der Geschwindigkeit langsam) nicht eingehalten werden. Weiter ist das Konzept sehr anfällig auf Vibrationen, wie die Messung y-Position schnell zeigt. Aus diesen Gründen gilt das Protokoll als nicht erfüllt. Es bleibt jedoch die erwähnten Probleme näher zu untersuchen und für aussagekräftigere Resultate eine höhere Anzahl an Messungen durchzuführen.	
+		Abschliessend kann die aufgestellte Hypothese \vref{hypo:translation} widerlegt werden. Die geforderte Genauigkeit von $\pm$\unit[1.0]{cm} kann, trotz der Berücksichtigung der Ungenauigkeit der Kontrollgruppe, von zwei Messungen (y- und z-Position bei der Geschwindigkeit \textsf{langsam}) nicht eingehalten werden. Weiter ist das Konzept sehr anfällig auf Vibrationen, wie die Messung y-Position \textsf{schnell} zeigt. Aus diesen Gründen gilt das Protokoll als nicht erfüllt. Es bleibt jedoch, die erwähnten Probleme näher zu untersuchen und für aussagekräftige Resultate eine höhere Anzahl Messungen durchzuführen.	
 %
 %
 %Verifikation Translation und Rotation überlagert
@@ -677,20 +677,20 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 	%
 	%
 	\subsection{Grund/Zweck der Messung}\todo{anpassen an Abschnitt 3.1}
-		Der Bewegungsablauf eines Knies umfasst eine Translation, die mit einer Rotation überlagert ist. Für eine abschliessende Überprüfung des Algorithmus sollen nun diese beiden Komponenten zeitgleich überprüft werden. Im Falle eines positiven Messergebnisse kann das Konzept, respektive der Algorithmus als geeignet betrachtet und implementiert werden. Die Anforderungen an das Messergebnis sind in der Hypothese \vref{hypo:tran_rot} festgelegt.
+		Der Bewegungsablauf eines Knies umfasst eine Translation, die mit einer Rotation überlagert ist. Für eine abschliessende Überprüfung des Algorithmus sollen nun diese beiden Komponenten zeitgleich überprüft werden. Im Falle eines positiven Messergebnisses kann das Konzept, respektive der Algorithmus, als geeignet betrachtet und implementiert werden. Die Anforderungen an das Messergebnis sind in der Hypothese \vref{hypo:tran_rot} festgelegt.
 		\begin{hypo}\label{hypo:tran_rot}
-			Das Messergebnis ist eine Bewegung in der \gls{g:transversalebene}, wobei nur die y-Komponente interessiert. Sie ist dabei eine Widerspiegelung des realen Ablaufs mit einer Abweichung von $\pm$\unit[1]{cm}\footnote{Erläuterungen zur geforderten Messgenauigkeit sind im Abschnitt \vref{ss:messgenauigkeit} zu finden.}.
+			Das Messergebnis ist eine Bewegung in der \gls{g:transversalebene}, wobei nur die y-Komponente interessiert. Sie ist dabei eine Widerspiegelung des realen Ablaufs mit einer Abweichung von $\pm$\unit[1.0]{cm}\footnote{Erläuterungen zur geforderten Messgenauigkeit sind im Abschnitt \vref{ss:messgenauigkeit} zu finden.}.
 		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}\label{ss:testumgebung_tran_rot}
 		Für eine aussagekräftige Messung muss eine Kniebewegung möglichst exakt nachgebildet werden können. Weiter sollten die Messungen reproduzierbar sein. Für diesen Zweck wurde eigens eine Mechanik konstruiert und aufgebaut.\par 
 		%
-		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG \url{http://www.boschrexroth.com}.} und ist durch das sehr anpassbar. Der Aufbau erlaubt es einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontal Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} M\low{1} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht ist. Die Position ist dabei so gewählt, dass sie der Kniehöhe eines Durchschnittsmenschen entspricht. Für das errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät M\low{2} befestigt, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung \vref{img:messaufbau_tran_rot} ersichtlich
+		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG \url{http://www.boschrexroth.com}.} und ist dadurch sehr anpassbar. Der Aufbau erlaubt es, einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontale Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} M\low{1} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht ist. Die Position ist dabei so gewählt, dass sie der Kniehöhe eines Durchschnittsmenschen entspricht. Für das Errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät M\low{2} befestigt, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung \vref{img:messaufbau_tran_rot} ersichtlich.
 		%
 		\image{content/3_konzept/image/messaufbau_tran_rot}{scale=0.2}{htbp}[Messaufbau Translation, Rotation überlagert][img:messaufbau_tran_rot]
 		%
-		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung \textsf{TR1}, \textsf{TR2} und \textsf{TR3} am Rotationsarm.}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
+		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst, ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm eingestellt werden\footnote{Markierung \textsf{TR1}, \textsf{TR2} und \textsf{TR3} am Rotationsarm.}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
 		%
 		\input{content/3_konzept/table/messmittel_tran_rot}	
 	%
@@ -707,18 +707,18 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				\item \textbf{Kontrollgruppe} Die Kontrollgruppe dient als Basis für die spätere Auswertung. Die Aufnahme der Daten erfolgt zum einen messtechnisch (Radius und Winkel) und zum anderen mathematisch (Berechnung der Pfadlänge).
 			\end{itemize}
 			%
-			Das unterschiedliche Messverfahren stellt die unabhängige Variabel in diesem Protokoll dar.
+			Das unterschiedliche Messverfahren stellt die unabhängige Variable in diesem Protokoll dar.
 		%
 		\subsubsection*{Testgruppe Messmethodik}
 			Die Messmethodik der Testgruppe ist äquivalent zur Messmethodik des vorherigen Protokolls im Abschnitt \vref{ss:messmethodik_kontroll_tran}. Für die bessere Gliederung der Protokolle wurde dennoch eigens das \gls{g:matlab}-Skript \texttt{Check\_Translation\_Rotation\_final.m} erstellt. Für eine detaillierte Einsicht ins Skript sei auf den Anhang \vref{s:anhang_matlab} verwiesen.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
-			Wie angetönt verwendet die Kontrollgruppe messtechnische und mathematische Verfahren um den zurückgelegten Weg zu ermitteln.  
-			Gemessen wird mit Hilfe von Massstab M\low{4} und Winkelmesser M\low{2} die aktuelle Kniehöhe (konstant über alle Messungen hinweg) und der mögliche Winkelbereich $\alpha$ der aktuellen Auslenkung. Als Ausgangslage für die Aufnahme der skalaren Messgrössen dient die Abbildung \vref{img:messaufbau_dimensionen}. 
+			Wie angetönt, verwendet die Kontrollgruppe messtechnische und mathematische Verfahren, um den zurückgelegten Weg zu ermitteln.  
+			Gemessen wird mithilfe von Massstab M\low{4} und Winkelmesser M\low{2} die aktuelle Kniehöhe (konstant über alle Messungen hinweg) und der mögliche Winkelbereich $\alpha$ der aktuellen Auslenkung. Als Ausgangslage für die Aufnahme der skalaren Messgrössen dient die Abbildung \vref{img:messaufbau_dimensionen}. 
 			%
 			\image{content/3_konzept/image/messaufbau}{scale=0.5}{htbp}[Messaufbau - Messmethodik][img:messaufbau_dimensionen]
 			%
-			Die benötigten Grössen sind zum einen der Radius $r$ (gemessen vom Drehpunkt bis Position Beschleunigungssensor) und davon abhängig die Bogenlänge $b$ (Entspricht der Pfadlänge des Bewegungsablaufs). Der Radius wird dem Satz des Pythagoras bestimmt, wie die Gleichung \vref{eq:radius} zeigt. 
+			Die benötigten Grössen sind zum einen der Radius $r$ (gemessen vom Drehpunkt bis zur Position Beschleunigungssensor) und, davon abhängig, die Bogenlänge $b$ (entspricht der Pfadlänge des Bewegungsablaufs). Der Radius wird durch den Satz des Pythagoras bestimmt, wie die Gleichung \vref{eq:radius} zeigt. 
 			\formula{
 				r &= \sqrt{x^2+y^2}\\
 				&=\sqrt{47^2+431^2}=\underline{433.56}
@@ -742,41 +742,41 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				}[eq:kreissegement]
 		%
 		\subsubsection*{Testbeschreibungen}
-			Es werden Messungen bei unterschiedlichen Auslenkungen  durchgeführt. Dazu wird die Querverbindung an drei verschiedenen Positionen, erkenntlich an Hand von Markierungen, angebracht (siehe Abbildung \vref{img:messaufbau_tran_rot}). Es wird insgesamt zwischen drei verschiedenen Auslenkungen unterschieden, wobei die Position des \gls{g:myrio} M\low{1} nicht verändert wird. 
+			Es werden Messungen bei unterschiedlichen Auslenkungen durchgeführt. Dazu wird die Querverbindung an drei verschiedenen Positionen, erkenntlich anhand von Markierungen, angebracht (siehe Abbildung \vref{img:messaufbau_tran_rot}). Es wird insgesamt zwischen drei verschiedenen Auslenkungen unterschieden, wobei die Position des \gls{g:myrio} M\low{1} nicht verändert wird. 
 			%
 			\begin{itemize}
-				\item \textbf{Auslenkung 1 \textsf{TR1}} Die erste Auslenkung beträgt \unit[7.5]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich. Daraus ergitbt sich unter Anwendung der Gleichung \vref{eq:kreissegement} eine Pfadlänge von \unit[56.75]{mm}.
+				\item \textbf{Auslenkung 1 \textsf{TR1}} Die erste Auslenkung beträgt \unit[7.5]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich. Daraus ergibt sich unter Anwendung der Gleichung \vref{eq:kreissegement} eine Pfadlänge von \unit[56.75]{mm}.
 				\image{content/3_konzept/image/messaufbau_querstrebe_pos_1}{scale=0.8}{htbp}[Querstreben-Position 1 (Angaben in \unit{mm})][Querstreben-Position 1][img:messaufbau_pos1]
 				%
-				\item \textbf{Auslenkung 2 \textsf{TR2}} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[30]{mm} befestigt. Damit ist ein Winkelbereich von \unit[15]{°} und eine Pfadlänge \unit[113.5]{mm} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
+				\item \textbf{Auslenkung 2 \textsf{TR2}} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[30]{mm} befestigt. Damit ist ein Winkelbereich von \unit[15]{°} und eine Pfadlänge von \unit[113.5]{mm} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
 				\image{content/3_konzept/image/messaufbau_querstrebe_pos_2}{scale=0.8}{htbp}[Querstreben-Position 2 (Angaben in \unit{mm})][Querstreben-Position 2][img:messaufbau_pos2]
 				%
-				\item \textbf{Auslenkung 3 \textsf{TR3}} Die maximale Auslenkung von \unit[23.5]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[60]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt. Für die Pfadlänge ergibt sich mit Hilfe der Gleichung \vref{eq:kreissegement} \unit[174.04]{mm}.
+				\item \textbf{Auslenkung 3 \textsf{TR3}} Die maximale Auslenkung von \unit[23.5]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist bei \unit[60]{mm}, wie die Abbildung \vref{img:messaufbau_pos3} zeigt. Für die Pfadlänge ergibt sich mithilfe der Gleichung \vref{eq:kreissegement} \unit[174.04]{mm}.
 				\image{content/3_konzept/image/messaufbau_querstrebe_pos_3}{scale=0.8}{htbp}[Querstreben-Position 3 (Angaben in \unit{mm})][Querstreben-Position 3][img:messaufbau_pos3]
 			\end{itemize}
 			%
-			Der Messablauf umfasst insgesamt 4 Schritte, die für jede Auslenkung 15 mal wiederholt werden müssen.
+			Der Messablauf umfasst insgesamt 4 Schritte, die für jede Auslenkung 15-mal wiederholt werden müssen.
 			\begin{enumerate}
-				\item Auslenkung wie zuvor angeben einstellen.
-				\item Den Schwenkarm genau senkrecht Ausrichten.
-				\item Das \gls{g:labview}-Programm ausführen.
-				\item Messung durchführen.
+				\item Auslenkung einstellen, wie zuvor angeben 
+				\item Den Schwenkarm genau senkrecht ausrichten
+				\item Das \gls{g:labview}-Programm ausführen
+				\item Messung durchführen
 				\begin{enumerate}
-					\item Für die Bestimmung der Rotationsmatrix \unit[4]{s} warten.
-					\item Den Rotationsarm gegen den Uhrzeigersinn einmal drehen und dabei auf eine möglichst konstante Geschwindigkeit achten.
-					\item In Ausgangsposition verharren bis \unit[11]{s} verstrichen sind.
+					\item Für die Bestimmung der Rotationsmatrix \unit[4]{s} warten
+					\item Den Rotationsarm einmal gegen den Uhrzeigersinn drehen und dabei auf eine möglichst konstante Geschwindigkeit achten
+					\item In Ausgangsposition verharren bis \unit[11]{s} verstrichen sind
 				\end{enumerate}
 			\end{enumerate}
 		%
 		\subsubsection*{Datenauswertung}
-			Die Messergebnisse der Testgruppe muss hinsichtlich der Kontrollgruppe ausgewertet werden. Dabei ist die ermittelte Entfernung die abhängige Variabel. Untersucht werden die absoluten und relativen Messfehler, sowie die Standardabweichung der Messung. Durch die einmalig Umdrehung wird eine Endposition gleich der Startposition (Ursprung = \unit[0]{cm}) erwartet, was auch als Referenz zur Bestimmung der Fehlerabweichung dient. 
+			Die Messergebnisse der Testgruppe müssen hinsichtlich der Kontrollgruppe ausgewertet werden. Dabei ist die ermittelte Entfernung die abhängige Variable. Untersucht werden die absoluten und relativen Messfehler sowie die Standardabweichung der Messung. Durch die einmalig Umdrehung wird eine Endposition gleich der Startposition (Ursprung = \unit[0.0]{cm}) erwartet, was auch als Referenz zur Bestimmung der Fehlerabweichung dient. 
 			%
 			\paragraph*{Auslenkung 1} 
-				Über alle Messungen hinweg ergibt sich bei der Auslenkung 1 einen mittleren absoluten Fehler von \unit[-348.02]{cm} was relativ \unit[-6'960.5]{\%} entspricht. Die Messung an sich weist einen Mittelwert von \unit[-348.06]{cm} und eine Standardabweichung von \unit[76.39]{cm} auf. Das Ergebnis, inklusive des eingezeichneten Mittelwerts (blau) und der Standardabweichung (rot) ist in der Abbildung \vref{img:auslenkung_1_y} ersichtlich. 
+				Über alle Messungen hinweg ergibt sich bei der Auslenkung 1 ein mittlerer absoluter Fehler von \unit[-348.02]{cm} was relativ \unit[-6'960.5]{\%} entspricht. Die Messung an sich weist einen Mittelwert von \unit[-348.06]{cm} und eine Standardabweichung von \unit[76.39]{cm} auf. Das Ergebnis, inklusive des eingezeichneten Mittelwerts (blau) und der Standardabweichung (rot), ist in der Abbildung \vref{img:auslenkung_1_y} ersichtlich. 
 				\image{content/3_konzept/image/auslenkung_1_Y}{scale=0.8}{htbp}[Translation Rotation Auslenkung 1][img:auslenkung_1_y]
 			%
 			\paragraph*{Auslenkung 2}
-				Bei der zweiten Auslenkung kann wie zuvor eine lineare Translation beobachtet werden. Gemittelt über alle Messungen weist sie einen Mittelwert von \unit[-665.05]{cm} auf, was zugleich dem absoluten Fehler entspricht (der relative Fehler ist \unit[-13'301]{\%}). Die Standardabweichung beträgt \unit[82.57]{cm}. Die Abbildung \vref{img:auslenkung_2_y} zeigt die 15 durchgeführten Messungen.
+				Bei der zweiten Auslenkung kann wie zuvor eine lineare Translation beobachtet werden. Gemittelt über alle Messungen, weist sie einen Mittelwert von \unit[-665.05]{cm} auf, was zugleich dem absoluten Fehler entspricht (der relative Fehler ist \unit[-13'301]{\%}). Die Standardabweichung beträgt \unit[82.57]{cm}. Die Abbildung \vref{img:auslenkung_2_y} zeigt die 15 durchgeführten Messungen.
 				\image{content/3_konzept/image/auslenkung_2_Y}{scale=0.8}{htbp}[Translation Rotation Auslenkung 2][img:auslenkung_2_y]
 			%
 			\paragraph*{Auslenkung 3}
@@ -784,38 +784,38 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				\image{content/3_konzept/image/auslenkung_3_Y}{scale=0.8}{htbp}[Translation Rotation Auslenkung 3][img:auslenkung_3_y]
 			%
 			%
-			Die Tabelle \vref{tab:auswertung_tran_rot} zeigt die beschriebenen Messergebnisse zusammengefasst. Die dienen als Ausgangslage für die folgende Interpretation (siehe folgender Abschnitt \vref{ss:interpretation_tran_rot}).
+			Die Tabelle \vref{tab:auswertung_tran_rot} zeigt die beschriebenen Messergebnisse zusammengefasst. Sie dienen als Ausgangslage für die folgende Interpretation (siehe folgender Abschnitt \vref{ss:interpretation_tran_rot}).
 			%
 			\input{content/3_konzept/table/auswertung_tran_rot}
 	%
 	%
 	\subsection{Interpretation}\label{ss:interpretation_tran_rot}
-Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen bezogen auf die Kontrollgruppe zu verbuchen. Die maximale Abweichung von \unit[-11.1]{m}, was einem Fehler von \unit[-22'233.5]{\%} entspricht, sind bei den Messungen der Auslenkung 3 aufgetreten. Die Abweichungen in Auslenkung 1 und 2 sind zwar geringer als in Auslenkung 3, jedoch auch enorm gross (Auslenkung 1 \unit[-3.5]{m}, Auslenkung 2 \unit[-6.7]{m}).\par
+Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen, bezogen auf die Kontrollgruppe zu verbuchen. Die maximale Abweichung von \unit[-1'111.68]{cm}, was einem Fehler von \unit[-22'233.5]{\%} entspricht, sind bei den Messungen der Auslenkung 3 aufgetreten. Die Abweichungen in Auslenkung 1 und 2 sind zwar geringer als in Auslenkung 3, jedoch auch enorm gross (Auslenkung 1 \unit[-348.02]{cm}, Auslenkung 2 \unit[-665.05]{cm}).\par
 %
-Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal einen cm genau angefahren werden kann. Diese Genauigkeit ist bei weitem kleiner als die gemessenen Abweichungen.\par
+Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal \unit[1.0]{cm} genau angefahren werden kann. Diese Genauigkeit ist bei weitem kleiner als die gemessenen Abweichungen.\par
 %
-Wie schon in  Abschnitt \vref{ss:interpretation_tran} gesehen ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, so wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige cm auf einem Messdauer von \unit[10]{s} ausmacht wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
+Wie schon in  Abschnitt \vref{ss:interpretation_tran} gesehen ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige cm auf einem Messdauer von \unit[10]{s} ausmacht, wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
 %
-Die enormen Abweichungen kann mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung des Sensors durch eine Rotation, so wird diese nicht mehr richtig kompensiert. Eine Projektion der Gravitation ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultaten.\par
+Die enormen Abweichungen können mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung des Sensors durch eine Rotation, so wird diese nicht mehr richtig kompensiert. Eine Projektion der Gravitation ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultate.\par
 %
-Da bei der Auslenkung 3 die grösste Rotation bezogen auf die Drehung des Sensors durchgeführt wurde, sind bei diesen Messungen die Abweichungen am grössten. Die Erdbeschleunigung hat in diesem Fall einen deutlichen Einfluss auf die Messungen. Somit werden die x- und y-Komponenten stärker verfälscht, dementsprechend ist auch die Integration fehlerbehafteter.\par
+Da bei der Auslenkung 3 die grösste Rotation, bezogen auf die Drehung des Sensors, durchgeführt wird, sind bei diesen Messungen die Abweichungen am grössten. Die Erdbeschleunigung hat in diesem Fall einen deutlichen Einfluss auf die Messungen. Somit werden die x- und y-Komponenten stärker verfälscht, dementsprechend ist auch die Integration fehlerbehafteter.\par
 %
 Die Hypothese \vref{hypo:tran_rot} wird widerlegt. Die geforderte Genauigkeit von \unit[$\pm$1]{cm} kann nicht im entferntesten erreicht werden. Die Funktion des Konzeptes ist somit nicht gewährleistet. Das Protokoll gilt als nicht erfüllt.
 %
 %
 %Validierung
 \section{Validierung}
-Die drei verschiedenen Verifikationen des Konzeptes haben gezeigt, dass das Konzept für den Anwendungsfall am Knie fehlerbehaftet ist. In diesem Anwendungsfall kommen Bewegungen vor, welche zum einen einer Translation in der \gls{g:transversalebene} sowie einer Rotation entsprechen.\par 
+Die drei verschiedenen Verifikationen des Konzepts haben gezeigt, dass das Konzept für den Anwendungsfall am Knie fehlerbehaftet ist. In diesem Anwendungsfall kommen Bewegungen vor, welche zum einen einer Translation in der \gls{g:transversalebene} sowie einer Rotation entsprechen.\par 
 %
-Das Konzept ist bekanntlich in zwei Teile aufgeteilt. Der erste Teil dient zum Schätzen der Orientierung des Sensors um anschliessend daraus die Kompensation zu berechnen. Dieser Teil des Konzeptes funktioniert gut, was in Abschnitt \vref{ss:rot} verifiziert wurde. Die Orientierung des Sensors vom \gls{g:bodyframe} in das \gls{g:worldframe} kann bei jeder Messung durchgeführt werden.\par
+Das Konzept ist bekanntlich in zwei Teile aufgeteilt. Der erste Teil dient zum Schätzen der Orientierung des Sensors, um anschliessend daraus die Kompensation zu berechnen. Dieser Teil des Konzeptes funktioniert gut, was in Abschnitt \vref{ss:rot} verifiziert wurde. Die Orientierung des Sensors vom \gls{g:bodyframe} in das \gls{g:worldframe} kann bei jeder Messung durchgeführt werden.\par
 %
-Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies wie in Abschnitt \vref{s:verifikation_translation} gezeigt auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissem Fehler nachempfunden werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung.} erstaunlich geringe Standardabweichung von unterhalb \unit[0.6]{cm} auf. Somit wird der zurückgelegte Weg zwar nicht exakt berechnet, jedoch streuen Messungen derselben zurückgelegten Distanz sehr gering.\par
+Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies, wie in Abschnitt \vref{s:verifikation_translation} gezeigt, auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissen Fehler berechnet werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung.} erstaunlich geringe Standardabweichung von weniger als \unit[0.6]{cm} auf. Damit wird der zurückgelegte Weg zwar nicht exakt berechnet aber die Messungen derselben zurückgelegten Distanz weisen eine nur geringe Streuung auf.\par
 % 
-Die Verifikation der Translation mit überlagerten Rotation hingegen zeigen auf, dass der zweite Teil des Konzeptes in welchem die Bewegung berechnet wird im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept wurde nicht beachtet, dass eine Rotation des Sensors vorkommt und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung durch die Projektion der Gravitation auf die Beschleunigung der Bewegung. Die Gravitation verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem additionalem \glqq DC-Anteil\glqq\ woraus der in Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
+Die Verifikation der Translation mit überlagerter Rotation hingegen zeigen auf, dass der zweite Teil des Konzepts, in welchem die Bewegung berechnet wird, im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept wurde nicht beachtet, dass eine Rotation des Sensors vorkommt und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung durch die Projektion der Gravitation auf die Beschleunigung der Bewegung. Die Gravitation verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem additionalen \glqq DC-Anteil\grqq\, woraus der im Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
 %
-Ein wichtiger Punkt zur Verbesserung des Konzeptes, ist die Rotation laufend zu berechnen. In diesem Fall könnten Rotationen des Sensors kompensiert werden und die Gravitation hätte keinen Einfluss auf die Messungen.\par
+Ein wichtiger Punkt zur Verbesserung des Konzepts, ist, die Rotation laufend zu berechnen. In diesem Fall könnten Rotationen des Sensors kompensiert werden und die Gravitation hätte keinen Einfluss auf die Messungen.\par
 %
-Da das Konzept fehlerhaft ist, wurde der Bewegungsablauf am Knie genauer analysiert\footnote{Die folgenden Berechnungen wurden mit dem \gls{g:matlab}-Skript \texttt{Dynamisch\_Statisch.m} im Anhang \vref{s:anhang_matlab} durchgeführt.}. Dazu wird ein einfaches Bewegungsmodell erstellt. Dieses ist in Abbildung \vref{img:dynamisch_statisch} dargestellt.\par
+Da das Konzept fehlerhaft ist, wird der Bewegungsablauf am Knie genauer analysiert\footnote{Die folgenden Berechnungen wurden mit dem \gls{g:matlab}-Skript \texttt{Dynamisch\_Statisch.m} im Anhang \vref{s:anhang_matlab} durchgeführt.}. Dazu wird ein einfaches Bewegungsmodell erstellt. Dieses ist in Abbildung \vref{img:dynamisch_statisch} dargestellt.\par
 %
 \image{content/3_konzept/image/dynamisch_statisch}{scale=0.8}{htbp}[Bewegungsmodell Knie][img:dynamisch_statisch]
 %
@@ -842,7 +842,7 @@ d & maximale laterale Auslenkung\\
 f_0 & Frequenz der Bewegung
 }[eq:auslenkung_beschl]
 %
-Da bei der Bewegung zur Translation zusätzlich eine Rotation hinzukommt wird die Gravitation auf die laterale Beschleunigung projektiert. Dies mach sich mit $a_{g l}(t))$ bemerkbar\footnote{Ist in Abbildung \vref{img:dynamisch_statisch} gut ersichtlich.}. Diese Projektion ist von $\alpha$, dem Winkel der Auslenkung, abhängig und kann mit der Höhe $L$ des Knies, der laterale Auslenkung $x_l(t)$ und der Erdbeschleunigung $g$ berechnet werden. Die Auslenkung $\alpha$ ist einfach mittels Trigonometrie zu berechnen.
+Da bei der Bewegung zur Translation zusätzlich eine Rotation hinzukommt, wird die Gravitation auf die laterale Beschleunigung projiziert. Dies macht sich mit $a_{g l}(t))$ bemerkbar\footnote{Ist in Abbildung \vref{img:dynamisch_statisch} gut ersichtlich.}. Diese Projektion ist von $\alpha$, dem Winkel der Auslenkung, abhängig und kann mit der Höhe $L$ des Knies, der laterale Auslenkung $x_l(t)$ und der Erdbeschleunigung $g$ berechnet werden. Die Auslenkung $\alpha$ ist einfach mittels Trigonometrie zu berechnen.
 %
 \formula{
 \alpha = sin(\frac{x_l(t)}{L})
@@ -853,19 +853,19 @@ x_l(t) & laterale Auslenkung\\
 L & Länge des Knies
 }[eq:auslenkung_beschl]
 %
-Da die laterale Auslenkung im Vergleich zur Kniehöhe deutlich kleiner ist, kann die Kleinwinkelnäherung angewendet werden ($\alpha = sin(\alpha)$). Die projektiert Gravitation $a_{l g}$ ist somit:
+Da die laterale Auslenkung im Vergleich zur Kniehöhe deutlich kleiner ist, kann die Kleinwinkelnäherung angewendet werden ($\alpha = sin(\alpha)$). Die projiziert Gravitation $a_{l g}$ ist somit:
 %
 \formula{
 a_{l g} = g*\frac{x_l(t)}{L}
 }
 {
-a_{l g} & projektierte Gravitation\\ 
+a_{l g} & projizierte Gravitation\\ 
 g 	&	Gravitationskonstante\\
 x_l(t) & laterale Auslenkung\\
 L & Länge des Knies
 }[eq:auslenkung_beschl]
 %   
-Werden nun die Amplituden der lateralen Beschleunigung $a_{l mov}(t)$ und der projizierten Gravitation $a_{l g}$ bei verschiedenen Frequenzen verglichen, so wird eine kritische Frequenz ersichtlich bei der beide Amplituden gleich gross sind. Dazu setzen wir die beiden Beschleunigungen gleich. Das Vorzeichen bei $a_{l mov}(t)$ kann hier vernachlässigt werden, es entspricht nur einer Phasendrehung um \unit[180]{°}. 
+Werden nun die Amplituden der lateralen Beschleunigung $a_{l mov}(t)$ und der projizierten Gravitation $a_{l g}$ bei verschiedenen Frequenzen verglichen, so wird eine kritisches Mass erreicht, wenn beide Amplituden gleich gross sind. Dazu werden die beiden Beschleunigungen gleich gesetzt. Das Vorzeichen bei $a_{l mov}(t)$ kann hier vernachlässigt werden, es entspricht nur einer Phasendrehung um \unit[180]{°}. 
 %
 \formula{
 a_{l mov}(t) &= a_{l g} \\[2ex]
@@ -874,7 +874,7 @@ a_{l mov}(t) &= a_{l g} \\[2ex]
 {
 }[eq:auslenkung_beschl]
 % 
-Die maximale Auslenkung $d$ sowie die Abhängigkeit der Zeit kürzen sich weg und wir erhalten für die kritische Frequenz $f_k$.
+Die maximale Auslenkung $d$ sowie die Abhängigkeit der Zeit kürzen sich weg; die Gleichung für die kritisch Frequenz $f_k$ lautet:
  %
 \formula{
 f_k = \sqrt{\frac{g}{(2\pi)^2*L}}
@@ -882,8 +882,8 @@ f_k = \sqrt{\frac{g}{(2\pi)^2*L}}
 {
 }[eq:auslenkung_beschl]
 %
-Diese kritische Frequenz liegt bei einer Kniehöhe von $L$ = \unit[0.5]{m} auf $f_k$ = \unit[0.7]{Hz}. Ist die Frequenz der Bewegung viel grösser als diese Grenzfrequenz, so hat die projektierte Gravitation nahezu keinen Einfluss auf die resultierende Beschleunigung, dies ist der dynamische Fall. Ist die Grenzfrequenz kleiner so liegt der statische Fall vor, wo die Projektion der Gravitation grösser als die laterale Beschleunigung der Bewegung ist. Dies wurde in \gls{g:matlab} simuliert und in Abbildung \vref{img:kritische_freq} dargestellt.\par
+Diese kritische Frequenz liegt bei einer Kniehöhe von $L$ = \unit[50]{cm} auf $f_k$ = \unit[0.7]{Hz}. Ist die Frequenz der Bewegung viel grösser als diese Grenzfrequenz, so hat die projizierte Gravitation nahezu keinen Einfluss auf die resultierende Beschleunigung: Dies ist der dynamische Fall. Ist die Grenzfrequenz kleiner, so liegt der statische Fall vor, wo die Projektion der Gravitation grösser als die laterale Beschleunigung der Bewegung ist. Dies wurde in \gls{g:matlab} simuliert und in Abbildung \vref{img:kritische_freq} dargestellt.\par
 %
 \image{content/3_konzept/image/kritische_freq}{scale=0.8}{htbp}[kritische Frequenz statische, dynamische Bewegung][img:kritische_freq]
 %
-Aufgrund dieser Erkenntnis kann ein neuer Algorithmus entwickelt werden. Dies umfasst jedoch nicht mehr diese Arbeit. 
+Aufgrund dieser Erkenntnis kann ein neuer Algorithmus entwickelt werden. Dieser Algorithmus gehört nicht mehr zu dieser Arbeit, sondern in die Pedenzenliste.
