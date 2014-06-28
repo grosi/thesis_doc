@@ -31,7 +31,7 @@
 			Im zweiten Zustand erfolgt wie vorgesehen die Signalverarbeitung bestehend aus den Teilen Rotieren, Bewegungsdetektion und Integrieren. Für korrekte Ergebnisse muss zuvor eine Initialisation durchgeführt worden sein. Im Gegensatz zum Konzept und dem vorherigen Zustand erfolgt die Verarbeitung Sample basierend. So kann eine schnelle Laufzeit und ein geringerer Speicherverbrauch forciert, jedoch nicht garantiert werden. Zusätzlich zum Konzept muss noch eine Möglichkeit bestehen die verarbeiteten Daten aus dem Target zu extrahieren. Dazu muss, wie in Abschnitt \vref{ss:myRIO_hw} beschrieben, ein Netzwerkstream zum \gls{g:host} aufgebaut werden. 
 	%
 	\subsection{Tiefpass-Filterung}
-		\gls{g:labview} bietet eine Vielzahl von Möglichkeiten Filter einzusetzen. Sie unterscheiden sich hauptsächlich durch ihre Charakteristik und Implementierung. Bezüglich der Umsetzung existieren Segment und Sample basierte \gls{ac:vi}s. Da die Signalverarbeitung mit Samples arbeitet, kann ein Tiefpassfilter der \texttt{NI\_PtByPt} Bibliothek eingesetzt werden\footnote{\gls{ac:vi} Bezeichnung \texttt{Butterworth Filter PtByPt.vi}}. Die Charakteristik ist wie im Konzept Butterworth (\acrshort{ac:iir}-Filter).
+		\gls{g:labview} bietet eine Vielzahl von Möglichkeiten Filter einzusetzen. Sie unterscheiden sich hauptsächlich durch ihre Charakteristik und Implementierung. Bezüglich der Umsetzung existieren Segment und Sample basierte \gls{ac:vi}s. Da die Signalverarbeitung mit Samples arbeitet, kann ein Tiefpassfilter der \texttt{NI\_PtByPt} Bibliothek eingesetzt werden\footnote{Die \gls{ac:vi} Bezeichnung ist \texttt{Butterworth Filter PtByPt.vi}.}. Die Charakteristik ist wie im Konzept Butterworth (\acrshort{ac:iir}-Filter).
 	%
 	\subsection{Schätzung der Orientierung}
 		Die Schätzung der Orientierung erfolgt analog zum Konzept. Dazu muss eine eigene \gls{ac:vi} basierend auf bestehenden erstellt werden. Die Implementierung ist im Abschnitt \vref{ss:demo_target} erklärt.
@@ -113,7 +113,7 @@
 		%
 		%
 		\subsubsection*{Frontpanel}
-			Mit dem Frontpanel kann die \texttt{RT Main.vi} und die darunter liegenden \gls{ac:vi}s gesteuert werden. Die möglichen Einstellungen beschränken sich auf ein Minimum. Müssen tiefgreifendere Anpassungen vorgenommen werden\footnote{z.B. Anpassung der Abtastfrequenz}, muss dies in den jeweiligen \gls{ac:vi}s erfolgen. \par
+			Mit dem Frontpanel kann die \texttt{RT Main.vi} und die darunter liegenden \gls{ac:vi}s gesteuert werden. Die möglichen Einstellungen beschränken sich auf ein Minimum. Müssen tiefgreifendere Anpassungen vorgenommen werden\footnote{Z.B. die Anpassung der Abtastfrequenz.}, muss dies in den jeweiligen \gls{ac:vi}s erfolgen. \par
 			%
 			Der Aufbau des Frontpanels kann der Abbildung \vref{img:front_myrio} entnommen werden. Die einzelnen Elemente werden folgt kurz erklärt.
 			\begin{enumerate}
@@ -129,7 +129,7 @@
 	%
 	%
 	\subsection{Host}\label{ss:host}
-		Der \gls{g:host}-Teil des Demonstrators dient lediglich der Darstellung der auf dem \gls{g:target} verarbeiteten Daten. In der Projektstruktur ist die \gls{ac:vi} des \gls{g:host} unter dem Namen \texttt{Desktop Main.vi} zu finden. Die Ausführung erfolgt direkt in \gls{g:labview}, sprich es wird keine Kompilation durchgeführt\footnote{Diese Aussage beruht auf eigens gemachte Beobachtungen der Autoren und kann bewiesen werden.}.
+		Der \gls{g:host}-Teil des Demonstrators dient lediglich der Darstellung der auf dem \gls{g:target} verarbeiteten Daten. In der Projektstruktur ist die \gls{ac:vi} des \gls{g:host} unter dem Namen \texttt{Desktop Main.vi} zu finden. Die Ausführung erfolgt direkt in \gls{g:labview}, sprich es wird keine Kompilation durchgeführt\footnote{Diese Aussage beruht auf eigens gemachte Beobachtungen der Autoren und kann nicht bewiesen werden.}.
 		%
 		\subsubsection*{Visualisierung}
 			Die Darstellung der übertragenen Daten erfolgt sample-basiert. Dazu müssen die Daten zuerst extrahiert und anschliessend ansprechend dargestellt werden. Weite Teile dieses \gls{ac:vi} wurden aus dem Beispielprojekt übernommen, wie auch die Abbildung \vref{img:rx_data} zeigt. Die Darstellung erfolgt durch ein 3D-Modell des \gls{g:myrio} und einem Pfadverlauf in einem x-y-Graph.
@@ -165,7 +165,7 @@
 %
 % Bedienung
 \section{Bedienung}
-	Für einen erfolgreichen Betrieb des Demonstrators sind einige Dinge zu beachten. Falls einer der folgt aufgeführten Schritte nicht funktioniert, sollte zuerst die Verbindung zum \gls{g:myrio} überprüft werden. Dies beinhaltet ebenfalls den aktuellen Zustand des Treibers\footnote{Während der Implementationsphase kam es zu diversen Abstürzen. Durch einen Neustart des \gls{g:host} konnte dieses Problem jedoch jedes mal behoben werden}.\par
+	Für einen erfolgreichen Betrieb des Demonstrators sind einige Dinge zu beachten. Falls einer der folgt aufgeführten Schritte nicht funktioniert, sollte zuerst die Verbindung zum \gls{g:myrio} überprüft werden. Dies beinhaltet ebenfalls den aktuellen Zustand des Treibers\footnote{Während der Implementationsphase kam es zu diversen Abstürzen. Durch einen Neustart des \gls{g:host} konnte dieses Problem jedoch jedes mal behoben werden.}.\par
 	%
 	Die gesamte Bedienung umfasst insgesamt XXX Schritte.
 	\begin{enumerate}
@@ -174,11 +174,11 @@
 		\item Starten der \texttt{RT Main.vi}. Konnte eine Verbindung zum \gls{g:target} hergestellt werden, wird der Kompilationsprozess ohne Probleme beendet werden. Ist dies nicht der Fall, so müssen die Schritte 1 und 2 wiederholt werden.
 		\item Abschliessend folgt der Start der \texttt{Desktop Main.vi}. Konnte eine Verbindung zur \texttt{RT Main.vi} aufgebaut werden, so wird dies durch Indikatoren visualisiert (siehe Abschnitt \vref{ss:demo_target} und \vref{ss:host}, Frontpanel).
 		\item Für korrekte Ergebnisse muss zu Beginn eine Initialisierung durchgeführt werden. Dies erfolgt durch entsprechende Bedienelemente am \gls{g:myrio} oder der \texttt{RT Main.vi} (siehe Abschnitt \vref{ss:demo_target}, Frontpanel).
-		\item Die Messung wird beendet durch das Betätigen der Schaltflächen \textsf{stop} in den jeweiligen \gls{ac:vi}s. Die Ausführung sollte nicht einfach direkt abgebrochen werden, da ansonsten das \gls{g:target} sich einem undefinierten Zustand befinden kann\footnote{\gls{g:labview} präsentiert entsprechende Fehlermeldungen}.
+		\item Die Messung wird beendet durch das Betätigen der Schaltflächen \textsf{stop} in den jeweiligen \gls{ac:vi}s. Die Ausführung sollte nicht einfach direkt abgebrochen werden, da ansonsten das \gls{g:target} sich einem undefinierten Zustand befinden kann\footnote{\gls{g:labview} präsentiert eine entsprechende Fehlermeldungen.}.
 	\end{enumerate}
 %
 \section{Vergleich Konzept - Implementierung}
-	Um eine Aussage bezüglich der Güte der Implementation machen zu können, muss diese mit dem Konzept verglichen werden. Dazu müssen identische Rohdaten durch die beiden Abläufe (\gls{g:matlab}-Skript \texttt{XXX} und \gls{g:labview}-Projekt \texttt{reametric}) verarbeitet und die Ergebnisse einander gegenübergestellt werden\footnote{Durch die Tatsache, dass das \gls{g:matlab}-Skript segment-basiert und die Implementierung sample-basiert arbeiten können nicht dieselben Daten verwendet werden (hätte eine Abänderung der Implementierung oder des Konzepts zur Folge). Deshalb werden zwei unabhängige Messungen unter den identischen Bedingungen durchgeführt und jeweils ausgewertet.}. Angelehnt an die drei Protokolle in den Abschnitten \ref{s:verifikation_rotation} bis \ref{s:verifikation_transaltion_rotation} werden dabei speziell die \textsf{Rotation}, \textsf{Translation} und \textsf{Rotation, Translation überlagert} kontrolliert\footnote{Auf Grund der negativen Ergebnisse der Protokolle wird auf ein detailliertes wiederholen verzichtet und die Implementation nur prinzipiell Überprüft}.
+	Um eine Aussage bezüglich der Güte der Implementation machen zu können, muss diese mit dem Konzept verglichen werden. Dazu müssen identische Rohdaten durch die beiden Abläufe (\gls{g:matlab}-Skript \texttt{XXX} und \gls{g:labview}-Projekt \texttt{reametric}) verarbeitet und die Ergebnisse einander gegenübergestellt werden\footnote{Durch die Tatsache, dass das \gls{g:matlab}-Skript segment-basiert und die Implementierung sample-basiert arbeiten können nicht dieselben Daten verwendet werden (hätte eine Abänderung der Implementierung oder des Konzepts zur Folge). Deshalb werden zwei unabhängige Messungen unter den identischen Bedingungen durchgeführt und ausgewertet.}. Angelehnt an die drei Protokolle in den Abschnitten \ref{s:verifikation_rotation} bis \ref{s:verifikation_transaltion_rotation} werden dabei speziell die \textsf{Rotation}, \textsf{Translation} und \textsf{Rotation, Translation überlagert} kontrolliert\footnote{Auf Grund der negativen Ergebnisse der Protokolle wird auf ein detailliertes wiederholen verzichtet und die Implementation nur prinzipiell überprüft.}.
 	%
 	\subsection*{Schätzung Rotationswinkel und Rotation}
 		Für das Überprüfen der Rotationswinkel und der anschliessenden Rotation wird eine statische Messung in z-Position (erläutert in Abschnitt \vref{ss:methode_tran}, Testbeschreibung) durchgeführt. Die Kontrolle beschränkt sich auf das Endergebnis der Rotation, das $a_{Soll}=[0\quad0\quad 9.81]$ sein sollte.\par

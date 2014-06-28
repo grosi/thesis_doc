@@ -37,12 +37,12 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 	\subsection{Aufbau und Struktur}\label{ss:aufbau_struktur}
 		Ein \gls{g:labview}-Projekt besteht aus mindestens einem \gls{ac:vi}, indem sich Funktionsblöcke oder weitere \gls{ac:vi}s befinden können. Eine \gls{ac:vi} stellt sich zusammen aus einem Frontpanel und einem Blockdiagramm zusammen. Das Frontpanel stellt dabei die Benutzeroberfläche dar, wogegen das Blockdiagramm die eigentliche Funktionalität beinhaltet.\par
 		%
-		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei den Computer mit installiertem \gls{g:labview} und das \gls{g:target} eine zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten, die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf derselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessend aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}}. Ebenso wird zwischen \gls{ac:vi}s auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
+		Ein wichtiger Aspekt im Aufbau eines \gls{g:labview}-Projekts ist die Unterscheidung zwischen dem \gls{g:host} und dem \gls{g:target}. Der \gls{g:host} bezeichnet dabei den Computer mit installiertem \gls{g:labview} und das \gls{g:target} eine zu \gls{g:labview} kompatible embedded Hardware, z.B. eine Datenerfassungskarte. Daten, die auf dem \gls{g:target} erfasst werden, befinden sich trotz bestehender Kommunikation zum \gls{g:host} nicht automatisch auf derselben. Sie werden stattdessen auf dem internen Speicher des \gls{g:target}s gespeichert und müssen anschliessend aus diesem Speicher extrahiert werden\footnote{dieses Fallbeispiel bezieht sich auf die Hardware \gls{g:myrio}.}. Ebenso wird zwischen \gls{ac:vi}s auf dem \gls{g:host} und \gls{g:target} unterschieden. Sie müssen für beide Systeme separat gestartet werden. Die Aufteilung ist im Projektdialog durch eine unterschiedliche Dateibaumtiefe visualisiert, wie der Abbildung \vref{img:labview_gliederung} zu entnehmen ist.
 		%
 		\image{content/2_grundlagen/image/labview_gliederung}{scale=0.7}{htbp}[\gls{g:labview}-Gliederung][img:labview_gliederung]
 	%
 	\subsection{Hardware}\label{ss:myRIO_hw}
-		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{nähere Angaben sind im Datenblatt im Anhang \vref{ch:datasheet_myrio} zu finden}:
+		Für die Datenerfassung wird das \gls{g:myrio} eingesetzt. Es handelt sich dabei um ein günstiges Developmentboard für den raschen Einstieg in \gls{g:labview}. Es bietet folgende für das Projekt notwendige Spezifikationen\footnote{nähere Angaben sind im Datenblatt im Anhang \vref{s:anhang_datasheets} zu finden}:
 		\begin{itemize}
 			\item \acrshort{ac:soc} Xilinx Z-7010
 			\begin{itemize}
@@ -69,7 +69,7 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 				%
 				\item[Weboberfläche] Das \gls{g:myrio} stellt eine Weboberfläche für die Konfiguration bereit. Damit können im gleichen Umfang wie in der Software NI MAX Einstellungen vorgenommen werden. Ergänzend besteht die Möglichkeit auf das interne Dateisystem via HTTP zu zugreifen. Aufgerufen wird die Oberfläche über die IP-Adresse 172.22.11.2 mit einem Internet-Browser.
 				%
-				\item[Terminal] \label{i:terminal}Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}. Als Alternative kann auch Cygwin mit den richtigen Paketen dienen: \url{http://cygwin.com/index.html}}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nennt sich die Option \textsf{Enable Secure Shell Server (sshd)}} aktiviert werden (via NI MAX oder Weboberfläche). Für einen Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
+				\item[Terminal] \label{i:terminal}Um direkt die Möglichkeiten des Real-Time Linux anzuwenden kann via \gls{g:ssh} ein Verbindung zum \gls{g:myrio} hergestellt werden. Dazu ist unter Windows ein Terminal-Client erforderlich\footnote{Beispielsweise kann die Software PuTTY eingesetzt werden: \url{http://www.putty.org/}. Als Alternative kann auch Cygwin mit den richtigen Paketen dienen: \url{http://cygwin.com/index.html}.}. Ausserdem muss die Funktion \textsf{Secure Shell Server (SSHD) deaktivieren}\footnote{\textbf{Achtung:} Hierbei handelt es sich um einen Übersetzungsfehler Englisch/Deutsch. In der englischen Version nennt sich die Option \textsf{Enable Secure Shell Server (sshd)}.} aktiviert werden (via NI MAX oder Weboberfläche). Für einen Verbindungsaufbau werden noch die IP-Adresse und Benutzername/Passwort des \gls{g:myrio} benötigt. Wurden keine Änderungen vorgenommen, so sind dies die folgenden Daten:
 				\begin{itemize}
 					\item IP-Adresse: 172.22.11.2
 					\item Benutzername: admin
@@ -96,7 +96,7 @@ Das Kreuzband wird in Sportarten in welchen grosse Belastungen des Knies mit Tät
 				%
 				\item[\gls{g:ssh}] Ein \gls{g:ssh}-Server bietet \gls{ac:sftp} für die sichere Übertragung von Daten. Dazu müssen die zuvor unter \textsf{Terminal} \vpageref{i:terminal} erwähnten Bedingungen erfüllt sein. Für den Dateitransfer dient das Kommando \texttt{scp}, das wie in Listing \vref{list:sftp} gezeigt angewendet wird.
 				%
-				\begin{lstlisting}[style=bash,caption={SFTP angewendet},label={list:sftp}]
+				\begin{lstlisting}[style=bash,caption={\gls{ac:sftp} angewendet},label={list:sftp}]
 scp admin@172.22.11.2:/Pfad/zur/Datei /Pfad/zur/Zieldatei
 				\end{lstlisting}  
 				%

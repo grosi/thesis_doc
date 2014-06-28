@@ -288,7 +288,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 \section{LabVIEW Rohdaten aufzeichnen}\label{s:konzept:sw}
 		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Die fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
 		%
-		Als Basis für die \acrshort{ac:vi} dient das Standardprojekt \textsf{myRIO Project}\footnote{Das Projekt kann im Startdialog von \gls{g:labview} 2013 angewählt werden} von \gls{g:labview}, das folgende Möglichkeiten mitbringt:
+		Als Basis für die \acrshort{ac:vi} dient das Standardprojekt \textsf{myRIO Project}\footnote{Das Projekt kann im Startdialog von \gls{g:labview} 2013 angewählt werden.} von \gls{g:labview}, das folgende Möglichkeiten mitbringt:
 		%
 		\begin{itemize}
 			\item Anbindung, inkl. Initialisierung den \gls{g:myrio}s
@@ -341,7 +341,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	    	%	
 		%
 		\subsubsection*{Datenaufzeichnen und Verarbeiten-Zustand}
-			Der Hauptzustand dieses \gls{ac:vi}s besteht aus zwei Teilen. Der erste Teil beinhaltet eine Endlosschlaufe\footnote{genauer ein Time Loop, der eine genaue zyklische Ausführung gewährleistet}, die zyklisch Beschleunigungsdaten und Timestamps einliest und buffert. Zusätzlich werden die aktuellen Daten im Diagramm auf dem Frontpanel ausgegeben. Wird die Endlosschleife durch einen Fehler oder durch Betätigung der Stopp-Schaltfläche beendet, so werden im zweiten Teil die gebufferten Daten mit Labels versehen, zu einer N x 4 Matrix zusammen gefasst und in eine Excel-Tabelle geschrieben. Dargestellt ist dieser Ablauf in der Abbildung \vref{img:process}. Die für die Bedienung erforderlichen Komponenten können der Abbildung \vref{img:process_indicator} entnommen werden.
+			Der Hauptzustand dieses \gls{ac:vi}s besteht aus zwei Teilen. Der erste Teil beinhaltet eine Endlosschlaufe\footnote{Genauer ein Time Loop, der eine genaue zyklische Ausführung gewährleistet.}, die zyklisch Beschleunigungsdaten und Timestamps einliest und buffert. Zusätzlich werden die aktuellen Daten im Diagramm auf dem Frontpanel ausgegeben. Wird die Endlosschleife durch einen Fehler oder durch Betätigung der Stopp-Schaltfläche beendet, so werden im zweiten Teil die gebufferten Daten mit Labels versehen, zu einer N x 4 Matrix zusammen gefasst und in eine Excel-Tabelle geschrieben. Dargestellt ist dieser Ablauf in der Abbildung \vref{img:process}. Die für die Bedienung erforderlichen Komponenten können der Abbildung \vref{img:process_indicator} entnommen werden.
 			%
 			\begin{figure}[htbp] %htbp
 				\centering
@@ -392,7 +392,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
-		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{siehe Abschnitt \vref{s:blockdiagramm}} und das erste von drei Experimental-Protokollen\footnote{die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
+		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{siehe Abschnitt \vref{s:blockdiagramm}.} und das erste von drei Experimental-Protokollen\footnote{Die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
 		%
 		\begin{hypo}\label{hypo:rotation}	   
 			Der eingestellte Winkel wird durch die Schätzung richtig bestimmt.	
@@ -403,7 +403,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	\subsection{Material/Testumgebung}
 		Die Messung, respektive Schätzung der Rotationswinkel erfolgt statisch auf einer eigens für dieses Projekt entworfenen Testumgebung, die später zur Simulation eines Bewegungsablaufs des Knies gebraucht wird. Dazu siehe den Abschnitt \vref{ss:testumgebung_tran_rot}, indem auch näher auf die Möglichkeiten des Aufbaus eingegangen wird. Für dieses Protokoll wird lediglich von der Tatsache Gebrauch gemacht, dass das \gls{g:myrio} kontrolliert in verschiedene Positionen gebracht und somit eine Reproduzierbarkeit der Messung gewährleistet werden kann.\par
 		%
-		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Markierung XXX auf Schwenkarm}. Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
+		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Markierung \textsf{R} auf Schwenkarm}. Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
 		%
 		\image{content/3_konzept/image/aufbau_rot}{scale=1}{htbp}[Rotation - Testaufbau][img:messaufbau_rot]	
 		%
@@ -419,7 +419,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			%
 			\begin{itemize}
 				%
-				\item \textbf{Testgruppe} In der Testgruppe werden Beschleunigungsdaten durch das \gls{g:myrio} M\low{1} aufgezeichnet\footnote{siehe Abschnitt \vref{ss:rohdaten_aufzeichnen}} und gespeichert. Im Anschluss zur Messung werden die Daten in \gls{g:matlab} eingelesen und verarbeitet.
+				\item \textbf{Testgruppe} In der Testgruppe werden Beschleunigungsdaten durch das \gls{g:myrio} M\low{1} aufgezeichnet\footnote{siehe Abschnitt \vref{s:konzept:sw}} und gespeichert. Im Anschluss zur Messung werden die Daten in \gls{g:matlab} eingelesen und verarbeitet.
 				%
 				\item \textbf{Kontrollgruppe} Die zweite Gruppe repräsentiert die direkte Messung mit Hilfe des Winkelmessers M\low{2}. Sie dient gleichzeitig der Kontrolle für die folgende Interpretation.
 			\end{itemize}
@@ -427,7 +427,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			Die unabhängige Variabel dieser Gruppen stellt die Messmethodik dar. 
 		%
 		\subsubsection*{Testgruppe Messmethodik}
-			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{XXX}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzept aufbaut. Im Konzept wird aus den in Ruhe aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel wie in Gleichung \vref{eq:pitch} gezeigt berechnet werden. 
+			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{Siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus.}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{XXX}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzept aufbaut. Im Konzept wird aus den in Ruhe aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel wie in Gleichung \vref{eq:pitch} gezeigt berechnet werden. 
 %
 			\formula{
 			M_{rot} &=\begin{bmatrix}a & b & c \\ d & e & f \\ g & h & i \end{bmatrix} \\[1ex]
@@ -450,7 +450,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			Der Messablauf sieht folgende Schritte vor. Sie werden jeweils bei jedem Winkel wiederholt.
 			\begin{enumerate}
 				\item Testaufbau auf den gewünschten Winkel einstellen. Dazu den Winkelmesser M\low{2} verwenden.
-				\item \gls{g:labview}-Programm starten. Es müssen während  \unit[6]{s} Daten aufgezeichnet werden\footnote{definierte minimale Messdauer, vorgeben durch das Konzept}.
+				\item \gls{g:labview}-Programm starten. Es müssen während  \unit[6]{s} Daten aufgezeichnet werden\footnote{Die definierte minimale Messdauer, vorgeben durch das Konzept.}.
 				\item den vorherigen Schritt 5-mal wiederholen.
 				\item Datenextraktion nach mit den in Abschnitt \vref{ss:myRIO_hw} beschriebenen Methoden.
 				\item Daten mit \gls{g:matlab} verarbeiten und auswerten.
@@ -459,7 +459,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 		\subsubsection*{Datenauswertung}
 			Es gilt die Winkelschätzung hinsichtlich des eingestellten Winkels auszuwerten. Weiter muss die Rotation geprüft werden. Das Messergebnis der beiden Messgruppen stellt die abhängige Variabel dar.\par 
 			%
-			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[0.74]{°} (\unit[118]{°}). Dies entspricht den relativen Fehlern von \unit[-0.038]{\%} (\unit[62]{°}), \unit[-0.021]{\%} (\unit[77]{°}), \unit[-0.016]{\%} (\unit[90]{°}), \unit[-0.002]{\%} (\unit[105]{°}) und \unit[0.006]{\%} (\unit[118]{°}).\par
+			Die absolute Messabweichung, gemittelt\footnote{Es wird der arithmetische Mittelwert verwendet.} über die fünf Messungen,  beträgt bei den unterschiedlichen Winkeln \unit[-2.28]{°} (\unit[62]{°}), \unit[-1.65]{°} (\unit[77]{°}), \unit[-1.45]{°} (\unit[90]{°}), \unit[-0.22]{°} (\unit[105]{°}) und \unit[0.74]{°} (\unit[118]{°}). Dies entspricht den relativen Fehlern von \unit[-0.038]{\%} (\unit[62]{°}), \unit[-0.021]{\%} (\unit[77]{°}), \unit[-0.016]{\%} (\unit[90]{°}), \unit[-0.002]{\%} (\unit[105]{°}) und \unit[0.006]{\%} (\unit[118]{°}).\par
 			%
 			Analysiert man die Messungen hinsichtlich ihrer Standardabweichung und des Mittelwerts, so ergibt dies bei \unit[62]{°} den Mittelwert \unit[59.72]{°} und die Standardabweichung \unit[0.009]{°}. Für die übrigen Winkeln sind es \unit[75.35]{°}, \unit[88.55]{°}, \unit[104.78]{°} und \unit[118.74]{°} (Winkel \unit[77]{°}, \unit[90]{°}, \unit[105]{°} und \unit[118]{°}, in dieser Reihenfolge )für den Mittelwert und \unit[0.005]{°}, \unit[0.009]{°}, \unit[0.003]{°} und \unit[0.152]{°} für die Standardabweichung.\par 
 			%
@@ -485,14 +485,14 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 		Die Verifikation der Translation stellt das zweite Experimental-Protokoll dar. Ziel der Messung ist es den kompletten Algorithmus hinsichtlich einer linearen Translation zu überprüfen. Dabei gilt es relevante Fakten wie Genauigkeit und Dynamik zu extrahieren und für die Validierung festzuhalten. Die in der Hypothese \vref{hypo:translation} festgelegten Anforderungen müssen erfüllt werden.
 		%
 		\begin{hypo}\label{hypo:translation}	    	
-			Nach einer linearen Translation um die Distanz \unit[5]{cm} ist das Ergebnis des Algorithmus dieselbe. Die Abweichung ist dabei maximal $\pm$\unit[1]{cm}\footnote{Die Messgenauigkeit ist im Abschnitt \vref{ss:messgenauigkeit} erläutert}. Die Position des \gls{g:myrio} hat keinen Einfluss auf das Messergebnis.
+			Nach einer linearen Translation um die Distanz \unit[5]{cm} ist das Ergebnis des Algorithmus dieselbe. Die Abweichung ist dabei maximal $\pm$\unit[1]{cm}\footnote{Die Messgenauigkeit ist im Abschnitt \vref{ss:messgenauigkeit} erläutert.}. Die Position des \gls{g:myrio} hat keinen Einfluss auf das Messergebnis.
 		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}\label{ss:material_translation}
 		Die Messung muss reproduzierbar sein. Deshalb muss eine Testumgebung gewährleistet sein, die für eine Simulation einer geradlinigen Translation geeignet ist. Diese Voraussetzung erfüllt ein Kreuztisch einer Standbohr- / Fräsmaschine oder ein Werkzeugschlitten einer Drehbank. Damit können vorgegebene Pfade präzise in der x-y-Ebene gefahren werden.\par 
 		%
-		Für die Messung wird der Werkzeugschlitten der Schaublin-Villeneuve M\low{3} aus der mechanischen Abteilung verwendet (siehe Abbildung \vref{img:drehbank}). Dieser erlaubt es eine kontrollierte Translation in der y-Richtung vorzunehmen. Weiter kommt als zentrale Komponente das \gls{g:myrio} M\low{1} zum Einsatz. Es dient der Aufzeichnung der Beschleunigungsdaten. Die gefahrene Distanz wird mit Hilfe des Massstabs M\low{3} angezeichnet\footnote{Der genau Vorschub kann der Bewegungsanforderung hinsichtlich der Geschwindigkeit nicht gerecht werden} (Abbildung \vref{img:distanz}).\par
+		Für die Messung wird der Werkzeugschlitten der Schaublin-Villeneuve M\low{3} aus der mechanischen Abteilung verwendet (siehe Abbildung \vref{img:drehbank}). Dieser erlaubt es eine kontrollierte Translation in der y-Richtung vorzunehmen. Weiter kommt als zentrale Komponente das \gls{g:myrio} M\low{1} zum Einsatz. Es dient der Aufzeichnung der Beschleunigungsdaten. Die gefahrene Distanz wird mit Hilfe des Massstabs M\low{3} angezeichnet\footnote{Der genau Vorschub kann der Bewegungsanforderung hinsichtlich der Geschwindigkeit nicht gerecht werden.} (Abbildung \vref{img:distanz}).\par
 		%
 		\begin{figure}[htbp]
 			\centering
@@ -526,7 +526,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			%
 			\begin{itemize}
 				%
-				\item \textbf{Testgruppe} Die Testgruppe repräsentiert das \gls{g:myrio} M\low{1}, das zur Aufzeichnung der Beschleunigungsdaten benötigt wird. Dabei werden die Daten nur gespeichert und nicht verarbeitet\footnote{Für detailliertere Informationen zur Aufzeichnung sei auf den Abschnitt \vref{ss:rohdaten_aufzeichnen} verwiesen}. Die Signalverarbeitung erfolgt zu einem späteren Zeitpunkt auf einem Computer mit Hilfe von \gls{g:matlab}.
+				\item \textbf{Testgruppe} Die Testgruppe repräsentiert das \gls{g:myrio} M\low{1}, das zur Aufzeichnung der Beschleunigungsdaten benötigt wird. Dabei werden die Daten nur gespeichert und nicht verarbeitet\footnote{Für detailliertere Informationen zur Aufzeichnung sei auf den Abschnitt \vref{s:konzept:sw} verwiesen.}. Die Signalverarbeitung erfolgt zu einem späteren Zeitpunkt auf einem Computer mit Hilfe von \gls{g:matlab}.
 				%
 				\item \textbf{Kontrollgruppe} Die zweite Gruppe stellt die direkte Messung mit dem Werkzeugtisch dar. Sie ist gleichzeitig die Kontrollgruppe, die schlussendlich bei der Interpretation als Ausgangslage gilt.
 			\end{itemize}
@@ -665,7 +665,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 		%
 		Die Hohe Abweichung bei langsamer Geschwindigkeit der Positionen y und z kann nicht begründet werden. Weder die relativ hohe Ungenauigkeit der Kontrollgruppe von geforderten $\pm$\unit[1]{cm} noch ein anderer Einfluss kann dieses Phänomen erklären. Denn die übrige Messung, die x-Position, hat bei der gleichen Geschwindigkeit lediglich einen absoluten Fehler von \unit[0.341]{cm}. Eine grössere Anzahl von Messungen könnte hier eventuell die Situation klären.\par 
 		%
-		Wie erwähnt kommt es bei der y-Position, im Gegensatz zu den übrigen Positionen, zu einer Überschätzung der aktuellen Position. Dies kann auf einen Messfehler des Beschleunigungssensor zurückgeführt werden. Ein beständiger Offset auf den gemessenen Werten hat, bedingt durch die zweifache Integration, einen Drift zur Folge\footnote{In der Literatur ist dies unter dem Begriff \textsf{Integration Drift} bekannt \cite{lit:drift_int}}. Durch die Bewegungsdetektion wird dies zwar weitestgehend unterdrückt, jedoch nur wenn der Sensor in Ruhe ist. Bei einer Bewegung kommt dieses Fehlverhalten zum Zuge und hat entweder einen positive (y-Position) oder negative Verfälschung des Resultates zur Folge (x- und z-Position).
+		Wie erwähnt kommt es bei der y-Position, im Gegensatz zu den übrigen Positionen, zu einer Überschätzung der aktuellen Position. Dies kann auf einen Messfehler des Beschleunigungssensor zurückgeführt werden. Ein beständiger Offset auf den gemessenen Werten hat, bedingt durch die zweifache Integration, einen Drift zur Folge\footnote{In der Literatur ist dies unter dem Begriff \textsf{Integration Drift} bekannt \cite{lit:drift_int}.}. Durch die Bewegungsdetektion wird dies zwar weitestgehend unterdrückt, jedoch nur wenn der Sensor in Ruhe ist. Bei einer Bewegung kommt dieses Fehlverhalten zum Zuge und hat entweder einen positive (y-Position) oder negative Verfälschung des Resultates zur Folge (x- und z-Position).
 		%
 		Der auffallende Punkt bezüglich der Standardabweichung der y-Position lässt sich ebenfalls begründen. Betrachtet man den Testaufbau und die Befestigungsart währende dieser Messung in Abbildung \vref{img:z_real}, so fällt auf wie exponiert das \gls{g:myrio} war. Durch diese eher instabilen Aufbau war der Sensor erhöhten Vibrationen ausgesetzt. Diese widerspiegeln sich in der Standardabweichung und sogar in der Messgenauigkeit (die Abweichungen von \unit[44.1]{\%}, respektive \unit[26.8]{\%} sind beide auffallend hoch).\par
 		%
@@ -679,18 +679,18 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	\subsection{Grund/Zweck der Messung}\todo{anpassen an Abschnitt 3.1}
 		Der Bewegungsablauf eines Knies umfasst eine Translation, die mit einer Rotation überlagert ist. Für eine abschliessende Überprüfung des Algorithmus sollen nun diese beiden Komponenten zeitgleich überprüft werden. Im Falle eines positiven Messergebnisse kann das Konzept, respektive der Algorithmus als geeignet betrachtet und implementiert werden. Die Anforderungen an das Messergebnis sind in der Hypothese \vref{hypo:tran_rot} festgelegt.
 		\begin{hypo}\label{hypo:tran_rot}
-			Das Messergebnis ist eine Bewegung in der \gls{g:transversalebene}, wobei nur die y-Komponente interessiert. Sie ist dabei eine Widerspiegelung des realen Ablaufs mit einer Abweichung von $\pm$\unit[1]{cm}\footnote{Erläuterungen zur geforderten Messgenauigkeit sind im Abschnitt \vref{ss:messgenauigkeit} zu finden}.
+			Das Messergebnis ist eine Bewegung in der \gls{g:transversalebene}, wobei nur die y-Komponente interessiert. Sie ist dabei eine Widerspiegelung des realen Ablaufs mit einer Abweichung von $\pm$\unit[1]{cm}\footnote{Erläuterungen zur geforderten Messgenauigkeit sind im Abschnitt \vref{ss:messgenauigkeit} zu finden.}.
 		\end{hypo}
 	%
 	%
 	\subsection{Material/Testumgebung}\label{ss:testumgebung_tran_rot}
 		Für eine aussagekräftige Messung muss eine Kniebewegung möglichst exakt nachgebildet werden können. Weiter sollten die Messungen reproduzierbar sein. Für diesen Zweck wurde eigens eine Mechanik konstruiert und aufgebaut.\par 
 		%
-		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG: \url{http://www.boschrexroth.com}} und ist durch das sehr anpassbar. Der Aufbau erlaubt es einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontal Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} M\low{1} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht ist. Die Position ist dabei so gewählt, dass sie der Kniehöhe eines Durchschnittsmenschen entspricht. Für das errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät M\low{2} befestigt, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung \vref{img:messaufbau_tran_rot} ersichtlich
+		Der Simulator basiert auf Bosch-Profilen\footnote{Hergestellt von der Firma Bosch Rexroth AG \url{http://www.boschrexroth.com}.} und ist durch das sehr anpassbar. Der Aufbau erlaubt es einen vollständigen statischen Bewegungsablauf nachzubilden, jedoch ohne die horizontal Rotation zu berücksichtigen. Für eine konstante Geschwindigkeit des Ablaufs sorgt ein DC-Motor mit Rutschkupplung. Dieser wird mit einem DC-Netzteil gespiesen, was zugleich eine Steuerung der Geschwindigkeit ermöglicht (durch Variation der Spannung). Die Befestigung des \gls{g:myrio} M\low{1} erfolgt auf einer Platte, die wiederum auf dem Schwenkarm angebracht ist. Die Position ist dabei so gewählt, dass sie der Kniehöhe eines Durchschnittsmenschen entspricht. Für das errechnen der Bewegungsbahn wird ausserdem ein Winkelmessgerät M\low{2} befestigt, das eine absolute Messung des Winkels erlaubt. Der komplette Aufbau ist in der Abbildung \vref{img:messaufbau_tran_rot} ersichtlich
 		%
 		\image{content/3_konzept/image/messaufbau_tran_rot}{scale=0.2}{htbp}[Messaufbau Translation, Rotation überlagert][img:messaufbau_tran_rot]
 		%
-		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung TR1, TR2 und TR3 am Rotationsarm}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
+		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung \textsl{TR1}, \textsl{TR2} und \textsl{TR3} am Rotationsarm.}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
 		%
 		\input{content/3_konzept/table/messmittel_tran_rot}	
 	%
@@ -809,7 +809,7 @@ Die drei verschiedenen Verifikationen des Konzeptes haben gezeigt, dass das Konz
 %
 Das Konzept ist bekanntlich in zwei Teile aufgeteilt. Der erste Teil dient zum Schätzen der Orientierung des Sensors um anschliessend daraus die Kompensation zu berechnen. Dieser Teil des Konzeptes funktioniert gut, was in Abschnitt \vref{ss:rot} verifiziert wurde. Die Orientierung des Sensors vom \gls{g:bodyframe} in das \gls{g:worldframe} kann bei jeder Messung durchgeführt werden.\par
 %
-Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies wie in Abschnitt \vref{s:verifikation_translation} gezeigt auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissem Fehler nachempfunden werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung} erstaunlich geringe Standardabweichung von unterhalb \unit[0.6]{cm} auf. Somit wird der zurückgelegte Weg zwar nicht exakt berechnet, jedoch streuen Messungen derselben zurückgelegten Distanz sehr gering.\par
+Das Konzept ist so ausgelegt, dass nur Bewegungen in einer zur z-Achse des \gls{g:worldframe} senkrecht stehenden Ebene, der \gls{g:transversalebene}, ausgewertet werden. Die Messungen der Verifikation der Translation zeigen auf, dass dies wie in Abschnitt \vref{s:verifikation_translation} gezeigt auch funktioniert. Auslenkungen in dieser Ebene können mit einem gewissem Fehler nachempfunden werden. Der Fehler entspricht dabei einer Über- respektive Unterschätzung der Distanz. Die Messungen zeigen untereinander eine im Verhältnis zur Genauigkeit der Kontrollgruppe\footnote{Genauigkeit der Kontrollgruppe $\pm$\unit[1]{cm} aufgrund der manuellen Bedienung.} erstaunlich geringe Standardabweichung von unterhalb \unit[0.6]{cm} auf. Somit wird der zurückgelegte Weg zwar nicht exakt berechnet, jedoch streuen Messungen derselben zurückgelegten Distanz sehr gering.\par
 % 
 Die Verifikation der Translation mit überlagerten Rotation hingegen zeigen auf, dass der zweite Teil des Konzeptes in welchem die Bewegung berechnet wird im zuvor definierten Anwendungsfall nicht funktioniert. Im Konzept wurde nicht beachtet, dass eine Rotation des Sensors vorkommt und dadurch dessen Orientierung ändert. In diesem Fall nimmt die Gravitation Einfluss auf die Messung. Je mehr der Sensor zusätzlich rotiert wird, desto grösser die Einwirkung durch die Projektion der Gravitation auf die Beschleunigung der Bewegung. Die Gravitation verfälscht die Beschleunigungsdaten der betrachteten Achsen mit einem additionalem \glqq DC-Anteil\glqq\ woraus der in Abschnitt \vref{s:verifikation_transaltion_rotation} ersichtliche Drift resultiert. Nicht erstaunlich sind in diesem Fall die grossen Abweichungen bei diesen Messungen.\par 
 %
@@ -842,7 +842,7 @@ d & maximale laterale Auslenkung\\
 f_0 & Frequenz der Bewegung
 }[eq:auslenkung_beschl]
 %
-Da bei der Bewegung zur Translation zusätzlich eine Rotation hinzukommt wird die Gravitation auf die laterale Beschleunigung projektiert. Dies mach sich mit $a_{g l}(t))$ bemerkbar\footnote{in Abbildung \vref{img:dynamisch_statisch} gut ersichtlich}. Diese Projektion ist von $\alpha$, dem Winkel der Auslenkung, abhängig und kann mit der Höhe L des Knies, der laterale Auslenkung $x_l(t)$ und der Erdbeschleunigung g berechnet werden. Die Auslenkung $\alpha$ ist einfach mittels Trigonometrie zu berechnen.
+Da bei der Bewegung zur Translation zusätzlich eine Rotation hinzukommt wird die Gravitation auf die laterale Beschleunigung projektiert. Dies mach sich mit $a_{g l}(t))$ bemerkbar\footnote{Ist in Abbildung \vref{img:dynamisch_statisch} gut ersichtlich.}. Diese Projektion ist von $\alpha$, dem Winkel der Auslenkung, abhängig und kann mit der Höhe L des Knies, der laterale Auslenkung $x_l(t)$ und der Erdbeschleunigung g berechnet werden. Die Auslenkung $\alpha$ ist einfach mittels Trigonometrie zu berechnen.
 %
 \formula{
 \alpha = sin(\frac{x_l(t)}{L})
