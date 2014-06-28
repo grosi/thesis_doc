@@ -67,7 +67,7 @@ In der letzten betrachteten Arbeit der Universität Coimbra in Portugal wird das 
 		%
 		\item[Konzept] Ein grosser Teil des Projekts beansprucht die Konzept-Phase für sich. Sie hat zum Ziel, einen entsprechenden Algorithmus zu entwickeln und anschliessend zu validieren (\gls{ac:ap} \textsf{Algorithmus-Entwicklung} und \textsf{Validierung Konzept}). Parallel dazu wird ein Experimental-Protokoll ausgearbeitet und ein \gls{g:labview}-Basis-Projekt aufgesetzt (\gls{ac:ap} \textsf{Experimental-Protokoll ausarbeiten} und \textsf{Basis-Projekt \gls{g:labview} ergänzen}).
 		%
-		\item[Implementierung] In der zweiten Hauptphase wird im \gls{ac:ap} \textsf{Portierung \gls{g:matlab} nach \gls{g:labview}} der erstellte \gls{g:matlab}-Algorithmus nach \gls{g:labview} portiert. Ziel ist, die gleiche Funktionalität wie im Konzept zu erreichen. Anschliessend erfolgt ein Vergleich mit dem Konzept (\gls{ac:ap} \textsf{Kreuzvalidierung Konzept-Implementation}\todo{Kreuzvalidierung weg}). Parallel dazu wird das bestehende \gls{g:labview}-Projekt zu einem Demonstrator für die Präsentation erweitert (\gls{ac:ap} \textsf{Demonstrator}).
+		\item[Implementierung] In der zweiten Hauptphase wird im \gls{ac:ap} \textsf{Portierung \gls{g:matlab} nach \gls{g:labview}} der erstellte \gls{g:matlab}-Algorithmus nach \gls{g:labview} portiert. Ziel ist, die gleiche Funktionalität wie im Konzept zu erreichen. Anschliessend erfolgt ein Vergleich mit dem Konzept (\gls{ac:ap} \textsf{Vergleich \gls{g:matlab} $\leftrightarrow$ \gls{g:labview}}). Parallel dazu wird das bestehende \gls{g:labview}-Projekt zu einem Demonstrator für die Präsentation erweitert (\gls{ac:ap} \textsf{Demonstrator}).
 		%   
 		\item[Validierung] Abschliessend wird in der letzten Phase das Projektergebnis mit der Aufgabenstellung verglichen und ein Soll/Ist-Vergleich durchgeführt (\gls{ac:ap} \textsf{Soll/Ist Vergleich}).
 	\end{description}
@@ -123,14 +123,14 @@ Der Zeitplan konnte nicht eingehalten werden. Auf Abweichungen wird im Abschnitt
 	Da kein Pflichtenheft zu diesem Projekt existiert, wird im Folgenden die Anforderungen an das Messprinzip definiert und erklärt.\par
 	%
 	\subsection{Messbereich}\label{ss:messbereich}
-		Das Kreuzband\footnote{für detaillierte Erläuterungen sei auf den Abschnitt \vref{s:funktion_kreuzband} verwiesen} engt den Bewegungsfreiraum des Knies ein. Diese Einschränkung erlaubt es, den geforderten Messbereich zu beschränken und dadurch das Konzept stark zu vereinfachen. Als Ausgangslage für die Auslegung des nötigen Bereichs dienen Messungen\footnote{Die Messungen wurden mit Hilfe eines Massstabs durchgeführt und haben keinen Anspruch auf hohe Genauigkeit} an einem realen Knie. Daraus ergeben sich folgende Fakten:
+		Das Kreuzband\footnote{für detaillierte Erläuterungen sei auf den Abschnitt \vref{s:funktion_kreuzband} verwiesen} engt den Bewegungsfreiraum des Knies ein. Diese Einschränkung erlaubt es, den geforderten Messbereich zu beschränken und dadurch das Konzept stark zu vereinfachen. Als Ausgangslage für die Auslegung des nötigen Bereichs dienen Messungen\footnote{Die Messungen wurden mithilfe eines Massstabs durchgeführt und haben keinen Anspruch auf hohe Genauigkeit.} an einem realen Knie. Daraus ergeben sich folgende Fakten:
 		\begin{itemize}
 			\item Horizontale Auslenkung y von $\pm$\unit[2.5]{cm}
 			\item Auslenkung in x-Richtung von $+$\unit[0.5]{cm}
 			\item Vertikaler Versatz z von bis zu $-$\unit[0.7]{cm}
 		\end{itemize}
 		Die drei Auslenkungen kombiniert ergeben einen kreisbogenförmigen Verlauf, der in der Abbildung \vref{img:knie_auslenkung} rot punktiert dargestellt ist. Dadurch, dass für eine Beurteilung des Heilprozesses des Kreuzbandes nur die seitliche Auslenkung y in der \gls{g:transversalebene} interessiert, kann der Bewegungsablauf auf eine horizontale Bewegung in der x-y-Ebene reduziert werden. Somit ergibt sich für das vorliegende Projekt eine 1-dimensionale Messung auf der y-Achse in einem Bereich von \unit[5.0]{cm}.
-		\image{content/3_konzept/image/knie_bewegung}{scale=0.6}{htbp}[Auslenkung Knie][img:knie_auslenkung]
+		\image{content/3_konzept/image/knie_bewegung}{scale=0.55}{htbp}[Auslenkung Knie][img:knie_auslenkung]
 	%
 	\subsection{Messgenauigkeit}\label{ss:messgenauigkeit}
 		Die Beurteilung des Zustandes der Knieverletzung erfolgt binär. Entweder das Knie ist geheilt und der Sportler kann das Training aufnehmen, oder die Genesung ist noch nicht abgeschlossen. Daher muss die Genauigkeit lediglich ausreichen, um eine Extraktion dieser beiden Fälle zu ermöglichen. Die Genauigkeit wird auf Grund dieser Fakten auf $\pm$ \unit[1.0]{cm} festgelegt\footnote{Dieser Wert ist eine Annahme und müsste durch eine Fachperson bestätigt werden}.
