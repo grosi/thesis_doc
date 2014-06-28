@@ -16,7 +16,7 @@
 %
 % Blockdiagramm
 \section{Algoritmus}\label{s:blockdiagramm}
-Das Konzept kann teilweise aus dem später beschriebenen Beispielprojekt in Abschnitt \vref{xxx} extrahiert werden. Dort wurde eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
+Das Konzept kann teilweise aus dem \gls{g:labview}-Beispielprojekt \textsf{Posture Estimation} von \gls{ac:ni} extrahiert werden. Dort wurde eine ähnliche Aufgabenstellung gelöst. Nach der Literaturstudie und der Absprache mit den Betreuern haben sich die Autoren entschieden, die Methode mit der doppelten Integration der Beschleunigung der Bewegung umzusetzen wie in der Literaturstudie in \cite{lit:doubleint} gesehen.\par
 %
 Die Beschleunigung der Bewegung wird von einem auf dem Knie montierten Drei-Achsen-Beschleunigungssensor aufgezeichnet. Da der Sensor beliebig im Raum platziert ist, enthalten die aufgezeichneten Beschleunigungsdaten zum einen die Erdbeschleunigung zum andern die Bewegungsbeschleunigung. In unserem Fall ist nur die Beschleunigung der Bewegung von Interesse. Somit muss die Erdbeschleunigung detektiert und diese von der Bewegungsbeschleunigung getrennt werden. Dies erreicht man durch die Kompensation der Orientierung des Sensors. Dafür wird die statische Erdbeschleunigung ausgenutzt. Diese zeigt stets in Richtung der z-Achse des Koordinatensystems des Betrachters dem \gls{g:worldframe}. Die zu detektierende Bewegung, welche einer seitlichen Auslenkung des Knies entspricht, wird nur in einer Ebene senkrecht zur Erdbeschleunigung betrachtet. Diese Vereinfachung ist möglich, da mit dieser Auslenkung in dieser Ebene bereits ein genügend genaues Urteil über die Gesundheit des Kreuzbandes gefällt werden kann. Die Bewegung wird also nur in der x-y-Ebene ausgewertet. Die Beschleunigungskomponenten der x- und y-Achse sind zweimal zu integrieren, um auf die Bewegung zu schliessen.\par
 %
@@ -40,7 +40,7 @@ H(z)=\frac{b_0 + b_1z^{-1}+...+b_Nz^{-N}}{a_0 + a_1z^{-1}+...+a_Nz^{-N}}
 Wobei $b_n$ und $a_n$ die jeweiligen Filterkoeffizienten sind. Ein Vorteil des \gls{ac:iir}-Filters und Grund weshalb es dem \gls{ac:fir}-Filters oft vorgezogen wird ist, dass es eine grössere Effizient auf eine kurze Verzögerung aufweist. Um mit einem \gls{ac:fir}-Filter dieselbe Filterwirkung wie mit einem \gls{ac:iir}-Filter zu erreichen ist eine deutlich grössere Filterordnung nötig. Somit vergrössert sich wie erwähnt die Verzögerung durch das Filter. Ein Nachteil ist, dass durch den rekursiven Aufbau das \gls{ac:iir}-Filters instabil sein kann.
 % 
 \subsubsection*{Filterentwurf}\label{subsub:filterentwurf}
-Ein vielfach verwendetes Verfahren zum Entwurf von \gls{ac:iir}-Filtern ist die Bilineare-Transforma\-tion. Hierbei wird die Übertragungsfunktion $H(s)$ eines Analogfilters in die Übertragungsfunktion $H(z)$ eines Digitalfilters überführt. Das Analogfilter entspricht dabei einem zeitkontinuierlichem \gls{g:lti}-System, das Digitalfilter bekanntlich einem zeitdiskreten \gls{g:lti}-System. Ein Ansatz ist, die Labplacevariable s durch eine Funktion der Variable z zu substituieren. Im Unterricht im Modul Digitale Signalverarbeitung (BTE5034 DIGSV) im vierten Semester hat sich gezeigt, dass die Substitution 
+Ein vielfach verwendetes Verfahren zum Entwurf von \gls{ac:iir}-Filtern ist die Bilineare-Transforma\-tion. Hierbei wird die Übertragungsfunktion $H(s)$ eines Analogfilters in die Übertragungsfunktion $H(z)$ eines Digitalfilters überführt. Das Analogfilter entspricht dabei einem zeitkontinuierlichem \gls{g:lti}-System, das Digitalfilter bekanntlich einem zeitdiskreten \gls{g:lti}-System. Ein Ansatz ist, die Labplacevariable $s$ durch eine Funktion der Variable $z$ zu substituieren. Im Unterricht im Modul Digitale Signalverarbeitung (BTE5034 DIGSV) im vierten Semester hat sich gezeigt, dass die Substitution 
 %
 \formula{
 s = \frac{2}{T_a}*\frac{1-z^{-1}}{1+z^{-1}}
@@ -49,7 +49,7 @@ s = \frac{2}{T_a}*\frac{1-z^{-1}}{1+z^{-1}}
 %
 dazu gebraucht wird. Diese Substitution wird Bilineare-Transformation genannt. Mit der bekannten Übertragungsfunktion des Analogfilters und der Abtastrate $T_a$ kann somit das Digitalfilter entworfen werden. Die Bilineare-Transformation wird zu einem späteren Zeitpunkt in Abschnitt \vref{ss:int} verwendet.\par
 %
-Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Entwurfsprogramme. In \gls{g:matlab} kann zum Entwurf mit Befehlen wie butter, cheby1, ellip gearbeitet werden. Im Beispiel-Projekt \vref{XXX} wird ein Elliptisches-Filter eingesetzt. Diese Elliptische-Approximation hat einen welligen Bereich im Durchlass- sowie im Sperrbereich. Dieses Filter wird durch ein Butterworth-Filter ersetzt. Diese Filter-Approximation hat im Durchlass- sowie im Sperrbereich einen monotonen Amplitudengang.
+Eine weitere Möglichkeit zum Entwurf eines \gls{ac:iir}-Filters bieten heute Entwurfsprogramme. In \gls{g:matlab} kann zum Entwurf mit Befehlen wie \texttt{butter}, \texttt{cheby1}, \texttt{ellip} gearbeitet werden. Im \gls{g:labview}-Beispielprojekt \textsf{Posture Estimation} wird ein Elliptisches-Filter eingesetzt. Diese Elliptische-Approximation hat einen welligen Bereich im Durchlass- sowie im Sperrbereich. Dieses Filter wird durch ein Butterworth-Filter ersetzt. Diese Filter-Approximation hat im Durchlass- sowie im Sperrbereich einen monotonen Amplitudengang.
 %
 % Filterentwurf
 \image{content/3_konzept/image/filterentwurf}{scale=0.8}{htbp}[Spezifikationen eines Tiefpassfilters \cite{img:filterentwurf}][img:spezfilter] 
@@ -283,7 +283,7 @@ b_1 &= \frac{T_a}{2}
 }{
 }[eq:koeff_filter]
 %
-Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gesehen mit dem Befehl filter() in \gls{g:matlab} auf die Beschleunigungsdaten angewandt. Der Output ist bei erster Anwendung die Geschwindigkeit und bei zweiter Anwendung der zurückgelegte Weg. 
+Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gesehen mit dem Befehl \texttt{filter} in \gls{g:matlab} auf die Beschleunigungsdaten angewandt. Der Output ist bei erster Anwendung die Geschwindigkeit und bei zweiter Anwendung der zurückgelegte Weg. 
 %Software
 \section{LabVIEW Rohdaten aufzeichnen}\label{s:konzept:sw}
 		Für die Verifikation des Konzept müssen Rohdaten des Beschleunigungssensors aufgenommen und in \gls{g:matlab} eingespeist werden. Dazu muss eine \gls{g:labview}-\acrshort{ac:vi} erstellt werden, die Daten aufnehmen und in einem \gls{g:matlab}-kompatiblen Format speichern kann. Die fertigen Projektdaten \texttt{concept\_reametric} sind im Anhang \vref{s:anhang_labview} zu finden.\par 
@@ -403,7 +403,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 	\subsection{Material/Testumgebung}
 		Die Messung, respektive Schätzung der Rotationswinkel erfolgt statisch auf einer eigens für dieses Projekt entworfenen Testumgebung, die später zur Simulation eines Bewegungsablaufs des Knies gebraucht wird. Dazu siehe den Abschnitt \vref{ss:testumgebung_tran_rot}, indem auch näher auf die Möglichkeiten des Aufbaus eingegangen wird. Für dieses Protokoll wird lediglich von der Tatsache Gebrauch gemacht, dass das \gls{g:myrio} kontrolliert in verschiedene Positionen gebracht und somit eine Reproduzierbarkeit der Messung gewährleistet werden kann.\par
 		%
-		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Markierung \textsf{R} auf Schwenkarm}. Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
+		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Die Markierung \textsf{R} auf dem Schwenkarm.}. Dazu wird der Rotationsarm sowie die Querverbindung wie in Abbildung  \vref{img:messaufbau_rot} gezeigt angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarm.\par
 		%
 		\image{content/3_konzept/image/aufbau_rot}{scale=1}{htbp}[Rotation - Testaufbau][img:messaufbau_rot]	
 		%
@@ -427,7 +427,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			Die unabhängige Variabel dieser Gruppen stellt die Messmethodik dar. 
 		%
 		\subsubsection*{Testgruppe Messmethodik}
-			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{Siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus.}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{XXX}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzept aufbaut. Im Konzept wird aus den in Ruhe aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel wie in Gleichung \vref{eq:pitch} gezeigt berechnet werden. 
+			Die Messmethodik der Testgruppe basiert zum einen auf den aufgezeichneten Beschleunigungsdaten und zum anderen aus mathematischen Operationen\footnote{Siehe Abschnitt \vref{s:blockdiagramm} für den verwendeten Algorithmus.}, die die Winkelschätzung vornehmen. Zur Auswertung der Rotation dient das \gls{g:matlab}-Skript \texttt{Check\_Rotation\_final.m}, das im Anhang \vref{s:anhang_matlab} zu finden ist und auf dem ersten Teil des Konzept aufbaut. Im Konzept wird aus den in Ruhe aufgenommenen Beschleunigungsdaten die Rotationsmatrix berechnet. Mit dieser Rotationsmatrix gelingt die Transformation des \gls{g:bodyframe} in das \gls{g:worldframe}. Aus der aufgestellten Rotationsmatrix kann nach \cite{lit:craig} der pitch-Winkel wie in Gleichung \vref{eq:pitch} gezeigt berechnet werden. 
 %
 			\formula{
 			M_{rot} &=\begin{bmatrix}a & b & c \\ d & e & f \\ g & h & i \end{bmatrix} \\[1ex]
@@ -534,7 +534,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			Die Messmethodik stellt bei den beschriebenen Gruppen die unabhängige Variabel dar.
 		%
 		\subsubsection*{Testgruppe Messmethodik}\label{ss:messmethodik_kontroll_tran}
-			Die Translation wird indirekt durch die auftretenden Beschleunigungen gemessen. Dazu werden die aufgezeichneten Daten in das \gls{g:matlab}-Skript \textit{XXX} eingelesen, wo mit Hilfe von mathematischen Operationen die Distanz bestimmt wird. Das Skript ist im Anhang \vref{s:anhang_matlab} zu finden.
+			Die Translation wird indirekt durch die auftretenden Beschleunigungen gemessen. Dazu werden die aufgezeichneten Daten in das \gls{g:matlab}-Skript \texttt{Check\_Translation\_final.m} eingelesen, wo mit Hilfe von mathematischen Operationen die Distanz bestimmt wird. Das Skript ist im Anhang \vref{s:anhang_matlab} zu finden.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
 			Die Aufnahme der Pfadlänge erfolgt direkt mit dem Massstab M\low{2}. Die vergebene Distanz von \unit[5]{cm} wird dabei auf dem Schlitten der Drehbank M\low{3} vermerkt.
@@ -690,7 +690,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 		%
 		\image{content/3_konzept/image/messaufbau_tran_rot}{scale=0.2}{htbp}[Messaufbau Translation, Rotation überlagert][img:messaufbau_tran_rot]
 		%
-		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung \textsl{TR1}, \textsl{TR2} und \textsl{TR3} am Rotationsarm.}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
+		Die Bedienung der Messeinrichtung kann auf zwei Arten erfolgen. Automatisch mit DC-Motor oder manuell von Hand (ermöglicht durch die Rutschkupplung). Im automatischen Betrieb kann die Geschwindigkeit, wie bereits zuvor erwähnt, mit Variation der angelegten Spannung eingestellt werden. Der zulässige Spannungsbereich des Motors liegt dabei zwischen \unit[8]{V} und \unit[12]{V}. Wird die Bewegung manuell ausgelöst ist darauf zu achten, dass der Ablauf mit einer möglichst konstanten Geschwindigkeit erfolgt. Um unterschiedliche Auslenkungen überprüfen zu können, kann die Querverbindung stufenlos am Rotationsarm verstellt werden\footnote{Markierung \textsf{TR1}, \textsf{TR2} und \textsf{TR3} am Rotationsarm.}. Eine Auflistung aller verwendeter Messmittel, inklusive ihrer geschätzten Messgenauigkeit ist in der Tabelle \vref{tab:messmittel_tran_rot} vermerkt.
 		%
 		\input{content/3_konzept/table/messmittel_tran_rot}	
 	%
@@ -710,7 +710,7 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			Das unterschiedliche Messverfahren stellt die unabhängige Variabel in diesem Protokoll dar.
 		%
 		\subsubsection*{Testgruppe Messmethodik}
-			Die Messmethodik der Testgruppe ist äquivalent zur Messmethodik des vorherigen Protokolls im Abschnitt \vref{ss:messmethodik_kontroll_tran}. Für die bessere Gliederung der Protokolle wurde dennoch eigens das \gls{g:matlab}-Skript \texttt{XXX} erstellt. Für eine detaillierte Einsicht ins Skript sei auf den Anhang \vref{s:anhang_matlab} verwiesen.
+			Die Messmethodik der Testgruppe ist äquivalent zur Messmethodik des vorherigen Protokolls im Abschnitt \vref{ss:messmethodik_kontroll_tran}. Für die bessere Gliederung der Protokolle wurde dennoch eigens das \gls{g:matlab}-Skript \texttt{Check\_Translation\_Rotation\_final.m} erstellt. Für eine detaillierte Einsicht ins Skript sei auf den Anhang \vref{s:anhang_matlab} verwiesen.
 		%
 		\subsubsection*{Kontrollgruppe Messmethodik}
 			Wie angetönt verwendet die Kontrollgruppe messtechnische und mathematische Verfahren um den zurückgelegten Weg zu ermitteln.  
@@ -745,13 +745,13 @@ Diese Filterkoeffizienten wird wie in Abschnitt \vref{subsub:filterentwurf} gese
 			Es werden Messungen bei unterschiedlichen Auslenkungen  durchgeführt. Dazu wird die Querverbindung an drei verschiedenen Positionen, erkenntlich an Hand von Markierungen, angebracht (siehe Abbildung \vref{img:messaufbau_tran_rot}). Es wird insgesamt zwischen drei verschiedenen Auslenkungen unterschieden, wobei die Position des \gls{g:myrio} M\low{1} nicht verändert wird. 
 			%
 			\begin{itemize}
-				\item \textbf{Auslenkung 1 TR1} Die erste Auslenkung beträgt \unit[7.5]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich. Daraus ergitbt sich unter Anwendung der Gleichung \vref{eq:kreissegement} eine Pfadlänge von \unit[56.75]{mm}.
+				\item \textbf{Auslenkung 1 \textsf{TR1}} Die erste Auslenkung beträgt \unit[7.5]{°}. Dazu wird die Querstrebe an der Position 1 befestigt, wie in Abbildung \vref{img:messaufbau_pos1} ersichtlich. Daraus ergitbt sich unter Anwendung der Gleichung \vref{eq:kreissegement} eine Pfadlänge von \unit[56.75]{mm}.
 				\image{content/3_konzept/image/messaufbau_querstrebe_pos_1}{scale=0.8}{htbp}[Querstreben-Position 1 (Angaben in \unit{mm})][Querstreben-Position 1][img:messaufbau_pos1]
 				%
-				\item \textbf{Auslenkung 2 TR2} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[30]{mm} befestigt. Damit ist ein Winkelbereich von \unit[15]{°} und eine Pfadlänge \unit[113.5]{mm} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
+				\item \textbf{Auslenkung 2 \textsf{TR2}} Für eine mittelgrosse Auslenkung wird die Querstrebe an Position 2 bei \unit[30]{mm} befestigt. Damit ist ein Winkelbereich von \unit[15]{°} und eine Pfadlänge \unit[113.5]{mm} möglich. Die Abbildung \vref{img:messaufbau_pos2} verdeutlicht die Befestigungsposition.
 				\image{content/3_konzept/image/messaufbau_querstrebe_pos_2}{scale=0.8}{htbp}[Querstreben-Position 2 (Angaben in \unit{mm})][Querstreben-Position 2][img:messaufbau_pos2]
 				%
-				\item \textbf{Auslenkung 3 TR3} Die maximale Auslenkung von \unit[23.5]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[60]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt. Für die Pfadlänge ergibt sich mit Hilfe der Gleichung \vref{eq:kreissegement} \unit[174.04]{mm}.
+				\item \textbf{Auslenkung 3 \textsf{TR3}} Die maximale Auslenkung von \unit[23.5]{°} wird bei der dritten Position erreicht. Der Befestigungspunkt ist dabei bei \unit[60]{mm} wie die Abbildung \vref{img:messaufbau_pos3} zeigt. Für die Pfadlänge ergibt sich mit Hilfe der Gleichung \vref{eq:kreissegement} \unit[174.04]{mm}.
 				\image{content/3_konzept/image/messaufbau_querstrebe_pos_3}{scale=0.8}{htbp}[Querstreben-Position 3 (Angaben in \unit{mm})][Querstreben-Position 3][img:messaufbau_pos3]
 			\end{itemize}
 			%
@@ -815,11 +815,11 @@ Die Verifikation der Translation mit überlagerten Rotation hingegen zeigen auf, 
 %
 Ein wichtiger Punkt zur Verbesserung des Konzeptes, ist die Rotation laufend zu berechnen. In diesem Fall könnten Rotationen des Sensors kompensiert werden und die Gravitation hätte keinen Einfluss auf die Messungen.\par
 %
-Da das Konzept fehlerhaft ist, wurde der Bewegungsablauf am Knie genauer analysiert. Dazu wird ein einfaches Bewegungsmodell erstellt. Dieses ist in Abbildung \vref{img:dynamisch_statisch} dargestellt.\par
+Da das Konzept fehlerhaft ist, wurde der Bewegungsablauf am Knie genauer analysiert\footnote{Die folgenden Berechnungen wurden mit dem \gls{g:matlab}-Skript \texttt{Dynamisch\_Statisch.m} im Anhang \vref{s:anhang_matlab} durchgeführt.}. Dazu wird ein einfaches Bewegungsmodell erstellt. Dieses ist in Abbildung \vref{img:dynamisch_statisch} dargestellt.\par
 %
 \image{content/3_konzept/image/dynamisch_statisch}{scale=0.8}{htbp}[Bewegungsmodell Knie][img:dynamisch_statisch]
 %
-Die Auslenkung des Knies kann als harmonische Funktion approximiert werden. Dabei müssen drei Parameter festgelegt werden. Diese sind die Kniehöhe L, die maximale laterale Auslenkung d sowie die Frequenz der Bewegung f\low{0}. Die laterale Auslenkung $x_l(t)$ kann somit folgendermassen beschrieben werden. 
+Die Auslenkung des Knies kann als harmonische Funktion approximiert werden. Dabei müssen drei Parameter festgelegt werden. Diese sind die Kniehöhe $L$, die maximale laterale Auslenkung $d$ sowie die Frequenz der Bewegung $f_0$. Die laterale Auslenkung $x_l(t)$ kann somit folgendermassen beschrieben werden. 
 %
 \formula{
 x_l(t) = d * sin(2  \pi  f_0  t)
@@ -842,7 +842,7 @@ d & maximale laterale Auslenkung\\
 f_0 & Frequenz der Bewegung
 }[eq:auslenkung_beschl]
 %
-Da bei der Bewegung zur Translation zusätzlich eine Rotation hinzukommt wird die Gravitation auf die laterale Beschleunigung projektiert. Dies mach sich mit $a_{g l}(t))$ bemerkbar\footnote{Ist in Abbildung \vref{img:dynamisch_statisch} gut ersichtlich.}. Diese Projektion ist von $\alpha$, dem Winkel der Auslenkung, abhängig und kann mit der Höhe L des Knies, der laterale Auslenkung $x_l(t)$ und der Erdbeschleunigung g berechnet werden. Die Auslenkung $\alpha$ ist einfach mittels Trigonometrie zu berechnen.
+Da bei der Bewegung zur Translation zusätzlich eine Rotation hinzukommt wird die Gravitation auf die laterale Beschleunigung projektiert. Dies mach sich mit $a_{g l}(t))$ bemerkbar\footnote{Ist in Abbildung \vref{img:dynamisch_statisch} gut ersichtlich.}. Diese Projektion ist von $\alpha$, dem Winkel der Auslenkung, abhängig und kann mit der Höhe $L$ des Knies, der laterale Auslenkung $x_l(t)$ und der Erdbeschleunigung $g$ berechnet werden. Die Auslenkung $\alpha$ ist einfach mittels Trigonometrie zu berechnen.
 %
 \formula{
 \alpha = sin(\frac{x_l(t)}{L})
@@ -853,7 +853,7 @@ x_l(t) & laterale Auslenkung\\
 L & Länge des Knies
 }[eq:auslenkung_beschl]
 %
-Da die laterale Auslenkung im Vergleich zur Kniehöhe deutlich kleiner ist, kann die Kleinwinkelnäherung angewendet werden ($\alpha = sin(\alpha)$). Die projektiert Gravitation $a_{l g}$ ist somit.
+Da die laterale Auslenkung im Vergleich zur Kniehöhe deutlich kleiner ist, kann die Kleinwinkelnäherung angewendet werden ($\alpha = sin(\alpha)$). Die projektiert Gravitation $a_{l g}$ ist somit:
 %
 \formula{
 a_{l g} = g*\frac{x_l(t)}{L}
@@ -865,7 +865,7 @@ x_l(t) & laterale Auslenkung\\
 L & Länge des Knies
 }[eq:auslenkung_beschl]
 %   
-Werden nun die Amplituden der lateralen Beschleunigung $a_{l mov}(t)$ und der projektierten Gravitation $a_{l g}$ bei verschiedenen Frequenzen verglichen, so wird eine kritische Frequenz ersichtlich bei der beide Amplituden gleich gross sind. Dazu setzen wir die beiden Beschleunigungen gleich. Das Vorzeichen bei $a_{l mov}(t)$ kann hier vernachlässigt werden, es entspricht nur einer Phasendrehung um 180°. 
+Werden nun die Amplituden der lateralen Beschleunigung $a_{l mov}(t)$ und der projizierten Gravitation $a_{l g}$ bei verschiedenen Frequenzen verglichen, so wird eine kritische Frequenz ersichtlich bei der beide Amplituden gleich gross sind. Dazu setzen wir die beiden Beschleunigungen gleich. Das Vorzeichen bei $a_{l mov}(t)$ kann hier vernachlässigt werden, es entspricht nur einer Phasendrehung um \unit[180]{°}. 
 %
 \formula{
 a_{l mov}(t) &= a_{l g} \\[2ex]
@@ -874,7 +874,7 @@ a_{l mov}(t) &= a_{l g} \\[2ex]
 {
 }[eq:auslenkung_beschl]
 % 
-Die maximale Auslenkung d sowie die Abhängigkeit der Zeit kürzen sich weg und wir erhalten für die kritische Frequenz $f_k$.
+Die maximale Auslenkung $d$ sowie die Abhängigkeit der Zeit kürzen sich weg und wir erhalten für die kritische Frequenz $f_k$.
  %
 \formula{
 f_k = \sqrt{\frac{g}{(2\pi)^2*L}}
@@ -882,7 +882,7 @@ f_k = \sqrt{\frac{g}{(2\pi)^2*L}}
 {
 }[eq:auslenkung_beschl]
 %
-Diese kritische Frequenz liegt bei einer Kniehöhe von L = \unit[0.5]{m} auf $f_k$ = \unit[0.7]{Hz}. Ist die Frequenz der Bewegung viel grösser als diese Grenzfrequenz, so hat die projektierte Gravitation nahezu keinen Einfluss auf die resultierende Beschleunigung, dies ist der dynamische Fall. Ist die Grenzfrequenz kleiner so liegt der statische Fall vor, wo die Projektion der Gravitation grösser als die laterale Beschleunigung der Bewegung ist. Dies wurde in \gls{g:matlab} simuliert und in Abbildung \vref{img:kritische_freq} dargestellt.\par
+Diese kritische Frequenz liegt bei einer Kniehöhe von $L$ = \unit[0.5]{m} auf $f_k$ = \unit[0.7]{Hz}. Ist die Frequenz der Bewegung viel grösser als diese Grenzfrequenz, so hat die projektierte Gravitation nahezu keinen Einfluss auf die resultierende Beschleunigung, dies ist der dynamische Fall. Ist die Grenzfrequenz kleiner so liegt der statische Fall vor, wo die Projektion der Gravitation grösser als die laterale Beschleunigung der Bewegung ist. Dies wurde in \gls{g:matlab} simuliert und in Abbildung \vref{img:kritische_freq} dargestellt.\par
 %
 \image{content/3_konzept/image/kritische_freq}{scale=0.8}{htbp}[kritische Frequenz statische, dynamische Bewegung][img:kritische_freq]
 %
