@@ -20,15 +20,15 @@
 	Für die Implementierung des im vorherigen Kapitels \vref{ch:konzept} konzeptionierten Algorithmus muss das erstellte \gls{g:matlab}-Skript analysiert werden. Es gilt \gls{ac:vi}s zu finden, die möglichst die gleiche Funktion haben wie die verwendeten Befehle und Toolboxen in \gls{g:matlab}. Dabei wird auf das Verwenden von \gls{g:matlab}-Skripten innerhalb von \gls{g:labview} verzichtet um die Eigenständigkeit der Implementierung zu gewährleisten\footnote{Mit der \gls{g:matlab}-Node ist es möglich \gls{g:matlab}-Code auszuführen, jedoch nicht auf einem Real-Time System wie das \gls{g:myrio} eines ist. Ausserdem muss für das Ausführen lokal \gls{g:matlab} installiert sein \cite{lit:labview_matlab}.}. Weiter soll eine Struktur gefunden werden, die den Ablauf des \gls{g:matlab}-Skripts widerspiegelt.
 	%
 	\subsection{Struktur}\label{ss:struktur}
-		Betrachtet man die Abbildung \vref{img:blockdiagramm} im Abschnitt \ref{s:blockdiagramm}, so sind zwei Bereiche offensichtlich. Der erste Teil beinhaltet das Schätzen der Rotationswinkel mit Hilfe der Gravität und das anschliessende berechnen der Rotationsmatrix. Darauf folgt das Anwenden der Rotationsmatrix auf die gemessenen Daten und das Integrieren, was der zweite Teil des Konzepts darstellt. Die beiden Teile lassen sich in ein Zustandsdiagramm transformieren, das es erlaubt die Implementierung zu strukturieren. Das Diagramm ist dargestellt in der Abbildung \vref{img:statediagramm}. \gls{g:labview} bietet einige Möglichkeiten den Datenfluss durch Strukturen zu beeinflussen. Für eine Zustandsmaschine bietet sich die Case Structure an, die äquivalent zu dem Konstrukt switch-case der Programmiersprache C funktioniert. 
+		Betrachtet man die Abbildung \vref{img:blockdiagramm} im Abschnitt \ref{s:blockdiagramm}, so sind zwei Bereiche offensichtlich. Der erste Teil beinhaltet das Schätzen der Rotationswinkel mit Hilfe der Gravitation und das anschliessende berechnen der Rotationsmatrix. Darauf folgt das Anwenden der Rotationsmatrix auf die gemessenen Daten und das Integrieren, was der zweite Teil des Konzepts darstellt. Die beiden Teile lassen sich in ein Zustandsdiagramm transformieren, das es erlaubt die Implementierung zu strukturieren. Das Diagramm ist dargestellt in der Abbildung \vref{img:statediagramm}. \gls{g:labview} bietet einige Möglichkeiten den Datenfluss durch Strukturen zu beeinflussen. Für eine Zustandsmaschine bietet sich die Case Structure an, die äquivalent zu dem Konstrukt switch-case der Programmiersprache C funktioniert. 
 		%
 		\image{content/4_implementierung/image/zustandsdiagramm}{scale=.8}{htbp}[Zustandswechsel][img:statediagramm]
 		%
-		\subsubsection*{Initialisierungs-Zustand}
-			Der erste Zustand stellt die Initialisierung dar. Er wird aufgerufen wenn der Taster am \gls{g:myrio} gedrückt wird. Wie im Konzept vorgesehen werden die Rotationswinkel geschätzt und die Rotationsmatrix bestimmt. Dies geschieht über eine einstellbare Anzahl von Samples. Anzumerken ist, dass während der Aufzeichnung dieser Samples das \gls{g:myrio} nicht berührt werden darf\footnote{Verfälscht die Schätzung der Winkel, was eine inkorrekte Matrix zur Folge hat.}. Im Unterschied zum Konzept wird ausserdem die Standardabweichung der aufgezeichneten Daten bestimmt. Diese wird im Zustand Signalverarbeitung für die Bewegungsdetektion verwendet\footnote{Im Konzept wird dies während der Signalverarbeitung durchgeführt, da Segment basierend.}. 
+		\subsubsection*{Kalibrations-Zustand}
+			Der erste Zustand stellt die Kalibration dar. Er wird aufgerufen wenn der Taster am \gls{g:myrio} gedrückt wird. Wie im Konzept vorgesehen werden die Rotationswinkel geschätzt und die Rotationsmatrix bestimmt. Dies geschieht über eine einstellbare Anzahl von Samples. Anzumerken ist, dass während der Aufzeichnung dieser Samples das \gls{g:myrio} nicht berührt werden darf\footnote{Verfälscht die Schätzung der Winkel, was eine inkorrekte Matrix zur Folge hat.}. Im Unterschied zum Konzept wird ausserdem die Standardabweichung der aufgezeichneten Daten bestimmt. Diese wird im Zustand Signalverarbeitung für die Bewegungsdetektion verwendet\footnote{Im Konzept wird dies während der Signalverarbeitung durchgeführt, da Segment basierend.}. 
 		%
-		\subsubsection*{Signalverarbeitungs-Zustand}
-			Im zweiten Zustand erfolgt wie vorgesehen die Signalverarbeitung bestehend aus den Teilen Rotieren, Bewegungsdetektion und Integrieren. Für korrekte Ergebnisse muss zuvor eine Initialisation durchgeführt worden sein. Im Gegensatz zum Konzept und dem vorherigen Zustand erfolgt die Verarbeitung Sample basierend. So kann eine schnelle Laufzeit und ein geringerer Speicherverbrauch forciert, jedoch nicht garantiert werden. Zusätzlich zum Konzept muss noch eine Möglichkeit bestehen die verarbeiteten Daten aus dem Target zu extrahieren. Dazu muss, wie in Abschnitt \vref{ss:myRIO_hw} beschrieben, ein Netzwerkstream zum \gls{g:host} aufgebaut werden. 
+		\subsubsection*{Bewegungs-Zustand}
+			Im zweiten Zustand erfolgt wie vorgesehen die Signalverarbeitung bestehend aus den Teilen Rotieren, Bewegungsdetektion und Integrieren. Für korrekte Ergebnisse muss zuvor eine Kalibration durchgeführt worden sein. Im Gegensatz zum Konzept und dem vorherigen Zustand erfolgt die Verarbeitung sample-basierend. So kann eine schnelle Laufzeit und ein geringerer Speicherverbrauch forciert, jedoch nicht garantiert werden. Zusätzlich zum Konzept muss noch eine Möglichkeit bestehen die verarbeiteten Daten aus dem \gls{g:target} zu extrahieren. Dazu muss, wie in Abschnitt \vref{ss:myRIO_hw} beschrieben, ein Netzwerkstream zum \gls{g:host} aufgebaut werden. 
 	%
 	\subsection{Tiefpass-Filterung}
 		\gls{g:labview} bietet eine Vielzahl von Möglichkeiten Filter einzusetzen. Sie unterscheiden sich hauptsächlich durch ihre Charakteristik und Implementierung. Bezüglich der Umsetzung existieren Segment und Sample basierte \gls{ac:vi}s. Da die Signalverarbeitung mit Samples arbeitet, kann ein Tiefpassfilter der \texttt{NI\_PtByPt} Bibliothek eingesetzt werden\footnote{Die \gls{ac:vi} Bezeichnung ist \texttt{Butterworth Filter PtByPt.vi}.}. Die Charakteristik ist wie im Konzept Butterworth (\acrshort{ac:iir}-Filter).
@@ -65,7 +65,7 @@
 		Das \gls{g:labview}-Projekt ist in zwei Teile gegliedert. Der eine beinhaltet \gls{ac:vi}s die auf dem Target ausgeführt werden (\texttt{RT Main.vi}) und der andere diejenigen des \gls{g:host}s \texttt{Desktop Main.vi}. Dieser Umstand ist im Abschnitt \vref{ss:aufbau_struktur} näher erläutert. Für die Ausführung auf seitens des Targets werden die erstellten \gls{ac:vi}s einem Kompilationsprozess unterzogen, der für das Target ausführbaren Code erzeugt. Im Falle des \gls{g:myrio} wird dies Code für die beiden ARM-Cores und das \acrshort{ac:fpga} sein. Diese Aussage kann jedoch mangels Transparenz des Prozesses nicht bewiesen werden und ist nur eine Annahme.
 		%
 		\subsubsection*{Zustandsmaschine}
-			Die Zustandsmaschine wird mit Hilfe einer Case Structure umgesetzt, wie bereits im Abschnitt \vref{ss:struktur} angetönt. Für den Wechsel zwischen den beiden Vorhanden Zuständen dient ein Taster als Auslöser eines entsprechenden Events. Um die Bedienung komfortabel zu gestalten kann auf zwei Möglichkeiten eine Initialisierung ausgelöst werden.
+			Die Zustandsmaschine wird mit Hilfe einer \textsf{Case Structure} umgesetzt, wie bereits im Abschnitt \vref{ss:struktur} angetönt. Für den Wechsel zwischen den beiden Vorhanden Zuständen dient ein Taster als Auslöser eines entsprechenden Events. Um die Bedienung komfortabel zu gestalten kann auf zwei Möglichkeiten eine Kalibration ausgelöst werden.
 			%
 			\begin{itemize}
 				\item \textbf{Hardware Taster} Für die eine Reinitialisierung direkt beim Messaufbau kann der Taster \textsf{Button0} am Gehäuse des \gls{g:myrio} betätigt werden.
@@ -76,15 +76,15 @@
 			%
 			\image{content/4_implementierung/image/button}{scale=.7}{htbp}[Zustandswechsel][img:state_switch]
 		%
-		\subsubsection*{Initialisierungs-Zustand}
-			Während der Initialisierung werden 4 wesentliche Schritte durchgeführt, die folgt kurz erläutert werden. Die Funktion des Zustandes an sich ist in Abschnitt \vref{ss:struktur} beschrieben. Da die unterschiedlichen Schritte zwingend sequentiell Ablaufen müssen, erfolgt die Umsetzung innerhalb Flat Sequence. Bei dieser \gls{g:labview}-Struktur wird eine folgende Sequenz erst abgearbeitet, wenn bei der aktuellen alle Knoten ausgeführt wurden. Weiter ist der Ablauf für ein Daten-Segment ausgelegt. Durch dies werden alle Operation auf dieselben Daten angewandt, was die Konsistenz des Ergebnisses erhöht. Eine Übersicht über den Initialisierungs-Zustand bietet die Abbildung \vref{img:init_phase}.
+		\subsubsection*{Kalibration-Zustand}
+			Während der Kalibrierung werden 4 wesentliche Schritte durchgeführt, die folgt kurz erläutert werden. Die Funktion des Zustandes an sich ist in Abschnitt \vref{ss:struktur} beschrieben. Da die unterschiedlichen Schritte zwingend sequentiell Ablaufen müssen, erfolgt die Umsetzung innerhalb \textsf{Flat Sequence}. Bei dieser \gls{g:labview}-Struktur wird eine folgende Sequenz erst abgearbeitet, wenn bei der aktuellen alle Knoten ausgeführt wurden. Weiter ist der Ablauf für ein Daten-Segment ausgelegt. Durch dies werden alle Operation auf dieselben Daten angewandt, was die Konsistenz des Ergebnisses erhöht. Eine Übersicht über den Initialisierungs-Zustand bietet die Abbildung \vref{img:init_phase}.
 			%
 			\image{content/4_implementierung/image/init_phase}{scale=.7}{htbp}[Initialisierungs-Zustand][img:init_phase]
 			%
 			\begin{enumerate}
 				\item Filterung \texttt{Filter.vi}: Die \gls{ac:vi} wird grösstenteils aus dem Beispiel \textsf{ Posture Estimation} übernommen. Lediglich die zuvor eingesetzten Elliptischen Filter werden durch solche mit einer Butterworth-Charakteristik ersetzt und die Parameter an denen des in Abschnitt \vref{ss:tp} beschriebenen angepasst. 
 				%
-				\item Rotationsmatrix \texttt{Mrot.vi}: Für die Schätzung der Rotationswinkel und der Berechnung der Rotationsmatrix wird eine eigene \gls{ac:vi}, angelehnt an bestehende, realisiert. Wesentlich ist die Schätzung der Winkel, die mit der Gleichung \vref{subsec:orientierungsschätzung} erfolgt und das folgende ermitteln der Matrix. Diese beiden \gls{ac:vi}s wurden übernommen und durch den konstanten Gravitätsvektor (dient als Bezugsachse für die Winkelschätzung) erweitert. Die Umsetzung wird in der Abbildung \vref{img:mrot} gezeigt.
+				\item Rotationsmatrix \texttt{Mrot.vi}: Für die Schätzung der Rotationswinkel und der Berechnung der Rotationsmatrix wird eine eigene \gls{ac:vi}, angelehnt an bestehende, realisiert. Wesentlich ist die Schätzung der Winkel, die mit der Gleichung \vref{subsec:orientierungsschätzung} erfolgt und das folgende ermitteln der Matrix. Diese beiden \gls{ac:vi}s wurden übernommen und durch den konstanten Gravitationsvektor (dient als Bezugsachse für die Winkelschätzung) erweitert. Die Umsetzung wird in der Abbildung \vref{img:mrot} gezeigt.
 					%
 					\image{content/4_implementierung/image/mrot}{scale=.7}{htbp}[Rotationsmatrix][img:mrot]
 				%
@@ -96,7 +96,7 @@
 			\end{enumerate}
 		%
 		%
-		\subsubsection*{Signalverarbeitungs-Zustand}
+		\subsubsection*{Bewegungs-Zustand}
 			Die Signalverarbeitung erfolgt, wie in Abschnitt \vref{ss:struktur} genau beschrieben, mit Samples. Sie umfasst 3 Schritte, für deren korrekte Funktionalität eine Initialisierung benötigt wird (erfolgt durch ein Wechsel in den Initialisierungs-Zustand). Die erforderlichen Daten des vorherigen Zustandes werden durch Schieberegister übertragen. Die Abbildung \vref{img:sig_phase} zeigt den vollständigen Zustand, inklusive den Schieberegistern (orange, horizontale Linien).
 			%
 			\image{content/4_implementierung/image/progress_phase}{scale=.7}{htbp}[Signalverarbeitungs-Zustand][img:sig_phase]
@@ -104,7 +104,7 @@
 			\begin{enumerate}
 				\item Rotation \texttt{Rot.vi}: Erfolgt analog mit derselben \gls{ac:vi} wie im Initialisierungs-Zustand. Die benötigte Rotationsmatrix wird vom vorherigen Zustand durch ein Schieberegister übernommen. 
 				%
-				\item Integration \texttt{Inta.vi}: Für die Wegbestimmung muss die Beschleunigung zweifach integriert werden. Zuvor erfolgt noch eine Auswertung der aktuellen Standardabweichung (ermittelt mit der \gls{ac:vi} \texttt{Standard Deviation PtByPt.vi}), die mit der Standardabweichung des während des Initialisierungs-Zustand aufgenommenen Segments verglichen wird. Fällt sie höher aus, kann von einer Bewegung ausgegangen werden. Die folgende Integration wird, wie zuvor in Abschnitt \vref{ss:implementierung_int} beschrieben, durch jeweils zwei \acrshort{ac:iir}-Filter bewerkstelligt. Speziell zu beachten ist, dass im Falle der ruhenden Position (keine Bewegung detektiert) der zurückgelegte Weg gleichwohl angezeigt werden muss. Für dieses Verhalten wird eine Feedback Node \gls{ac:vi} eingesetzt.
+				\item Integration \texttt{Inta.vi}: Für die Wegbestimmung muss die Beschleunigung zweifach integriert werden. Zuvor erfolgt noch eine Auswertung der aktuellen Standardabweichung (ermittelt mit der \gls{ac:vi} \texttt{Standard Deviation PtByPt.vi}), die mit der Standardabweichung des während des Initialisierungs-Zustand aufgenommenen Segments verglichen wird. Fällt sie höher aus, kann von einer Bewegung ausgegangen werden. Die folgende Integration wird, wie zuvor in Abschnitt \vref{ss:implementierung_int} beschrieben, durch jeweils zwei \acrshort{ac:iir}-Filter bewerkstelligt. Speziell zu beachten ist, dass im Falle der ruhenden Position (keine Bewegung detektiert) der zurückgelegte Weg gleichwohl angezeigt werden muss. Für dieses Verhalten wird eine \textsf{Feedback Node} \gls{ac:vi} eingesetzt.
 					%
 					\image{content/4_implementierung/image/inta}{scale=.7}{htbp}[Integration][img:inta]
 				%
@@ -118,9 +118,9 @@
 			Der Aufbau des Frontpanels kann der Abbildung \vref{img:front_myrio} entnommen werden. Die einzelnen Elemente werden folgt kurz erklärt.
 			\begin{enumerate}
 				\item Der Taster \textsf{Init} dient zum Auslösen einer Reinitialisierung. Beschrieben ist dieser Vorgang im Abschnitt \vref{ss:demo_target} unter Zustandsmaschine.
-				\item Durch den Indikator \textsf{Init} wird die Initialisierungs-Phase visualisiert (leuchtet grün).
+				\item Durch den Indikator \textsf{Init} wird die Kalibrations-Phase visualisiert (leuchtet grün).
 				\item Die Dauer, respektive die Anzahl Samples, die für die Bestimmung der Rotationsmatrix im Initialisierungs-Zustand verwendet werden, kann zwischen 1000 und 5000 eingestellt werden. Mit der aktuell eingestellten Abtastrate von \unit[1]{kHz} entspricht diese Angabe ebenfalls der benötigten Zeit in \unit{ms}.
-				\item Die Schaltfläche \textsf{stop} dient zum Beenden der laufenden \gls{ac:vi}. Durch deren Betätigung wird ebenfalls, nachdem verstreichen eines Timeouts, die \gls{ac:vi} des \gls{g:host} abgebrochen (Netwerk-Stream Fehler). 
+				\item Die Schaltfläche \textsf{stop} dient zum Beenden der laufenden \gls{ac:vi}. Durch deren Betätigung wird ebenfalls, nachdem verstreichen eines Timeouts, die \gls{ac:vi} des \gls{g:host} abgebrochen (Netwerkstream Fehler). 
 				\item Sollen die Elemente zur Wegbestimmung auf ihre Standardwerte zurückgestellt werden, so kann die Schaltfläche \textsf{initalize} gedrückt werden.
 				\item Konnte erfolgreich eine Netzwerkverbindung zum \gls{g:host} hergestellt werden, wird dies durch den Indikator \textsf{connected?} dargestellt.
 			\end{enumerate}
@@ -132,14 +132,14 @@
 		Der \gls{g:host}-Teil des Demonstrators dient lediglich der Darstellung der auf dem \gls{g:target} verarbeiteten Daten. In der Projektstruktur ist die \gls{ac:vi} des \gls{g:host} unter dem Namen \texttt{Desktop Main.vi} zu finden. Die Ausführung erfolgt direkt in \gls{g:labview}, sprich es wird keine Kompilation durchgeführt\footnote{Diese Aussage beruht auf eigens gemachte Beobachtungen der Autoren und kann nicht bewiesen werden.}.
 		%
 		\subsubsection*{Visualisierung}
-			Die Darstellung der übertragenen Daten erfolgt sample-basiert. Dazu müssen die Daten zuerst extrahiert und anschliessend ansprechend dargestellt werden. Weite Teile dieses \gls{ac:vi} wurden aus dem Beispielprojekt übernommen, wie auch die Abbildung \vref{img:rx_data} zeigt. Die Darstellung erfolgt durch ein 3D-Modell des \gls{g:myrio} und einem Pfadverlauf in einem x-y-Graph.
+			Die Darstellung der übertragenen Daten erfolgt sample-basiert. Dazu müssen die Daten zuerst extrahiert und anschliessend ansprechend dargestellt werden. Weite Teile dieses \gls{ac:vi} wurden aus dem Beispielprojekt übernommen, wie auch die Abbildung \vref{img:rx_data} zeigt. Die Darstellung erfolgt durch ein 3-D-Modell des \gls{g:myrio} und einem Pfadverlauf in einem x-y-Graph.
 			%
 			\image{content/4_implementierung/image/net_end_host}{scale=.7}{htbp}[Daten Empfangen][img:rx_data]
 			%
 			\begin{enumerate}
 				\item Daten Extraktion: Aus der übertragenen Datenstruktur werden die x- und y-Koordina\-ten mit Hilfe der \texttt{Read Single Element from Stream.vi} extrahiert . Diese Aufteilung in die einzelnen Komponenten ist für eine Darstellung in der x-y-Ebene Voraussetzung. 
 				%
-				\item Translation: Um die Translation des \gls{g:myrio} im Raum darzustellen, muss auf das vorhandene 3D-Modell die \texttt{Set Translation.vi} angewandt werden.
+				\item Translation: Um die Translation des \gls{g:myrio} im Raum darzustellen, muss auf das vorhandene 3-D-Modell die \texttt{Set Translation.vi} angewandt werden.
 				\item x-y-Graph \texttt{XY-Graph as Chart.vi}: Die \texttt{XY Graph.vi} kann Daten nur aus einem bestehenden Segment darstellen. Da die Koordinaten jedoch sample-weise kontinuierlich übertragen werden, muss ein Buffer implementiert werden. Dieser muss zusätzlich die Charakteristik eines Schieberegisters aufweisen, das, wenn der Buffer überläuft, die ältesten Daten verwirft. Mit einer solchen \gls{ac:vi} kann anschliessend eine Konvertierung des Graphs in eine Chart erfolgen. Eine entsprechende Umsetzung kann in \cite{lit:labview_graph_as_chart} gefunden werden. Dargestellt ist sie in der Abbildung \vref{img:graph}.
 					%
 					\image{content/4_implementierung/image/graph_chart_host}{scale=.7}{htbp}[Graph zu Chart][img:graph]
@@ -153,7 +153,7 @@
 			\begin{enumerate}
 				\item Im Texteingabefeld \textsf{myRIO IP-Address} muss die aktuelle IP-Adresse des \gls{g:myrio} angegeben werden. Diese kann je nach Netzwerkkonfiguration unterschiedlich ausfallen muss jeweils kurz kontrolliert werden.
 				\item Konnte eine Verbindung zum \gls{g:target} aufgebaut werden, so wird dies durch ein grünes Leuchten des Indikators \textsf{connected?} kundgetan. 
-				\item Darstellung des 3D-Modells im dreidimensionalen Raum.
+				\item Darstellung des 3-D-Modells im dreidimensionalen Raum.
 				\item Zurückgelegter Pfad in der x-y-Ebene. Die Auflösung der Achsen wird dabei laufend angepasst und ist unbedingt zu beachten.
 				\item Die Schaltfläche \textsf{stop} dient zum Beenden der laufenden \gls{ac:vi}. Dies hat ebenfalls eine Unterbrechung der Netzwerkverbindung zur Folge.
 				\item Mit dem Taster \textsf{reset graph} kann, wie der Name schon andeutet, der Graph gelöscht werden. 
@@ -167,7 +167,7 @@
 \section{Bedienung}
 	Für einen erfolgreichen Betrieb des Demonstrators sind einige Dinge zu beachten. Falls einer der folgt aufgeführten Schritte nicht funktioniert, sollte zuerst die Verbindung zum \gls{g:myrio} überprüft werden. Dies beinhaltet ebenfalls den aktuellen Zustand des Treibers\footnote{Während der Implementationsphase kam es zu diversen Abstürzen. Durch einen Neustart des \gls{g:host} konnte dieses Problem jedoch jedes mal behoben werden.}.\par
 	%
-	Die gesamte Bedienung umfasst insgesamt XXX Schritte.
+	Die gesamte Bedienung umfasst insgesamt 6 Schritte.
 	\begin{enumerate}
 		\item Das \gls{g:myrio} mit dem \gls{g:host}-System verbinden.
 		\item \gls{g:labview} starten und das Projekt \texttt{reametric} öffnen (ist im Anhang \vref{s:anhang_labview} zu finden).
