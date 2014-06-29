@@ -449,7 +449,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 			Der Messablauf sieht folgende Schritte vor. Sie werden jeweils bei jedem Winkel wiederholt.
 			\begin{enumerate}
 				\item Testaufbau auf den gewünschten Winkel einstellen. Dazu den Winkelmesser M\low{2} verwenden
-				\item \gls{g:labview}-Programm starten. Es müssen während \unit[6.0]{s} Daten aufgezeichnet werden\footnote{Die definierte minimale Messdauer, vorgeben durch das Konzept.}
+				\item \gls{g:labview}-Programm starten. Es müssen während \unit[6]{s} Daten aufgezeichnet werden\footnote{Die definierte minimale Messdauer, vorgeben durch das Konzept.}
 				\item Den vorherigen Schritt 5-mal wiederholen
 				\item Datenextraktion nach mit den in Abschnitt \vref{ss:myRIO_hw} beschriebenen Methoden
 				\item Daten mit \gls{g:matlab} verarbeiten und auswerten
@@ -605,9 +605,9 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 			%
 			Wie im vorherigen Abschnitt \vref{ss:material_translation} erörtert, wird die Geschwindigkeit indirekt über die Bewegungszeit gemessen. Daher werden lediglich zwei Bereiche definiert:
 			\begin{itemize}
-				\item \textbf{langsam} Die Translation dauert \unit[2.0]{s}. Diese Vorgabe wird nur rudimentär mit einer Zeitmessung verifiziert (Stoppuhr M\low{4}).  
+				\item \textbf{langsam} Die Translation dauert \unit[2]{s}. Diese Vorgabe wird nur rudimentär mit einer Zeitmessung verifiziert (Stoppuhr M\low{4}).  
 				%
-				\item \textbf{schnell} Eine Bewegungszeit von \unit[1.0]{s}.
+				\item \textbf{schnell} Eine Bewegungszeit von \unit[1]{s}.
 			\end{itemize}\par
 			%
 			Insgesamt ergeben sich durch die verschiedenen Positionierungen und Geschwindigkeiten \\6 verschiedene Messungen. Der Messablauf gliedert sich in 5 Schritte. Alle Schritte sind bei jeder Positionierung und Geschwindigkeit 15-mal zu wiederholen. 
@@ -618,9 +618,9 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				\item Das \gls{g:labview}-Programm starten
 				\item Messung starten
 					\begin{enumerate}
-						\item \unit[4.0]{s} warten, bis die Rotationswinkel geschätzt sind
+						\item \unit[4]{s} warten, bis die Rotationswinkel geschätzt sind
 						\item Translation durchführen (\unit[5.0]{cm}, \textsf{langsam} oder \textsf{schnell})
-						\item Warten bis \unit[10.0]{s} verstrichen sind (totale Messzeit)
+						\item Warten bis \unit[10]{s} verstrichen sind (totale Messzeit)
 					\end{enumerate}
 				\item Werkzeugtisch in Ursprungsposition bewegen
 			\end{enumerate}
@@ -763,9 +763,9 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				\item Das \gls{g:labview}-Programm ausführen
 				\item Messung durchführen
 				\begin{enumerate}
-					\item Für die Bestimmung der Rotationsmatrix \unit[4.0]{s} warten
+					\item Für die Bestimmung der Rotationsmatrix \unit[4]{s} warten
 					\item Den Rotationsarm einmal gegen den Uhrzeigersinn drehen und dabei auf eine möglichst konstante Geschwindigkeit achten
-					\item In Ausgangsposition verharren bis \unit[11.0]{s} verstrichen sind
+					\item In Ausgangsposition verharren bis \unit[11]{s} verstrichen sind
 				\end{enumerate}
 			\end{enumerate}
 		%
@@ -797,7 +797,7 @@ Bei allen Messungen der drei verschiedenen Auslenkungen sind Abweichungen, bezog
 %
 Gegeben durch den Messaufbau ist eine sinusförmige Bewegung auf der y-Achse zu erwarten. Diese kann nicht reproduziert werden. Die Genauigkeit der Kontrollgruppe hat keinen Einfluss auf die grossen Abweichungen der Messungen. Da Start- und Endposition auf maximal \unit[1.0]{cm} genau angefahren werden kann. Diese Genauigkeit ist bei weitem kleiner als die gemessenen Abweichungen.\par
 %
-Wie schon in  Abschnitt \vref{ss:interpretation_tran} gesehen ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige cm auf einem Messdauer von \unit[10.0]{s} ausmacht, wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
+Wie schon in  Abschnitt \vref{ss:interpretation_tran} gesehen ist bei jeder Bewegung mit einem beständigem Offset ein Drift durch die zweifache Integration möglich. Dieser Drift wird, wenn der Sensor in Ruhe ist, durch die Bewegungsdetektion unterdrückt. Ist der Sensor in Bewegung, wird das Resultat durch diesen Drift zusätzlich verfälscht. Messungen haben jedoch gezeigt, dass dieser Drift nur einige \unit{cm} auf einem Messdauer von \unit[10]{s} ausmacht, wie in Abbildung \vref{img:drift} im Anhang gezeigt. Dieser Drift hat im Vergleich zu den hier aufgetretenen Abweichungen einen kleinen Einfluss.
 %
 Die enormen Abweichungen können mit dem fehlerhaften Konzept begründet werden. Das Konzept ist so ausgelegt, dass nur Bewegungen in einer Ebene parallel zur z-Achse des \gls{g:worldframe} betrachtet werden können. Dabei wird die Orientierung des Sensors nur einmal kompensiert. Ändert nun die Orientierung des Sensors durch eine Rotation, so wird diese nicht mehr richtig kompensiert. Eine Projektion der Gravitation ist auf unserer x- und y-Achse vorhanden und wird mit integriert. Dadurch entsteht ein Drift. Dieser Drift führt zu den grossen Abweichungen der Messresultate.\par
 %
