@@ -125,7 +125,7 @@ Um die Bewegung des Sensors im Koordinatensystem des Betrachters, dem \gls{g:wor
 %
 Die gemessene Erdbeschleunigung des Sensors entspricht den \gls{ac:tp}-gefilterten Beschleunigungsdaten. Mit dem Drehwinkel $\phi$ und der Rotationsachse $\overrightarrow{n}$ kann die in Abschnitt \vref{sub:rotmat} beschriebene Rotationsmatrix aufgestellt werden. Mit dieser Rotationsmatrix kann die Orientierung des Beschleunigungssensors (\gls{g:bodyframe}) in das Betrachtungssystem (\gls{g:worldframe}) transformiert werden. Der Drehwinkel $\phi$ ist der Zwischenwinkel der Vektoren $\overrightarrow{a_g}$ und $\overrightarrow{a_{grav}}$, die Rotationsachse $\overrightarrow{n}$ steht senkrecht auf diesen beiden Vektoren.
 %
-\image{content/3_konzept/image/Vektor_bearb}{scale=0.7}{t}[Rotation][img:Vektor]
+\image{content/3_konzept/image/Vektor_bearb}{scale=0.58}{t}[Rotation][img:Vektor]
 %
 \subsubsection*{Betrachtungssystem}\label{subsub:betrachter}
 Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung \vref{img:koordinatensystem} das Koordinatensystem des Betrachters, das \gls{g:worldframe}, sowie das Koordinatensystem des \gls{g:myrio}, das \gls{g:bodyframe}, aufgezeigt. Das \gls{g:worldframe} liegt mit der z-Achse parallel zur Erdbeschleunigung. Bei frontaler Betrachtung von \gls{g:transversal}en Bewegungen nach recht und links resultiert eine Zu- oder Abnahme der y-Komponente. Hingegen bewirken \gls{g:sagital}e Bewegungen nach vorne und hinten eine Zu- bzw. Abnahme der x-Komponente.
@@ -148,6 +148,8 @@ Um die Orientierung des Sensors zu kompensieren, ist zum Überblick in Abbildung 
 %
 Das \gls{g:myrio} hat bekanntlich eine beliebige Ausrichtung im \gls{g:worldframe}. Durch die Montage des Beschleunigungssensors sind dessen Achsen in Bezug auf das Gehäuse gegeben und bilden somit das \gls{g:bodyframe}. Diese ist in Abbildung \vref{img:koord_myRIO} ersichtlich.
 %
+\FloatBarrier
+%\newpage
 \subsubsection*{Drehwinkel}
 Der Drehwinkel $\phi$, wie in Abbildung \vref{img:Vektor} gesehen, entspricht gerade dem Zwischenwinkel der beiden Vektoren $\overrightarrow{a\low{g}}$ sowie den \gls{ac:tp}-gefilterten Beschleunigungsdaten $\overrightarrow{a\low{grav}}$. Der Zwischenwinkel zweier Vektoren wird über das Skalarprodukt berechnet. Nach Papula \cite{lit:papula} ist dies wie in Gleichung \vref{eq:dotp} dargestellt möglich.
 %
@@ -212,7 +214,7 @@ Mit der Rotationsmatrix und der berechneten Beschleunigung der Bewegung kann die
 a_{world} = a_{body} * R_{g; O; \overrightarrow{n}; \phi}
 }{
 a_{world} & Beschleunigung im Bezugskoordinatensystem \gls{g:worldframe}\\
-R_{g; O; \overrightarrow{n}; \phi} & Rotationsmatrix um Gerade g mit Richtung $\overrightarrow{n}$ um Winkel $\phi$\\
+R_{g; O; \overrightarrow{n}; \phi} & Rotationsmatrix um Gerade $g$ mit Richtung $\overrightarrow{n}$ um Winkel $\phi$\\
 a_{body} & Beschleunigung im Koordinatensystem des Sensors \gls{g:bodyframe} 
 }[eq:delay]
 %
@@ -231,6 +233,7 @@ Zu Beginn jeder Messung wird der Sensor für \unit[4]{s} in Ruhe gelassen. In die
 Die Standardabweichung wird, wie schon erwähnt, über ein Fenster $w$ der Länge \unit[200]{Smaples} berechnet. Somit erhält man die in Abbildung \vref{img:bewegungdetect} im unteren subplot dargestellte Standardabweichung. Übersteigt die Standartabweichung den zuvor definierten Threshold, so wird mit der Integration begonnen. Wird der Threshold anschliessend unterschritten, so ist keine Bewegung mehr vorhanden und es wird nicht mehr integriert. 
 %
 % Integration
+\FloatBarrier
 \subsection{Berechnung der Bewegung}\label{ss:int}
 %
 \image{content/3_konzept/image/Integration}{scale=0.7}{h}[Bewegung auf der y-Achse][img:bewegung_y_achse]
@@ -240,9 +243,9 @@ Um von der Beschleunigung auf die Position zu schliessen, kann die Beschleunigun
 \formula{
 v(t) = \int a(t)dt + v_0 
 }{
-v & Geschwindigkeit [$m/s$]\\
-v_{0} & Anfangsgeschwindigkeit [$m/s$]\\
-a & Beschleunigung [$m/s^2$]
+v & Geschwindigkeit [m/s]\\
+v_{0} & Anfangsgeschwindigkeit [m/s]\\
+a & Beschleunigung [m/s\high{2}]
 }[eq:geschw]
 %
 Integriert man diese Geschwindigkeit erneut, so erhält man den zurückgelegten Weg über die betrachtete Zeitdauer.
@@ -252,7 +255,7 @@ s(t) = \int v(t)dt + s_0
 }{
 s & zurückgelegter Weg [m]\\
 s_{0} & Anfangsposition [m]\\
-v & Geschwindigkeit [$m/s$]
+v & Geschwindigkeit [m/s]
 }[eq:weg]
 % 
 Die Integration erfolgt, wie bereits im Abschnitt \vref{sec:numint} beschrieben, mittels der Trapezmethode. Speziell dabei ist, dass dafür ein \gls{ac:iir}-Filter angewendet wird. Dazu wird die in Abschnitt \vref{subsub:filterentwurf} beschriebene Bilineare-Transformation verwendet.\par
@@ -298,7 +301,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 		Damit die dargestellten Daten aufgezeichnet werden können, muss das bestehende Projekt mit den Komponenten \textsf{Datei anlegen}, \textsf{Daten buffern} und \textsf{Daten speichern} ergänzt werden. Für diesen Zweck werden die drei Zustände der bestehenden Sequenz angepasst.
 		%
 		\subsubsection*{Initialisierungs-Zustand}
-			In der Initialisierung muss eine Datei für das spätere Speichern der Rohdaten erstellt werden. Dazu wird der in Abbildung \vref{img:init_file} ersichtliche Ablauf verwendet. Der Dateiname kann mithilfe eines Eingabefeldes (siehe Abbildung \vref{img:init_file_indicator}) individuell angepasst werden, muss aber die Endung \texttt{*.xlsx} aufweisen. Der Pfad der angelegten Datei bezieht sich auf das Home-Directory des \texttt{lvuser}, einem lokalen Benutzer des \gls{ac:ni} Real-Time-Linux. Der endgültige Speicherpfad wird anschliessend im letzten Zustand (Schliessen-Zustand) ausgegeben.
+			In der Initialisierung muss eine Datei für das spätere Speichern der Rohdaten erstellt werden. Dazu wird der in Abbildung \ref{img:init_file} ersichtliche Ablauf verwendet. Der Dateiname kann mithilfe eines Eingabefeldes (siehe Abbildung \vref{img:init_file_indicator}) individuell angepasst werden, muss aber die Endung \texttt{*.xlsx} aufweisen. Der Pfad der angelegten Datei bezieht sich auf das Home-Directory des \texttt{lvuser}, einem lokalen Benutzer des \gls{ac:ni} Real-Time-Linux. Der endgültige Speicherpfad wird anschliessend im letzten Zustand (\textsf{Schliessen-Zustand}) ausgegeben.
 			%
 			\begin{figure}[htbp] %htbp
 				\centering
@@ -318,7 +321,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				\label{img:datei_erstellen}
 	    	\end{figure}\par
 	    	%
-	    	Für das einfachere Einstellen der Sampling-Rate wird die Initialisierung noch durch eine solche Möglichkeit ergänzt. Für eine einfachere Interpretation wird zudem noch eine Umrechnung in Herz vorgenommen und angezeigt. Der Ablauf und das UI ist in der Abbildung \vref{img:periode} ersichtlich.
+	    	Für das einfachere Einstellen der Sampling-Rate wird die Initialisierung noch durch eine solche Möglichkeit ergänzt. Für eine einfachere Interpretation wird zudem noch eine Umrechnung in Herz vorgenommen und angezeigt. Der Ablauf und das \gls{ac:ui} ist in der Abbildung \vref{img:periode} ersichtlich.
 	    	%
 			\begin{figure}[htbp] %htbp
 				\centering
@@ -362,7 +365,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 	    	%	
 		%
 		\subsubsection*{Schliessen-Zustand}
-			Abgeschlossen wird das \gls{ac:vi} durch den Schliessen-Zustand. Dabei wird das \gls{g:myrio} auf den Ursprung zurückgesetzt und der Speicherpfad der Daten ausgegeben. Für diesen Zweck wird eine vorgefertigte \gls{ac:vi} von \gls{ac:ni} verwendet, die das Reseten des \gls{g:myrio} durchführt. Die Ausgabe des Pfades erfolgt bereits im vorderen Zustand, wird jedoch erst hier visualisiert. Für das Blockdiagramm und das UI sei auf die Abbildung \vref{img:speicherpfad} verwiesen.
+			Abgeschlossen wird das \gls{ac:vi} durch den \textsf{Schliessen-Zustand}. Dabei wird das \gls{g:myrio} auf den Ursprung zurückgesetzt und der Speicherpfad der Daten ausgegeben. Für diesen Zweck wird eine vorgefertigte \gls{ac:vi} von \gls{ac:ni} verwendet, die das Reseten des \gls{g:myrio} durchführt. Die Ausgabe des Pfades erfolgt bereits im vorderen Zustand, wird jedoch erst hier visualisiert. Für das Blockdiagramm und das \gls{ac:ui} sei auf die Abbildung \ref{img:speicherpfad} verwiesen.
 			%
 			\begin{figure}[htbp] %htbp
 				\centering
@@ -380,7 +383,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				\end{subfigure}
 				\caption{Speicherpfad angeben und \gls{g:myrio} reseten}
 				\label{img:speicherpfad}
-	    	\end{figure}\par
+	    	\end{figure}
 	    	%	
 	%
 	%\subsection{myRIO Posture Estimation}\label{subsec:myposture} \todo{gut darauf eingehen}
@@ -391,7 +394,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 	%
 	%
 	\subsection{Grund/Zweck der Messung}
-		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{siehe Abschnitt \vref{s:blockdiagramm}.} und das erste von drei Experimental-Protokollen\footnote{Die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen, ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
+		Die Schätzung des Rotationswinkels ist der erste Teil des Konzepts\footnote{Siehe in Abschnitt \vref{s:blockdiagramm}.} und das erste von drei Experimental-Protokollen\footnote{Die übrigen Protokolle sind in den Abschnitten \vref{s:verifikation_translation} und \vref{s:verifikation_transaltion_rotation} zu finden. Sie dienen als Ausgangslage für die Validierung des Konzepts.}. Sie dient als Basis für die spätere Rotation und anschliessende doppelte Integration und ist Voraussetzung für eine korrekte Messung. Die Winkel werden dabei hinsichtlich des Bezugssystems bestimmt. Das Protokoll soll die Genauigkeit des Algorithmus bestimmen und abwägen, ob sie den Anforderungen der Hypothese \vref{hypo:rotation} genügt.
 		%
 		\begin{hypo}\label{hypo:rotation}	   
 			Der eingestellte Winkel wird durch die Schätzung richtig bestimmt.	
@@ -402,7 +405,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 	\subsection{Material/Testumgebung}
 		Die Messung, respektive Schätzung der Rotationswinkel erfolgt statisch auf einer eigens für dieses Projekt entworfenen Testumgebung, die später zur Simulation eines Bewegungsablaufs des Knies gebraucht wird. Siehe dazu den Abschnitt \vref{ss:testumgebung_tran_rot}, in welchem auch näher auf die Möglichkeiten des Aufbaus eingegangen wird. Für dieses Protokoll wird lediglich von der Tatsache Gebrauch gemacht, dass das \gls{g:myrio} kontrolliert in verschiedene Positionen gebracht und somit eine Reproduzierbarkeit der Messung gewährleistet werden kann.\par
 		%
-		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Die Markierung \textsf{R} auf dem Schwenkarm.}. Dazu wird der Rotationsarm sowie die Querverbindung, wie in Abbildung  \vref{img:messaufbau_rot} gezeigt, angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarms.\par
+		Für die Messung wird die Befestigung und der Bewegungsfreiraum des Testaufbaus so eingestellt, dass ein möglichst grosser Winkelbereich zur Verfügung steht (insgesamt \unit[56]{°})\footnote{Die Markierung \textsf{R} auf dem Schwenkarm.}. Dazu wird der Rotationsarm sowie die Querverbindung, wie in Abbildung  \ref{img:messaufbau_rot} gezeigt, angeordnet. Die Position des \gls{g:myrio} M\low{1}, das für die Aufzeichnung der Beschleunigungsdaten eingesetzt wird, befindet sich am äussersten Ende des Schwenkarms.\par
 		%
 		\image{content/3_konzept/image/aufbau_rot}{scale=1}{htbp}[Testaufbau Rotation][img:messaufbau_rot]	
 		%
@@ -464,7 +467,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 			%
 			Der Rotationswinkel kann zwar für eine Aussage über die Rotation verwendet werden, seine Bedeutung ist jedoch nur zweitrangig, wenn die Rotation an sich nicht funktioniert. Daher gilt es, die Beschleunigungskomponenten der einzelnen Achsen nach der Rotation auszuwerten. Bei allen Messungen ist der Beschleunigungsvektor $\overrightarrow{a_{grav}}=[0\quad 0\quad 1]^{\top}$, was dem unbewegten \gls{g:worldframe} entspricht (auf der z-Achse die Erdbeschleunigung).
 			%
-			Die Auswertung der Messungen ist in der Tabelle \vref{tab:auswertung_tran} zusammengefasst. 
+			Die Auswertung der Messungen ist in der Tabelle \vref{tab:auswertung_rot} zusammengefasst. 
 			%
 			\input{content/3_konzept/table/auswertung_rot} 
 			
@@ -630,28 +633,28 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 			%
 			\begin{itemize}
 			%\paragraph*{x-Achsen Position}
-				\item \textbf{x-Achsen Position} Bei über 15 Messungen mit der langsamen Geschwindigkeit tritt ein mittlerer absoluter Fehler von \unit[0.341]{cm} auf, was \unit[6.8]{\%} ergibt. Die gemessenen Translationen, zu sehen in der Abbildung \vref{img:x_tran_langsam_y}, weisen eine mittlere Distanz von \unit[-4.659]{cm} (blaue Linie) mit einer Standardabweichung (rote Linien) von \unit[0.348]{cm} auf.
+				\item \textbf{x-Achsen Position} Bei über 15 Messungen mit der langsamen Geschwindigkeit tritt ein mittlerer absoluter Fehler von \unit[0.34]{cm} auf, was \unit[6.8]{\%} ergibt. Die gemessenen Translationen, zu sehen in der Abbildung \vref{img:x_tran_langsam_y}, weisen eine mittlere Distanz von \unit[-4.66]{cm} (blaue Linie) mit einer Standardabweichung (rote Linien) von \unit[0.35]{cm} auf.
 				\image{content/3_konzept/image/mittel_5_X_Y}{scale=0.6}{htbp}[x-Position Translation \textsf{langsam}][img:x_tran_langsam_y]
 				%
-				Wird die Geschwindigkeit auf Stufe \textsf{schnell} verdoppelt, so verkleinert sich der mittlere absolute Fehler auf \unit[0.192]{cm}. Dies entspricht einer relativen Abweichung von \unit[3.8]{\%}. Daraus ergibt sich eine mittlere gemessene Distanz von \unit[-4.808]{cm} mit einer Standardabweichung von \unit[0.349]{cm}. Ersichtlich sind die Messung und die Auswertung in der Abbildung \vref{img:x_tran_schnell_y}.
+				Wird die Geschwindigkeit auf Stufe \textsf{schnell} verdoppelt, so verkleinert sich der mittlere absolute Fehler auf \unit[0.19]{cm}. Dies entspricht einer relativen Abweichung von \unit[3.8]{\%}. Daraus ergibt sich eine mittlere gemessene Distanz von \unit[-4.81]{cm} mit einer Standardabweichung von \unit[0.35]{cm}. Ersichtlich sind die Messung und die Auswertung in der Abbildung \ref{img:x_tran_schnell_y}.
 				%
 				\image{content/3_konzept/image/mittel_5_X_Y}{scale=0.6}{htbp}[x-Position Translation \textsf{schnell}][img:x_tran_schnell_y] 
 			%
 			%\paragraph*{y-Achsen Position}
-				\item \textbf{y-Achsen Position} Befindet sich das \gls{g:myrio} in der y-Achsen Position, so ergibt sich über 15 Messungen ein mittlerer absoluter Fehler von \unit[2.203]{cm} (relativ \unit[44.1]{\%}). Dies bei der Geschwindigkeit \textsf{langsam}. Die Analyse hinsichtlich des gemessenen Mittelwerts und Standardabweichung ergibt \unit[7.203]{cm} und \unit[0.467]{cm}. Die Abbildung \vref{img:y_tran_langsam_y} zeigt die 15 Messungen mit eingezeichneten Kenngrössen (blau Mittelwert der Messung und rot die Standardabweichung).
+				\item \textbf{y-Achsen Position} Befindet sich das \gls{g:myrio} in der y-Achsen Position, so ergibt sich über 15 Messungen ein mittlerer absoluter Fehler von \unit[2.20]{cm} (relativ \unit[44.1]{\%}). Dies bei der Geschwindigkeit \textsf{langsam}. Die Analyse hinsichtlich des gemessenen Mittelwerts und Standardabweichung ergibt \unit[7.20]{cm} und \unit[0.47]{cm}. Die Abbildung \vref{img:y_tran_langsam_y} zeigt die 15 Messungen mit eingezeichneten Kenngrössen (blau Mittelwert der Messung und rot die Standardabweichung).
 				%
 				\image{content/3_konzept/image/mittel_5_Y_Y}{scale=0.6}{htbp}[y-Position Translation \textsf{langsam}][img:y_tran_langsam_y]
 				%
-				Eine Erhöhung der Geschwindigkeit bringt einen mittleren absoluten Messfehler von \unit[1.343]{cm} und einen relativen von \unit[26.8]{\%} zutage. Dies bei einem Mittelwert von \unit[6.343]{cm} und einer Standardabweichung von \unit[0.558]{cm}; siehe Abbildung \vref{img:y_tran_schnell_y}.
+				Eine Erhöhung der Geschwindigkeit bringt einen mittleren absoluten Messfehler von \unit[1.34]{cm} und einen relativen von \unit[26.8]{\%} zutage. Dies bei einem Mittelwert von \unit[6.34]{cm} und einer Standardabweichung von \unit[0.56]{cm}; siehe Abbildung \vref{img:y_tran_schnell_y}.
 				%
 				\image{content/3_konzept/image/schnell_5_Y_Y}{scale=0.6}{htbp}[y-Position Translation \textsf{schnell}][img:y_tran_schnell_y]
 			%
 			%\paragraph*{z-Achsen Position}
-				\item \textbf{z-Achsen Position} Die abschliessende Messung in der z-Achsen Position ergibt bei der \textsf{langsamen} Geschwindigkeit einen absoluten mittleren Fehler von \unit[2.203]{cm}, was einem relativen Fehler von \unit[44.1]{\%} entspricht. Betrachtet man die Abbildung \vref{img:z_tran_langsam_y}, so zeigt sich bei der blauen Linie ein Mittelwert von \unit[-2.797]{cm} bei einer Standardabweichung von \unit[0.364]{cm}.
+				\item \textbf{z-Achsen Position} Die abschliessende Messung in der z-Achsen Position ergibt bei der \textsf{langsamen} Geschwindigkeit einen absoluten mittleren Fehler von \unit[2.20]{cm}, was einem relativen Fehler von \unit[44.1]{\%} entspricht. Betrachtet man die Abbildung \vref{img:z_tran_langsam_y}, so zeigt sich bei der blauen Linie ein Mittelwert von \unit[-2.80]{cm} bei einer Standardabweichung von \unit[0.36]{cm}.
 				%
 				\image{content/3_konzept/image/mittel_5_Z_Y}{scale=0.6}{htbp}[z-Position Translation y-Richtung \textsf{langsam}][img:z_tran_langsam_y]
 				%
-				Bei der Geschwindigkeit \textsf{schnell} verringert sich der absolute Fehler auf \unit[0.709]{cm} (entspricht relativ \unit[14.1]{\%}). Die Messung an sich hat einen Mittelwert von \unit[-4.294]{cm} bei einer Standardabweichung von \unit[0.231]{cm}. Die Abbildung \vref{img:z_tran_schnell_y} zeigt das gemessene Ergebnis.\par 
+				Bei der Geschwindigkeit \textsf{schnell} verringert sich der absolute Fehler auf \unit[0.71]{cm} (entspricht relativ \unit[14.1]{\%}). Die Messung an sich hat einen Mittelwert von \unit[-4.29]{cm} bei einer Standardabweichung von \unit[0.23]{cm}. Die Abbildung \vref{img:z_tran_schnell_y} zeigt das gemessene Ergebnis.\par 
 				%
 				\image{content/3_konzept/image/schnell_5_Z_Y}{scale=0.6}{htbp}[z-Position Translation \textsf{schnell}][img:z_tran_schnell_y]
 			\end{itemize}
@@ -662,9 +665,9 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 	%
 	%
 	\subsection{Interpretation}\label{ss:interpretation_tran}
-		Über alle Messungen und Positionen kam es, bezogen auf die Kontrollgruppe, zu Abweichungen. Dabei kam es zu einer maximalen Abweichung von \unit[2.203]{cm} bei der y-/z-Position und langsamer Geschwindigkeit, was bereits einem Fehler von \unit[44.1]{\%} entspricht. Diese beiden Messvoraussetzungen stellen hinsichtlich dieser grossen Abweichung eine Ausnahme dar, liegen die übrigen Messungen doch innerhalb von \unit[30]{\%}. Weiter ist auffallend, dass der Mittelwert bei den Postionen x und z kleiner als \unit[5.0]{cm} ausfiel, wohingegen die y-Position einen Wert hat, der darüber liegt. Eine letzte Auffälligkeit zeigt sich bei den Standardabweichungen der Messungen. Wiederum sticht die y-Position mit einem höheren Wert bei beiden Geschwindigkeiten heraus.\par
+		Über alle Messungen und Positionen kam es, bezogen auf die Kontrollgruppe, zu Abweichungen. Dabei kam es zu einer maximalen Abweichung von \unit[2.20]{cm} bei der y-/z-Position und langsamer Geschwindigkeit, was bereits einem Fehler von \unit[44.1]{\%} entspricht. Diese beiden Messvoraussetzungen stellen hinsichtlich dieser grossen Abweichung eine Ausnahme dar, liegen die übrigen Messungen doch innerhalb von \unit[30]{\%}. Weiter ist auffallend, dass der Mittelwert bei den Postionen x und z kleiner als \unit[5.0]{cm} ausfiel, wohingegen die y-Position einen Wert hat, der darüber liegt. Eine letzte Auffälligkeit zeigt sich bei den Standardabweichungen der Messungen. Wiederum sticht die y-Position mit einem höheren Wert bei beiden Geschwindigkeiten heraus.\par
 		%
-		Die Hohe Abweichung bei \textsf{langsamer} Geschwindigkeit der Positionen y und z kann nicht begründet werden. Weder die relativ hohe Ungenauigkeit der Kontrollgruppe von geforderten $\pm$\unit[1.0]{cm} noch kann ein anderer Einfluss dieses Phänomen erklären. Denn die übrige Messung, die x-Position, hat bei der gleichen Geschwindigkeit lediglich einen absoluten Fehler von \unit[0.341]{cm}. Eine grössere Anzahl von Messungen könnte hier eventuell die Situation klären.\par 
+		Die Hohe Abweichung bei \textsf{langsamer} Geschwindigkeit der Positionen y und z kann nicht begründet werden. Weder die relativ hohe Ungenauigkeit der Kontrollgruppe von geforderten $\pm$\unit[1.0]{cm} noch kann ein anderer Einfluss dieses Phänomen erklären. Denn die übrige Messung, die x-Position, hat bei der gleichen Geschwindigkeit lediglich einen absoluten Fehler von \unit[0.34]{cm}. Eine grössere Anzahl von Messungen könnte hier eventuell die Situation klären.\par 
 		%
 		Wie erwähnt, kommt es bei der y-Position, im Gegensatz zu den übrigen Positionen, zu einer Überschätzung der aktuellen Position. Dies kann auf einen Messfehler des Beschleunigungssensors zurückgeführt werden. Ein beständiger Offset auf den gemessenen Werten hat, bedingt durch die zweifache Integration, einen Drift zur Folge\footnote{In der Literatur ist dies unter dem Begriff \textsf{Integration Drift} bekannt \cite{lit:drift_int}.}. Durch die Bewegungsdetektion wird dies zwar weitestgehend unterdrückt, jedoch nur, wenn der Sensor in Ruhe ist. Bei einer Bewegung kommt dieses Fehlverhalten zum Zuge und hat entweder eine positive (y-Position) oder eine negative Verfälschung des Resultates zur Folge (x- und z-Position).
 		%
@@ -725,9 +728,9 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				&=\sqrt{47^2+431^2}=\underline{433.56}
 			}
 			{
-				r & Radius in mm\\
-				x & vertikaler Abstand in mm\\
-				y & horizontaler Abstand in mm\\
+				r & Radius [mm]\\
+				x & vertikaler Abstand [mm]\\
+				y & horizontaler Abstand [mm]\\
 			}[eq:radius]
 			%
 			Die Bogenlänge $b$ kann anschliessend mit der Gleichung \vref{eq:kreissegement} unter Berücksichtigung des eingestellten Winkels $\alpha$ bestimmt werden.
@@ -736,10 +739,10 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 					b&=r\cdot\alpha '
 				}
 				{
-					r & Radius in mm\\
-					\alpha & Winkel in Grad\\
-					\alpha ' & Winkel in Rad\\
-					b & Teilumfang in mm\\
+					r & Radius [mm]\\
+					\alpha & Winkel [°]\\
+					\alpha ' & Winkel [rad]\\
+					b & Teilumfang [mm]\\
 				}[eq:kreissegement]
 		%
 		\subsubsection*{Testbeschreibungen}
@@ -782,7 +785,7 @@ Diese Filterkoeffizienten werden wie in Abschnitt \vref{subsub:filterentwurf} ge
 				\image{content/3_konzept/image/auslenkung_2_Y}{scale=0.6}{htbp}[Translation Rotation Auslenkung 2][img:auslenkung_2_y]
 			%
 			%\paragraph*{Auslenkung 3}
-				\item \textbf{Auslenkung 3} Wird die Auslenkung auf \unit[23.5]{°} erhöht, ergibt sich ein absoluter Fehler von \unit[-1'111.68]{cm}. Dies ist gleichbedeutend mit einem relativen Fehler von \unit[-22'233.5]{\%}. Der Mittelwert der Messungen beläuft sich auf \unit[-1'111.68]{cm}. Dies bei einer Standardabweichung von \unit[179.450]{cm}. Die Ergebnisse der dritten Auslenkung sind in der Abbildung \vref{img:auslenkung_3_y} dargestellt.\par 
+				\item \textbf{Auslenkung 3} Wird die Auslenkung auf \unit[23.5]{°} erhöht, ergibt sich ein absoluter Fehler von \unit[-1'111.68]{cm}. Dies ist gleichbedeutend mit einem relativen Fehler von \unit[-22'233.5]{\%}. Der Mittelwert der Messungen beläuft sich auf \unit[-1'111.68]{cm}. Dies bei einer Standardabweichung von \unit[179.45]{cm}. Die Ergebnisse der dritten Auslenkung sind in der Abbildung \vref{img:auslenkung_3_y} dargestellt.\par 
 				\image{content/3_konzept/image/auslenkung_3_Y}{scale=0.6}{htbp}[Translation Rotation Auslenkung 3][img:auslenkung_3_y]
 			\end{itemize}
 			%
